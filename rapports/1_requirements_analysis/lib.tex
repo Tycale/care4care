@@ -1,0 +1,204 @@
+\documentclass[11pt,a4paper]{article}
+
+% French
+\usepackage[utf8x]{inputenc}
+\usepackage[frenchb]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{ifthen}
+
+% Color
+% cfr http://en.wikibooks.org/wiki/LaTeX/Colors
+\usepackage{color}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\definecolor{dkgreen}{rgb}{0.25,0.7,0.35}
+\definecolor{dkred}{rgb}{0.7,0,0}
+
+% Floats and referencing
+\newcommand{\sectionref}[1]{section~\ref{sec:#1}}
+\newcommand{\annexeref}[1]{annexe~\ref{ann:#1}}
+\newcommand{\figuref}[1]{figure~\ref{fig:#1}}
+
+% Listing
+\usepackage{listings}
+\lstset{
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  basicstyle=\rm\small\ttfamily,
+  keywordstyle=\bfseries\color{dkred},
+  frame=single,
+  commentstyle=\color{gray}=small,
+  stringstyle=\color{dkgreen},
+  %backgroundcolor=\color{gray!10},
+  %tabsize=2,
+  rulecolor=\color{black!30},
+  %title=\lstname,
+  breaklines=true,
+  framextopmargin=2pt,
+  framexbottommargin=2pt,
+  extendedchars=true,
+  inputencoding=utf8x
+}
+\newcommand{\oz}{\textsc{Oz}}
+\newcommand{\java}{\textsc{Java}}
+\newcommand{\clang}{\textsc{C}}
+\newcommand{\keyword}{mot clef}
+
+% Math symbols
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+% Sets
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Rn}{\R^n}
+\newcommand{\Rnn}{\R^{n \times n}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\Kn}{\K^n}
+\newcommand{\Knn}{\K^{n \times n}}
+
+% Chemistry
+\newcommand{\std}{\ensuremath{^{\circ}}}
+\newcommand\ph{\ensuremath{\mathrm{pH}}}
+
+%\theoremstyle{indented}
+
+% Theorem and definitions
+\makeatother
+\newtheoremstyle{indenteddefinition}{.5\topsep}{.5\topsep}{\addtolength{\leftskip}{2em}}{-2.5em}{\bfseries}{ :}{.5em }{}
+\theoremstyle{indenteddefinition}
+\newtheorem{mydef}{Définition}
+\newtheorem{mynota}[mydef]{Notation}
+\newtheorem{myprop}[mydef]{Propriétés}
+\newtheorem{myrem}[mydef]{Remarque}
+\newtheorem{myform}[mydef]{Formules}
+\newtheorem{mycorr}[mydef]{Corrolaire}
+\newtheorem{mytheo}[mydef]{Théorème}
+\newtheorem{mylem}[mydef]{Lemme}
+\newtheorem{myexem}[mydef]{Exemple}
+\newtheorem{myineg}[mydef]{Inégalité}
+
+% Unit vectors
+\usepackage{esint}
+\usepackage{esvect}
+\newcommand{\kmath}{k}
+\newcommand{\xunit}{\hat{\imath}}
+\newcommand{\yunit}{\hat{\jmath}}
+\newcommand{\zunit}{\hat{\kmath}}
+
+% rot & div & grad & lap
+\DeclareMathOperator{\newdiv}{div}
+\newcommand{\divn}[1]{\nabla \cdot #1}
+\newcommand{\rotn}[1]{\nabla \times #1}
+\newcommand{\grad}[1]{\nabla #1}
+\newcommand{\gradn}[1]{\nabla #1}
+\newcommand{\lap}[1]{\nabla^2 #1}
+
+
+% Elec
+\newcommand{\B}{\vec B}
+\newcommand{\E}{\vec E}
+\newcommand{\EMF}{\mathcal{E}}
+\newcommand{\perm}{\varepsilon} % permittivity
+
+\newcommand{\bigoh}{\mathcal{O}}
+\newcommand\eqdef{\triangleq}
+
+\DeclareMathOperator{\newdiff}{d} % use \dif instead
+\newcommand{\dif}{\newdiff\!}
+\newcommand{\fpart}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\ffpart}[2]{\frac{\partial^2 #1}{\partial #2^2}}
+\newcommand{\fdpart}[3]{\frac{\partial^2 #1}{\partial #2\partial #3}}
+\newcommand{\fdif}[2]{\frac{\dif #1}{\dif #2}}
+\newcommand{\ffdif}[2]{\frac{\dif^2 #1}{\dif #2^2}}
+\newcommand{\constant}{\ensuremath{\mathrm{cst}}}
+
+% Numbers and units
+\usepackage[squaren, Gray]{SIunits}
+\usepackage{sistyle}
+\usepackage[autolanguage]{numprint}
+%\usepackage{numprint}
+\newcommand\si[2]{\numprint[#2]{#1}}
+\newcommand\np[1]{\numprint{#1}}
+
+\newcommand\strong[1]{\textbf{#1}}
+\newcommand{\annexe}{\part{Annexes}\appendix}
+
+% Bibliography
+\newcommand{\biblio}{\bibliographystyle{plain}\bibliography{biblio}}
+
+\usepackage{fullpage}
+% le `[e ]' rend le premier argument (#1) optionnel
+% avec comme valeur par défaut `e `
+\newcommand{\hypertitle}[7][e ]{
+\usepackage{hyperref}
+{\renewcommand{\and}{\unskip, }
+\hypersetup{pdfauthor={#6},
+            pdftitle={Synth\`ese d#1#2 Q#3 - L#4#5},
+            pdfsubject={#2}}
+}
+
+\title{Synth\`ese d#1#2 Q#3 - L#4#5}
+\author{#6}
+
+\begin{document}
+
+\ifthenelse{\isundefined{\skiptitlepage}}{
+\begin{titlepage}
+\maketitle
+
+ \paragraph{Informations importantes}
+   Ce document est grandement inspiré de l'excellent cours
+   donné par #7 à l'EPL (École Polytechnique de Louvain),
+   faculté de l'UCL (Université Catholique de Louvain).
+   Il est écrit par les auteurs susnommés avec l'aide de tous
+   les autres étudiants et votre aide est la bienvenue.
+   Il y a toujours moyen de l'améliorer surtout que si le cours
+   change, la synthèse doit être changée en conséquence.
+   On peut retrouver le code source à l'adresse suivante
+   \begin{center}
+     \url{https://github.com/Gp2mv3/Syntheses}.
+   \end{center}
+   On y trouve aussi le contenu du \texttt{README} qui contient de plus
+   amples informations, vous êtes invité à le lire.
+
+   Il y est indiqué que les questions, signalements d'erreurs,
+   suggestions d'améliorations ou quelque discussion que ce soit
+   relative au projet
+   % signalisations ou signalements ?
+   sont à spécifier de préférence à l'adresse suivante
+   \begin{center}
+     \url{https://github.com/Gp2mv3/Syntheses/issues}.
+   \end{center}
+   Ça permet à tout le monde de les voir, les commenter et agir
+   en conséquence.
+   Vous êtes d'ailleurs invité à participer aux discussions.
+
+   Vous trouverez aussi des informations sur le wiki
+   \begin{center}
+     \url{https://github.com/Gp2mv3/Syntheses/wiki}.
+   \end{center}
+   comme le status des synthèses pour chaque cours
+   \begin{center}
+     \url{https://github.com/Gp2mv3/Syntheses/wiki/Status}.
+   \end{center}
+   vous pouvez d'ailleurs remarquer qu'il en manque encore beaucoup,
+   votre aide est la bienvenue.
+
+   Pour contribuer au bug tracker et au wiki, il vous suffira de
+   créer un compte sur Github.
+   Pour interagir avec le code des synthèses,
+   il vous faudra installer \LaTeX.
+   Pour interagir directement avec le code sur Github,
+   vous devez utiliser \texttt{git}.
+   Si cela pose problème,
+   nous sommes évidemment ouvert à des contributeurs envoyant leur
+   changement par mail ou n'importe quel autres moyen.
+\end{titlepage}
+}{}
+
+\ifthenelse{\isundefined{\skiptableofcontents}}{
+\tableofcontents
+}{}
+}

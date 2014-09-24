@@ -1,0 +1,81 @@
+\input{lib.tex}
+\usepackage{pdfpages}
+\usepackage{palatino}
+\usepackage{enumitem}
+
+\usepackage[bottom]{footmisc}
+\usepackage{desclist}
+\usepackage{tocloft}
+\setlength\cftparskip{4pt}
+
+\setlist[itemize]{topsep=3pt,after=\vspace{.5\baselineskip}}
+\usepackage[left=3cm,right=3cm,top=3cm,bottom=3cm]{geometry}
+\setlength{\parskip}{2mm}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\newcommand{\stcomp}[1]{\overline{#1}} 
+\newcommand{\N}{\mathbb{N}}
+
+% Make the style indentedefinition use bold for the name of the theorem
+\makeatletter
+\def\th@indenteddefinition{%
+  \thm@notefont{}% same as heading font
+  \normalfont % body font
+}
+\makeatother
+
+\lstset{language={Python}}
+
+\def\blurb{\textsc{Université catholique de Louvain\\
+  École polytechnique de Louvain}}
+\def\clap#1{\hbox to 0pt{\hss #1\hss}}%
+\def\ligne#1{%
+  \hbox to \hsize{%
+    \vbox{\centering #1}}}%
+\def\haut#1#2#3{%
+  \hbox to \hsize{%
+    \rlap{\vtop{\raggedright #1}}%
+    \hss
+    \clap{\vbox{\vfill\centering #2\vfill}}%
+    \hss
+    \llap{\vtop{\raggedleft #3}}}}%
+\begin{document}
+
+\begin{titlepage}
+\thispagestyle{empty}\vbox to 1\vsize{%
+  \vss
+  \vbox to 1\vsize{%
+    \haut{\raisebox{-5mm}{\includegraphics[width=2.5cm]{logo_ucl.pdf}}}{\blurb}{\raisebox{-3mm}{\includegraphics[scale=0.35]{logo_epl.jpg}}}
+    \vfill
+    \ligne{\Huge \textbf{\textsc{Software Development Project}}}
+     \vspace{5mm}
+    \ligne{\huge \textbf{\textsc{Care 4 Care}}}
+      \vspace{15mm}
+    \ligne{\Large \textbf{\textsc{Requirements analysis}}}
+    \vspace{5mm}
+    \ligne{\large{\textsc{3 octobre 2014}}}
+    \vfill
+    \vspace{5mm}
+    \ligne{%
+         \textsc{Groupe} 8 
+      }
+      \vspace{5mm}
+    }%
+  \vss
+  }
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+
+\section{Introduction}
+\label{sec:introduction}
+
+Bleh
+
+% section classes_de_complexit_ (end)
+\end{document}
