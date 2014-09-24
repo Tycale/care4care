@@ -5,7 +5,7 @@ Projet développé avec Django 1.7 et Python 3
 
 ###Team Members:
 ---
-L'équipe est composée est huit étudiants:
+L'équipe est composée de huit étudiants:
 * Baptiste Lacasse (Project Manager)
 * Thibault Gerondal (Engineering Leader)
 * Michael Heraly (Ninja Coder)
