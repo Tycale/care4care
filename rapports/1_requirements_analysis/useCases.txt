@@ -1,0 +1,40 @@
+Name: Register
+
+Identifier: UC01
+
+- User enter data and accept the Care4Care agreement
+- System verifies if the user is eligible and the datas are correct 
+- System save the user 
+- System display a welcoming message
+- System send a email to the user and notify branch officer
+
+Name: I need help
+
+Identifier: UC02
+
+- User click on the button "I need help"
+- System check if the user is logged. If not the user is ask to login
+- User complete information about the job and choose the visibility
+- System store the demand 
+- System send a notification to interested members
+
+Name: Offering Help
+
+Identifier: UC03
+
+- User click on "I want help" button
+- System check if the user is logged in. If not the user is ask to login
+- User choose which requests to display, all or only the one matching his criterias
+- System display the list of requests
+- User choose a task 
+
+Name: Complete a job
+
+Identifier: UC04
+
+- User go to his pending actions
+- User fill out informations about the job done and confirm
+- System send a message to the demanding member asking to confirm
+- Demanding member confirm
+- System credit and debit time to users
+
