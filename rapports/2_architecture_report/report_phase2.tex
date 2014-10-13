@@ -32,36 +32,38 @@
 
 \section{Choice of web application framework}
 
-To build a web application, a framework is necessary.
-But there are many available, with different features, which don't make the choice easy.
-For this project, we have chosen the Django framework, and in the following we're going to explain why we have done this choice.
-Here is a table comparison of the different frameworks we considered :
+To build a web application, a framework is highly recommended because nobody wants to reinvent the wheel\dots
+But there are many available, with a lot of interesting features, which don't make the choice easy. Since two of our members have already used Django, we thought to use this framework. However, we wanted to study the alternatives to make the best choice. Let's take a quick look at some of the most popular ones : Django, Ruby on Rails (RoR), CakePHP and Play!.
 
-\bigskip
-\begin{tabular}{|c|c|c|c|c|c|}
+\medskip
+\begin{center}
+\begin{tabular}{@{}|c|c|c|c|c|c|@{}}
 \hline
-\tbf{Framework}		& Django		& Ruby On Rails	& Pyramid	&	other	\\
+\tbf{Framework}		& Django		& RoR	& CakePHP	&	Play!	\\
 \hline
-\tbf{Language}		& Python		& Ruby			& Python	&	\\
+\tbf{Language}		& Python		& Ruby			& PHP	&	\begin{tabular}{@{}c@{}}Scala \\Java \\\end{tabular} \\
 \hline
-\tbf{Documentation}	& \yes			& \yes			& \yes		&	\\
+\tbf{Documentation}	& \yes			& \yes			& \yes		& \yes	\\
 \hline
-\tbf{Architecture}		& MVC (MTV)	& MVC			& MVC		&	\\
+\tbf{Architecture}		& MVC (MTV)	& MVC			& MVC		& MVC	\\
 \hline
-\tbf{ORM}			& \yes			& \yes			& \no		&	\\
+\tbf{Scaffolding}		& \yes			& \yes			& \yes		& \yes	\\
 \hline
-\tbf{Migration} 		& \yes			& \yes			& \no		&	\\
+\tbf{ORM}			& \yes			& \yes			& \yes		& \begin{tabular}{@{}c@{}}\yes \\(ebean) \\\end{tabular}	\\
 \hline
-\tbf{Admin}			& \yes			& \no			& ?			&	\\
+\tbf{Migration} 		& \yes			& \yes			& \begin{tabular}{@{}c@{}}\yes \\(basic) \\\end{tabular}		&	\begin{tabular}{@{}c@{}}\yes \\(module)\\\end{tabular} \\
+\hline
+\tbf{Automatic admin}			& \yes			& \no			&\begin{tabular}{@{}c@{}}\yes \\(module) \\\end{tabular}			&	\no \\
 \hline
 \end{tabular}
+\end{center}
+\medskip
 
-
-\bigskip
 We were looking for a web application framework based on a language that was powerful, while quick to learn for the team members that don't know it yet.
-From this, three frameworks stand out from the rest (Python \& Ruby): Django, Ruby On Rails and Pyramid.
-But Pyramid has a few drawbacks: no ORM (object-relational mapper) and no migration by default, which are important features for us to manage the database.
-So we refined our choice to Django \& RoR.
+From this, all these frameworks meets this requirement.
+About the features, CakePHP and Play! have a few drawbacks: these needs to install third-party modules to enable ORM, migrations or admin. We think this is a useless hassle. We think built-in support is better and more stable as we don't have to rely on a third-party module. This is why, we put away CackePHP and Play! frameworks. 
+So we refined our choice to Django \& RoR. \newline
+
 They both have a lot of great features, including: MVC architecture, an object-relational mapper, migrations, and furthermore good documentation and an active community.
 Ruby On Rails is mainly based on the principle \tit{convention-over-configuration}, which means that a lot of things are done automatically, letting the framework manage several things (e.g. interactions between the database, the controller, and the view). But it's not always easy to understand what's really going on underneath.
 Django, however, tends to follow the Python principle \tit{explicit is better than implicit}, so that it makes it easier to figure out what the code does.
@@ -70,10 +72,11 @@ We have a preference for the second approach.
 \medskip
 At this point, the choice of the framework relates more to the programming language used.
 Python and Ruby have quite a similar learning curve.
-Knowing that the members of the team have to learn Python for another course, we can assert that this language is known by the entire team.
-But that's not the case for Ruby.
-Furthermore, two members of the team already have a good knowledge of the Django framework.
-So we could rely on them if we face a problem concerning the framework during the development.
+Knowing that the members of the team have to learn Python for another course, we can assert that this language is known by the entire team. But that's not the case for Ruby. This is why we chose Django to develop this project.
+
+\section{Choice of web simulator}
+
+We looked out for some web simulators : PhantomJS and Selenium. We found out that these tools are really powerful. We can simulate easily a web browser with both of them. The difference lies in the fact PhantomJS is a headless WebKit which means that you can't see the browser performing the actions. This is really fast but we can't check if the web interface is compatible with differents browsers. While with Selenium, we can watch a chosen browser performing actions and browse the website. This is why we think it's more clever to choose Selenium to be able to simulate the user experience.
 
 
 \end{document}  
