@@ -1,0 +1,76 @@
+1) Class diagram :
+
+The main class of this diagram is the User class. It is the base class for all the different kind of user the website can have (user, member, non-member, branch officer and verified member). We choosed to do it this way because there was a lot of attributes/methods in common between these classes.
+
+So when we speak of a User, we mean a member, verified member, branch officer and a non-member.
+When we speak of a Member we mean all of them but the non-member
+
+Some relation are one to one but we decided to create a new class and not put them as an attribute
+for visibility and ease of understanding. (Ex : emergency contact, preference, dashboard)
+
+We have multiples relations between the class Member and User to allow members to have peoples in their favorite, personnal network or ignored user list.
+We can also have a relation between a non-member and a member to know which kind of relation they have (family, professional ...).
+
+We did not create a class for the address because it would have taken a lot of space in the diagram for something which is very common. It is
+described in more details in the ORM.
+
+We created an enumeration for the jobs categories from the list in the requirements but we can imagine
+to be able to add or remove items from that enumeration.
+
+Each user has one or multiple agenda and one dashboard.
+Each member has credit but a non-member does not, a branch also have credit like requested in the requirements.
+Each user can be connected to one or multiple branches.
+
+Each class has all of its required attributes and its main methods.
+
+
+
+2) Deployment Diagram :
+
+a) Description of software:
+
+Nginx is a free open source HTTP server and reverse proxy server. Nginx is known for its high performance, stability, rich feature set, simple configuration, and low resource consumption. 
+
+http://nginx.org/ 
+
+Gunicorn is a Python WSGI HTTP Server for UNIX it natively support Django, 
+it has a worker process management and is compatible with Python 2.x >= 2.6 or 3.x >= 3.1 
+
+http://gunicorn.org/ 
+
+PostgreSQL is a powerful, open source object-relational database system. 
+It runs on all major operating systems, including Linux, UNIX (AIX, BSD, HP-UX, SGI IRIX, Mac OS X, Solaris, Tru64), and Windows.
+It is fully ACID compliant, has full support for foreign keys, joins, views, triggers, and stored procedures (in multiple languages).
+It is highly scalable both in the sheer quantity of data it can manage and in the number of concurrent users it can accommodate.
+
+http://www.postgresql.org
+
+b) How we will use them ? 
+
+Nginx will be use for : 
+
+- Deliver static file to the client (proxy)
+- Forward non static request to the Gunicorn workers 
+
+Gunicorn will be use for : 
+
+- Create workers running our django application 
+- Balance work between the different workers 
+
+Postgresql will be use for: 
+
+- Storing and deliver data
+- Can only be accessed by Gunicorn workers and not directly by the users 
+
+c) Why did we choose this approch ?
+
+Nginx and Gunicorn give the possibility to split the work across mulitples server easily. Nginx and Gunicorn load balancer will optimize the resources across the servers. 
+
+We can also use a Postgresql cluster to optimize database performance and reliability. 
+
+Those techniques are usefull to guarantee scalability, availability and reliability of the system. 
+
+This will be very practical if for exemple the website user base grows quickly and we need more resources in a short period of time. In conclusion you could use cloud services to adapt your needs and optimize the running cost of your application.
+
+
+
