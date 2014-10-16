@@ -1,15 +1,14 @@
 1) Class diagram :
 
-The main class of this diagram is the User class. It is the base class for all the different kind of user the website can have (user, member, non-member, branch officer and verified member). We choosed to do it this way because there was a lot of attributes/methods in common between these classes.
+The main class of this diagram is the User class. It is the base class for all the different kinds of user the website can have (user, member, non-member, branch officer and verified member). We choosed to do it this way because there was a lot of attributes/methods in common between these classes.
 
-So when we speak of a User, we mean a member, verified member, branch officer and a non-member.
+When we speak of a User, we mean a member, verified member, branch officer and a non-member.
 When we speak of a Member we mean all of them but the non-member
 
-Some relation are one to one but we decided to create a new class and not put them as an attribute
-for visibility and ease of understanding. (Ex : emergency contact, preference, dashboard)
+Some relation are one to one but we decided to create a new class anyway and not add as an attribute for visibility and ease of understanding. (Ex : emergency contact, preference, dashboard)
 
-We have multiples relations between the class Member and User to allow members to have peoples in their favorite, personnal network or ignored user list.
-We can also have a relation between a non-member and a member to know which kind of relation they have (family, professional ...).
+We have multiples relations between the class Member and User to allow members to have user in their favorite, personnal network or ignored user list.
+We can also have a link between a non-member and a member to know which kind of relation they have (family, professional ...).
 
 We did not create a class for the address because it would have taken a lot of space in the diagram for something which is very common. It is
 described in more details in the ORM.
@@ -49,22 +48,25 @@ b) How we will use them ?
 
 Nginx will be use for : 
 
-- Deliver static file to the client (proxy)
-- Forward non static request to the Gunicorn workers 
+- Will be used as a reverse proxy
+- Delivering static file to the client (proxy)
+- Forwarding requests to the Gunicorn workers pool
 
 Gunicorn will be use for : 
 
-- Create workers running our django application 
-- Balance work between the different workers 
+- Create a master process which load the app into memory
+- This master process will fork workers and it will also kill and recreate new workers when needed.
+- The master process never handle any request only workers do.
 
 Postgresql will be use for: 
 
 - Storing and deliver data
 - Can only be accessed by Gunicorn workers and not directly by the users 
 
+
 c) Why did we choose this approch ?
 
-Nginx and Gunicorn give the possibility to split the work across mulitples server easily. Nginx and Gunicorn load balancer will optimize the resources across the servers. 
+Nginx and Gunicorn give the possibility to split the work across mulitple servers easily. Gunicorn workers pool will optimize the resources across the servers. 
 
 We can also use a Postgresql cluster to optimize database performance and reliability. 
 
@@ -72,5 +74,16 @@ Those techniques are usefull to guarantee scalability, availability and reliabil
 
 This will be very practical if for exemple the website user base grows quickly and we need more resources in a short period of time. In conclusion you could use cloud services to adapt your needs and optimize the running cost of your application.
 
+3) The architectural style of the application will be MVC because django is a MVC framework. The small particularity of django is that view are called template and controller are called view.
+
+4) We choose only one physical server to start with becaus the number of user is pretty low and it would not be worth paying for more than one.
+But we have a very scalable solution which in the future can use multiples servers without problem.
+
+Documentation (link):
+
+https://github.com/blog/517-unicorn
+http://gunicorn-docs.readthedocs.org/
+https://www.djangoproject.com/
+http://wiki.nginx.org/Main
 
 
