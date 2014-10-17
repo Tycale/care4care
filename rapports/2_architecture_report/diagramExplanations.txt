@@ -69,7 +69,7 @@ Postgresql will be use for:
 - Can only be accessed by Gunicorn workers and not directly by the users 
 
 
-c) Why did we choose this approch ?
+c) Why did we choose this approach ?
 
 Nginx and Gunicorn give the possibility to split the work across mulitple servers easily. Gunicorn workers pool will optimize the resources across the servers. 
 
@@ -81,7 +81,7 @@ This will be very practical if for exemple the website user base grows quickly a
 
 3) The architectural style of the application will be MVC because django is a MVC framework. The small particularity of django is that view are called template and controller are called view.
 
-4) We choose only one physical server to start with becaus the number of user is pretty low and it would not be worth paying for more than one.
+4) We choosed only one physical server to start with because the number of user is pretty low and it would not be worth paying for more than one.
 But we have a very scalable solution which in the future can use multiples servers without problem.
 
 Documentation (link):
@@ -94,8 +94,24 @@ http://wiki.nginx.org/Main
 
 3) Sequence diagrams :
 
-We choose to represent the sequence diagram "Complete a job" because there is a lot of interaction between multiple actors and the system and there is two way to confirm a job, either the member confirm the job or the branch officer.
+Complete a job: (see figure X)
 
-We choose to represent the sequnce diagram "Requesting help" because there is the creation and the interaction with a object help.
+In the sequence diagram "Complete a job" we can see a lot of interaction between multiple actors and the system. There is also two way to confirm a job, either by the member or by the branch officer.
+
+First the member ask for his pending actions list and then select a job from that list that he completed. After that he fill informations about the job and confirm. The system receives the informations about the job and send a message to the demanding member (the member which has be helped) to ask him to confirm that the job has been done correctly.
+
+If the member confirm the job, the system credit and debit time to the corresponding members. But if the demanding member can't confirm by himself, the Branch officer can confirm the job for him.
+
+
+Request Help: (see figure X)
+
+First the member click on the button "I need help". He arrives on a page with a form which he needs to fill with information about the job.
+After receiving the data the system checks it and than create a new Job. This new job will be publish on the home page and a notification will be
+send to every member which has jobs preferences corresponding to the new job created.
+
+
+Create account: (see figure x)
+
+A visitor click on the register button and arrives on the create new account page. He fills the data and than confirm. The server receives it and check if the data are correct. If it is correct it will create a new user and send a notification to the branch officer. If it is not correct it will send a error message to the user to tell him what he needs to correct.
 
 
