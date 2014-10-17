@@ -1,5 +1,7 @@
 1) Class diagram :
 
+In this diagram I tried to be to be as precise as possible about all the different kind of users. I hope this will balance the fact that in the first report, we neglected to talk about some kind of members.
+
 The main class of this diagram is the User class. It is the base class for all the different kinds of user the website can have (user, member, non-member, branch officer and verified member). We choosed to do it this way because there was a lot of attributes/methods in common between these classes.
 
 When we speak of a User, we mean a member, verified member, branch officer and a non-member.
