@@ -16,12 +16,17 @@ described in more details in the ORM.
 We created an enumeration for the jobs categories from the list in the requirements but we can imagine
 to be able to add or remove items from that enumeration.
 
-Each user has one or multiple agenda and one dashboard.
+Each user has one agenda and one dashboard.
 Each member has credit but a non-member does not, a branch also have credit like requested in the requirements.
 Each user can be connected to one or multiple branches.
 
 Each class has all of its required attributes and its main methods.
 
+The branch officer has a attribute "superadmin" which when set to true allow him to manage all the branches. We did that because both type of user are very similar.
+
+The class branch does not derive from the class User even if it is said in the requirements that a branch is a special kind of member. We did that because we did not find many common attributes appart from the credits. 
+
+We created only one class Help instead of two request and offert to make comparison easier and the type is represented by the relation between the class help and class member.
 
 
 2) Deployment Diagram :
@@ -60,7 +65,7 @@ Gunicorn will be use for :
 
 Postgresql will be use for: 
 
-- Storing and deliver data
+- Storing and delivering data
 - Can only be accessed by Gunicorn workers and not directly by the users 
 
 
@@ -82,8 +87,15 @@ But we have a very scalable solution which in the future can use multiples serve
 Documentation (link):
 
 https://github.com/blog/517-unicorn
-http://gunicorn-docs.readthedocs.org/
+http://gunicorn-docs.readthedocs.org
 https://www.djangoproject.com/
 http://wiki.nginx.org/Main
+
+
+3) Sequence diagrams :
+
+We choose to represent the sequence diagram "Complete a job" because there is a lot of interaction between multiple actors and the system and there is two way to confirm a job, either the member confirm the job or the branch officer.
+
+We choose to represent the sequnce diagram "Requesting help" because there is the creation and the interaction with a object help.
 
 
