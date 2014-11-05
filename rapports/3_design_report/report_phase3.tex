@@ -22,7 +22,6 @@
 \begin{document}
 %\maketitle
 
-
 \section{Simulator}
 
 We chose Selenium\footnote{\url{http://www.seleniumhq.org/}} to automate the testing of the web application.
@@ -58,5 +57,102 @@ It is an interesting package because it supports a lot of authentication service
 \medskip
 Because the extension is tightly coupled with core functionalities of the application (login, post demands, respond to demands), it will have to be integrated into the system, and will interact with other elements of the architecture.
 
+
+
+
+\section{Sequence diagrams}
+
+For the sequence diagrams we choose the same use case than the activity diagrams because in our first report it laked of details.
+In the second phase, we added the create account sequence diagrams because it is a important part of the software and it was missing from our first report.
+
+We have modified some of the sequence diagrams taking into account the remarks made after our second report.
+
+\figure{requestingHelp}
+
+On figure {requestingHelp} : The user need some help and he is going to create a new request. For that he click on the "I need help"
+and he is redirected to a page where he needs to fill in informations about the jobs. Afterward the system check the data entered by the user.
+If it is correct create the request and add it to the list of request on the home page. The system also send a notification to the members that
+correspond to the criterias of the request using their preferences. If the data are not correct it send an error message to the user.
+
+The main modification on figure {requestingHelp} is that the action "publish on home page" is now done by the system.
+
+\figure{completeAJob}
+
+On figure {completeAJob} : The user has completed a job and want to get credit for it. He needs to go to the pending actions page (list all the jobs that the member accepted but did not completed yet) and select the corresponding job. He will then fill informations about the job done and confirm. 
+The system will send a notification to the demanding member (member which has been helped) and this member need to confirm that the job has been done.
+Unfortunatly it can happen that the member does not confirm because he has no internet access for example. In this case, after some times, the system will send a message to the branch officer and ask him to confirm himself.
+
+The main modification on figure {completeAJob} is that the system send a message to the branch officer. (I didn't find a way to show the waiting time)
+
+\subsection{Login with Social Media}
+
+For this phase, we also added a new sequence diagrams called LoginWithSocialMedia, in the second report we talked about the social media extension but we didn't explain how we will integrate it in our own software.
+
+\figure{LoginWithSocialMedia}
+
+On the figure {LoginWithSocialMedia} you can see that the client wants to authenticate using a social network. In fact the client directly use the social network API to do it. This is due to the fact that we use javascript for login into Google+,Facebook or Twitter. Than the social network API server check if the user already allowed this website to access his account and ask the user to do so if needed. 
+Finally the server send back the token which will be use to authenticate the user for the API calls and the client will send some informations about his account to our application.
+
+\section{Deployment diagram}
+
+In the second report, our explanation was a bit too technical here is the main reason without all the technical details.
+
+We choosed Nginx because it is a very light and efficient web server. We use it as a reverse proxy to avoid putting too much load on our application server (Gunicorn). The Gunicorn workers are like multiple application server which will handle the work. We didn't use another web server for exemple apache because Nginx is faster and better for the usage we want to do with our web server.
+
+\section{Class diagrams}
+
+For the class diagram there was a few mistakes and some missing features about the social media extension. 
+
+We tried to correct this by modifying our main class diagram and creating new small diagrams.
+
+In our main class diagram:
+
+\begin{itemize}
+\item We added all the missing parameters to the function
+\item We added new function to some classes 
+\item We added type to attributes
+\item We created new classes 
+\end{itemize}
+
+
+\figure{newMainClassDiagram}
+
+\subsection{Main class diagram}
+
+On the figure {newMainClassDiagram} you can see some new things.
+
+\subsubsection{class member}
+
+The class member has now much more function :
+\begin{itemize}
+\item A function to share on a social Media like Facebook / Google+
+\item Some functions to add/remove a user to/from their personnal network/favorite/ignored list.
+\item Some functions to (un)subscribe to a branch.
+\end{itemize}
+
+\subsubsection{class help}
+
+The class help has now function regarding searching for features and demands
+\begin{itemize}
+\item A function to get all the helps.
+\item A function to get all the helps for a specific category.
+\item A function to get all the helps depending on user preferences.
+\end{itemize}
+
+\subsection{Verified Member diagram}
+
+\figure{verifiedMember}
+
+On figure {verifiedMember} you can see new class to really describe very precisely the attributes of the class.
+
+The time availability, language and hobby are now class instead of attribute because they are not as simple as the other
+attributes. 
+
+\subsection{Preferences and Address diagrams}
+
+\figure{preferencesAndAddress}
+
+On figure {preferencesAndAddress} This time we represented the class address that we didn't do last time. And we also went into more details
+for the class preferences which is not as simple as we would think it is.
 
 \end{document}
