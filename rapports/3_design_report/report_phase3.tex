@@ -1,0 +1,62 @@
+% LINGI2255 - Software Development Project
+% Phase 2 - Architecture report
+% Framework choice
+\documentclass[11pt, a4paper]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage[utf8]{inputenc}
+\usepackage[UKenglish]{babel}
+\usepackage{graphicx}
+
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{url}
+
+\newcommand{\tbf}[1]{\textbf{#1}}
+\newcommand{\tit}[1]{\textit{#1}}
+
+
+\title{Brief Article}
+\author{The Author}
+%\date{}							% Activate to display a given date or no date
+
+\begin{document}
+%\maketitle
+
+
+\section{Simulator}
+
+We chose Selenium\footnote{\url{http://www.seleniumhq.org/}} to automate the testing of the web application.
+An interesting feature is that we can actually see the actions performed in real time.
+
+Selenium is composed of different components, but the one that we're interested in is the Selenium WebDriver\footnote{\url{http://www.seleniumhq.org/projects/webdriver/}}. % with the Selenium-Server
+Its purpose is to drive a browser natively, either on a local or remote machine.
+It gives the ability to send commands to a browser and to retrieve the results.
+The Selenium WebDriver uses specific drivers to interact with browsers.
+There are drivers for multiple browsers, including Chrome, Firefox and the Android browser.
+
+\medskip
+The tests can be written in multiple languages, including Java, Python and Ruby.
+We chose to use Python because it is a simple, yet powerful language, and we will also use it for the web application.
+
+\medskip
+The simulator will not be integrated with the rest of the web application, because they are made for different purposes.
+It will be useful to stress our system and to see how it adapts to such situations.
+It will give us an idea of how the system performs in real conditions.
+
+
+\section{Extension}
+
+The extension we have been forced to implement is social media.
+It consists of allowing the users to login with a Facebook or Google account.
+We decided to add the possibility to sign in with a Twitter account, because we think it could allow more users to easily use the web application.
+
+\medskip
+As we will be using the Django framework to build the web application, there are many packages available that can be installed to extend the possibilities of the application.
+We searched for one that could help us for this task, and we chose to use the Django-Allauth\footnote{\url{https://www.djangopackages.com/packages/p/django-allauth/}} package to manage users authentication with Facebook, Google, or Twitter.
+It is an interesting package because it supports a lot of authentication services, so that we could add more in the future if it is relevant.
+
+\medskip
+Because the extension is tightly coupled with core functionalities of the application (login, post demands, respond to demands), it will have to be integrated into the system, and will interact with other elements of the architecture.
+
+
+\end{document}
