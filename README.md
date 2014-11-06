@@ -13,4 +13,4 @@ L'équipe est composée de huit étudiants:
 * Victor Velghe (Marketing Leader)
 * Jeremy Vanhee (Human Resources Manager)
 * Arnold Moyaux (Senior Developer)
-* Alois Paulus (To be determined)
+* Alois Paulus (Conceptual UI Designer)
