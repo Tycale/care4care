@@ -81,9 +81,12 @@ In the second report, we added the create account sequence diagram because it is
 
 In this report, we have modified some of the sequence diagrams taking into account the remarks made after our second report.
 
-%\figure{requestingHelp}
+\begin{figure}[!ht]
+   \includegraphics[width=\textwidth]{requestHelp.png}
+   \caption{\label{requestHelp} Request Help}
+\end{figure}
 
-On figure {requestingHelp} : The user need some help and he is going to create a new request. For that he click on the \enquote{I need help}
+On figure ~\ref{requestHelp} : The user need some help and he is going to create a new request. For that he click on the \enquote{I need help}
 and he is redirected to a page where he needs to fill in informations about the jobs. Afterward the system check the data entered by the user.
 If it is correct create the request and add it to the list of request on the home page. The system also send a notification to the members that
 correspond to the criterias of the request using their preferences. If the data are not correct it send an error message to the user.
@@ -91,9 +94,12 @@ correspond to the criterias of the request using their preferences. If the data 
 The main modification on figure {requestingHelp} is that the action \enquote{publish on home page} is now done by the system. You can see below the modified 
 diagrams and their descriptions.
 
-%\figure{completeAJob}
+\begin{figure}[!ht]
+   \includegraphics[width=\textwidth]{completeJob.png}
+   \caption{\label{completeJob} Complete Job}
+\end{figure}
 
-On figure {completeAJob} : The user has completed a job and want to get time credit for it. For that he needs to go to the pending actions page (list all the jobs that the member accepted but did not completed yet) and select the corresponding job. He will then fill informations about the job and confirm. 
+On figure ~\ref{completeJob} : The user has completed a job and want to get time credit for it. For that he needs to go to the pending actions page (list all the jobs that the member accepted but did not completed yet) and select the corresponding job. He will then fill informations about the job and confirm. 
 
 The system will send a notification to the demanding member (member which has been helped) and this member need to confirm that the job has been done correctly.
 
@@ -105,33 +111,33 @@ The main modification on figure {completeAJob} is that the system send a message
 
 In this report, we also added a new sequence diagram called \enquote{LoginWithSocialMedia}. We did that becaus in the second report we talked about the social media extension but we did not explain how we will integrate it in our own software.
 
-%\figure{LoginWithSocialMedia}
+\begin{figure}[!ht]
+   \includegraphics[width=\textwidth]{loginWithSocialMedia.png}
+   \caption{\label{loginWithSocialMedia} Login with social media}
+\end{figure}
 
-On the figure {LoginWithSocialMedia} you can see that the client wants to authenticate using a social media like Google+ or Facebook. These social medias all give the possibility to sign in on your web site using their account. Usually they have multiple way to do it but the most common one is throw javascript using a API. We choose that approach because we plan to support multiple social media.
+On the figure ~\ref{loginWithSocialMedia} you can see that the client wants to authenticate using a social media like Google+ or Facebook. These social medias all give the possibility to sign in on your web site using their account. Usually they have multiple way to do it but the most common one is throw javascript using a API. We choose that approach because we plan to support multiple social media.
 
 In fact in this diagram the client directly use javascript to contact the social media API server to login. Than the social media API server check first if the credential are correct and second if the user already allowed this website to access his account and ask the user permission otherwise. 
 Finally the server send back the token which will be use to authenticate the user for the API calls and the client will send some informations about his account to our application.
 
-\section{Deployment diagram}
-
-In the second report, our explanation was a bit too technical here is the main reason without all the technical details.
-
-We choosed Nginx because it is a very light and efficient web server. We use it as a reverse proxy to avoid putting too much load on our application server (Gunicorn). The Gunicorn workers are like multiple application server which will handle the work. We didn't use another web server for exemple apache because Nginx is faster and better for the usage we want to do with our web server.
 
 \section{Class diagrams}
 
-For the class diagram there was a few mistakes and some missing features about the social media extension. 
+About the main class diagram there was a few mistakes and some missing features about the social media extension. 
 
 We tried to correct this by modifying our main class diagram and creating new small diagrams.
 
 
 \subsection{Main class diagram}
 
-%\figure{newMainClassDiagram}
+\begin{figure}[!ht]
+   \includegraphics[width=\textwidth]{phase3MainClassDiagram.png}
+   \caption{\label{phase3MainClassDiagram} Main class diagram}
+\end{figure}
 
-On the figure {newMainClassDiagram} you can see some new things.
 
-In our main class diagram we did the following changes :
+On the figure ~\ref{phase3MainClassDiagram},our main class diagram, we did the following changes :
 
 \begin{itemize}
 \item We added all the missing parameters to the function
@@ -140,7 +146,7 @@ In our main class diagram we did the following changes :
 \item We created new classes 
 \end{itemize}
 
-\subsubsection{class member}
+\subsubsection{Member class}
 
 The class member has now more functions :
 \begin{itemize}
@@ -149,7 +155,7 @@ The class member has now more functions :
 \item Some functions to (un)subscribe to a branch.
 \end{itemize}
 
-\subsubsection{class help}
+\subsubsection{Help class}
 
 The class help has now function regarding searching for features and demands
 \begin{itemize}
@@ -158,21 +164,27 @@ The class help has now function regarding searching for features and demands
 \item A function to get all the helps depending on user preferences.
 \end{itemize}
 
-\subsection{Verified Member diagram}
+\subsection{Verified member diagram}
 
-%\figure{verifiedMember}
+\begin{figure}[!ht]
+   \includegraphics[width=\textwidth]{verifiedMember.png}
+   \caption{\label{verifiedMember} Verified Member}
+\end{figure}
 
-On figure {verifiedMember} you can see new class diagram which describe in more details the attributes of the class.
+On figure ~\ref{verifiedMember} you can see new class diagram which describe in more details the attributes of the class.
 
 The time availability, language and hobby are now seperate classes instead of attributes because they are not as simple as the other
 attributes. 
 
 \subsection{Preferences and Address diagrams}
 
-%\figure{preferencesAndAddress}
+\begin{figure}[!ht]
+ \includegraphics[width=\textwidth]{preferences.png}
+   \caption{\label{preferences} Preferences and address diagrams}
+\end{figure}
 
-On figure {preferencesAndAddress} We represented the class address that we didn't do last time. And we also went into more details
-for the class preferences which is not as simple as we would think it is. In fact you need time availibility and multiple mail preferences.
+On figure ~\ref{preferences} we represented the class address that we didn't do last time. And we also went into more details
+for the class preferences.
 
 
 
