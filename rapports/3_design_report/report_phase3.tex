@@ -45,18 +45,32 @@ It will give us an idea of how the system performs in real conditions.
 
 \section{Extension}
 
-The extension we have been forced to implement is social media.
+Our extension is social media.
 It consists of allowing the users to login with a Facebook or Google account.
 We decided to add the possibility to sign in with a Twitter account, because we think it could allow more users to easily use the web application.
 
 \medskip
-As we will be using the Django framework to build the web application, there are many packages available that can be installed to extend the possibilities of the application.
+We will use the Django framework to build the web application, and it offers a built-in user authentication system.
+It handles user accounts, groups, permissions and cookie-based user sessions. 
+There are many packages available that can be installed to extend the possibilities of a Django project.
 We searched for one that could help us for this task, and we chose to use the Django-Allauth\footnote{\url{https://www.djangopackages.com/packages/p/django-allauth/}} package to manage users authentication with Facebook, Google, or Twitter.
 It is an interesting package because it supports a lot of authentication services, so that we could add more in the future if it is relevant.
+Furthermore, it supports Python3 and Django 1.7, the latests stable versions.
 
-\medskip
-Because the extension is tightly coupled with core functionalities of the application (login, post demands, respond to demands), it will have to be integrated into the system, and will interact with other elements of the architecture.
+\subsection*{How it will integrate with the system}
+When the user sign in via a third-party provider, the module will create a \textit{user} object in the system as a standard registration.
+The only difference is that this user will have no password associated.
+Instead, another object \textit{Social account} will exists which will permit the user to sign in.
+Since it is hard to automate registration and connection by third-party providers, we will not be able to test this extension via the simulator.
 
+
+\section{User-Interface design}
+The user interface has become increasingly important and complex.
+Nowadays, UI frameworks are highly used by front-end developers.
+Naturally, we looked for a UI framework that meets our needs.
+\textit{Twitter Bootstrap} is a reference in this domain.
+It encourage the use of responsive design, which means that the UI will adapt to the screen it is displayed on.
+Furthermore, it promotes minimalist UI design that makes it is easier and quicker for the user to access information.
 
 
 
@@ -67,7 +81,7 @@ In the second report, we added the create account sequence diagram because it is
 
 In this report, we have modified some of the sequence diagrams taking into account the remarks made after our second report.
 
-\figure{requestingHelp}
+%\figure{requestingHelp}
 
 On figure {requestingHelp} : The user need some help and he is going to create a new request. For that he click on the "I need help"
 and he is redirected to a page where he needs to fill in informations about the jobs. Afterward the system check the data entered by the user.
@@ -77,7 +91,7 @@ correspond to the criterias of the request using their preferences. If the data 
 The main modification on figure {requestingHelp} is that the action "publish on home page" is now done by the system. You can see below the modified 
 diagrams and their descriptions.
 
-\figure{completeAJob}
+%\figure{completeAJob}
 
 On figure {completeAJob} : The user has completed a job and want to get time credit for it. For that he needs to go to the pending actions page (list all the jobs that the member accepted but did not completed yet) and select the corresponding job. He will then fill informations about the job and confirm. 
 
@@ -91,7 +105,7 @@ The main modification on figure {completeAJob} is that the system send a message
 
 In this report, we also added a new sequence diagram called "LoginWithSocialMedia". We did that becaus in the second report we talked about the social media extension but we did not explain how we will integrate it in our own software.
 
-\figure{LoginWithSocialMedia}
+%\figure{LoginWithSocialMedia}
 
 On the figure {LoginWithSocialMedia} you can see that the client wants to authenticate using a social media like Google+ or Facebook. These social medias all give the possibility to sign in on your web site using their account. Usually they have multiple way to do it but the most common one is throw javascript using a API. We choose that approach because we plan to support multiple social media.
 
@@ -113,7 +127,7 @@ We tried to correct this by modifying our main class diagram and creating new sm
 
 \subsection{Main class diagram}
 
-\figure{newMainClassDiagram}
+%\figure{newMainClassDiagram}
 
 On the figure {newMainClassDiagram} you can see some new things.
 
@@ -146,7 +160,7 @@ The class help has now function regarding searching for features and demands
 
 \subsection{Verified Member diagram}
 
-\figure{verifiedMember}
+%\figure{verifiedMember}
 
 On figure {verifiedMember} you can see new class diagram which describe in more details the attributes of the class.
 
@@ -155,7 +169,7 @@ attributes.
 
 \subsection{Preferences and Address diagrams}
 
-\figure{preferencesAndAddress}
+%\figure{preferencesAndAddress}
 
 On figure {preferencesAndAddress} We represented the class address that we didn't do last time. And we also went into more details
 for the class preferences which is not as simple as we would think it is. In fact you need time availibility and multiple mail preferences.
