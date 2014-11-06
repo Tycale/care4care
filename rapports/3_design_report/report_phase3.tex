@@ -10,6 +10,7 @@
 \usepackage{xcolor}
 \usepackage{hyperref}
 \usepackage{url}
+\usepackage{csquotes}
 
 \newcommand{\tbf}[1]{\textbf{#1}}
 \newcommand{\tit}[1]{\textit{#1}}
@@ -73,7 +74,6 @@ It encourage the use of responsive design, which means that the UI will adapt to
 Furthermore, it promotes minimalist UI design that makes it is easier and quicker for the user to access information.
 
 
-
 \section{Sequence diagrams}
 
 For the sequence diagrams we picked the same use cases than the activity diagrams because in our first report it lacked some details.
@@ -83,12 +83,12 @@ In this report, we have modified some of the sequence diagrams taking into accou
 
 %\figure{requestingHelp}
 
-On figure {requestingHelp} : The user need some help and he is going to create a new request. For that he click on the "I need help"
+On figure {requestingHelp} : The user need some help and he is going to create a new request. For that he click on the \enquote{I need help}
 and he is redirected to a page where he needs to fill in informations about the jobs. Afterward the system check the data entered by the user.
 If it is correct create the request and add it to the list of request on the home page. The system also send a notification to the members that
 correspond to the criterias of the request using their preferences. If the data are not correct it send an error message to the user.
 
-The main modification on figure {requestingHelp} is that the action "publish on home page" is now done by the system. You can see below the modified 
+The main modification on figure {requestingHelp} is that the action \enquote{publish on home page} is now done by the system. You can see below the modified 
 diagrams and their descriptions.
 
 %\figure{completeAJob}
@@ -103,7 +103,7 @@ The main modification on figure {completeAJob} is that the system send a message
 
 \subsection{Login with Social Media}
 
-In this report, we also added a new sequence diagram called "LoginWithSocialMedia". We did that becaus in the second report we talked about the social media extension but we did not explain how we will integrate it in our own software.
+In this report, we also added a new sequence diagram called \enquote{LoginWithSocialMedia}. We did that becaus in the second report we talked about the social media extension but we did not explain how we will integrate it in our own software.
 
 %\figure{LoginWithSocialMedia}
 
@@ -173,5 +173,41 @@ attributes.
 
 On figure {preferencesAndAddress} We represented the class address that we didn't do last time. And we also went into more details
 for the class preferences which is not as simple as we would think it is. In fact you need time availibility and multiple mail preferences.
+
+
+
+\section{Team Organisation}
+
+To do the job, we have divided our team into groups of two.
+Then we divided the jobs in tasks that have been then assigned to groups.
+We set some deadlines to avoid last minut rush.
+To organise our work, we use several tools including Trello and Github. 
+
+\subsection{Trello}
+
+\begin{figure}[!ht]
+   \includegraphics[width=\textwidth]{trello.png}
+   \caption{\label{trello} Trello}
+\end{figure}
+
+Trello allows our team to organise the tasks scheduling.
+We can create task and assign them to our members.
+We are able to update each card and sort them by lists.
+For the moment, as you can see on figure~\ref{trello}, we have four lists : \tit{Backlog}, \tit{To do}, \tit{Doing} and \tit{Done since beginning}.
+This organisation is really helpful because we can see the progression in a glance.
+
+\subsection{Github} 
+
+\begin{figure}[!ht]
+   \includegraphics[width=\textwidth]{github.png}
+   \caption{\label{github} github repository – care4care}
+\end{figure}
+
+Github is well-known in the developers community.
+This platform permits us to synchronise the files and see the differences between versions.
+We asked for a private repository thanks to the educational program.
+The difference between two revisions is called a \enquote{commit}.
+As shown in the figure~\ref{github}, you can see that we have 87 commits delivered by 8 contributors.
+
 
 \end{document}
