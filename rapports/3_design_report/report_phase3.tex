@@ -76,10 +76,12 @@ Furthermore, it promotes minimalist UI design that makes it is easier and quicke
 
 \section{Sequence diagrams}
 
-For the sequence diagrams we picked the same use cases than the activity diagrams because in our first report it lacked some details.
-In the second report, we added the create account sequence diagram because it is a important part of the software and it was missing from our first report.
+The sequence diagrams are based on the same use cases than the activity diagrams. In our first report, it lacked some details and we wanted
+to compensate the deficiencies with sequence diagrams. In the second report, we also added the \enquote{create account} sequence diagram because we think that it is a important part of the user work-flow even if normally the user only register once.
 
-In this report, we have modified some of the sequence diagrams taking into account the remarks made after our second report.
+In this report, we have modified some of the sequence diagrams and created a new one called \enquote{LoginWithSocialMedia} to take into account the remarks made after our second report about some inconsistencies and the social media extension.
+
+You can see below the modified diagrams and their descriptions.
 
 \begin{figure}[!ht]
    \includegraphics[width=\textwidth]{requestHelp.png}
@@ -89,10 +91,9 @@ In this report, we have modified some of the sequence diagrams taking into accou
 On figure ~\ref{requestHelp} : The user need some help and he is going to create a new request. For that he click on the \enquote{I need help}
 and he is redirected to a page where he needs to fill in informations about the jobs. Afterward the system check the data entered by the user.
 If it is correct create the request and add it to the list of request on the home page. The system also send a notification to the members that
-correspond to the criterias of the request using their preferences. If the data are not correct it send an error message to the user.
+correspond to the criteria of the request using their preferences. If the data are not correct it send an error message to the user.
 
-The main modification on figure {requestingHelp} is that the action \enquote{publish on home page} is now done by the system. You can see below the modified 
-diagrams and their descriptions.
+The main modification on figure {requestingHelp} is that the action \enquote{publish on home page} is now done by the system. 
 
 \begin{figure}[!ht]
    \includegraphics[width=\textwidth]{completeJob.png}
@@ -103,22 +104,20 @@ On figure ~\ref{completeJob} : The user has completed a job and want to get time
 
 The system will send a notification to the demanding member (member which has been helped) and this member need to confirm that the job has been done correctly.
 
-Unfortunatly it can happen that the member does not confirm because for example, he has no internet access. In this case, after some times, the system will send a message to the branch officer and ask him to confirm by himself.
+Unfortunately it can happen that the member does not confirm because for example, he has no Internet access. In this case, after some times, the system will send a message to the branch officer and ask him to confirm by himself.
 
 The main modification on figure {completeAJob} is that the system send a message to the branch officer if the demanding member does not confirm after a certain period of time. (I didn't find a way to show the waiting time)
 
 \subsection{Login with Social Media}
-
-In this report, we also added a new sequence diagram called \enquote{LoginWithSocialMedia}. We did that becaus in the second report we talked about the social media extension but we did not explain how we will integrate it in our own software.
 
 \begin{figure}[!ht]
    \includegraphics[width=\textwidth]{loginWithSocialMedia.png}
    \caption{\label{loginWithSocialMedia} Login with social media}
 \end{figure}
 
-On the figure ~\ref{loginWithSocialMedia} you can see that the client wants to authenticate using a social media like Google+ or Facebook. These social medias all give the possibility to sign in on your web site using their account. Usually they have multiple way to do it but the most common one is throw javascript using a API. We choose that approach because we plan to support multiple social media.
+On the figure ~\ref{loginWithSocialMedia} you can see that the client wants to authenticate using a social media like Google+ or Facebook. These social medias all give the possibility to sign in on your web site using their account. Usually they have multiple way to do it but the most common one is using Javascript that call a API. We choose that approach because we plan to support multiple social media.
 
-In fact in this diagram the client directly use javascript to contact the social media API server to login. Than the social media API server check first if the credential are correct and second if the user already allowed this website to access his account and ask the user permission otherwise. 
+In fact in this diagram the client directly contact the social media API server using Javascript to login. Than the social media API server check if the credential are correct and if the user already allowed this website to access his account and ask the user permission otherwise. 
 Finally the server send back the token which will be use to authenticate the user for the API calls and the client will send some informations about his account to our application.
 
 
@@ -143,15 +142,19 @@ On the figure ~\ref{phase3MainClassDiagram},our main class diagram, we did the f
 \item We added all the missing parameters to the function
 \item We added new function to some classes 
 \item We added type to attributes
-\item We created new classes 
+\item We created new classes
 \end{itemize}
+
+\subsubsection{Transfer class}
+
+The new classe Transfer will be use to track credit gifts from member and credit rewards for completed jobs. This class is link with two member, a giver and a receiver and optionally with a Help in case of a reward. This will enable us to keep a history of all the transactions of a user.
 
 \subsubsection{Member class}
 
-The class member has now more functions :
+The class member has now more functionality :
 \begin{itemize}
 \item A function to share on a social Media like Facebook / Google+
-\item Some functions to add/remove a user to/from their personnal network/favorite/ignored list.
+\item Some functions to add/remove a user to/from their personal network/favorite/ignored list.
 \item Some functions to (un)subscribe to a branch.
 \end{itemize}
 
@@ -173,8 +176,7 @@ The class help has now function regarding searching for features and demands
 
 On figure ~\ref{verifiedMember} you can see new class diagram which describe in more details the attributes of the class.
 
-The time availability, language and hobby are now seperate classes instead of attributes because they are not as simple as the other
-attributes. 
+The time availability, language and hobby are now separate classes instead of attributes because they will be more complexe things to represent in our program. For example language and hobby are list of values and time availability is a object with method like \enquote{insideInterval} to check if some Help can be match with a user schedule.
 
 \subsection{Preferences and Address diagrams}
 
@@ -188,12 +190,12 @@ for the class preferences.
 
 
 
-\section{Team Organisation}
+\section{Team Organization}
 
 To do the job, we have divided our team into groups of two.
 Then we divided the jobs in tasks that have been then assigned to groups.
-We set some deadlines to avoid last minut rush.
-To organise our work, we use several tools including Trello and Github. 
+We set some deadlines to avoid last minute rush.
+To organize our work, we use several tools including Trello and Github. 
 
 \subsection{Trello}
 
@@ -202,11 +204,11 @@ To organise our work, we use several tools including Trello and Github.
    \caption{\label{trello} Trello}
 \end{figure}
 
-Trello allows our team to organise the tasks scheduling.
+Trello allows our team to organize the tasks scheduling.
 We can create task and assign them to our members.
 We are able to update each card and sort them by lists.
 For the moment, as you can see on figure~\ref{trello}, we have four lists : \tit{Backlog}, \tit{To do}, \tit{Doing} and \tit{Done since beginning}.
-This organisation is really helpful because we can see the progression in a glance.
+This organization is really helpful because we can see the progression in a glance.
 
 \subsection{Github} 
 
