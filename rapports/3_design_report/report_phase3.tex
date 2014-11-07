@@ -292,7 +292,7 @@ To ensure that code and design are of good quality we have decided several thing
 
 \subsubsection{Coding Style}
 	
-We will be using the \enquote{Style Guide for Python Code} from PEP 8 found on python.org because it is well knowed and widespread. 
+We will be using the \enquote{Style Guide for Python Code} from PEP8\footnote{\url{http://legacy.python.org/dev/peps/pep-0008/}} found on python.org because it is well knowed and widespread. 
 The advantage of a coding guideline is that it improve the readability of code by us and most importantly by other developers. 
 It also make the code consistent across an entire project developed by different peoples, avoid duplication of code and reduce bug-rate. 
  
@@ -300,14 +300,14 @@ Here is the main things we will try to be consistent with :
 
 \begin{itemize}
 \item Indentation : 4 spaces per indentation level
-\item Use snake case as naming style
+\item Use snake case as naming style : my\_variable\_name
 \item Maximum Line Length of 79 characters
 \item Separate top-level function and class definitions with two blank lines
 \item Try to write comprehensive code
 \item Comment your code if the code is not easy to understand
 \item Source Code file use UTF-8 format
 \item Imports on separate lines
-\item Avoid extraneous whitespace
+\item Avoid extraneous whitespace : ( ham[ 1 ], { eggs: 2 } ) => (ham[1], {eggs: 2})
 \item Avoid Global Variable
 \end{itemize} 
 
@@ -317,13 +317,13 @@ Here is the main things we will try to be consistent with :
 Each time a task will be finished or a bug will be resolve, the code will be review by someone else from the group. 
 We hope that doing this will ensure well written code and avoid introducing new bugs when correcting one.  
  
-This will be possible with the help of github and the pull requests functionality, we will also need a bug tracking tool like trello or a most advance one like Jira. Some member in the group have already experience with Jira and it is very useful to track bug and review code for a specific bug. 
+This will be possible with the help of github and the pull requests functionality, we will also need a bug tracking tool like trello or a most advance one like Jira\footnote{\url{https://www.atlassian.com/software/jira/}}. Some member in the group have already experience with Jira and it is very useful to track bug and review code for a specific bug. 
  
 Code reviews are also good for improving the code because multiple brains are usually better than one. 
  
 \subsubsection{Unit Testing} 
  
-Unit testing our application is a great way to detect bugs early in the development phase and gain some precious time. That is why we will use the Unit testing framework from python named \enquote{unittest} and also Selenium explained above (which also test the user interface). 
+Unit testing our application is a great way to detect bugs early in the development phase and gain some precious time. That is why we will use the Unit testing framework from python named \enquote{unittest}\footnote{\url{https://docs.python.org/3.4/library/unittest.html}} and also Selenium explained above (which also test the user interface). 
  
 The unit tests will run frequently to detect bugs introduced by new code or modification of existing code. This way we hope members of the group will rarely commit code that breaks the application and not notice it. 
  
