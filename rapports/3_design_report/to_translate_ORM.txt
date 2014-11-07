@@ -1,0 +1,42 @@
+Django uses an ORM (Object-Relational Mapping).
+A ne pas confondre avec notre schéma ORM (object-relational mapping).
+
+Un ORM permet de nous libérer de la gestion de la base de donnée.
+Django nous permet de créer des modèles (sous forme de classe) afin de définir nos données.
+
+Imaginons que nous définissons un modèle "Person" dans notre application "members" du projet "care4care"
+
+fichier care4care/members/models.py :
+
+from django.db import models
+
+class Person(models.Model):
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+
+Django va automatiquement créer une table dans la base de données en fonction de notre modèle que nous avons défini.
+Ainsi, pour cet exemple, django va créer une table "members_person" contenant nos deux champs : first_name et last_name.
+Django supporte plusieurs base de données tel que sqlite, postgresql, mysql, etc.
+En fonction du gestionnaire de base de donnée choisie, la requête de création que django va générer sera différente. 
+En sqlite, pour cet exemple, Django créera la requête suivante :
+CREATE TABLE "members_person" ("id" integer NOT NULL PRIMARY KEY AUTOINCREMENT, "first_name" varchar(30) NOT NULL, "last_name" varchar(30) NOT NULL);
+
+On peut remarquer que django donne un id par défaut à chaque objet qu'il va stocker en DB.
+
+Si nous voulons récupérer tous les objets d'un modèle, nous pouvons simplement écrire :
+
+>> Person.objects.all()
+
+Cet appel va créer une requête SQL pour nous afin de sélectionner tous les objets "Person" en DB.
+
+Nous pouvons appliquer des filtres aussi :
+
+>> Person.objects.filter(last_name__startswith='T')
+
+Cette requête va sélectionner toutes les "Person" dont leur "last_name" commence par 'T'.
+
+Ces requêtes sont nommées "QuerySets" en Django.
+
+QuerySets are lazy – the act of creating a QuerySet doesn’t involve any database activity. You can stack filters together all day long, and Django won’t actually run the query until the QuerySet is evaluated.
+
+

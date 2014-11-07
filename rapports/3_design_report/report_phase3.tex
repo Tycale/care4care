@@ -11,6 +11,8 @@
 \usepackage{hyperref}
 \usepackage{url}
 \usepackage{csquotes}
+\usepackage{listings}
+\lstset{language=Python}
 
 \newcommand{\tbf}[1]{\textbf{#1}}
 \newcommand{\tit}[1]{\textit{#1}}
@@ -208,6 +210,45 @@ This platform permits us to synchronise the files and see the differences betwee
 We asked for a private repository thanks to the educational program.
 The difference between two revisions is called a \enquote{commit}.
 As shown in the figure~\ref{github}, you can see that we have 87 commits delivered by 8 contributors.
+
+
+\section{Data}
+\subsection{Object-Role Modeling Schema}
+
+%Schema ici
+
+\subsection{Object-Relational Mapping}
+Django uses an ORM (Object-Relational Mapping).
+A ne pas confondre avec notre schéma ORM (object-relational mapping).
+L'ORM de Django permet de nous libérer de la gestion de la base de donnée.
+Django nous permet de créer des modèles (sous forme de classe) afin de définir nos données.
+
+Imaginons que nous définissons un modèle \texttt{Person} dans notre application \texttt{members} du projet \texttt{care4care}.
+
+\begin{lstlisting}[frame=single, caption=file care4care/members/models.py]  % Start your code-block
+from django.db import models
+
+class Person(models.Model):
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+\end{lstlisting}
+
+Django va automatiquement créer une table dans la base de données en fonction de notre modèle que nous avons défini.
+Ainsi, pour cet exemple, django va créer une table \texttt{members\_person} contenant nos deux champs : \texttt{first\_name} et \texttt{last\_name}.
+Django supporte plusieurs base de données tel que sqlite, postgresql, mysql, etc.
+En fonction du gestionnaire de base de donnée choisi, la requête que django va générer sera différente. 
+
+Il est inutile de donner un \texttt{id} à nos modèles car django crée ce champ par défaut.
+
+Si nous voulons récupérer tous les objets d'un modèle, nous pouvons simplement écrire : \lstinline{Person.objects.all()}.
+Cet appel va créer une requête SQL pour nous afin de sélectionner tous les objets \texttt{Person} en DB.
+L'objet retourné par ce type de requête est un \enquote{QuerySets}.
+Nous pouvons appliquer des filtres aux \enquote{QuerySets} : \lstinline{Person.objects.filter(last_name__startswith='T')}.
+Cette requête va sélectionner toutes les \texttt{Person} dont leur \texttt{last\_name} commence par \enquote{T}.
+QuerySets are lazy – the act of creating a QuerySet doesn’t involve any database activity.
+
+
+
 
 
 \end{document}
