@@ -8,7 +8,8 @@ Ces outils permettent d'installer des paquets facilement sur votre système à u
 
 Dans le dossier nommé "code", lancez la commande :
 
-  pyvenv venv
+```
+pyvenv venv
 
 ##Activation de l'environnement virtuel
 
