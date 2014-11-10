@@ -55,6 +55,12 @@ ROOT_URLCONF = 'care4care.urls'
 WSGI_APPLICATION = 'care4care.wsgi.application'
 
 
+JENKINS_TASKS = (
+    'django_jenkins.tasks.run_pep8',
+    'django_jenkins.tasks.run_pylint',
+)
+
+
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
