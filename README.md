@@ -1,7 +1,7 @@
 ##Care 4 Care
 ---
 
-Projet développé avec Django 1.7 et Python 3
+Projet développé avec Django 1.7 et Python 3.3+
 
 ###Team Members:
 ---
