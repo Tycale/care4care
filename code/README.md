@@ -52,3 +52,4 @@ Dans le dossier care4care :
   ./manage.py runserver
 
 Vous pouvez désormais accéder au serveur web de production sur http://localhost:8000/ !
+
