@@ -1,12 +1,12 @@
 ## Virtual environement
 
-Etant donné que nous allons utiliser des ressources extérieurs (application, modules, etc.). Afin d'éviter de devoir les installer manuellement sur le système de tout le monde à la racine, nous utiliserons un environement virtuel.
+Etant donné que nous allons utiliser des ressources extérieures. Afin d'éviter de devoir les installer manuellement à chaque fois et sur le système de tout le monde à la racine, nous utiliserons un environement virtuel et pip.
 
-Celui-ci permet d'installer les paquets facilement sur votre système à l'endroit du projet.
+Ces outils permettent d'installer des paquets facilement sur votre système à un endroit précis.
 
 ##Création de l'environnement virtuel
 
-Dans le dossier code, lancez la commande :
+Dans le dossier nommé "code", lancez la commande :
 
   pyvenv venv
 
@@ -52,4 +52,3 @@ Dans le dossier care4care :
   ./manage.py runserver
 
 Vous pouvez désormais accéder au serveur web de production sur http://localhost:8000/ !
-
