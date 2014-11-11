@@ -216,7 +216,7 @@ hr {
 ul.top-menu > li > .logout {
 	color: #f2f2f2;
 	font-size: 12px;
-	border-radius: 4px;
+	border-radius: 4px; 
 	-webkit-border-radius: 4px;
 	border: 1px solid #64c3c2 !important;
 	padding: 5px 15px;
@@ -2249,7 +2249,7 @@ label {
 
 .lang-box{
     margin-top: 15px;
-    margin-right: 10px;
+    margin-right: 50px;
 }
 
 ul.lang-menu > li{
@@ -2272,4 +2272,10 @@ ul.lang-menu > li:hover{
 .btn-lang {
     padding: 5px 8px;
 }
+
+.btn-login {
+    margin-right: 15px;
+    margin-top: 15px;
+}
+
 

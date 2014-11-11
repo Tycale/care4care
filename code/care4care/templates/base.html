@@ -192,6 +192,12 @@
             <div class="top-menu">
             	<ul class="nav pull-right top-menu">
                 <li>
+                  <button type="button" class="btn btn-default btn-login force-size">
+                    <span aria-hidden="true" class="li_user"></span>
+                    Login
+                  </button>
+                </li>
+                <li>
                   <div class="lang-box">
                   {% get_current_language as LANGUAGE_CODE %}
                   {% get_language_info for LANGUAGE_CODE as lang %}
@@ -213,8 +219,6 @@
                   </form>
                   </div>
                 </li>
-
-                <li><a class="logout force-size" href="login.html">Logout</a></li>
             	</ul>
             </div>
         </header>
