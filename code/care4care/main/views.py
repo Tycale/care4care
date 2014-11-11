@@ -23,7 +23,8 @@ def login(request):
             _login(request, user)
             messages.add_message(request, messages.INFO, _('Vous êtes désormais connecté.'))
         else:
-            messages.add_message(request, messages.ERROR, _('Impossible de vous connecter, vous êtes innactif. Vérifiez vos emails afin de valider votre compte.'))
+            messages.add_message(request, messages.ERROR, _('Impossible de vous connecter, vous \
+                êtes innactif. Vérifiez vos emails afin de valider votre compte.'))
     else:
         messages.add_message(request, messages.ERROR, _('Impossible de se connecter.'))
 
