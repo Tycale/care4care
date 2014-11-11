@@ -2243,6 +2243,10 @@ label {
 
 /* ADDED */
 
+.force-size{
+    height: 30px;
+}
+
 .lang-box{
     margin-top: 15px;
     margin-right: 10px;
@@ -2263,5 +2267,9 @@ ul.lang-menu > li:hover{
     color: #262626;
     text-decoration: none;
     background-color: #f5f5f5;
+}
+
+.btn-lang {
+    padding: 5px 8px;
 }
 
