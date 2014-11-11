@@ -1,6 +1,7 @@
 Django==1.7.1
 astroid==1.2.1
 coverage==3.7.1
+django-bootstrap3==4.11.0
 django-jenkins==0.16.3
 logilab-common==0.63.0
 pep8==1.5.7
