@@ -191,11 +191,52 @@
             </div>
             <div class="top-menu">
             	<ul class="nav pull-right top-menu">
-                <li>
-                  <button type="button" class="btn btn-default btn-login force-size">
-                    <span aria-hidden="true" class="li_user"></span>
-                    Login
+                <li class="dropdown">
+                  <button type="button" class="btn btn-default btn-login force-size dropdown-toggle" data-toggle="dropdown">
+                    <span class="glyphicon glyphicon-user"></span>
+                    {% if request.user.is_authenticated %} 
+                      {{ request.user }} <span class="caret"></span>
+                    {% else %} 
+                      {% trans "Se connecter" %} <span class="caret"></span>
+                    {% endif %}
                   </button>
+                  {% if request.user.is_authenticated %} 
+                  <ul class="dropdown-menu lang-menu" role="user-menu">
+                    <li><a href="{% url 'logout' %}">
+                    <span class="glyphicon glyphicon-log-out"></span>&nbsp; {% trans "Se déconnecter" %}
+                    </li></a>
+                  </ul>
+                  {% else %}
+                  <ul class="dropdown-menu" style="padding: 15px;min-width: 250px;">
+                        <li>
+                           <div class="row">
+                              <div class="col-md-12">
+                                 <form class="form" role="form" method="post" action="{% url 'login' %}" accept-charset="UTF-8" id="login-nav">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                       <label class="sr-only" for="username">{% trans "Nom d'utilisateur" %}</label>
+                                       <input type="input" class="form-control" name="username" id="username" placeholder='{% trans "Nom d'utilisateur" %}' required>
+                                    </div>
+
+                                    <div class="form-group">
+                                       <label class="sr-only" for="password">{% trans 'Mot de passe' %}</label>
+                                       <input type="password" class="form-control" name="password" id="password" placeholder="{% trans 'Mot de passe' %}" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                       <button type="submit" class="btn btn-success btn-block">Sign in</button>
+                                    </div>
+                                 </form>
+                              </div>
+                           </div>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                           <input class="btn btn-primary btn-block" type="button" id="sign-in-google" value="Sign In with Google">
+                           <input class="btn btn-primary btn-block" type="button" id="sign-in-twitter" value="Sign In with Twitter">
+                        </li>
+                     </ul>
+                  {% endif %}
                 </li>
                 <li>
                   <div class="lang-box">
@@ -501,35 +542,40 @@
     <!--common script for all pages-->
     <script src="{% static "js/common-scripts.js" %}"></script>
     
-    <script type="text/javascript" src="{% static "js/gritter/js/jquery.gritter.js" %}"></script>
-    <script type="text/javascript" src="{% static "js/gritter-conf.js" %}"></script>
+    <script type="text/javascript" src="{% static "js/jquery.gritter.min.js" %}"></script>
 
     <!--script for this page-->
     <script src="{% static "js/sparkline-chart.js" %}"></script>    
 	<script src="{% static "js/zabuto_calendar.js" %}"></script>	
 	
-  {% comment %} <!-- TODO: USER NOTIFICATION -->
 	<script type="text/javascript">
+
         $(document).ready(function () {
-        var unique_id = $.gritter.add({
-            // (string | mandatory) the heading of the notification
-            title: 'Welcome to Dashgum!',
-            // (string | mandatory) the text inside the notification
-            text: 'Hover me to enable the Close Button. You can hide the left sidebar clicking on the button next to the logo. Free version for <a href="http://blacktie.co" target="_blank" style="color:#ffd777">BlackTie.co</a>.',
-            // (string | optional) the image to display on the left
-            image: 'assets/img/ui-sam.jpg',
-            // (bool | optional) if you want it to fade out on its own or just sit there
-            sticky: true,
-            // (int | optional) the time you want it to be alive for before fading out
-            time: '',
-            // (string | optional) the class name you want to apply to that specific message
-            class_name: 'my-sticky-class'
+        //Handles menu drop down
+        $('.dropdown-menu').find('form').click(function (e) {
+            e.stopPropagation();
         });
+
+        {% for message in messages %}
+            var unique_id = $.gritter.add({
+                // (string | mandatory) the heading of the notification
+                title: 'Notification',
+                // (string | mandatory) the text inside the notification
+                text: '{{ message }}',
+                // (string | optional) the image to display on the left
+                //image: 'assets/img/ui-sam.jpg',
+                // (bool | optional) if you want it to fade out on its own or just sit there
+                sticky: false,
+                // (int | optional) the time you want it to be alive for before fading out
+                time: '5000',
+                // (string | optional) the class name you want to apply to that specific message
+                //class_name: 'notification-class'
+            });
+        {% endfor %}
 
         return false;
         });
 	</script>
-  {% endcomment %}
 
   </body>
 </html>
