@@ -5,3 +5,5 @@
 *log
 *pdf
 *pyc
+venv/
+*sqlite3

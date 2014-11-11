@@ -121,6 +121,13 @@ STATICFILES_DIRS = (
 #    '/var/www/static/',
 )
 
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, "locale"),
+)
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
+
 
 LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/'

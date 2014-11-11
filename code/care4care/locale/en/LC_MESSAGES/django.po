@@ -1,0 +1,64 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-11-11 22:33+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: care4care/settings.py:103
+msgid "Français"
+msgstr "French"
+
+#: care4care/settings.py:104
+msgid "Anglais"
+msgstr "English"
+
+#: care4care/settings.py:105
+msgid "Néerlandais"
+msgstr "Dutch"
+
+#: main/views.py:14
+msgid "Vous êtes désormais déconnecté."
+msgstr "You have been disconnected"
+
+#: main/views.py:24
+msgid "Vous êtes désormais connecté."
+msgstr "Connected"
+
+#: main/views.py:26
+msgid ""
+"Impossible de vous connecter, vous êtes innactif. Vérifiez vos emails afin "
+"de valider votre compte."
+msgstr ""
+
+#: main/views.py:28
+msgid "Impossible de se connecter."
+msgstr ""
+
+#: templates/base.html:200
+msgid "Se connecter"
+msgstr ""
+
+#: templates/base.html:206
+msgid "Se déconnecter"
+msgstr ""
+
+#: templates/base.html:217 templates/base.html.py:218
+msgid "Nom d'utilisateur"
+msgstr ""
+
+#: templates/base.html:222 templates/base.html.py:223
+msgid "Mot de passe"
+msgstr ""
