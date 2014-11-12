@@ -30,4 +30,3 @@ def login(request):
 
     return redirect('home')
 
-
