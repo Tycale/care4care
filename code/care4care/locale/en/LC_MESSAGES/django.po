@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-11 22:33+0000\n"
+"POT-Creation-Date: 2014-11-12 00:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,17 +17,85 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: care4care/settings.py:103
+#: care4care/settings.py:105
 msgid "Français"
 msgstr "French"
 
-#: care4care/settings.py:104
+#: care4care/settings.py:106
 msgid "Anglais"
 msgstr "English"
 
-#: care4care/settings.py:105
+#: care4care/settings.py:107
 msgid "Néerlandais"
 msgstr "Dutch"
+
+#: main/templates/main/home.html:5
+msgid "Accueil"
+msgstr "Home"
+
+#: main/templates/registration/activation_complete.html:5
+#: main/templates/registration/activation_complete.html:9
+msgid "Bienvenue !"
+msgstr "Welcome !"
+
+#: main/templates/registration/activation_complete.html:16
+msgid "Pour bien commencer.."
+msgstr ""
+
+#: main/templates/registration/activation_complete.html:19
+msgid "Explication du service"
+msgstr ""
+
+#: main/templates/registration/activation_email.txt:3
+msgid "Bonjour "
+msgstr "Hello "
+
+#: main/templates/registration/activation_email.txt:5
+msgid "Bienvenue dans notre communauté !"
+msgstr ""
+
+#: main/templates/registration/activation_email.txt:7
+msgid ""
+"Il ne vous reste plus qu'une petite étape à réaliser afin de pouvoir nous "
+"rejoindre, suivez le lien suivant afin d'activer votre compte :"
+msgstr ""
+
+#: main/templates/registration/activation_email.txt:11
+msgid "À bientot,"
+msgstr "See you soon,"
+
+#: main/templates/registration/activation_email.txt:12
+msgid "L'équipe de Care4Care"
+msgstr "The Care4Care team"
+
+#: main/templates/registration/activation_email_subject.txt:1
+msgid "[Care4Care] Merci pour votre inscription !"
+msgstr "Thanks you for your registration"
+
+#: main/templates/registration/registration_complete.html:5
+#: main/templates/registration/registration_form.html:5
+#: main/templates/registration/registration_form.html:9
+#: templates/base.html:198
+msgid "Inscription"
+msgstr "Sign up"
+
+#: main/templates/registration/registration_complete.html:9
+msgid "On y est presque !"
+msgstr ""
+
+#: main/templates/registration/registration_complete.html:16
+msgid "Vérifiez vos mails"
+msgstr "Check your mails"
+
+#: main/templates/registration/registration_complete.html:19
+msgid ""
+"Afin de finir votre inscription, veuillez suivre le lien que nous venons de "
+"vous envoyer par mail."
+msgstr ""
+
+#: main/templates/registration/registration_form.html:15
+msgid "Complétez les informations suivantes afin de créer votre compte"
+msgstr ""
 
 #: main/views.py:14
 msgid "Vous êtes désormais déconnecté."
@@ -39,26 +107,38 @@ msgstr "Connected"
 
 #: main/views.py:26
 msgid ""
-"Impossible de vous connecter, vous êtes innactif. Vérifiez vos emails afin "
-"de valider votre compte."
+"Impossible de vous connecter, vous                 êtes innactif. Vérifiez "
+"vos emails afin de valider votre compte."
 msgstr ""
 
-#: main/views.py:28
+#: main/views.py:29
 msgid "Impossible de se connecter."
 msgstr ""
 
-#: templates/base.html:200
+#: templates/base.html:208
 msgid "Se connecter"
-msgstr ""
+msgstr "Sign in"
 
-#: templates/base.html:206
+#: templates/base.html:214
 msgid "Se déconnecter"
-msgstr ""
+msgstr "Sign out"
 
-#: templates/base.html:217 templates/base.html.py:218
+#: templates/base.html:225 templates/base.html.py:226
 msgid "Nom d'utilisateur"
-msgstr ""
+msgstr "Username"
 
-#: templates/base.html:222 templates/base.html.py:223
+#: templates/base.html:230 templates/base.html.py:231
 msgid "Mot de passe"
-msgstr ""
+msgstr "Password"
+
+#: templates/base.html:235
+msgid "se connecter"
+msgstr "sign in"
+
+#: templates/base.html:243
+msgid "se connecter via Google"
+msgstr "Sign in with Google"
+
+#: templates/base.html:244
+msgid "se connecter via Twitter"
+msgstr "Sign in with Twitter"
