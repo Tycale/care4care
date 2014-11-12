@@ -75,7 +75,7 @@ JENKINS_TASKS = (
     'django_jenkins.tasks.run_pep8',
     'django_jenkins.tasks.run_pylint',
 )
-
+PYLINT_RCFILE = 'pylintrc'
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
