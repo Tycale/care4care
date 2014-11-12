@@ -193,9 +193,9 @@
             	<ul class="nav pull-right top-menu">
                 {% if not request.user.is_authenticated %} 
                 <li>
-                  <button type="button" class="btn btn-theme02 btn-login force-size">
+                  <button type="button" class="btn btn-theme02 btn-login force-size" onclick="window.location.href='{% url 'registration_register' %}'">
                     {% bootstrap_icon 'pencil' %}
-                    <a href="{% url 'registration_register' %}">{% trans "Inscription" %}</a>
+                    {% trans "Inscription" %}
                   </button>
                 </li>
                 {% endif %}
@@ -281,9 +281,11 @@
           <div id="sidebar"  class="nav-collapse ">
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
-              
+                  
+                  {% comment %}
               	  <p class="centered"><a href="{% url 'home' %}"><img src="/assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
               	  <h5 class="centered">Marcel Newman</h5>
+                  {% endcomment %}
               	  	
                   <li class="mt">
                       <a class="active" href="index.html">
@@ -542,8 +544,10 @@
     <script src="{% static "js/jquery-1.8.3.min.js" %}"></script>
     <script src="{% static "js/bootstrap.min.js" %}"></script>
     <script class="include" type="text/javascript" src="{% static "js/jquery.dcjqaccordion.2.7.js" %}"></script>
+    {% comment %}
     <script src="{% static "js/jquery.scrollTo.min.js" %}"></script>
     <script src="{% static "js/jquery.nicescroll.js" %}" type="text/javascript"></script>
+    {% endcomment %}
     <script src="{% static "js/jquery.sparkline.js" %}"></script>
 
 
