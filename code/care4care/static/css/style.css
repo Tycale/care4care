@@ -2277,9 +2277,48 @@ ul.lang-menu > li:hover{
     margin-right: 15px;
     margin-top: 15px;
 }
-
-
-.notification-class {
-    
+div.top-menu > ul > li > button > a {
+    color: #fff;
 }
+
+/* Register panel */
+#register-complete {
+    background: url(../img/profile-02.jpg) no-repeat center top;
+    margin-top: -15px;
+    background-attachment: relative;
+    background-position: center center;
+    min-height: 200px;
+    width: 100%;
+    -webkit-background-size: 100%;
+    -moz-background-size: 100%;
+    -o-background-size: 100%;
+    background-size: 100%;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+#register-complete .badge {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+}
+.register-title {
+    background: rgba(0,0,0,0.5);
+    bottom: 50px;
+    padding: 6px;
+    color: white;
+    font-weight: 700;
+    position: absolute;
+    display: block;
+    width: 150px;
+}
+.register-text {
+    margin-left: 8px;
+    margin-right: 8px;
+    margin-top: 15px;
+    font-size: 12px;
+}
+
+
 

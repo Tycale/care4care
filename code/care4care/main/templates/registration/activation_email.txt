@@ -1,0 +1,12 @@
+{% load i18n %}
+
+{% trans "Bonjour " %}{{user.first_name}},
+
+{% trans "Bienvenue dans notre communauté !" %}
+
+{% trans "Il ne vous reste plus qu'une petite étape à réaliser afin de pouvoir nous rejoindre, suivez le lien suivant afin d'activer votre compte :" %}
+
+http://localhost:8000/accounts/activate/{{activation_key}}
+
+{% trans "À bientot," %}
+{% trans "L'équipe de Care4Care" %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}{% load i18n %}
+
+
+{% block title %}{% trans "Bienvenue !" %}{% endblock %}
+
+
+{% block content %}
+<h3><i class="fa fa-angle-right"></i> {% trans "Bienvenue !" %}</h3>
+
+<div class="row mt">
+	<div class="col-lg-12">
+		<div class="content-panel pn">
+			<div id="blog-bg">
+				<div class="badge badge-popular">Welcome</div>
+				<div class="blog-title">{% trans "Pour bien commencer.." %}</div>
+			</div>
+			<div class="blog-text">
+				<p>{% trans "Explication du service" %}</p>
+			</div>
+		</div>
+	</div><!-- col-lg-12-->      	
+</div>
+{% endblock %}

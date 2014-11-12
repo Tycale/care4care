@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -40,6 +41,7 @@ INSTALLED_APPS = (
     'django_jenkins',
     'main',
     'bootstrap3',
+    'registration',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -131,3 +133,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
 
 LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/'
+
+# django-registration-redux
+# https://django-registration-redux.readthedocs.org/en/latest/quickstart.html
+ACCOUNT_ACTIVATION_DAYS = 365
+REGISTRATION_AUTO_LOGIN = True
+SITE_ID = 1
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

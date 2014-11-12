@@ -1,0 +1,1 @@
+{% load i18n %}{% trans "[Care4Care] Merci pour votre inscription !" %}

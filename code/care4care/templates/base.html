@@ -8,7 +8,7 @@
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>{% block title %}Care4Care{% endblock%}</title>
+    <title>Care4Care - {% block title %}{% endblock%}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
@@ -47,7 +47,7 @@
                   <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
               </div>
             <!--logo start-->
-            <a href="index.html" class="logo"><b>DASHGUM FREE</b></a>
+            <a href="{% url 'home' %}" class="logo"><b>CARE 4 CARE</b></a>
             <!--logo end-->
             <div class="nav notify-row" id="top_menu">
                 <!--  notification start -->
@@ -191,8 +191,16 @@
             </div>
             <div class="top-menu">
             	<ul class="nav pull-right top-menu">
+                {% if not request.user.is_authenticated %} 
+                <li>
+                  <button type="button" class="btn btn-theme02 btn-login force-size">
+                    {% bootstrap_icon 'pencil' %}
+                    <a href="{% url 'registration_register' %}">{% trans "Inscription" %}</a>
+                  </button>
+                </li>
+                {% endif %}
                 <li class="dropdown">
-                  <button type="button" class="btn btn-default btn-login force-size dropdown-toggle" data-toggle="dropdown">
+                  <button type="button" class="btn btn-theme03 btn-login force-size dropdown-toggle" data-toggle="dropdown">
                     <span class="glyphicon glyphicon-user"></span>
                     {% if request.user.is_authenticated %} 
                       {{ request.user }} <span class="caret"></span>
@@ -224,7 +232,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                       <button type="submit" class="btn btn-success btn-block">Sign in</button>
+                                       <button type="submit" class="btn btn-theme btn-block">{% trans "se connecter"%}</button>
                                     </div>
                                  </form>
                               </div>
@@ -232,8 +240,8 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                           <input class="btn btn-primary btn-block" type="button" id="sign-in-google" value="Sign In with Google">
-                           <input class="btn btn-primary btn-block" type="button" id="sign-in-twitter" value="Sign In with Twitter">
+                           <input class="btn btn-theme03 btn-block" type="button" id="sign-in-google" value="{% trans "se connecter via Google"%}">
+                           <input class="btn btn-theme03 btn-block" type="button" id="sign-in-twitter" value="{% trans "se connecter via Twitter"%}">
                         </li>
                      </ul>
                   {% endif %}
@@ -274,7 +282,7 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
               
-              	  <p class="centered"><a href="profile.html"><img src="assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
+              	  <p class="centered"><a href="{% url 'home' %}"><img src="/assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
               	  <h5 class="centered">Marcel Newman</h5>
               	  	
                   <li class="mt">

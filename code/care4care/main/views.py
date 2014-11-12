@@ -29,3 +29,5 @@ def login(request):
         messages.add_message(request, messages.ERROR, _('Impossible de se connecter.'))
 
     return redirect('home')
+
+
