@@ -72,7 +72,7 @@ WSGI_APPLICATION = 'care4care.wsgi.application'
 
 
 JENKINS_TASKS = (
-    'django_jenkins.tasks.run_pep8',
+#    'django_jenkins.tasks.run_pep8',
     'django_jenkins.tasks.run_pylint',
 )
 PYLINT_RCFILE = 'pylintrc'
