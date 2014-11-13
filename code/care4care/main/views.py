@@ -4,8 +4,6 @@ from django.contrib import messages
 from django.contrib.auth import logout as _logout
 from django.contrib.auth import authenticate, login as _login
 
-
-# Create your views here.
 def home(request):
     return render(request, 'main/home.html', locals())
 
