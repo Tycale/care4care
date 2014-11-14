@@ -8,9 +8,7 @@ from django.contrib.sites.models import RequestSite
 from django.contrib.sites.models import Site
 from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
-from main.forms import CareRegistrationForm
-from main.models import User
-from django.conf import settings
+
 
 def home(request):
     return render(request, 'main/home.html', locals())
@@ -56,7 +54,7 @@ class RegistrationView(BaseRegistrationView):
             send_email=self.SEND_ACTIVATION_EMAIL,
             request=request,
         )
-        new_user.last_name =  last_name
+        new_user.last_name = last_name
         new_user.first_name = first_name
         new_user.birth_date = cleaned_data['birth_date']
         new_user.how_found = cleaned_data['how_found']

@@ -1,5 +1,4 @@
 from django.conf.urls import patterns, url, include
-from main.forms import CareRegistrationForm
 
 urlpatterns = patterns(
     '',

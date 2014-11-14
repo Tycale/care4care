@@ -1,5 +1,4 @@
 from django import forms
-from registration.forms import RegistrationForm
 from django.utils.translation import ugettext_lazy as _
 from main.models import User
 
@@ -15,13 +14,15 @@ class CareRegistrationForm(forms.ModelForm):
     password2 = forms.CharField(widget=forms.PasswordInput,
                                 label=_("Mot de passe (à nouveau)"))
 
-    birth_date = forms.DateField(label=_("Date de naissance (DD/MM/YYYY)"), 
-                                 widget=SelectDateWidget(years=range(datetime.date.today().year-100,datetime.date.today().year)),
+    birth_date = forms.DateField(label=_("Date de naissance (DD/MM/YYYY)"),
+                                 widget=SelectDateWidget(years=range(datetime.date.today().year-100, \
+                                                                     datetime.date.today().year)),
                                  initial=datetime.date.today())
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email', 'password1', 'password2', 'languages', 'how_found', 'birth_date', 'phone_number', 'mobile_number', 'address', 'city', 'postal_code', 'contry']
+        fields = ['first_name', 'last_name', 'email', 'password1', 'password2', 'languages', \
+         'how_found', 'birth_date', 'phone_number', 'mobile_number', 'address', 'city', 'postal_code', 'contry']
 
 
     def clean_email(self):
@@ -30,7 +31,7 @@ class CareRegistrationForm(forms.ModelForm):
         in use.
         """
         try:
-            email = User.objects.get(email__iexact=self.cleaned_data['email'])
+            User.objects.get(email__iexact=self.cleaned_data['email'])
         except User.DoesNotExist:
             return self.cleaned_data['email']
         raise forms.ValidationError(_("Cet email existe déjà dans notre système. Veuillez utiliser utiliser le formulaire 'Mot de passe perdu'."))

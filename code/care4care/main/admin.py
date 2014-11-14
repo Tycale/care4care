@@ -2,8 +2,6 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from main.models import User
 
-from main.forms import CareRegistrationForm
-
 class CareUserAdmin(UserAdmin):
 
     # The fields to be used in displaying the User model.
@@ -13,7 +11,8 @@ class CareUserAdmin(UserAdmin):
     list_filter = ('is_staff', 'is_superuser')
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('first_name', 'last_name', 'credit', 'languages', 'how_found', 'birth_date', 'phone_number', 'mobile_number', 'address', 'city', 'postal_code', 'contry')}),
+        ('Personal info', {'fields': ('first_name', 'last_name', 'credit', 'languages', 'how_found', 
+        	'birth_date', 'phone_number', 'mobile_number', 'address', 'city', 'postal_code', 'contry')}),
         ('Permissions', {'fields': ('is_staff',)}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin

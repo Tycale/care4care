@@ -41,7 +41,7 @@ class CommonInfo(models.Model):
 
     def get_short_name(self):
         return self.first_name
-    
+
     class Meta:
         abstract = True
 
@@ -65,6 +65,12 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo):
 
     REQUIRED_FIELDS = ['username',]
     USERNAME_FIELD = 'email'
+
+    def get_full_name(self):
+        return '{} {}'.format(self.first_name, self.last_name)
+
+    def get_short_name(self):
+        return self.first_name
 
     def __unicode__(self):
         return self.email
