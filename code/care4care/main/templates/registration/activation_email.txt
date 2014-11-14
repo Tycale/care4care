@@ -1,6 +1,6 @@
 {% load i18n %}
 
-{% trans "Bonjour " %}{{user.first_name}},
+{% trans "Bonjour " %}{{user.username}},
 
 {% trans "Bienvenue dans notre communauté !" %}
 

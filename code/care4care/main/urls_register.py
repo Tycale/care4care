@@ -6,8 +6,9 @@ from django.views.generic.base import TemplateView
 from registration.backends.default.views import ActivationView
 #from registration.backends.default.views import RegistrationView
 
-from main.forms import CareRegistrationForm
 from main.views import RegistrationView
+
+from main.forms import CareRegistrationForm
 
 urlpatterns = patterns('',
                        url(r'^activate/complete/$',

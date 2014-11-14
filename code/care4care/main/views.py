@@ -4,8 +4,10 @@ from django.contrib import messages
 from django.contrib.auth import logout as _logout
 from django.contrib.auth import authenticate, login as _login
 from registration import signals
-
-from registration.views.backends.default.views import RegistrationView as BaseRegistrationView
+from django.contrib.sites.models import RequestSite
+from django.contrib.sites.models import Site
+from registration.models import RegistrationProfile
+from registration.backends.default.views import RegistrationView as BaseRegistrationView
 from main.forms import CareRegistrationForm
 from main.models import User
 from django.conf import settings
@@ -40,15 +42,22 @@ class RegistrationView(BaseRegistrationView):
     """
 
     def register(self, request, **cleaned_data):
-        email, password = cleaned_data['email'], cleaned_data['password1']
-        first_name, last_name = cleaned_data['first_name'], cleaned_data['last_name']
-
+        username, email, password = cleaned_data['username'], cleaned_data['email'], cleaned_data['password1']
         if Site._meta.installed:
             site = Site.objects.get_current()
         else:
             site = RequestSite(request)
 
-        new_user = User.objects.create_user(email, first_name, last_name, password=password)
+        first_name = cleaned_data['first_name']
+        last_name = cleaned_data['last_name']
+        username = '{} {}'.format(first_name, last_name)
+        new_user = RegistrationProfile.objects.create_inactive_user(
+            username, email, password, site,
+            send_email=self.SEND_ACTIVATION_EMAIL,
+            request=request,
+        )
+        new_user.last_name =  last_name
+        new_user.first_name = first_name
         new_user.birth_date = cleaned_data['birth_date']
         new_user.how_found = cleaned_data['how_found']
         new_user.languages = cleaned_data['languages']
@@ -60,14 +69,10 @@ class RegistrationView(BaseRegistrationView):
         new_user.contry = cleaned_data['contry']
         new_user.save()
 
-        #new_user = authenticate(username=email, password=password)
-        #_login(request, new_user)
         signals.user_registered.send(sender=self.__class__,
                                      user=new_user,
                                      request=request)
         return new_user
 
-    def get_success_url(self, request, user):
-        return ('registration_complete', (), {})
 
 
