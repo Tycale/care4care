@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}{% load i18n %}
+
+{% block title %}{% trans "Profile management" %}{% endblock %}
+
+{% block content %}
+{{current_user.first_name}}
+{{current_user.email}}
+{% endblock %}

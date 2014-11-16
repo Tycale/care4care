@@ -7,6 +7,7 @@ from registration.backends.default.views import ActivationView
 #from registration.backends.default.views import RegistrationView
 
 from main.views import RegistrationView
+from main.views import user_profile, profile_management
 
 from main.forms import CareRegistrationForm
 
@@ -31,4 +32,13 @@ urlpatterns = patterns('',
                            TemplateView.as_view(template_name='registration/registration_closed.html'),
                            name='registration_disallowed'),
                        (r'', include('registration.auth_urls')),
+                       url(r'^profile/$',
+                           profile_management,
+                           name='profile_management'),
+                       url(r'^profile/(?P<username>\w{0,50})/$',
+                           user_profile,
+                           name='user_profile'),
+                       url(r'^profile/network/$',
+                           TemplateView.as_view(template_name='profile/personal_network.html'),
+                           name='personal_network'),
                        )

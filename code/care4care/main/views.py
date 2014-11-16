@@ -8,7 +8,7 @@ from django.contrib.sites.models import RequestSite
 from django.contrib.sites.models import Site
 from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
-
+from main.backends import EmailAuthBackend
 
 def home(request):
     return render(request, 'main/home.html', locals())
@@ -33,6 +33,18 @@ def login(request):
         messages.add_message(request, messages.ERROR, _('Impossible de se connecter.'))
 
     return redirect('home')
+
+""" Get profile from a user"""
+def user_profile(request,username):
+
+    auth = EmailAuthBackend()
+    user = auth.get_user_by_username(username)
+    return render(request, 'profile/user_profile.html', {
+           'current_user': user,
+       })
+
+def profile_management(request):
+    return render(request, 'profile/profile_management.html', locals())
 
 class RegistrationView(BaseRegistrationView):
     """
@@ -71,6 +83,3 @@ class RegistrationView(BaseRegistrationView):
                                      user=new_user,
                                      request=request)
         return new_user
-
-
-
