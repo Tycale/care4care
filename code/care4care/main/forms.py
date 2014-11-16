@@ -21,7 +21,7 @@ class CareRegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email', 'password1', 'password2', 'languages', \
+        fields = ['username','first_name', 'last_name', 'email', 'password1', 'password2', 'languages', \
          'how_found', 'birth_date', 'phone_number', 'mobile_number', 'address', 'city', 'postal_code', 'contry']
 
 
