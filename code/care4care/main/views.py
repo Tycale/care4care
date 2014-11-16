@@ -8,6 +8,7 @@ from django.contrib.sites.models import RequestSite
 from django.contrib.sites.models import Site
 from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
+from django.views.generic import View
 from main.forms import ProfileManagementForm
 from main.models import User
 
@@ -42,13 +43,41 @@ def user_profile(request, user_id):
 
 """ Return the profile from the current logged user"""
 def manage_profile(request):
-    user_to_display = get_object_or_404(User, pk=request.user.id)
-    return render(request, 'profile/user_profile.html',locals())
+    if request.user.is_authenticated():
+        user_to_display = get_object_or_404(User, pk=request.user.id)
+        return render(request, 'profile/user_profile.html',locals())
+    else:
+        messages.add_message(request, messages.INFO, _('Vous n\'êtes pas connecté.'))
+        return redirect('home')
 
-""" Return the profile from the current logged user"""
-def edit_profile(request):
-    form = ProfileManagementForm(instance=request.user)
-    return render(request,'registration/registration_form.html',locals())
+""" Return the edit page for the current logged user"""
+class edit_profile(View):
+
+    def get(self, request):
+        if request.user.is_authenticated():
+            user = get_object_or_404(User, pk=request.user.id)
+            form = ProfileManagementForm(instance=user)
+            return render(request,'profile/edit_profile.html',locals())
+        else:
+            messages.add_message(request, messages.INFO, _('Vous n\'êtes pas connecté.'))
+            return redirect('home')
+
+    def post(self, request):
+        if request.user.is_authenticated():
+            user = get_object_or_404(User, pk=request.user.id)
+            form = ProfileManagementForm(request.POST,instance=user)
+            print(form.errors)
+            if form.is_valid():
+                form.save()
+                messages.add_message(request, messages.INFO, _('Modification sauvegardée'))
+                return redirect('home')
+            else:
+                form = ProfileManagementForm(instance=request.user)
+                return render(request,'profile/edit_profile.html',locals())
+        else:
+            messages.add_message(request, messages.INFO, _('Vous n\'êtes pas connecté.'))
+            return redirect('home')
+
 
 class RegistrationView(BaseRegistrationView):
     """

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}{% load i18n %}
+
+
+{% block title %}{% trans "Modifier mon profil" %}{% endblock %}
+
+
+{% block content %}
+<h3><i class="fa fa-angle-right"></i> {% trans "Modifier mon profil" %}</h3>
+
+<div class="row mt">
+  <div class="col-lg-12">
+    <div class="form-panel">
+      <form action="." role="form" method="post">
+      <h4 class="mb"><i class="fa fa-angle-right"></i> {% trans "Modifiez les informations suivantes " %}</h4>
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      {% buttons %}
+      <button type="submit" class="btn btn-success btn-lg">
+      {% bootstrap_icon "ok" %} &nbsp; {% trans "Sauvegarder" %}
+      </button>
+      <a href="{% url 'profile_management' %}">
+        <button type="button" class="btn btn-lg">
+          {% bootstrap_icon "remove" %} &nbsp; {% trans "Annuler" %}
+        </button>
+      </a>
+      {% endbuttons %}
+      </form>
+    </div>
+       </div>
+  </div><!-- col-lg-12-->
+</div>
+{% endblock %}
+
+{% block extra_footer %}
+{{ form.media }}
+{% endblock %}
