@@ -19,10 +19,15 @@ class CareRegistrationForm(forms.ModelForm):
                                                                      datetime.date.today().year)),
                                  initial=datetime.date.today())
 
+    how_found = forms.MultipleChoiceField(choices=HOW_FOUND_CHOICES, widget=forms.CheckboxSelectMultiple(), required=True)
+
     class Meta:
         model = User
-        fields = ['username','first_name', 'last_name', 'email', 'password1', 'password2', 'languages', \
+        fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'languages', \
          'how_found', 'birth_date', 'phone_number', 'mobile_number', 'address', 'city', 'postal_code', 'country']
+        widgets = {
+            'languages' : forms.CheckboxSelectMultiple,
+        }
 
 
     def clean_email(self):

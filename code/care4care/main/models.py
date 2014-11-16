@@ -1,10 +1,10 @@
 from django.utils.translation import ugettext as _
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
-from django.db import models
 from multiselectfield import MultiSelectField
+from django.db import models
 from django.conf import settings
 from django.core.validators import RegexValidator
-from django.contrib.auth.models import UserManager
+from django.contrib.auth.models import UserManager as BaseUserManager
 
 # TODO: complete
 HOW_FOUND_CHOICES = (
@@ -19,7 +19,6 @@ COUNTRY_CHOICES = (
     ('nl', _("Pays-Bas")),
     ('lu', _("Luxembourg")),
     )
-
 
 class CommonInfo(models.Model):
     """
@@ -46,6 +45,14 @@ class CommonInfo(models.Model):
         abstract = True
 
 
+class UserManager(BaseUserManager):
+    def create_superuser(self, username, email, password, **extra_fields):
+        super_user = self._create_user(username, email, password, True, True, **extra_fields)
+        super_user.languages = ['fr', 'be', 'nl']
+        super_user.how_found = HOW_FOUND_CHOICES[0][0]
+        super_user.save()
+        return super_user
+
 class User(AbstractBaseUser, PermissionsMixin, CommonInfo):
     """
     Custom user class
@@ -63,8 +70,8 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo):
 
     objects = UserManager()
 
-    REQUIRED_FIELDS = ['username',]
-    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name',]
+    USERNAME_FIELD = 'username'
 
     def get_full_name(self):
         return '{} {}'.format(self.first_name, self.last_name)
@@ -74,6 +81,7 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo):
 
     def __unicode__(self):
         return self.email
+
 
 class Contact(CommonInfo):
     """
