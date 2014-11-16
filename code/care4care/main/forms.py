@@ -57,4 +57,4 @@ class CareRegistrationForm(forms.ModelForm):
 class ProfileManagementForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['email', 'phone_number', 'address', 'city','languages', 'country']
+        fields = ['email', 'phone_number', 'address', 'city', 'languages', 'country']
