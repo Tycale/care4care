@@ -1,5 +1,5 @@
 from django.utils.translation import ugettext as _
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import logout as _logout
 from django.contrib.auth import authenticate, login as _login
@@ -8,8 +8,7 @@ from django.contrib.sites.models import RequestSite
 from django.contrib.sites.models import Site
 from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
-from main.backends import EmailAuthBackend
-
+from main.models import User
 def home(request):
     return render(request, 'main/home.html', locals())
 
@@ -35,14 +34,13 @@ def login(request):
     return redirect('home')
 
 """ Get profile from a user"""
-def user_profile(request):
-    user = request.user
-    return render(request, 'profile/user_profile.html', {
-           'current_user': user,
-       })
+def user_profile(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    return render(request, 'profile/user_profile.html',locals())
 
+""" Return the profile from the current logged user"""
 def profile_management(request):
-    return render(request, 'profile/profile_management.html', locals())
+    return render(request, 'profile/profile_management.html',locals())
 
 class RegistrationView(BaseRegistrationView):
     """
