@@ -35,10 +35,8 @@ def login(request):
     return redirect('home')
 
 """ Get profile from a user"""
-def user_profile(request,username):
-
-    auth = EmailAuthBackend()
-    user = auth.get_user_by_username(username)
+def user_profile(request):
+    user = request.user
     return render(request, 'profile/user_profile.html', {
            'current_user': user,
        })
