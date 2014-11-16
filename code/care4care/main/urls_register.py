@@ -31,17 +31,5 @@ urlpatterns = patterns('',
                        url(r'^register/closed/$',
                            TemplateView.as_view(template_name='registration/registration_closed.html'),
                            name='registration_disallowed'),
-                       (r'', include('registration.auth_urls')),
-                       url(r'^profile/$',
-                           manage_profile,
-                           name='profile_management'),
-                       url(r'^profile/edit/$',
-                           edit_profile,
-                           name='edit_profile'),
-                       url(r'^profile/(?P<user_id>)/$',
-                           user_profile,
-                           name='user_profile'),
-                       url(r'^profile/network/$',
-                           TemplateView.as_view(template_name='profile/personal_network.html'),
-                           name='personal_network')
+                       (r'', include('registration.auth_urls'))
                        )

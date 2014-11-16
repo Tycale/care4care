@@ -7,4 +7,5 @@ urlpatterns = patterns(
     url(r'^accounts/login/$', 'main.views.login', name='login'),
 
     url(r'^accounts/', include('main.urls_register')),
+    url(r'^accounts/', include('main.urls_profile')),
 )
