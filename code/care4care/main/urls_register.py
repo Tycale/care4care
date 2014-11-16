@@ -9,7 +9,7 @@ from registration.backends.default.views import ActivationView
 from main.views import RegistrationView
 from main.views import user_profile, manage_profile, edit_profile
 
-from main.forms import CareRegistrationForm, ProfileManagementForm
+from main.forms import CareRegistrationForm
 
 urlpatterns = patterns('',
                        url(r'^activate/complete/$',
@@ -43,5 +43,5 @@ urlpatterns = patterns('',
                            name='user_profile'),
                        url(r'^profile/network/$',
                            TemplateView.as_view(template_name='profile/personal_network.html'),
-                           name='personal_network'),
+                           name='personal_network')
                        )
