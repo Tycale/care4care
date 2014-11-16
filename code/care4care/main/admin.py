@@ -11,8 +11,8 @@ class CareUserAdmin(UserAdmin):
     list_filter = ('is_staff', 'is_superuser')
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('first_name', 'last_name', 'credit', 'languages', 'how_found', 
-        	'birth_date', 'phone_number', 'mobile_number', 'address', 'city', 'postal_code', 'contry')}),
+        ('Personal info', {'fields': ('first_name', 'last_name', 'credit', 'languages', 'how_found',
+        	'birth_date', 'phone_number', 'mobile_number', 'address', 'city', 'postal_code', 'country')}),
         ('Permissions', {'fields': ('is_staff',)}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin

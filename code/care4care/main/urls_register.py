@@ -7,9 +7,9 @@ from registration.backends.default.views import ActivationView
 #from registration.backends.default.views import RegistrationView
 
 from main.views import RegistrationView
-from main.views import user_profile, profile_management
+from main.views import user_profile, manage_profile, edit_profile
 
-from main.forms import CareRegistrationForm
+from main.forms import CareRegistrationForm, ProfileManagementForm
 
 urlpatterns = patterns('',
                        url(r'^activate/complete/$',
@@ -33,8 +33,11 @@ urlpatterns = patterns('',
                            name='registration_disallowed'),
                        (r'', include('registration.auth_urls')),
                        url(r'^profile/$',
-                           profile_management,
+                           manage_profile,
                            name='profile_management'),
+                       url(r'^profile/edit/$',
+                           edit_profile,
+                           name='edit_profile'),
                        url(r'^profile/(?P<user_id>)/$',
                            user_profile,
                            name='user_profile'),

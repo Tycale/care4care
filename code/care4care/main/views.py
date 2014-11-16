@@ -8,7 +8,9 @@ from django.contrib.sites.models import RequestSite
 from django.contrib.sites.models import Site
 from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
+from main.forms import ProfileManagementForm
 from main.models import User
+
 def home(request):
     return render(request, 'main/home.html', locals())
 
@@ -35,12 +37,18 @@ def login(request):
 
 """ Get profile from a user"""
 def user_profile(request, user_id):
-    user = get_object_or_404(User, pk=user_id)
+    user_to_display = get_object_or_404(User, pk=user_id)
     return render(request, 'profile/user_profile.html',locals())
 
 """ Return the profile from the current logged user"""
-def profile_management(request):
-    return render(request, 'profile/profile_management.html',locals())
+def manage_profile(request):
+    user_to_display = get_object_or_404(User, pk=request.user.id)
+    return render(request, 'profile/user_profile.html',locals())
+
+""" Return the profile from the current logged user"""
+def edit_profile(request):
+    form = ProfileManagementForm(instance=request.user)
+    return render(request,'registration/registration_form.html',locals())
 
 class RegistrationView(BaseRegistrationView):
     """
@@ -72,7 +80,7 @@ class RegistrationView(BaseRegistrationView):
         new_user.address = cleaned_data['address']
         new_user.city = cleaned_data['city']
         new_user.postal_code = cleaned_data['postal_code']
-        new_user.contry = cleaned_data['contry']
+        new_user.country = cleaned_data['country']
         new_user.save()
 
         signals.user_registered.send(sender=self.__class__,

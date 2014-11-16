@@ -22,7 +22,7 @@ class CareRegistrationForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username','first_name', 'last_name', 'email', 'password1', 'password2', 'languages', \
-         'how_found', 'birth_date', 'phone_number', 'mobile_number', 'address', 'city', 'postal_code', 'contry']
+         'how_found', 'birth_date', 'phone_number', 'mobile_number', 'address', 'city', 'postal_code', 'country']
 
 
     def clean_email(self):
@@ -48,3 +48,8 @@ class CareRegistrationForm(forms.ModelForm):
                 raise forms.ValidationError(_("Les mots de passe ne sont pas identiques."))
         self.cleaned_data['username'] = self.cleaned_data['email']
         return self.cleaned_data
+
+class ProfileManagementForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['email', 'phone_number', 'address', 'city','languages', 'country']

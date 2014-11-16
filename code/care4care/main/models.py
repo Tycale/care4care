@@ -13,7 +13,7 @@ HOW_FOUND_CHOICES = (
     ('other', _("Autre")),
     )
 
-CONTRY_CHOICES = (
+COUNTRY_CHOICES = (
     ('be', _("Belgique")),
     ('fr', _("France")),
     ('nl', _("Pays-Bas")),
@@ -27,7 +27,7 @@ class CommonInfo(models.Model):
     """
     first_name = models.CharField(_('Prénom'), max_length=30, blank=False)
     last_name = models.CharField(_('Nom'), max_length=30, blank=False)
-    contry = models.CharField(choices=CONTRY_CHOICES, max_length=2, verbose_name=_("Pays"), default=CONTRY_CHOICES[0][0])
+    country = models.CharField(choices=COUNTRY_CHOICES, max_length=2, verbose_name=_("Pays"), default=COUNTRY_CHOICES[0][0])
     address = models.CharField(max_length=255, verbose_name=_("Adresse postale"), blank=True)
     city = models.CharField(max_length=100, verbose_name=_("Ville"), blank=True)
     postal_code = models.IntegerField(max_length=10, verbose_name=_("Code postale"), blank=True, null=True)
@@ -82,10 +82,3 @@ class Contact(CommonInfo):
     email = models.EmailField(_('Adresse email'), blank=True)
     relationship = models.CharField(max_length=255, blank=True, verbose_name=_("Votre relation par rapport à cette personne"))
     comments = models.CharField(max_length=255, blank=True, verbose_name=_("Commentaire supplémentaire"))
-
-
-
-
-
-
-
