@@ -140,7 +140,6 @@ LOGIN_REDIRECT_URL = '/'
 # django-registration-redux
 # https://django-registration-redux.readthedocs.org/en/latest/quickstart.html
 AUTH_USER_MODEL = 'main.User'
-AUTHENTICATION_BACKENDS = ('main.backends.EmailAuthBackend',)
 ACCOUNT_ACTIVATION_DAYS = 365
 REGISTRATION_AUTO_LOGIN = True
 SITE_ID = 1

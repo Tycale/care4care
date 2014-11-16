@@ -57,9 +57,9 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo):
     """
     Custom user class
     """
-    email = models.EmailField('email address', unique=True, db_index=True)
+    email = models.EmailField('email address', unique=False)
     date_joined = models.DateTimeField(auto_now_add=True)
-    username = models.CharField(max_length=255, blank=True, null=True)
+    username = models.CharField(max_length=255, verbose_name=_("Nom d'utilisateur"), blank=False, null=False, unique=True, db_index=True)
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
 
@@ -70,7 +70,7 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo):
 
     objects = UserManager()
 
-    REQUIRED_FIELDS = ['username', 'first_name', 'last_name',]
+    REQUIRED_FIELDS = ['email', 'first_name', 'last_name',]
     USERNAME_FIELD = 'username'
 
     def get_full_name(self):
