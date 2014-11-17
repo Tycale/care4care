@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-12 00:39+0000\n"
+"POT-Creation-Date: 2014-11-17 00:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,20 +18,177 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: care4care/settings.py:105
+#: branch/models.py:7
+msgid "Nom de la branche"
+msgstr ""
+
+#: branch/models.py:8
+msgid "Administrateurs de la branche"
+msgstr ""
+
+#: branch/models.py:9
+msgid "Membres de la branche"
+msgstr ""
+
+#: care4care/settings.py:113
 msgid "Français"
 msgstr ""
 
-#: care4care/settings.py:106
+#: care4care/settings.py:114
 msgid "Anglais"
 msgstr ""
 
-#: care4care/settings.py:107
+#: care4care/settings.py:115
 msgid "Néerlandais"
+msgstr ""
+
+#: main/forms.py:9 main/models.py:27
+msgid "Prénom"
+msgstr ""
+
+#: main/forms.py:10
+msgid "Nom de famille"
+msgstr ""
+
+#: main/forms.py:12 templates/base.html:234 templates/base.html.py:235
+msgid "Mot de passe"
+msgstr ""
+
+#: main/forms.py:14
+msgid "Mot de passe (à nouveau)"
+msgstr ""
+
+#: main/forms.py:16
+msgid "Date de naissance (DD/MM/YYYY)"
+msgstr ""
+
+#: main/forms.py:37
+msgid ""
+"Cet utilisateur existe déjà dans notre système. Veuillez utiliser utiliser "
+"le formulaire 'Mot de passe perdu' si vous êtes déjà enregistré."
+msgstr ""
+
+#: main/forms.py:48
+msgid "Les mots de passe ne sont pas identiques."
+msgstr ""
+
+#: main/models.py:11
+msgid "Mes amis m'en ont parlés"
+msgstr ""
+
+#: main/models.py:12
+msgid "J'ai vu de la pub"
+msgstr ""
+
+#: main/models.py:13
+msgid "Autre"
+msgstr ""
+
+#: main/models.py:17
+msgid "Belgique"
+msgstr ""
+
+#: main/models.py:18
+msgid "France"
+msgstr ""
+
+#: main/models.py:19
+msgid "Pays-Bas"
+msgstr ""
+
+#: main/models.py:20
+msgid "Luxembourg"
+msgstr ""
+
+#: main/models.py:28
+msgid "Nom"
+msgstr ""
+
+#: main/models.py:29 main/templates/registration/registration_form.html:64
+msgid "Adresse"
+msgstr ""
+
+#: main/models.py:30
+msgid "Latitude"
+msgstr ""
+
+#: main/models.py:31
+msgid "Longitude"
+msgstr ""
+
+#: main/models.py:32
+msgid ""
+"Votre numéro de téléphone doit être au format '+999999999'. Jusqu'à 15 "
+"chiffres."
+msgstr ""
+
+#: main/models.py:33
+msgid "Numéro de téléphone (fixe)"
+msgstr ""
+
+#: main/models.py:34
+msgid "Numéro de téléphone mobile"
+msgstr ""
+
+#: main/models.py:35
+msgid "Langues parlées"
+msgstr ""
+
+#: main/models.py:61 templates/base.html:229
+msgid "Nom d'utilisateur"
+msgstr ""
+
+#: main/models.py:66
+msgid "Comment avez-vous entendu parlé de Care4Care ?"
+msgstr ""
+
+#: main/models.py:67
+msgid "Date de naissance"
+msgstr ""
+
+#: main/models.py:68
+msgid "Crédit restant"
+msgstr ""
+
+#: main/models.py:89
+msgid "Adresse email"
+msgstr ""
+
+#: main/models.py:90
+msgid "Votre relation par rapport à cette personne"
+msgstr ""
+
+#: main/models.py:91
+msgid "Commentaire supplémentaire"
 msgstr ""
 
 #: main/templates/main/home.html:5
 msgid "Accueil"
+msgstr ""
+
+#: main/templates/profile/edit_profile.html:5
+#: main/templates/profile/edit_profile.html:9
+msgid "Modifier mon profil"
+msgstr ""
+
+#: main/templates/profile/edit_profile.html:15
+msgid "Modifiez les informations suivantes "
+msgstr ""
+
+#: main/templates/profile/edit_profile.html:20
+msgid "Sauvegarder"
+msgstr ""
+
+#: main/templates/profile/edit_profile.html:24
+msgid "Annuler"
+msgstr ""
+
+#: main/templates/profile/personal_network.html:4
+msgid "Personal Network"
+msgstr ""
+
+#: main/templates/profile/user_profile.html:4
+msgid "Profile management"
 msgstr ""
 
 #: main/templates/registration/activation_complete.html:5
@@ -75,8 +232,8 @@ msgstr ""
 
 #: main/templates/registration/registration_complete.html:5
 #: main/templates/registration/registration_form.html:5
-#: main/templates/registration/registration_form.html:9
-#: templates/base.html:198
+#: main/templates/registration/registration_form.html:16
+#: templates/base.html:199
 msgid "Inscription"
 msgstr ""
 
@@ -94,52 +251,88 @@ msgid ""
 "vous envoyer par mail."
 msgstr ""
 
-#: main/templates/registration/registration_form.html:15
+#: main/templates/registration/registration_form.html:21
 msgid "Complétez les informations suivantes afin de créer votre compte"
 msgstr ""
 
-#: main/views.py:14
+#: main/templates/registration/registration_form.html:28
+msgid "Informations de connexion"
+msgstr ""
+
+#: main/templates/registration/registration_form.html:38
+msgid "Informations générales"
+msgstr ""
+
+#: main/templates/registration/registration_form.html:47
+msgid "Informations de contact"
+msgstr ""
+
+#: main/templates/registration/registration_form.html:57
+msgid "Comment avez-vous entendu parler de nous \t?"
+msgstr ""
+
+#: main/templates/registration/registration_form.html:67
+msgid "\tEntrez votre addresse"
+msgstr ""
+
+#: main/templates/registration/registration_form.html:84
+msgid "Valider"
+msgstr ""
+
+#: main/templates/statistics/users_statistics.html:4
+msgid "Users statistics"
+msgstr ""
+
+#: main/views.py:20
 msgid "Vous êtes désormais déconnecté."
 msgstr ""
 
-#: main/views.py:24
+#: main/views.py:30
 msgid "Vous êtes désormais connecté."
 msgstr ""
 
-#: main/views.py:26
+#: main/views.py:32
 msgid ""
 "Impossible de vous connecter, vous                 êtes innactif. Vérifiez "
 "vos emails afin de valider votre compte."
 msgstr ""
 
-#: main/views.py:29
+#: main/views.py:35
 msgid "Impossible de se connecter."
 msgstr ""
 
-#: templates/base.html:208
+#: main/views.py:50 main/views.py:62 main/views.py:78
+msgid "Vous n'êtes pas connecté."
+msgstr ""
+
+#: main/views.py:72
+msgid "Modification sauvegardée"
+msgstr ""
+
+#: templates/base.html:209
 msgid "Se connecter"
 msgstr ""
 
-#: templates/base.html:214
+#: templates/base.html:215
 msgid "Se déconnecter"
 msgstr ""
 
-#: templates/base.html:225 templates/base.html.py:226
-msgid "Nom d'utilisateur"
+#: templates/base.html:218
+msgid "Mon Profile"
 msgstr ""
 
-#: templates/base.html:230 templates/base.html.py:231
-msgid "Mot de passe"
+#: templates/base.html:230
+msgid "Utilisateur"
 msgstr ""
 
-#: templates/base.html:235
+#: templates/base.html:239
 msgid "se connecter"
 msgstr ""
 
-#: templates/base.html:243
+#: templates/base.html:247
 msgid "se connecter via Google"
 msgstr ""
 
-#: templates/base.html:244
+#: templates/base.html:248
 msgid "se connecter via Twitter"
 msgstr ""

@@ -69,6 +69,11 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.i18n",
 )
 
+STATICFILES_FINDERS = (
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+)
+
 ROOT_URLCONF = 'care4care.urls'
 
 WSGI_APPLICATION = 'care4care.wsgi.application'

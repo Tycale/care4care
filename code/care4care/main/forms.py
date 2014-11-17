@@ -20,17 +20,22 @@ class CareRegistrationForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'languages', \
-         'how_found', 'birth_date', 'phone_number', 'mobile_number', 'address', 'city', 'postal_code', 'country']
-
+         'how_found', 'birth_date', 'phone_number', 'mobile_number', 'location', 'latitude', 'longitude']
+        widgets = {
+            'latitude': forms.HiddenInput,
+            'longitude': forms.HiddenInput,
+            'location': forms.HiddenInput,
+        }
 
     def clean_username(self):
-        """
-        Validate that the username DoesNotExist
-        """
+        # Since User.username is unique, this check is redundant,
+        # but it sets a nicer error message than the ORM. See #13147.
+        UserModel = self._meta.model
+        username = self.cleaned_data["username"].lower()
         try:
-            User.objects.get(username__iexact=self.cleaned_data['username'])
-        except User.DoesNotExist:
-            return self.cleaned_data['username']
+            UserModel.objects.get(username=username)
+        except UserModel.DoesNotExist:
+            return username
         raise forms.ValidationError(_("Cet utilisateur existe déjà dans notre système. Veuillez utiliser utiliser le formulaire 'Mot de passe perdu' si vous êtes déjà enregistré."))
 
     def clean(self):
@@ -40,12 +45,18 @@ class CareRegistrationForm(forms.ModelForm):
         ``non_field_errors()`` because it doesn't apply to a single
         field.
         """
+        print(self.cleaned_data)
         if 'password1' in self.cleaned_data and 'password2' in self.cleaned_data:
             if self.cleaned_data['password1'] != self.cleaned_data['password2']:
                 raise forms.ValidationError(_("Les mots de passe ne sont pas identiques."))
+        if not 'longitude' in self.cleaned_data or not self.cleaned_data['longitude']:
+            raise forms.ValidationError(_("Veuillez introduire une adresse valide via les propositions."))
+        if not 'latitude' in self.cleaned_data or not self.cleaned_data['latitude']:
+            raise forms.ValidationError(_("Veuillez introduire une adresse valide via les propositions."))
+
         return self.cleaned_data
 
 class ProfileManagementForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['email', 'phone_number', 'address', 'city', 'languages', 'country']
+        fields = ['email', 'phone_number', 'languages', 'location']

@@ -2,9 +2,12 @@ from django.utils.translation import ugettext as _
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from multiselectfield import MultiSelectField
 from django.db import models
+from django.core import validators
 from django.conf import settings
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import UserManager as BaseUserManager
+
+import re
 
 # TODO: complete
 HOW_FOUND_CHOICES = (
@@ -26,10 +29,9 @@ class CommonInfo(models.Model):
     """
     first_name = models.CharField(_('Prénom'), max_length=30, blank=False)
     last_name = models.CharField(_('Nom'), max_length=30, blank=False)
-    country = models.CharField(choices=COUNTRY_CHOICES, max_length=2, verbose_name=_("Pays"), default=COUNTRY_CHOICES[0][0])
-    address = models.CharField(max_length=255, verbose_name=_("Adresse postale"), blank=True)
-    city = models.CharField(max_length=100, verbose_name=_("Ville"), blank=True)
-    postal_code = models.IntegerField(max_length=10, verbose_name=_("Code postale"), blank=True, null=True)
+    location = models.CharField(_('Adresse'), max_length=256, null=True, blank=True)
+    latitude = models.CharField(_('Latitude'), max_length=20, null=True, blank=True)
+    longitude = models.CharField(_('Longitude'), max_length=20, null=True, blank=True)
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message=_("Votre numéro de téléphone doit être au format '+999999999'. Jusqu'à 15 chiffres."))
     phone_number = models.CharField(validators=[phone_regex], max_length=16, blank=True, verbose_name=_("Numéro de téléphone (fixe)"))
     mobile_number = models.CharField(validators=[phone_regex], max_length=16, blank=True, verbose_name=_("Numéro de téléphone mobile"))
@@ -57,9 +59,14 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo):
     """
     Custom user class
     """
-    email = models.EmailField('email address', unique=False)
+    email = models.EmailField(_("Adresse email"), unique=False)
     date_joined = models.DateTimeField(auto_now_add=True)
-    username = models.CharField(max_length=255, verbose_name=_("Nom d'utilisateur"), blank=False, null=False, unique=True, db_index=True)
+
+    username = models.CharField(_("Nom d'utilisateur"), max_length=30, unique=True,
+        validators=[
+            validators.RegexValidator(re.compile('^[\w.@+-]+$'), _("Entrez un nom d'utilisateur valide.\
+             30 caractères ou moins. Peut contenir des lettres, nombres et les caractères @/./+/-/_ "), 'invalid')
+        ])
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
 

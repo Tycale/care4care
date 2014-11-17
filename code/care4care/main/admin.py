@@ -7,12 +7,12 @@ class CareUserAdmin(UserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('email', 'first_name', 'last_name', 'birth_date', 'is_staff')
+    list_display = ('username', 'email', 'first_name', 'last_name', 'birth_date', 'is_staff')
     list_filter = ('is_staff', 'is_superuser')
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         ('Personal info', {'fields': ('first_name', 'last_name', 'credit', 'languages', 'how_found',
-        	'birth_date', 'phone_number', 'mobile_number', 'address', 'city', 'postal_code', 'country')}),
+        	'birth_date', 'phone_number', 'mobile_number', 'location', 'latitude', 'longitude')}),
         ('Permissions', {'fields': ('is_staff',)}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin

@@ -21,7 +21,7 @@ def logout(request):
     return redirect('home')
 
 def login(request):
-    username = request.POST['username']
+    username = request.POST['username'].lower()
     password = request.POST['password']
     user = authenticate(username=username, password=password)
     if user is not None:
@@ -93,7 +93,6 @@ class RegistrationView(BaseRegistrationView):
 
         first_name = cleaned_data['first_name']
         last_name = cleaned_data['last_name']
-        username = '{} {}'.format(first_name, last_name)
         new_user = RegistrationProfile.objects.create_inactive_user(
             username, email, password, site,
             send_email=self.SEND_ACTIVATION_EMAIL,
@@ -106,10 +105,9 @@ class RegistrationView(BaseRegistrationView):
         new_user.languages = cleaned_data['languages']
         new_user.phone_number = cleaned_data['phone_number']
         new_user.mobile_number = cleaned_data['mobile_number']
-        new_user.address = cleaned_data['address']
-        new_user.city = cleaned_data['city']
-        new_user.postal_code = cleaned_data['postal_code']
-        new_user.country = cleaned_data['country']
+        new_user.longitude = cleaned_data['longitude']
+        new_user.latitude = cleaned_data['latitude']
+        new_user.location = cleaned_data['location']
         new_user.save()
 
         signals.user_registered.send(sender=self.__class__,
