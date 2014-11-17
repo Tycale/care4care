@@ -65,10 +65,12 @@
 				<h4 class="mb"><i class="fa fa-angle-right"></i> {% trans "Adresse" %}</h4>
 				<div class="row">
 					<div class="col-lg-6">
-						<input id="id_location_input" class="typeahead form-control" type="text" placeholder="{% trans "	Entrez votre adresse"%}">
+						<input id="id_location_input" class="typeahead form-control" type="text" placeholder="{% trans "Entrez votre adresse"%}">
 					</div>
 					<div class="col-lg-6">
 						<div id="map" style="min-height:300px;"></div>
+						<br />
+						<div class="alert alert-info"><b>{% trans "Information:"%}</b> {% trans "L'emplacement sur la carte peut être approximatif" %}</div>
 					</div>
 				</div>
 				{% bootstrap_field form.location %}

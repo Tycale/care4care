@@ -22,7 +22,7 @@
     <!-- Custom styles for this template -->
     <link href="{% static "css/style.css" %}" rel="stylesheet">
     <link href="{% static "css/style-responsive.css" %}" rel="stylesheet">
-    
+
     <script src="{% static "js/jquery-1.8.3.min.js" %}"></script>
     <script src="{% static "js/chart-master/Chart.js" %}"></script>
 
@@ -210,12 +210,13 @@
                     {% endif %}
                   </button>
                   {% if request.user.is_authenticated %}
-                  <ul class="dropdown-menu lang-menu" role="user-menu">
-                    <li><a href="{% url 'logout' %}">
-                    <span class="glyphicon glyphicon-log-out"></span>{% trans "Se déconnecter" %}</a>
-                    </li>
+                  <ul class="dropdown-menu" role="user-menu">
                     <li><a href="{% url 'profile_management' %}">
-                    <span class="glyphicon glyphicon-log-out"></span>{% trans "Mon Profile" %}</a>
+                    {% bootstrap_icon 'user' %} &nbsp; {% trans "Mon Profile" %}</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li><a href="{% url 'logout' %}">
+                    {% bootstrap_icon 'log-out' %} &nbsp; {% trans "Se déconnecter" %}</a>
                     </li>
                   </ul>
                   {% else %}

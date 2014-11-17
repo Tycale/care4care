@@ -2254,7 +2254,7 @@ label {
 
 ul.lang-menu > li{
     display: block;
-    padding: 3px 20px;
+    padding-left: 10px;
     clear: both;
     font-weight: normal;
     line-height: 1.42857143;
