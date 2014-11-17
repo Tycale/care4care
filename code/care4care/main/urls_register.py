@@ -4,10 +4,8 @@ from django.conf.urls import url
 from django.views.generic.base import TemplateView
 
 from registration.backends.default.views import ActivationView
-#from registration.backends.default.views import RegistrationView
 
 from main.views import RegistrationView
-from main.views import user_profile, manage_profile, edit_profile
 
 from main.forms import CareRegistrationForm
 

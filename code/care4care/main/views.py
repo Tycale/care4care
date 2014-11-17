@@ -11,6 +11,8 @@ from registration.backends.default.views import RegistrationView as BaseRegistra
 from django.views.generic import View
 from main.forms import ProfileManagementForm
 from main.models import User
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 def home(request):
     return render(request, 'main/home.html', locals())
@@ -36,47 +38,40 @@ def login(request):
 
     return redirect('home')
 
-""" Get profile from a user"""
+
 def user_profile(request, user_id):
+    """ Get profile from a user"""
     user_to_display = get_object_or_404(User, pk=user_id)
     return render(request, 'profile/user_profile.html',locals())
 
-""" Return the profile from the current logged user"""
+@login_required
 def manage_profile(request):
-    if request.user.is_authenticated():
-        user_to_display = get_object_or_404(User, pk=request.user.id)
-        return render(request, 'profile/user_profile.html',locals())
-    else:
-        messages.add_message(request, messages.INFO, _('Vous n\'êtes pas connecté.'))
-        return redirect('home')
+    """ Return the profile from the current logged user"""
+    user_to_display = get_object_or_404(User, pk=request.user.id)
+    return render(request, 'profile/user_profile.html',locals())
 
-""" Return the edit page for the current logged user"""
-class edit_profile(View):
+
+class EditProfileView(View):
+    """ Return the edit page for the current logged user"""
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(EditProfileView, self).dispatch(*args, **kwargs)
 
     def get(self, request):
-        if request.user.is_authenticated():
-            user = get_object_or_404(User, pk=request.user.id)
-            form = ProfileManagementForm(instance=user)
-            return render(request,'profile/edit_profile.html',locals())
-        else:
-            messages.add_message(request, messages.INFO, _('Vous n\'êtes pas connecté.'))
-            return redirect('home')
+        user = request.user
+        form = ProfileManagementForm(instance=user)
+        return render(request,'profile/edit_profile.html',locals())
 
     def post(self, request):
-        if request.user.is_authenticated():
-            user = get_object_or_404(User, pk=request.user.id)
-            form = ProfileManagementForm(request.POST,instance=user)
-            print(form.errors)
-            if form.is_valid():
-                form.save()
-                messages.add_message(request, messages.INFO, _('Modification sauvegardée'))
-                return redirect('home')
-            else:
-                form = ProfileManagementForm(instance=request.user)
-                return render(request,'profile/edit_profile.html',locals())
+        user = request.user
+        form = ProfileManagementForm(request.POST,instance=user)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.INFO, _('Modification sauvegardée'))
         else:
-            messages.add_message(request, messages.INFO, _('Vous n\'êtes pas connecté.'))
-            return redirect('home')
+            form = ProfileManagementForm(instance=request.user)
+        return render(request,'profile/edit_profile.html',locals())
 
 
 class RegistrationView(BaseRegistrationView):
