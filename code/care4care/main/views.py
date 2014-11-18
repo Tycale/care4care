@@ -13,6 +13,7 @@ from main.forms import ProfileManagementForm
 from main.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.http import HttpResponseRedirect
 
 def home(request):
     return render(request, 'main/home.html', locals())
@@ -23,20 +24,24 @@ def logout(request):
     return redirect('home')
 
 def login(request):
-    username = request.POST['username'].lower()
-    password = request.POST['password']
-    user = authenticate(username=username, password=password)
-    if user is not None:
-        if user.is_active:
-            _login(request, user)
-            messages.add_message(request, messages.INFO, _('Vous êtes désormais connecté.'))
-        else:
-            messages.add_message(request, messages.ERROR, _('Impossible de vous connecter, vous \
-                êtes innactif. Vérifiez vos emails afin de valider votre compte.'))
-    else:
-        messages.add_message(request, messages.ERROR, _('Impossible de se connecter.'))
+    redirect_to = request.POST.get('next',
+                                   request.GET.get('next', '/'))
 
-    return redirect('home')
+    if request.POST and 'username' in request.POST and 'password' in request.POST :
+        username = request.POST['username'].lower()
+        password = request.POST['password']
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            if user.is_active:
+                _login(request, user)
+                messages.add_message(request, messages.INFO, _('Vous êtes désormais connecté.'))
+                return HttpResponseRedirect(redirect_to)
+            else:
+                messages.add_message(request, messages.ERROR, _('Impossible de vous connecter, vous \
+                    êtes innactif. Vérifiez vos emails afin de valider votre compte.'))
+        else:
+            messages.add_message(request, messages.ERROR, _('Impossible de se connecter.'))
+    return render(request, 'profile/login.html',locals())
 
 
 def user_profile(request, user_id):

@@ -200,7 +200,7 @@
                   </button>
                 </li>
                 {% endif %}
-                <li class="dropdown">
+                <li class="dropdown">{% block connect %}
                   <button type="button" class="btn btn-theme03 btn-login force-size dropdown-toggle" data-toggle="dropdown">
                     <span class="glyphicon glyphicon-user"></span>
                     {% if request.user.is_authenticated %}
@@ -208,7 +208,7 @@
                     {% else %}
                       {% trans "Se connecter" %} <span class="caret"></span>
                     {% endif %}
-                  </button>
+                  </button>{% endblock %}
                   {% if request.user.is_authenticated %}
                   <ul class="dropdown-menu" role="user-menu">
                     <li><a href="{% url 'profile_management' %}">
@@ -235,7 +235,6 @@
                                        <label class="sr-only" for="password">{% trans 'Mot de passe' %}</label>
                                        <input type="password" class="form-control" name="password" id="password" placeholder="{% trans 'Mot de passe' %}" required>
                                     </div>
-
                                     <div class="form-group">
                                        <button type="submit" class="btn btn-theme btn-block">{% trans "se connecter"%}</button>
                                     </div>

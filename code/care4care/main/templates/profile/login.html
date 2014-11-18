@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}{% load i18n %}
+
+
+{% block title %}{% trans "Connectez-vous !" %}{% endblock %}
+
+{% block connect %}{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-6 col-md-offset-3 col-xs-12">
+        <div class="login">
+            <div class="white-header">
+                <h4>{% trans "Connectez-vous " %} 
+                    {% if next != '/' %}
+                    {% trans "afin d'accéder à cette page" %}
+                    {% endif %}
+                    !</h4>
+            </div>
+            <div class="whithe-body">
+            <h3></h3>
+
+            <form class="form" role="form" method="post" action="{% url 'login' %}" accept-charset="UTF-8" id="login-nav">
+                {% csrf_token %}
+                <div class="form-group text-left">
+                    <label for="username">{% trans "Nom d'utilisateur" %}</label>
+                    <input type="input" class="form-control" name="username" id="username" placeholder='{% trans "Utilisateur" %}' required>
+                </div>
+
+                <div class="form-group text-left">
+                    <label for="password">{% trans 'Mot de passe' %}</label>
+                    <input type="password" class="form-control" name="password" id="password" placeholder="{% trans 'Mot de passe' %}" required>
+                </div>
+                <input name="next" type="hidden" value="{{ redirect_to }}" />
+                <div class="form-group">
+                    <button type="submit" class="btn btn-theme btn-block"><i class="fa fa-user"></i> {% trans "se connecter"%}</button>
+                </div>
+            </form>  
+
+            <p>{% trans "Pas encore de compte ?" %} <a href="{% url 'registration_register' %}">{% trans 'Inscrivez-vous !'%}</a></p>
+            <p>{% trans "Mot de passe perdu ?" %} <a href="{% url 'registration_register' %}">{% trans 'Retrouvez votre mot de passe !'%}</a></p>
+
+            <hr />
+            <p>{% trans "Ou connectez-vous via :" %}</p>
+            <input class="btn btn-theme03 btn-block" type="button" id="sign-in-google" value="{% trans "se connecter via Google"%}" />
+            <input class="btn btn-theme03 btn-block" type="button" id="sign-in-twitter" value="{% trans "se connecter via Twitter"%}" />
+            </div>
+        </div>
+    </div>
+</div><!-- col-lg-12-->      	
+</div>
+{% endblock %}

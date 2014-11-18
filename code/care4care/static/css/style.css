@@ -422,7 +422,7 @@ ul.sidebar-menu li a.active i {
     margin-top: 60px;
     padding-left: 15px;
     padding-right: 15px;
-    padding-bottom: 15px;
+    /*padding-bottom: 15px; */
     padding-top: 0px;
     width: 100%;
 }
@@ -2367,7 +2367,7 @@ div.top-menu > ul > li > button > a {
 }
 
 .tt-suggestion {
-  padding: 3px 20px;
+  padding: 3px 20px; 
   font-size: 18px;
   line-height: 24px;
 }
@@ -2386,4 +2386,21 @@ div.top-menu > ul > li > button > a {
     background-color: #F2F2F2 !important;
 }
 
+.login {
+    margin-top: 15px;
+    background-color: #fff;
+    text-align: center;
+    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.login .white-header {
+    background: #f4f4f4;
+    padding: 3px;
+    margin-bottom: 15px;
+    color: #c6c6c6;
+}
+
+.login .whithe-body {
+    padding: 15px 15px;
+}
 
