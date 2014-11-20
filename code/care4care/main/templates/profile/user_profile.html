@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load bootstrap3 %}{% load i18n %}
 
-{% block title %}{% trans "Profile management" %}{% endblock %}
+{% block title %}{% trans "Gestion du profil" %}{% endblock %}
 
 {% block content %}
 <div class="">
@@ -10,36 +10,36 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-3"><!--left col-->
+    <div class="col-sm-4"><!--left col-->
 
       <ul class="list-group">
-        <li class="list-group-item text-muted  text-right"><span class="pull-left">Profile</span>
+        <li class="list-group-item text-muted  text-right"><span class="pull-left">{% trans 'Profil' %}</span>
           {% if request.user.is_authenticated %}
             <a href="{% url 'edit_profile' %}">
-            <span class="glyphicon glyphicon-edit"></span>
+            <span class="glyphicon glyphicon-edit">  </span> {% trans 'Modifier' %}
             </a>
           {% endif %}
         </li>
-        <li class="list-group-item text-right"><span class="pull-left"><strong>Joined</strong></span> {{user_to_display.date_joined}}</li>
-        <li class="list-group-item text-right"><span class="pull-left"><strong>Last seen</strong></span> empty</li>
-        <li class="list-group-item text-right"><span class="pull-left"><strong>Real name</strong></span> empty</li>
-        <li class="list-group-item text-right"><span class="pull-left"><strong>Email</strong></span> {{user_to_display.email}}</li>
+        <li class="list-group-item text-right"><span class="pull-left"><strong>{% trans "Date d'inscription" %}</strong></span> {{user_to_display.date_joined}}</li>
+        <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Dernière connexion" %}</strong></span> empty</li>
+        <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Nom" %}</strong></span> {{user_to_display.get_full_name}} </li>
+        <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Email" %}</strong></span> {{user_to_display.email}}</li>
       </ul>
 
       <div class="panel panel-default">
-        <div class="panel-heading">Website <i class="fa fa-link fa-1x"></i></div>
+        <div class="panel-heading"> {% trans "Site web" %} <i class="fa fa-link fa-1x"></i></div>
         <div class="panel-body"><a href="http://bootply.com">care4care.com</a></div>
       </div>
 
 
       <ul class="list-group">
-        <li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
+        <li class="list-group-item text-muted">{% trans "Activités" %} <i class="fa fa-dashboard fa-1x"></i></li>
       </ul>
 
       <div class="panel panel-default">
-        <div class="panel-heading">Social Media</div>
+        <div class="panel-heading"> {% trans "Réseaux sociaux" %}</div>
         <div class="panel-body">
-          <i class="fa fa-facebook fa-2x"></i> <i class="fa fa-github fa-2x"></i> <i class="fa fa-twitter fa-2x"></i> <i class="fa fa-pinterest fa-2x"></i> <i class="fa fa-google-plus fa-2x"></i>
+          <i class="fa fa-facebook fa-2x"></i> <i class="fa fa-twitter fa-2x"></i>  <i class="fa fa-google-plus fa-2x"></i>
         </div>
       </div>
 

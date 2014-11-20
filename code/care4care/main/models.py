@@ -23,6 +23,64 @@ COUNTRY_CHOICES = (
     ('lu', _("Luxembourg")),
     )
 
+ACTIVE = 1
+HOLIDAYS = 2
+UNSUBSCRIBE = 3
+
+STATUS = (
+    (ACTIVE, _("Actif")),
+    (HOLIDAYS, _("En vacance")),
+    (UNSUBSCRIBE, _("Désactivé")),
+    )
+
+INBOX = 1
+MAIL = 2
+
+INFORMED_BY =(
+    (INBOX, _("Boite à message")),
+    (MAIL, _("Mail"))
+    )
+
+class MemberType():
+    MEMBER = 1
+    NON_MEMBER = 2
+    VERIFIED_MEMBER = 3
+    BRANCH_OFFICER = 4
+    ALL = 5
+    FAVORITE = 6
+
+    MEMBER_TYPES = (
+        (MEMBER, _("Membre")),
+        (NON_MEMBER, _("Non-membre"))
+        )
+
+    MEMBER_TYPES_GROUP = (
+        (FAVORITE, _("Favoris (inclus le reseau personel)")),
+        (ALL, _("Tous")),
+        (VERIFIED_MEMBER, _("Membre vérifié")))
+
+class JobCategory():
+    visit_at_home = 1
+    accompany_someone = 2
+    transport_by_car = 3
+    shopping = 4
+    household = 5
+    handyman_jobs = 6
+    gardening_jobs = 7
+    pets_care = 8
+    personal_care = 9
+    administration = 10
+    other = 11
+    special = 12
+
+    JOB_CATEGORIES = ((
+        (visit_at_home, _("Visite à la maison")),
+        (accompany_someone, _("Tenir compagnie")),
+        (transport_by_car, _("Transport par voiture")),
+        (shopping, _("Shopping"))
+        ))
+
+
 class CommonInfo(models.Model):
     """
     Common informations class
@@ -52,6 +110,7 @@ class UserManager(BaseUserManager):
         super_user = self._create_user(username, email, password, True, True, **extra_fields)
         super_user.languages = ['fr', 'be', 'nl']
         super_user.how_found = HOW_FOUND_CHOICES[0][0]
+        super_user.super_admin = True
         super_user.save()
         return super_user
 
@@ -70,14 +129,38 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo):
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
 
-    non_member = models.BooleanField(default=False)
+    status = models.IntegerField(choices=STATUS,
+                                      default=ACTIVE)
+
+    user_type = models.IntegerField(_("Type de compte"),choices=MemberType.MEMBER_TYPES,
+                                      default=MemberType.MEMBER, help_text='Un member pourra aider ou être aidé alors qu\'un  non-membre est un professionnel qui s\'inscrira pour avoir accès au donnée d\'un \
+                                       passiant. Veuillez choisir celui qui vous correspond' )
+
     how_found = MultiSelectField(choices=HOW_FOUND_CHOICES, verbose_name=_("Comment avez-vous entendu parlé de Care4Care ?"))
     birth_date = models.DateField(blank=True, null=True, verbose_name=_("Date de naissance"))
     credit = models.IntegerField(default=0, verbose_name=_("Crédit restant")) # in minuts
 
+    #Verified member
+    social_media = []
+    car = models.BooleanField(default=False)
+
+    #branch officer
+    super_admin = models.BooleanField(default=False)
+
+    #non member
+    organization = models.CharField(_("Organization"), max_length=100)
+    work = models.CharField(_("Fonction"), max_length=100)
+
+    # preference
+    work_with = models.ManyToManyField('self')
+    mail_preferences = models.IntegerField(choices=INFORMED_BY,
+                                      default=INBOX)
+    receive_help_from_who = models.IntegerField(choices=MemberType.MEMBER_TYPES_GROUP, default=MemberType.ALL)
+    preferred_job = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Quels sont vos travaux préférés ?"))
+
     objects = UserManager()
 
-    REQUIRED_FIELDS = ['email', 'first_name', 'last_name',]
+    REQUIRED_FIELDS = ['email', 'first_name', 'last_name','user_type']
     USERNAME_FIELD = 'username'
 
     def get_full_name(self):
@@ -88,7 +171,6 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo):
 
     def __unicode__(self):
         return self.email
-
 
 class Contact(CommonInfo):
     """

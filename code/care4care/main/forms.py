@@ -20,7 +20,7 @@ class CareRegistrationForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'languages', \
-         'how_found', 'birth_date', 'phone_number', 'mobile_number', 'location', 'latitude', 'longitude']
+         'how_found', 'birth_date', 'phone_number', 'mobile_number', 'location', 'latitude', 'longitude','user_type']
         widgets = {
             'latitude': forms.HiddenInput,
             'longitude': forms.HiddenInput,
@@ -59,4 +59,4 @@ class CareRegistrationForm(forms.ModelForm):
 class ProfileManagementForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['email', 'phone_number', 'languages', 'location']
+        fields = ['email', 'phone_number', 'status', 'languages', 'location','mail_preferences','preferred_job']
