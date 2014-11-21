@@ -86,7 +86,9 @@ class verified_member_demand_view(View):
             messages.add_message(request, messages.INFO, _('Modification sauvegardée'))
         else:
             form = VerifiedInformationForm()
-        return render(request,'verified/verified_member_demand.html',locals())
+            messages.add_message(request, messages.INFO, _('Erreur veuillez insèrer les trois fichiers'))
+            return render(request,'verified/verified_member_demand.html',locals())
+        return render(request,'main/home.html',locals())
 
 
 class EditProfileView(View):

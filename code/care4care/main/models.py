@@ -220,5 +220,3 @@ class VerifiedInformation(models.Model):
     recomendation_letter_1=models.FileField(upload_to='documents/')
     recomendation_letter_2=models.FileField(upload_to='documents/')
     criminal_record=models.FileField(upload_to='documents/')
-
-    REQUIRED_FIELDS = ['recomendation_letter_1', 'recomendation_letter_2', 'criminal_case', ]
