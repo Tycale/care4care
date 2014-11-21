@@ -1,6 +1,7 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from main.models import User
+from multiselectfield import MultiSelectField
 
 from django.forms.extras import SelectDateWidget
 import datetime
@@ -57,6 +58,11 @@ class CareRegistrationForm(forms.ModelForm):
         return self.cleaned_data
 
 class ProfileManagementForm(forms.ModelForm):
+
+    favorites = MultiSelectField(verbose_name="Vos membres favoris", help_text="test")
+    personal_network = MultiSelectField(verbose_name="Votre reseau")
+    
     class Meta:
         model = User
-        fields = ['email', 'phone_number', 'status', 'languages', 'location','mail_preferences','preferred_job','receive_help_from_who','branches']
+        fields = ['email', 'phone_number', 'status', 'languages', 'location','mail_preferences','preferred_job',
+        'receive_help_from_who','branches','favorites','personal_network']

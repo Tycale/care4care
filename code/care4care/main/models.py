@@ -177,6 +177,11 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo):
 
     # preference
     work_with = models.ManyToManyField('self')
+
+    # network management
+    favorites = models.ManyToManyField('self')
+    personal_network = models.ManyToManyField('self', verbose_name="Votre reseau personnel")
+
     mail_preferences = models.IntegerField(choices=INFORMED_BY,
                                       default=INBOX, verbose_name=_("Recevoir mes messages par"))
     receive_help_from_who = models.IntegerField(choices=MemberType.MEMBER_TYPES_GROUP, default=MemberType.ALL,
