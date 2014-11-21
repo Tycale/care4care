@@ -9,7 +9,7 @@ from django.contrib.sites.models import Site
 from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
 from django.views.generic import View
-from main.forms import ProfileManagementForm
+from main.forms import ProfileManagementForm, VerifiedInformationForm
 from main.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -63,6 +63,28 @@ def verified_member_demand_view(request):
 
 
 # Classes views
+
+class verified_member_demand_view(View):       
+    
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(verified_member_demand_view, self).dispatch(*args, **kwargs)
+    
+    def get(self, request):
+        user = request.user
+        form = VerifiedInformationForm(instance=user)
+        return render(request,'verified/verified_member_demand.html',locals())    
+
+    def post(self, request):
+        user = request.user
+        form = VerifiedInformationForm(request.POST,instance=user)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.INFO, _('Modification sauvegardée'))
+        else:
+            form = VerifiedInformationForm(instance=request.user)
+        return render(request,'verified/verified_member_demand.html',locals())
+
 
 class EditProfileView(View):
     """ Return the edit page for the current logged user"""

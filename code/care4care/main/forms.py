@@ -66,3 +66,9 @@ class ProfileManagementForm(forms.ModelForm):
         model = User
         fields = ['email', 'phone_number', 'status', 'languages', 'location','mail_preferences','preferred_job',
         'receive_help_from_who','branches','favorites','personal_network']
+
+class VerifiedInformationForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['recomendation_letter_1', 'recomendation_letter_2', 'criminal_case']
+

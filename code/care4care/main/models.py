@@ -112,6 +112,15 @@ class CommonInfo(models.Model):
     class Meta:
         abstract = True
 
+class VerifiedInformation(models.Model):
+    """
+    Doc for verfied member class
+    """
+    recomendation_letter_1=models.FileField()
+    recomendation_letter_2=models.FileField()
+    criminal_case=models.FileField()
+
+    REQUIRED_FIELDS = ['recomendation_letter_1', 'recomendation_letter_2', 'criminal_case', ]
 
 class UserManager(BaseUserManager):
     """
@@ -126,7 +135,7 @@ class UserManager(BaseUserManager):
         super_user.save()
         return super_user
 
-class User(AbstractBaseUser, PermissionsMixin, CommonInfo):
+class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedInformation):
     """
     Custom user class
     AbstractBaseUser gives us the following fields :
