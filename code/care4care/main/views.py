@@ -49,6 +49,7 @@ def user_profile(request, user_id):
     user_to_display = get_object_or_404(User, pk=user_id)
     return render(request, 'profile/user_profile.html',locals())
 
+
 @login_required
 def manage_profile(request):
     """ Return the profile from the current logged user"""

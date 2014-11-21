@@ -2389,7 +2389,6 @@ div.top-menu > ul > li > button > a {
 .login {
     margin-top: 15px;
     background-color: #fff;
-    text-align: center;
     box-shadow: 0 2px 1px rgba(0, 0, 0, 0.2);
 }
 
@@ -2398,6 +2397,8 @@ div.top-menu > ul > li > button > a {
     padding: 3px;
     margin-bottom: 15px;
     color: #c6c6c6;
+    text-align: center;
+
 }
 
 .login .whithe-body {

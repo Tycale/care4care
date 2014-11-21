@@ -38,11 +38,10 @@
                 </div>
             </form>  
 
-            <p>{% trans "Pas encore de compte ?" %} <a href="{% url 'registration_register' %}">{% trans 'Inscrivez-vous !'%}</a></p>
-            <p>{% trans "Mot de passe perdu ?" %} <a href="{% url 'registration_register' %}">{% trans 'Retrouvez votre mot de passe !'%}</a></p>
-
+            <p class="text-center">{% trans "Pas encore de compte ?" %} <a href="{% url 'registration_register' %}">{% trans 'Inscrivez-vous !'%}</a><br/>
+            {% trans "Mot de passe perdu ?" %} <a href="{% url 'password_reset' %}">{% trans 'Retrouvez votre mot de passe !'%}</a></p>
             <hr />
-            <p>{% trans "Ou connectez-vous via :" %}</p>
+            <p class="text-center">{% trans "Ou connectez-vous via :" %}</p>
             <input class="btn btn-theme03 btn-block" type="button" id="sign-in-google" value="{% trans "se connecter via Google"%}" />
             <input class="btn btn-theme03 btn-block" type="button" id="sign-in-twitter" value="{% trans "se connecter via Twitter"%}" />
             </div>

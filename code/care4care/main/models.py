@@ -106,17 +106,31 @@ class CommonInfo(models.Model):
 
 
 class UserManager(BaseUserManager):
+    """
+    https://github.com/django/django/blob/master/django/contrib/auth/models.py#L162
+    """
     def create_superuser(self, username, email, password, **extra_fields):
         super_user = self._create_user(username, email, password, True, True, **extra_fields)
         super_user.languages = ['fr', 'be', 'nl']
         super_user.how_found = HOW_FOUND_CHOICES[0][0]
-        super_user.super_admin = True
+        super_user.user_type = MemberType.MEMBER
+
         super_user.save()
         return super_user
 
 class User(AbstractBaseUser, PermissionsMixin, CommonInfo):
     """
     Custom user class
+    AbstractBaseUser gives us the following fields :
+        * password
+        * last_login
+        * is_active
+    See https://github.com/django/django/blob/master/django/contrib/auth/models.py#L191
+    PermissionsMixin gives us the following fields :
+        * is_superuser
+        * groups
+        * user_permissions
+    See https://github.com/django/django/blob/master/django/contrib/auth/models.py#L299
     """
     email = models.EmailField(_("Adresse email"), unique=False)
     date_joined = models.DateTimeField(auto_now_add=True)
@@ -133,19 +147,17 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo):
                                       default=ACTIVE)
 
     user_type = models.IntegerField(_("Type de compte"),choices=MemberType.MEMBER_TYPES,
-                                      default=MemberType.MEMBER, help_text='Un member pourra aider ou être aidé alors qu\'un  non-membre est un professionnel qui s\'inscrira pour avoir accès au donnée d\'un \
-                                       passiant. Veuillez choisir celui qui vous correspond' )
+                                      default=MemberType.MEMBER, help_text=_('Un member pourra aider ou être aidé alors qu\'un \
+                                       non-membre est un professionnel qui s\'inscrira pour avoir accès aux données d\'un \
+                                       passiant. Veuillez choisir celui qui vous correspond'))
 
     how_found = MultiSelectField(choices=HOW_FOUND_CHOICES, verbose_name=_("Comment avez-vous entendu parlé de Care4Care ?"))
     birth_date = models.DateField(blank=True, null=True, verbose_name=_("Date de naissance"))
     credit = models.IntegerField(default=0, verbose_name=_("Crédit restant")) # in minuts
 
     #Verified member
-    social_media = []
+    # social_media = [] # Commented since we don't know how it'll be traited by the third-app.
     car = models.BooleanField(default=False)
-
-    #branch officer
-    super_admin = models.BooleanField(default=False)
 
     #non member
     organization = models.CharField(_("Organization"), max_length=100)
@@ -160,7 +172,7 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo):
 
     objects = UserManager()
 
-    REQUIRED_FIELDS = ['email', 'first_name', 'last_name','user_type']
+    REQUIRED_FIELDS = ['email', 'first_name', 'last_name', ]
     USERNAME_FIELD = 'username'
 
     def get_full_name(self):
