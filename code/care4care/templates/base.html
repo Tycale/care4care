@@ -213,6 +213,8 @@
                   <ul class="dropdown-menu" role="user-menu">
                     <li><a href="{% url 'profile_management' %}">
                     {% bootstrap_icon 'user' %} &nbsp; {% trans "Mon Profile" %}</a>
+                    <a href="{% url 'verified_member_demand' %}">
+                    {% bootstrap_icon 'star' %} &nbsp; {% trans "Vérifier" %}</a>
                     </li>
                     <li class="divider"></li>
                     <li><a href="{% url 'logout' %}">

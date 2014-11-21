@@ -114,3 +114,7 @@ class RegistrationView(BaseRegistrationView):
                                      user=new_user,
                                      request=request)
         return new_user
+
+def verified_member_demand_view(request):       
+    user_to_display = get_object_or_404(User, pk=request.user.id)
+    return render(request,'verified/verified_member_demand.html',locals())
