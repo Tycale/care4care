@@ -1,6 +1,6 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from main.models import User
+from main.models import User, VerifiedInformation
 from multiselectfield import MultiSelectField
 
 from django.forms.extras import SelectDateWidget
@@ -67,8 +67,11 @@ class ProfileManagementForm(forms.ModelForm):
         fields = ['email', 'phone_number', 'status', 'languages', 'location','mail_preferences','preferred_job',
         'receive_help_from_who','branches','favorites','personal_network']
 
-class VerifiedInformationForm(forms.ModelForm):
+class VerifiedInformationForm(forms.Form):
+    recomendation_letter_1=forms.FileField()
+    recomendation_letter_2=forms.FileField()
+    criminal_record=forms.FileField()
     class Meta:
-        model = User
-        fields = ['recomendation_letter_1', 'recomendation_letter_2', 'criminal_case']
+        model = VerifiedInformation
+        fields = ['user','recomendation_letter_1', 'recomendation_letter_2', 'criminal_record']
 

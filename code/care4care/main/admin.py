@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from main.models import User
+from main.models import User, VerifiedInformation
 
 class CareUserAdmin(UserAdmin):
 
@@ -29,3 +29,9 @@ class CareUserAdmin(UserAdmin):
     readonly_fields = ('how_found', 'languages')
 
 admin.site.register(User, CareUserAdmin)
+
+
+class VerifiedInformationAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.register(VerifiedInformation, VerifiedInformationAdmin)

@@ -10,7 +10,7 @@ from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
 from django.views.generic import View
 from main.forms import ProfileManagementForm, VerifiedInformationForm
-from main.models import User
+from main.models import User, VerifiedInformation
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect
@@ -72,17 +72,20 @@ class verified_member_demand_view(View):
     
     def get(self, request):
         user = request.user
-        form = VerifiedInformationForm(instance=user)
+        form = VerifiedInformationForm()
         return render(request,'verified/verified_member_demand.html',locals())    
 
     def post(self, request):
-        user = request.user
-        form = VerifiedInformationForm(request.POST,instance=user)
+        form = VerifiedInformationForm(request.POST,request.FILES,request.user)
         if form.is_valid():
-            form.save()
+            newdoc1 = VerifiedInformation(user = request.user, 
+                recomendation_letter_1 = request.FILES['recomendation_letter_1'],
+                recomendation_letter_2 = request.FILES['recomendation_letter_2'],
+                criminal_record = request.FILES['criminal_record'])
+            newdoc1.save()
             messages.add_message(request, messages.INFO, _('Modification sauvegardée'))
         else:
-            form = VerifiedInformationForm(instance=request.user)
+            form = VerifiedInformationForm()
         return render(request,'verified/verified_member_demand.html',locals())
 
 
