@@ -67,12 +67,8 @@ class ProfileManagementForm(forms.ModelForm):
         fields = ['email', 'phone_number', 'status', 'languages', 'location', 'mail_preferences', 'preferred_job',
         'receive_help_from_who', 'favorites', 'personal_network']
 
-class VerifiedInformationForm(forms.Form):
-    recomendation_letter_1=forms.FileField()
-    recomendation_letter_2=forms.FileField()
-    criminal_record=forms.FileField()
-    
+class VerifiedInformationForm(forms.ModelForm):
     class Meta:
         model = VerifiedInformation
-        fields = ['user', 'recomendation_letter_1', 'recomendation_letter_2', 'criminal_record']
+        fields = ['recomendation_letter_1', 'recomendation_letter_2', 'criminal_record']
 

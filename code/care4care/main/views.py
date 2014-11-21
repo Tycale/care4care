@@ -76,16 +76,12 @@ class verified_member_demand_view(View):
         return render(request,'verified/verified_member_demand.html',locals())    
 
     def post(self, request):
-        form = VerifiedInformationForm(request.POST,request.FILES,request.user)
+        form = VerifiedInformationForm(request.POST, request.FILES)
         if form.is_valid():
-            newdoc1 = VerifiedInformation(user = request.user, 
-                recomendation_letter_1 = request.FILES['recomendation_letter_1'],
-                recomendation_letter_2 = request.FILES['recomendation_letter_2'],
-                criminal_record = request.FILES['criminal_record'])
-            newdoc1.save()
+            form.user = request.user
+            form.save()
             messages.add_message(request, messages.INFO, _('Modification sauvegardée'))
         else:
-            form = VerifiedInformationForm()
             messages.add_message(request, messages.INFO, _('Erreur veuillez insèrer les trois fichiers'))
             return render(request,'verified/verified_member_demand.html',locals())
         return render(request,'main/home.html',locals())
