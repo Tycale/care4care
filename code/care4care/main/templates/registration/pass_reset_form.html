@@ -2,14 +2,14 @@
 {% load bootstrap3 %}{% load i18n %}
 
 
-{% block title %}{% trans "Réinitialiser son mot de passe" %}{% endblock %}
+{% block title %}{% trans "Changez votre mot de passe" %}{% endblock %}
 
 {% block content %}
 <div class="row">
     <div class="col-md-6 col-md-offset-3 col-xs-12">
         <div class="login">
             <div class="white-header">
-                <h4>{% trans "Réinitialiser son mot de passe" %} </h4>
+                <h4>{% trans "Changez votre mot de passe" %} </h4>
             </div>
             <div class="whithe-body">
             <h3></h3>
@@ -18,7 +18,7 @@
                 {% csrf_token %}
                 {% bootstrap_form form %}
                 <div class="form-group">
-                    <button type="submit" class="btn btn-theme btn-block">{% trans "Réinitialiser mon mot de passe"%}</button>
+                    <button type="submit" class="btn btn-theme btn-block">{% trans "Changer mon mot de passe"%}</button>
                 </div>
             </form>  
             </div>

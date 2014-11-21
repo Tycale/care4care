@@ -1,0 +1,1 @@
+{% load i18n %}{% trans "[Care4Care] Réinitialiser votre mot de passe" %}
