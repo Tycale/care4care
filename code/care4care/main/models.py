@@ -167,6 +167,10 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo):
     # social_media = [] # Commented since we don't know how it'll be traited by the third-app.
     car = models.BooleanField(default=False)
 
+    #branch
+    #https://code.djangoproject.com/ticket/9321
+    branches =  models.ManyToManyField('Branch')
+
     #non member
     organization = models.CharField(_("Organization"), max_length=100)
     work = models.CharField(_("Fonction"), max_length=100)
@@ -200,3 +204,6 @@ class Contact(CommonInfo):
     email = models.EmailField(_('Adresse email'), blank=True)
     relationship = models.CharField(max_length=255, blank=True, verbose_name=_("Votre relation par rapport à cette personne"))
     comments = models.CharField(max_length=255, blank=True, verbose_name=_("Commentaire supplémentaire"))
+
+class Branch(User):
+    website =  models.CharField(_("Organization"), max_length=400)
