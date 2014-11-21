@@ -113,16 +113,6 @@ class CommonInfo(models.Model):
     class Meta:
         abstract = True
 
-class VerifiedInformation(models.Model):
-    """
-    Doc for verfied member class
-    """
-    recomendation_letter_1=models.FileField()
-    recomendation_letter_2=models.FileField()
-    criminal_case=models.FileField()
-
-    REQUIRED_FIELDS = ['recomendation_letter_1', 'recomendation_letter_2', 'criminal_case', ]
-
 class UserManager(BaseUserManager):
     """
     https://github.com/django/django/blob/master/django/contrib/auth/models.py#L162
@@ -136,7 +126,7 @@ class UserManager(BaseUserManager):
         super_user.save()
         return super_user
 
-class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedInformation):
+class User(AbstractBaseUser, PermissionsMixin, CommonInfo):
     """
     Custom user class
     AbstractBaseUser gives us the following fields :
@@ -215,4 +205,14 @@ class Contact(CommonInfo):
     email = models.EmailField(_('Adresse email'), blank=True)
     relationship = models.CharField(max_length=255, blank=True, verbose_name=_("Votre relation par rapport à cette personne"))
     comments = models.CharField(max_length=255, blank=True, verbose_name=_("Commentaire supplémentaire"))
+
+
+class VerifiedInformation(models.Model):
+    """
+    Doc for verfied member class
+    """
+    user = models.ForeignKey(User)
+    recomendation_letter_1=models.FileField(upload_to='documents/')
+    recomendation_letter_2=models.FileField(upload_to='documents/')
+    criminal_record=models.FileField(upload_to='documents/')
 
