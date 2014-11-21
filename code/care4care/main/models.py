@@ -9,6 +9,7 @@ from django.contrib.auth.models import UserManager as BaseUserManager
 
 import re
 
+
 # TODO: complete
 HOW_FOUND_CHOICES = (
     ('amis', _("Mes amis m'en ont parlés")),
@@ -41,7 +42,7 @@ INFORMED_BY =(
     (MAIL, _("Mail"))
     )
 
-class MemberType():
+class MemberType:
     MEMBER = 1
     NON_MEMBER = 2
     VERIFIED_MEMBER = 3
@@ -60,7 +61,8 @@ class MemberType():
         (FAVORITE, _("Favoris (inclus le reseau personel)")),
         )
 
-class JobCategory():
+
+class JobCategory:
     visit_at_home = 1
     accompany_someone = 2
     transport_by_car = 3
@@ -87,7 +89,6 @@ class JobCategory():
         (other,_("Autre")),
         (special,_("Special ... :D")),
         ))
-
 
 class CommonInfo(models.Model):
     """
