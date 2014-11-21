@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}{% load i18n %}
+
+
+{% block title %}{% trans "Mot de passe changé" %}{% endblock %}
+
+
+{% block content %}
+<h3><i class="fa fa-angle-right"></i> {% trans "Mot de passe changé" %}</h3>
+
+<div class="row mt">
+    <div class="col-lg-12">
+        <div class="content-panel pn">
+            <div id="register-complete">
+                <div class="register-title">{% trans "Mot de passe changé" %}</div>
+            </div>
+            <div class="register-text">
+                <p>{% trans "Vous pouvez désormais vous connecter avec votre nouveau mot de passe." %}</p>
+            </div>
+        </div>
+    </div><!-- col-lg-12-->
+</div>
+{% endblock %}

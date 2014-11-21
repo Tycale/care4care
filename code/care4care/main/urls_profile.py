@@ -1,5 +1,5 @@
-from django.conf.urls import patterns
-from django.conf.urls import url
+from django.conf.urls import patterns, url
+
 from django.views.generic.base import TemplateView
 
 from main.views import user_profile, manage_profile, EditProfileView

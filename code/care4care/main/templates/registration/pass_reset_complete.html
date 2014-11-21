@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}{% load i18n %}
+
+
+{% block title %}{% trans "Mot de passe perdu" %}{% endblock %}
+
+
+{% block content %}
+<h3><i class="fa fa-angle-right"></i> {% trans "Vérifiez vos mails" %}</h3>
+
+<div class="row mt">
+    <div class="col-lg-12">
+        <div class="content-panel pn">
+            <div id="register-complete">
+                <div class="badge badge-hot">Mail</div>
+                <div class="register-title">{% trans "Vérifiez vos mails" %}</div>
+            </div>
+            <div class="register-text">
+                <p>{% trans "Afin de récupérer votre compte, nous venons de vous envoyer un lien par email vous permettant de changer votre mot de passe." %}</p>
+            </div>
+        </div>
+    </div><!-- col-lg-12-->
+</div>
+{% endblock %}
