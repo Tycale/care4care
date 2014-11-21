@@ -62,29 +62,29 @@ def verified_member_demand_view(request):
     return render(request,'verified/verified_member_demand.html',locals())
 
 
-# Classes views
+@login_required
+def verified_member_demand_view(request):
+    user = request.user
+    form = VerifiedInformationForm()
 
-class verified_member_demand_view(View):       
-    
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super(verified_member_demand_view, self).dispatch(*args, **kwargs)
-    
-    def get(self, request):
-        user = request.user
-        form = VerifiedInformationForm()
-        return render(request,'verified/verified_member_demand.html',locals())    
+    try:
+        old_vi = VerifiedInformation.objects.get(user=user)
+        form = VerifiedInformationForm(instance=old_vi)
+    except VerifiedInformation.DoesNotExist:
+        pass
 
-    def post(self, request):
+    if request.POST :
         form = VerifiedInformationForm(request.POST, request.FILES)
         if form.is_valid():
-            form.user = request.user
-            form.save()
+            obj = form.save(commit=False)
+            obj.user = user
+            obj.save()
             messages.add_message(request, messages.INFO, _('Modification sauvegardée'))
-        else:
-            messages.add_message(request, messages.INFO, _('Erreur veuillez insèrer les trois fichiers'))
-            return render(request,'verified/verified_member_demand.html',locals())
-        return render(request,'main/home.html',locals())
+            return redirect('home')
+
+    return render(request,'verified/verified_member_demand.html',locals())
+
+# Classes views
 
 
 class EditProfileView(View):

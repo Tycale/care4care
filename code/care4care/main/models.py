@@ -211,7 +211,7 @@ class VerifiedInformation(models.Model):
     """
     Doc for verfied member class
     """
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, null=True, blank=False)
     recomendation_letter_1=models.FileField(upload_to='documents/')
     recomendation_letter_2=models.FileField(upload_to='documents/')
     criminal_record=models.FileField(upload_to='documents/')

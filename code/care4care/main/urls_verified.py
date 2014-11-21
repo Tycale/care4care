@@ -4,6 +4,6 @@ from main.views import verified_member_demand_view
 
 urlpatterns = patterns('',
                        url(r'^verified/$',
-                           verified_member_demand_view.as_view(),
+                           verified_member_demand_view,
                            name='verified_member_demand'),
                        )
