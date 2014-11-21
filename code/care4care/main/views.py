@@ -57,7 +57,7 @@ def manage_profile(request):
     return render(request, 'profile/user_profile.html',locals())
 
 @login_required
-def verified_member_demand_view(request):       
+def verified_member_demand_view(request):
     user_to_display = request.user
     return render(request,'verified/verified_member_demand.html',locals())
 
@@ -84,7 +84,9 @@ class EditProfileView(View):
             messages.add_message(request, messages.INFO, _('Modification sauvegardée'))
         else:
             form = ProfileManagementForm(instance=request.user)
-        return render(request,'profile/edit_profile.html',locals())
+        user_to_display = user
+        request.method = "GET"
+        return HttpResponseRedirect('../')
 
 
 class RegistrationView(BaseRegistrationView):

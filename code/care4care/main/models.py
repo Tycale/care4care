@@ -55,9 +55,10 @@ class MemberType():
         )
 
     MEMBER_TYPES_GROUP = (
-        (FAVORITE, _("Favoris (inclus le reseau personel)")),
         (ALL, _("Tous")),
-        (VERIFIED_MEMBER, _("Membre vérifié")))
+        (VERIFIED_MEMBER, _("Membre vérifié")),
+        (FAVORITE, _("Favoris (inclus le reseau personel)")),
+        )
 
 class JobCategory():
     visit_at_home = 1
@@ -77,7 +78,14 @@ class JobCategory():
         (visit_at_home, _("Visite à la maison")),
         (accompany_someone, _("Tenir compagnie")),
         (transport_by_car, _("Transport par voiture")),
-        (shopping, _("Shopping"))
+        (shopping, _("Shopping")),
+        (household,_("Garder des maisons")),
+        (handyman_jobs,_("Petit boulots manuels")),
+        (gardening_jobs,_("Jardinage")),
+        (pets_care,_("Garder des animaux")),
+        (administration,_("Administratif")),
+        (other,_("Autre")),
+        (special,_("Special ... :D")),
         ))
 
 
@@ -166,8 +174,9 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo):
     # preference
     work_with = models.ManyToManyField('self')
     mail_preferences = models.IntegerField(choices=INFORMED_BY,
-                                      default=INBOX)
-    receive_help_from_who = models.IntegerField(choices=MemberType.MEMBER_TYPES_GROUP, default=MemberType.ALL)
+                                      default=INBOX, verbose_name=_("Recevoir mes messages par"))
+    receive_help_from_who = models.IntegerField(choices=MemberType.MEMBER_TYPES_GROUP, default=MemberType.ALL,
+    verbose_name=_("Recevoir des demandes et des offres de"))
     preferred_job = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Quels sont vos travaux préférés ?"))
 
     objects = UserManager()
