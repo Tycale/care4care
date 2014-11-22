@@ -9,7 +9,6 @@ from django.contrib.auth.models import UserManager as BaseUserManager
 
 import re
 
-
 # TODO: complete
 HOW_FOUND_CHOICES = (
     ('amis', _("Mes amis m'en ont parlés")),
@@ -212,7 +211,7 @@ class VerifiedInformation(models.Model):
     Doc for verfied member class
     """
     user = models.ForeignKey(User, null=True, blank=False)
-    recomendation_letter_1=models.FileField(upload_to='documents/')
-    recomendation_letter_2=models.FileField(upload_to='documents/')
-    criminal_record=models.FileField(upload_to='documents/')
+    recomendation_letter_1=models.FileField(upload_to='documents/', verbose_name=_("Lettre de recommendation n°1"))
+    recomendation_letter_2=models.FileField(upload_to='documents/', verbose_name=_("Lettre de recommendation n°2"))
+    criminal_record=models.FileField(upload_to='documents/', verbose_name=_("Casier judiciaire"))
 
