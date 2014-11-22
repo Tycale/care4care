@@ -2,14 +2,14 @@
  * DC jQuery Vertical Accordion Menu - jQuery vertical accordion menu plugin
  * Copyright (c) 2011 Design Chemical
  *
- * Dual licensed under the MIT and GPL licenses:
+ * Dual licensed under the MIT and GPL xxxxxxlicenses:
  * 	http://www.opensource.org/licenses/mit-license.php
  * 	http://www.gnu.org/licenses/gpl.html
  *
  */
 
 (function($){
-
+  
 	$.fn.dcAccordion = function(options) {
 
 		//set default options 
@@ -19,6 +19,7 @@
 			classArrow	 : 'dcjq-icon',
 			classCount	 : 'dcjq-count',
 			classExpand	 : 'dcjq-current-parent',
+			classDisable : '',
 			eventType	 : 'click',
 			hoverDelay	 : 300,
 			menuClose     : true,
@@ -28,21 +29,30 @@
 			saveState	 : true,
 			disableLink	 : true,
 			showCount : false,
-//			cookie	: 'dcjq-accordion'
+			cookie	: 'dcjq-accordion'
 		};
 
 		//call in the default otions
 		var options = $.extend(defaults, options);
-
+    
 		this.each(function(options){
-
 			var obj = this;
+			$objLinks = $('li > a',obj);
+			$objSub = $('li > ul',obj);
+		  //console.log($objLinks,$objSub+"\n");
+			if(defaults.classDisable){
+				$objLinks = $('li:not(.'+defaults.classDisable+') > a',obj);
+				$objSub = $('li:not(.'+defaults.classDisable+') > ul',obj);
+			}
+			
+			classActive = defaults.classActive;
+			
 			setUpAccordion();
-//			if(defaults.saveState == true){
-//				checkCookie(defaults.cookie, obj);
-//			}
+			if(defaults.saveState == true){
+				checkCookie(defaults.cookie, obj, classActive);
+			}
 			if(defaults.autoExpand == true){
-				$('li.'+defaults.classExpand+' > a').addClass(defaults.classActive);
+				$('li.'+defaults.classExpand+' > a').addClass(classActive);
 			}
 			resetAccordion();
 
@@ -56,7 +66,7 @@
 					out: linkOut // function = onMouseOut callback (REQUIRED)
 				};
 
-				$('li a',obj).hoverIntent(config);
+				$objLinks.hoverIntent(config);
 				var configMenu = {
 					sensitivity: 2, // number = sensitivity threshold (must be 1 or higher)
 					interval: 1000, // number = milliseconds for onMouseOver polling interval
@@ -70,7 +80,7 @@
 				// Disable parent links
 				if(defaults.disableLink == true){
 
-					$('li a',obj).click(function(e){
+					$objLinks.click(function(e){
 						if($(this).siblings('ul').length >0){
 							e.preventDefault();
 						}
@@ -79,7 +89,7 @@
 
 			} else {
 			
-				$('li a',obj).click(function(e){
+				$objLinks.click(function(e){
 
 					$activeLi = $(this).parent('li');
 					$parentsLi = $activeLi.parents('li');
@@ -99,16 +109,16 @@
 
 					if ($('> ul',$activeLi).is(':visible')){
 						$('ul',$activeLi).slideUp(defaults.speed);
-						$('a',$activeLi).removeClass(defaults.classActive);
+						$('a',$activeLi).removeClass(classActive);
 					} else {
 						$(this).siblings('ul').slideToggle(defaults.speed);
-						$('> a',$activeLi).addClass(defaults.classActive);
+						$('> a',$activeLi).addClass(classActive);
 					}
 					
-//					// Write cookie if save state is on
-//					if(defaults.saveState == true){
-//						createCookie(defaults.cookie, obj);
-//					}
+					// Write cookie if save state is on
+					if(defaults.saveState == true){
+						createCookie(defaults.cookie, obj, classActive);
+					}
 				});
 			}
 
@@ -117,14 +127,17 @@
 
 				$arrow = '<span class="'+defaults.classArrow+'"></span>';
 				var classParentLi = defaults.classParent+'-li';
-				$('> ul',obj).show();
+				$objSub.show();
 				$('li',obj).each(function(){
 					if($('> ul',this).length > 0){
 						$(this).addClass(classParentLi);
 						$('> a',this).addClass(defaults.classParent).append($arrow);
 					}
 				});
-				$('> ul',obj).hide();
+				$objSub.hide();
+				if(defaults.classDisable){
+					$('li.'+defaults.classDisable+' > ul').show();
+				}
 				if(defaults.showCount == true){
 					$('li.'+classParentLi,obj).each(function(){
 						if(defaults.disableLink == true){
@@ -132,7 +145,7 @@
 						} else {
 							var getCount = parseInt($('ul a',this).length);
 						}
-						$('> a',this).append(' <span class="'+defaults.classCount+'">'+getCount+'</span>');
+						$('> a',this).append(' <span class="'+defaults.classCount+'">('+getCount+')</span>');
 					});
 				}
 			}
@@ -151,15 +164,15 @@
 
 			if ($('> ul',$activeLi).is(':visible')){
 				$('ul',$activeLi).slideUp(defaults.speed);
-				$('a',$activeLi).removeClass(defaults.classActive);
+				$('a',$activeLi).removeClass(classActive);
 			} else {
 				$(this).siblings('ul').slideToggle(defaults.speed);
-				$('> a',$activeLi).addClass(defaults.classActive);
+				$('> a',$activeLi).addClass(classActive);
 			}
 
 			// Write cookie if save state is on
 			if(defaults.saveState == true){
-				createCookie(defaults.cookie, obj);
+				createCookie(defaults.cookie, obj, classActive);
 			}
 		}
 
@@ -172,10 +185,10 @@
 		function menuOut(){
 
 			if(defaults.menuClose == true){
-				$('ul',obj).slideUp(defaults.speed);
+				$objSub.slideUp(defaults.speed);
 				// Reset active links
-				$('a',obj).removeClass(defaults.classActive);
-				createCookie(defaults.cookie, obj);
+				$('a',obj).removeClass(classActive);
+				createCookie(defaults.cookie, obj, classActive);
 			}
 		}
 
@@ -183,43 +196,45 @@
 		function autoCloseAccordion($parentsLi, $parentsUl){
 			$('ul',obj).not($parentsUl).slideUp(defaults.speed);
 			// Reset active links
-			$('a',obj).removeClass(defaults.classActive);
-			$('> a',$parentsLi).addClass(defaults.classActive);
+			$('a',obj).removeClass(classActive);
+			$('> a',$parentsLi).addClass(classActive);
 		}
 		// Reset accordion using active links
 		function resetAccordion(){
-			$('ul',obj).hide();
-			$allActiveLi = $('a.'+defaults.classActive,obj);
-			$allActiveLi.siblings('ul').show();
+			$objSub.hide();
+			var $parentsLi = $('a.'+classActive,obj).parents('li');
+			$('> a',$parentsLi).addClass(classActive);
+			$allActiveLi = $('a.'+classActive,obj);
+			$($allActiveLi).siblings('ul').show();
 		}
 		});
 
 		// Retrieve cookie value and set active items
-//		function checkCookie(cookieId, obj){
-//			var cookieVal = $.cookie(cookieId);
-//			if(cookieVal != null){
-//				// create array from cookie string
-//				var activeArray = cookieVal.split(',');
-//				$.each(activeArray, function(index,value){
-//					var $cookieLi = $('li:eq('+value+')',obj);
-//					$('> a',$cookieLi).addClass(defaults.classActive);
-//					var $parentsLi = $cookieLi.parents('li');
-//					$('> a',$parentsLi).addClass(defaults.classActive);
-//				});
-//			}
-//		}
+		function checkCookie(cookieId, obj, classActive){
+			var cookieVal = $.cookie(cookieId);
+			if(cookieVal != null){
+				// create array from cookie string
+				var activeArray = cookieVal.split(',');
+				$.each(activeArray, function(index,value){
+					var $cookieLi = $('li:eq('+value+')',obj);
+					$('> a',$cookieLi).addClass(classActive);
+					var $parentsLi = $cookieLi.parents('li');
+					$('> a',$parentsLi).addClass(classActive);
+				});
+			}
+		}
 
 		// Write cookie
-//		function createCookie(cookieId, obj){
-//			var activeIndex = [];
-//			// Create array of active items index value
-//			$('li a.'+defaults.classActive,obj).each(function(i){
-//				var $arrayItem = $(this).parent('li');
-//				var itemIndex = $('li',obj).index($arrayItem);
-//					activeIndex.push(itemIndex);
-//				});
-//			// Store in cookie
-//			$.cookie(cookieId, activeIndex, { path: '/' });
-//		}
+		function createCookie(cookieId, obj, classActive){
+			var activeIndex = [];
+			// Create array of active items index value
+			$('li a.'+classActive,obj).each(function(i){
+				var $arrayItem = $(this).parent('li');
+				var itemIndex = $('li',obj).index($arrayItem);
+					activeIndex.push(itemIndex);
+				});
+			// Store in cookie
+			$.cookie(cookieId, activeIndex, { path: '/' });
+		}
 	};
 })(jQuery);

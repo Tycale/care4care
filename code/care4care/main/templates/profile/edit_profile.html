@@ -41,17 +41,18 @@
         </div>
           {% bootstrap_field form.mail_preferences %}
           {% bootstrap_field form.receive_help_from_who %}
-          <div>
-            {% buttons %}
-            <button type="submit" class="btn btn-success">
-              {% bootstrap_icon "ok" %} &nbsp; {% trans "Sauvegarder" %}
-            </button>
-            <a href="{% url 'profile_management' %}" class="btn btn-danger">
-              {% bootstrap_icon "remove" %} &nbsp; {% trans "Annuler" %}
-            </a>
-            {% endbuttons %}
-          </div>
         </div>
+
+        {% buttons %}
+        <div class="row mt mb">
+          <div class="col-lg-6"><button type="submit" class="btn btn-success btn-lg btn-block">
+        {% bootstrap_icon "ok" %} &nbsp; {% trans "Modifier" %}
+        </button></div>
+          <div class="col-lg-6"><a href="{% url 'home' %}" class="btn btn-danger btn-lg btn-block">
+              {% bootstrap_icon "remove" %} &nbsp; {% trans "Annuler" %}
+            </a></div>
+        </div>
+        {% endbuttons %}
       </div>
 
     </form>

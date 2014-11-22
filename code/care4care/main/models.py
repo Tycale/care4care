@@ -121,6 +121,7 @@ class UserManager(BaseUserManager):
         super_user.languages = ['fr', 'be', 'nl']
         super_user.how_found = HOW_FOUND_CHOICES[0][0]
         super_user.user_type = MemberType.MEMBER
+        super_user.is_verified = True
 
         super_user.save()
         return super_user
@@ -149,6 +150,8 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo):
         ])
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
+
+    is_verified = models.BooleanField(default=False)
 
     status = models.IntegerField(choices=STATUS,
                                       default=ACTIVE)

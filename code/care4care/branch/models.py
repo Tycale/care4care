@@ -1,15 +1,22 @@
 from django.utils.translation import ugettext as _
+from django.template.defaultfilters import slugify
 from django.db import models
 
 from main.models import User, JobCategory
 
 class Branch(models.Model):
     name = models.CharField(verbose_name=_("Nom de la branche"), max_length=255)
+    slug = models.SlugField()
     creator = models.ForeignKey(User, verbose_name=_("Créateur de la branche"))
     location = models.CharField(_('Adresse'), max_length=256, null=True, blank=True)
     latitude = models.CharField(_('Latitude'), max_length=20, null=True, blank=True)
     longitude = models.CharField(_('Longitude'), max_length=20, null=True, blank=True)
     members = models.ManyToManyField(User, null=True, blank=True, through='BranchMembers', related_name="members", verbose_name=_("Membres de la branche"))
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.slug = slugify(self.name)
+        super(Branch, self).save(*args, **kwargs)
 
     class Meta:
         ordering = ['name']
