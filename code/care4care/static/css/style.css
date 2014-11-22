@@ -233,6 +233,7 @@ ul.top-menu > li > .logout {
     height: 100%;
     position: fixed;
     background: #424a5d;
+    overflow: scroll;
 }
 
 #sidebar h5 {
@@ -245,7 +246,7 @@ ul.top-menu > li > .logout {
 }
 
 #sidebar .sub-menu > .sub li  {
-    padding-left: 32px;
+    padding-left: 22px;
 }
 
 #sidebar .sub-menu > .sub li:last-child {

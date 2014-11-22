@@ -197,8 +197,8 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo):
     def get_short_name(self):
         return self.first_name
 
-    def __unicode__(self):
-        return self.email
+    def __str__(self):
+        return self.username
 
 class Contact(CommonInfo):
     """

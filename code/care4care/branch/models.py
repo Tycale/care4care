@@ -5,7 +5,7 @@ from django.db import models
 from main.models import User, JobCategory
 
 class Branch(models.Model):
-    name = models.CharField(verbose_name=_("Nom de la branche"), max_length=255)
+    name = models.CharField(verbose_name=_("Nom de la branche"), max_length=255, help_text=_("Nom de la localité"))
     slug = models.SlugField()
     creator = models.ForeignKey(User, verbose_name=_("Créateur de la branche"))
     location = models.CharField(_('Adresse'), max_length=256, null=True, blank=True)
@@ -17,6 +17,13 @@ class Branch(models.Model):
         if not self.id:
             self.slug = slugify(self.name)
         super(Branch, self).save(*args, **kwargs)
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('branch_home', (), {'slug' : self.slug , 'id' : self.id})
+
+    def __str__(self):
+        return self.name
 
     class Meta:
         ordering = ['name']

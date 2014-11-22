@@ -311,10 +311,13 @@
                           <span>{% trans "Branches" %}</span>
                       </a>
                       <ul class="sub">
-                          <li><a href="general.html"><i class="fa fa-circle-thin"></i>General</a></li>
+                        {% for branch in request.user.branch_set.all %}
+                          <li><a href="{{ branch.get_absolute_url }}"><i class="fa fa-circle-thin"></i>{{ branch }}</a></li>
+                        {% endfor %}
+
                           <li><a href="#"><i class="fa fa-plus"></i>{% trans "Rejoindre une branche" %}</a></li>
                           {% if request.user.is_verified %}
-                            <li><a href="#"><i class="fa fa-code-fork"></i>{% trans "Créer une branche" %}</a></li>
+                            <li><a href="{% url "branch_create" %}"><i class="fa fa-code-fork"></i>{% trans "Créer une branche" %}</a></li>
                           {% endif %}
                       </ul>
                   </li>
