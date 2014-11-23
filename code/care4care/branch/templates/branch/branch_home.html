@@ -4,19 +4,34 @@
 
 {% block title %}{{ branch }}{% endblock %}
 
+{% block extra_head %}
+<script src="http://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+{% endblock %}
 
 {% block content %}
-<h3><i class="fa fa-angle-right"></i> {{ branch }}</h3>
+<div class="row">
+    <div class="col-lg-12">
+            <div id="map" style="width: 100%; min-height: 300px;">
+            </div>
+            <div style="display:none;">
+            <div id="title-branch">
+                <h3><i class="fa fa-angle-right"></i> {% trans "Branche" %} {{ branch }}</h3>
+                {% if nb_users != 0 %}
+                <h5><i class="fa fa-user"></i>
+                    {% blocktrans count nb=nb_users %}
+                        {{nb}} participant
+                    {% plural %}
+                        {{nb}} participants
+                    {% endblocktrans %}
+                </h5>
+                {% endif %}
+            </div>
+            </div>
+    </div>
+</div>
 
 <div class="row mt">
     <div class="col-lg-12">
-        <div class="showback">
-            Carte ici (google maps)
-        </div>
-    </div>
-
-    <div class="col-lg-6">
-
 
     	<div class="content-panel">
             <h4><i class="fa fa-angle-right"></i> {% trans "Liste des membres" %}</h4>
@@ -40,7 +55,7 @@
                 	    <td>{% if member.is_admin %}{% trans "Responsable" %}{% endif %}</td>
                 	    <td>
                 	        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                	        <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                	        <a class="btn btn-danger btn-xs" href="{% url 'branch_leave' branch_id=branch.id user_id=member.user.id %}"><i class="fa fa-trash-o "></i></a>
                 	    </td>
                 	</tr>
                 	{% endfor %}
@@ -49,7 +64,38 @@
         </div>
 
     </div>
-</div><!-- col-lg-12-->
 </div>
+{% endblock %}
+
+
+{% block extra_footer %}
+<script type="text/javascript">
+$(document).ready(function () {
+    var options = {
+        zoom: 13,
+        center: new google.maps.LatLng({{branch.latitude}}, {{branch.longitude}}),
+        disableDefaultUI: true,
+        panControl: false,
+        overviewMapControl: false,
+        streetViewControl: false,
+        scaleControl: false,
+        rotateControl: false,
+        draggable: false,
+        zoomControl: false,
+        scrollwheel: false,
+        disableDoubleClickZoom: true,
+        mapTypeId: google.maps.MapTypeId.HYBRID,
+    };
+    var map = new google.maps.Map(document.getElementById('map'), options);
+
+    var titleBranch = document.getElementById('title-branch');
+    map.controls[google.maps.ControlPosition.LEFT_TOP].push(titleBranch); 
+
+    $('.fa-bars').click(function () {
+        alert('resiz');
+        google.maps.event.trigger(map, 'resize');
+    });
+});
+</script>
 {% endblock %}
 

@@ -12,3 +12,17 @@ class CreateBranchForm(forms.ModelForm):
             'longitude': forms.HiddenInput,
             'location': forms.HiddenInput,
         }
+
+class ChooseBranchForm(forms.Form):
+	id = forms.IntegerField(widget=forms.HiddenInput)
+
+	def clean(self):
+		id = self.cleaned_data.get('id')
+		try:
+			Branch.objects.get(pk=id)
+		except Branch.DoesNotExist:
+			raise forms.ValidationError("Veuillez choisir un point sur la carte")
+		super(ChooseBranchForm, self).clean()
+
+	class Meta:
+		fields = ['id']

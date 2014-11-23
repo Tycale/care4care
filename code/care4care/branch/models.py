@@ -34,6 +34,9 @@ class BranchMembers(models.Model):
     is_admin = models.BooleanField(default=False)
     joined = models.DateTimeField(verbose_name=_("date d'arrivé"))
 
+    class Meta:
+        ordering = ['is_admin']
+
 class Job(models.Model):
     branch = models.ForeignKey(Branch, verbose_name=_("Branche"), related_name="branch") 
     donor = models.ForeignKey(User, verbose_name=_("Donneur"), related_name="donor")
