@@ -2421,3 +2421,8 @@ div.top-menu > ul > li > button > a {
 #title-branch h5 {
     padding-left: 15px;
 }
+
+#options-branch {
+    position: absolute;
+    padding: 15px;
+}
