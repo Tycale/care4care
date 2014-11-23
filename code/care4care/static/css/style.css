@@ -364,7 +364,7 @@ ul.sidebar-menu li a{
     transition: all 0.3s ease;
 }
 
-ul.sidebar-menu li a.active, ul.sidebar-menu li a:hover, ul.sidebar-menu li a:focus {
+ul.sidebar-menu li a.dcjq-parent.active, ul.sidebar-menu li a:hover, ul.sidebar-menu li a:focus {
     background: rgba(86, 94, 113, 0.9);
     color: #fff;
     display: block;
@@ -388,6 +388,11 @@ ul.sidebar-menu li a:hover i, ul.sidebar-menu li a:focus i {
 
 ul.sidebar-menu li a.active i {
     color: #fff;
+}
+
+ul.sidebar-menu li a.active {
+    color: #fff !important;
+    font-weight: bold;
 }
 
 
