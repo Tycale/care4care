@@ -24,7 +24,8 @@
                 {% bootstrap_form form %}
                 {% buttons %}
                 <div id="map" style="min-width: 500px; min-height: 400px; width: 100%; height: 100%;"></div>
-                <h3>{%trans "Branche choisie :" %} <span class="text-danger" id="choosen_branch"></span></h3>
+                <h3>{%trans "Branche choisie :" %} <span class="text-danger" id="choosen_branch">aucune</span></h3>
+                <div class="alert alert-info"><b>{% trans "Information:"%}</b> {% trans "Selectionner un emplacement (marqueur rouge) sur la carte afin de rejoindre une branche." %}</div>
             </div>
 
             <div class="row mt mb">
