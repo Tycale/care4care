@@ -311,8 +311,8 @@
                           <span>{% trans "Branches" %}</span>
                       </a>
                       <ul class="sub">
-                        {% for branch in request.user.branch_set.all %}
-                          <li><a href="{{ branch.get_absolute_url }}"><i class="fa fa-circle-thin"></i>{{ branch }}</a></li>
+                        {% for branch in request.user.membership.all %}
+                          <li><a href="{{ branch.branch.get_absolute_url }}"><i class="fa fa-circle-thin"></i>{{ branch.branch }}</a></li>
                         {% endfor %}
 
                           <li><a href="{% url "branch_join" %}"><i class="fa fa-plus"></i>{% trans "Rejoindre une branche" %}</a></li>

@@ -33,6 +33,14 @@ def branch_create(request):
 
 def branch_home(request, id, slug):
     branch = get_object_or_404(Branch, pk=id)
+    user = request.user
+
+    is_in = BranchMembers.objects.filter(branch=branch, user=user).count
+
+    if is_in == 0 and not user.is_superuser :
+        messages.add_message(request, messages.INFO, _("Vous n'avez rien à faire ici !"))
+        return redirect('home')
+        
     nb_users = BranchMembers.objects.filter(branch=branch).count()
 
     return render(request,'branch/branch_home.html',locals())
@@ -71,6 +79,20 @@ def branch_leave(request, branch_id, user_id):
                 messages.add_message(request, messages.INFO, _('Vous avez quitté la branche {branch}').format(branch=branch))
             else :
                 messages.add_message(request, messages.INFO, _('{user} a été retiré de la branche {branch}').format(branch=branch, user=user))
+        except :
+            pass
+    
+    return redirect('home')
+
+
+@login_required
+def branch_delete(request, branch_id):
+    branch = get_object_or_404(Branch, pk=branch_id)
+
+    if request.user == branch.creator or request.user.is_superuser :
+        try :
+            branch.delete()
+            messages.add_message(request, messages.INFO, _('Vous avez supprimé la branche {branch}').format(branch=branch))
         except :
             pass
     
