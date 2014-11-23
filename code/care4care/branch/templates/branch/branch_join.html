@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}{% load i18n %}{% load staticfiles %}
+
+
+{% block title %}{% trans "Rejoindre une branche" %}{% endblock %}
+
+{% block extra_head %}
+<script src="{% static "js/bloodhound.min.js" %}"></script>
+<script src="http://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places,geometry"></script>
+<script src="{% static "js/typeahead-addresspicker.js" %}"></script>
+<script src="{% static "js/typeahead.js" %}"></script>
+<script src="{% static "js/geoPosition.js" %}"></script>
+{% endblock %}
+
+{% block content %}
+<h3><i class="fa fa-angle-right"></i> {% trans "Rejoindre une branche" %}</h3>
+
+<div class="row mt">
+    <div class="col-lg-12">
+        <form action="." role="form" method="post">
+            <div class="showback">
+                <div id="map" style="min-width: 500px; min-height: 400px; width: 100%; height: 100%;"></div>
+            </div>
+            {% buttons %}
+            <div class="row mt mb">
+              <div class="col-lg-6"><button type="submit" class="btn btn-success btn-lg btn-block">
+            {% bootstrap_icon "ok" %} &nbsp; {% trans "Rejoindre" %}
+            </button></div>
+              <div class="col-lg-6"><a href="{% url 'home' %}" class="btn btn-danger btn-lg btn-block">
+                  {% bootstrap_icon "remove" %} &nbsp; {% trans "Annuler" %}
+                </a></div>
+            </div>
+            {% endbuttons %}
+        </form>
+    </div>
+</div><!-- col-lg-12-->
+</div>
+{% endblock %}
+
+{% block extra_footer %}
+<script type="text/javascript">
+$(document).ready(function () {
+    var locations = [
+        {% for b in branches %}
+        ['{{b.name}}', {{b.latitude}}, {{b.longitude}}, {{b.id}}, 0],
+        {% endfor %}
+    ];
+    
+    (function() {
+        // map options
+        var options = {
+            zoom: 8,
+            center: new google.maps.LatLng(50.846975, 4.351815699999975),
+            streetViewControl: false,
+            mapTypeControl: false,
+        };
+
+        // init map
+        var map = new google.maps.Map(document.getElementById('map'), options);
+        var bounds = new google.maps.LatLngBounds();
+
+        // set multiple marker
+        for (var i = 0; i < locations.length; ++i) {
+            var pos = new google.maps.LatLng(locations[i][1], locations[i][2]);
+            var marker = new google.maps.Marker({
+                position: pos,
+                map: map,
+                title: locations[i][0]
+            });
+            // process multiple info windows
+            (function(marker, i) {
+                // add click event
+                google.maps.event.addListener(marker, 'click', function() {
+                    infowindow = new google.maps.InfoWindow({
+                        content: ''+locations[i][3]
+                    });
+                    infowindow.open(map, marker);
+                });
+            })(marker, i);
+            bounds.extend(pos);
+        }
+
+        map.fitBounds(bounds);
+
+        if(geoPosition.init()){  // Geolocation Initialisation
+                geoPosition.getCurrentPosition(success_callback,error_callback,{enableHighAccuracy:true});
+        }
+
+        // p : geolocation object
+        function success_callback(p){
+            var latitude = parseFloat( p.coords.latitude );
+            var longitude = parseFloat( p.coords.longitude );
+            var lo = new google.maps.LatLng(latitude, longitude);
+
+            for(var i = 0; i < locations.length; ++i){
+                var pos = new google.maps.LatLng(locations[i][1], locations[i][2]);
+                locations[i][4] = google.maps.geometry.spherical.computeDistanceBetween(lo, pos);
+            }
+
+            locations.sort(function(r1, r2) {return r1[4] - r2[4];});
+
+            var nbounds = new google.maps.LatLngBounds();
+
+            for(var i = 0; i < Math.min(locations.length, 3); ++i){
+                var pos = new google.maps.LatLng(locations[i][1], locations[i][2]);
+                nbounds.extend(pos);
+            }
+
+            map.fitBounds(nbounds);
+        }
+
+        function error_callback(p){}
+
+    })();
+});
+</script>
+{{ form.media }}
+{% endblock %}

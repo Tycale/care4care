@@ -33,3 +33,7 @@ def branch_home(request, id, slug):
 	branch = get_object_or_404(Branch, pk=id)
 
 	return render(request,'branch/branch_home.html',locals())
+
+def branch_join(request):
+    branches = Branch.objects.all()
+    return render(request,'branch/branch_join.html',locals())
