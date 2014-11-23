@@ -20,7 +20,7 @@ class Branch(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('branch_home', (), {'slug' : self.slug , 'id' : self.id})
+        return ('branch_home', (), {'slug' : self.slug, 'id' : self.id})
 
     def __str__(self):
         return self.name
@@ -38,7 +38,7 @@ class BranchMembers(models.Model):
         ordering = ['is_admin']
 
 class Job(models.Model):
-    branch = models.ForeignKey(Branch, verbose_name=_("Branche"), related_name="branch") 
+    branch = models.ForeignKey(Branch, verbose_name=_("Branche"), related_name="branch")
     donor = models.ForeignKey(User, verbose_name=_("Donneur"), related_name="donor")
     receiver =  models.ForeignKey(User, verbose_name=_("Receveur"), related_name="receiver")
     description = models.TextField(verbose_name=_("Description"))

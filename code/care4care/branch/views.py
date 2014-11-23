@@ -17,7 +17,7 @@ def branch_create(request):
     user = request.user
     form = CreateBranchForm()
 
-    if request.POST :
+    if request.POST:
         form = CreateBranchForm(request.POST)
         if form.is_valid():
             obj = form.save(commit=False)
@@ -71,15 +71,15 @@ def branch_leave(request, branch_id, user_id):
     branch = get_object_or_404(Branch, pk=branch_id)
     user = get_object_or_404(User, pk=user_id)
 
-    if user == request.user or request.user == branch.creator or request.user.is_superuser :
-        try :
+    if user == request.user or request.user == branch.creator or request.user.is_superuser:
+        try:
             to_remove = BranchMembers.objects.get(branch=branch_id, user=user_id)
             to_remove.delete()
             if user != request.user :
                 messages.add_message(request, messages.INFO, _('Vous avez quitté la branche {branch}').format(branch=branch))
             else :
                 messages.add_message(request, messages.INFO, _('{user} a été retiré de la branche {branch}').format(branch=branch, user=user))
-        except :
+        except:
             pass
     
     return redirect('home')
@@ -90,10 +90,10 @@ def branch_delete(request, branch_id):
     branch = get_object_or_404(Branch, pk=branch_id)
 
     if request.user == branch.creator or request.user.is_superuser :
-        try :
+        try:
             branch.delete()
             messages.add_message(request, messages.INFO, _('Vous avez supprimé la branche {branch}').format(branch=branch))
-        except :
+        except:
             pass
     
     return redirect('home')
