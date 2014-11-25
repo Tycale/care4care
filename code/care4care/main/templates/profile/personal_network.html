@@ -4,5 +4,21 @@
 {% block title %}{% trans "Personal Network" %}{% endblock %}
 
 {% block content %}
+<div class="input-group">
+  <input type="text" class="form-control" placeholder="username">
+  <span class="input-group-btn">
+    <button class="btn btn-default" type="button">{% trans 'Rechercher' %}</button>
+  </span>
+</div>
+{% for personne in user.personal_network %}
+<div class="media">
+  <a class="media-left" href="#">
+    <img src="..." alt="...">
+  </a>
+  <div class="media-body">
+    <h4 class="media-heading">{% personne.get_full_name %}</h4>
+  </div>
+</div>
+{% endfor %}
 
 {% endblock %}

@@ -1,36 +1,63 @@
 {% extends "base.html" %}
-{% load bootstrap3 %}{% load i18n %}
+{% load bootstrap3 %}{% load i18n %}{% load staticfiles %}
 
 {% block title %}{% trans "Gestion du profil" %}{% endblock %}
 
+
+{% block extra_head %}
+<script src="{% static "js/user-profile-api.js" %}"></script>
+{% endblock %}
+
 {% block content %}
-<div class="">
-  <div class="row">
-    <div class="col-sm-10"><h1>{{user_to_display.get_full_name}}</h1>
-    </div>
-  </div>
+<div class=" mt">
+  <input id="user_id" value="{{ user_to_display.id }}" type="hidden"/>
+  <input id="csrf_token" value="{{ csrf_token }}" type="hidden"/>
   <div class="row">
     <div class="col-sm-4"><!--left col-->
 
-      <ul class="list-group">
-        <li class="list-group-item text-muted  text-right"><span class="pull-left">{% trans 'Profil' %}</span>
-          {% if request.user.is_authenticated %}
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="text-right">
+            <span class="pull-left">
+              {{user_to_display.get_full_name}}
+            </span>
+            {%  if request.user.id == user_to_display.id %}
             <a href="{% url 'edit_profile' %}">
-            <span class="glyphicon glyphicon-edit">  </span> {% trans 'Modifier' %}
+              <span class="glyphicon glyphicon-edit">  </span> {% trans 'Modifier' %}
             </a>
-          {% endif %}
-        </li>
-        <li class="list-group-item text-right"><span class="pull-left"><strong>{% trans "Date d'inscription" %}</strong></span> {{user_to_display.date_joined}}</li>
-        <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Dernière connexion" %}</strong></span> empty</li>
-        <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Nom" %}</strong></span> {{user_to_display.get_full_name}} </li>
-        <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Email" %}</strong></span> {{user_to_display.email}}</li>
-      </ul>
+            {% endif %}
+            {% if request.user.id != user_to_display.id %}
+
+            {% if is_my_friend %}
+            <a href="#" class="btn btn-default btn-sm" id="add_favorite_link">
+              <span class="glyphicon glyphicon glyphicon-star" id="is_favorite_star">  </span> {% trans 'favoris' %}
+            </a>
+            {% else %}
+            <a href="#" class="btn btn-default btn-sm" id="add_favorite_link">
+              <span class="glyphicon glyphicon glyphicon-star-empty" id="is_favorite_star">  </span> {% trans 'favoris' %}
+            </a>
+            {% endif %}
+
+            <a href="#" >
+              <span class="glyphicon glyphicon glyphicon-user" alt="{% trans 'Ajouter à mon réseau' %}"> </span>
+            </a>
+            {% endif %}
+          </div>
+        </div>
+
+        <ul class="list-group">
+          <li class="list-group-item text-right"><span class="pull-left"><strong>{% trans "Date d'inscription" %}</strong></span> {{user_to_display.date_joined}}</li>
+          <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Dernière connexion" %}</strong></span> empty</li>
+          <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Nom" %}</strong></span> {{user_to_display.get_full_name}} </li>
+          <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Email" %}</strong></span> {{user_to_display.email}}</li>
+        </ul>
+
+      </div>
 
       <div class="panel panel-default">
         <div class="panel-heading"> {% trans "Site web" %} <i class="fa fa-link fa-1x"></i></div>
         <div class="panel-body"><a href="http://bootply.com">care4care.com</a></div>
       </div>
-
 
       <ul class="list-group">
         <li class="list-group-item text-muted">{% trans "Activités" %} <i class="fa fa-dashboard fa-1x"></i></li>
@@ -44,5 +71,31 @@
       </div>
 
     </div>
+
+    {% if request.user.id == user_to_display.id %}
+    <div class="col-lg-4 col-sm-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          {% trans "Favoris" %}
+        </div>
+        <div class="panel-body">
+          {% for personne in user_to_display.favorites.all %}
+          {{ personne.get_full_name }}
+          {% endfor %}
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          {% trans "Réseau personel" %}
+        </div>
+        <div class="panel-body">
+          {% for personne in user_to_display.personal_network.all %}
+          {{ personne.get_full_name }}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
   </div>
-  {% endblock %}
+{% endblock %}

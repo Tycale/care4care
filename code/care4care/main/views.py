@@ -14,6 +14,7 @@ from main.models import User, VerifiedInformation
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect, HttpResponse
+import json
 import os
 from os.path import abspath, dirname
 
@@ -50,7 +51,12 @@ def login(request):
 
 def user_profile(request, user_id):
     """ Get profile from a user"""
-    user_to_display = get_object_or_404(User, pk=user_id)
+    id_int = int(user_id)
+    user_to_display = get_object_or_404(User, pk=id_int)
+    user = get_object_or_404(User, pk=request.user.id)
+    is_my_friend = False
+    if (user_to_display in user.favorites.all()):
+        is_my_friend = True
     return render(request, 'profile/user_profile.html',locals())
 
 
@@ -93,6 +99,42 @@ def verified_member_demand_view(request):
 
     return render(request,'verified/verified_member_demand.html',locals())
 
+
+@login_required
+def member_favorite(request, user_id):
+    user = get_object_or_404(User, pk=request.user.id)
+    id_favorite = user_id
+    favorite_user = get_object_or_404(User, pk=id_favorite)
+    if request.method == "PUT":
+        user.favorites.add(favorite_user)
+        user.save()
+        return HttpResponse(
+            json.dumps({"name": favorite_user.get_full_name()}),
+            content_type="application/json"
+        )
+
+    elif request.method == 'DELETE':
+        user.favorites.remove(favorite_user)
+        user.save()
+        return HttpResponse(json.dumps({"name": favorite_user.get_full_name()}), content_type='application/json')
+
+@login_required
+def member_personal_network(request, user_id):
+    user = get_object_or_404(User, pk=request.user.id)
+    id_other = user_id
+    other_user = get_object_or_404(User, pk=id_other)
+    if request.method == "PUT":
+        user.personal_network.add(other_user)
+        user.save()
+        return HttpResponse(
+            json.dumps({"name": other_user.get_full_name()}),
+            content_type="application/json"
+        )
+
+    elif request.method == 'DELETE':
+        user.personal_network.remove(other_user)
+        user.save()
+        return HttpResponse(json.dumps({"name": other_user.get_full_name()}), content_type='application/json')
 
 # Classes views
 
@@ -150,6 +192,7 @@ class RegistrationView(BaseRegistrationView):
         new_user.longitude = cleaned_data['longitude']
         new_user.latitude = cleaned_data['latitude']
         new_user.location = cleaned_data['location']
+        new_user.is_active = True
         new_user.save()
 
         signals.user_registered.send(sender=self.__class__,
