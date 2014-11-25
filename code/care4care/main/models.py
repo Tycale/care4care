@@ -6,7 +6,6 @@ from django.core import validators
 from django.conf import settings
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import UserManager as BaseUserManager
-from main.formatChecker import ContentTypeRestrictedFileField
 
 import re
 
@@ -90,6 +89,25 @@ class JobCategory:
         (special,_("Special ... :D")),
         ))
 
+class VerifiedUser(models.Model):
+    """
+    Verified informations class
+    """ 
+    car = models.BooleanField(default=False)
+    # preference
+    work_with = models.ManyToManyField('self')
+
+    # network management
+    favorites = models.ManyToManyField('self')
+    personal_network = models.ManyToManyField('self', verbose_name="Votre reseau personnel")
+
+    mail_preferences = models.IntegerField(choices=INFORMED_BY,
+                                      default=INBOX, verbose_name=_("Recevoir mes messages par"))
+    receive_help_from_who = models.IntegerField(choices=MemberType.MEMBER_TYPES_GROUP, default=MemberType.ALL,
+    verbose_name=_("Recevoir des demandes et des offres de"))
+    preferred_job = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Quels sont vos travaux préférés ?"))
+
+
 class CommonInfo(models.Model):
     """
     Common informations class
@@ -127,7 +145,7 @@ class UserManager(BaseUserManager):
         super_user.save()
         return super_user
 
-class User(AbstractBaseUser, PermissionsMixin, CommonInfo):
+class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
     """
     Custom user class
     AbstractBaseUser gives us the following fields :
@@ -168,24 +186,10 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo):
 
     #Verified member
     # social_media = [] # Commented since we don't know how it'll be traited by the third-app.
-    car = models.BooleanField(default=False)
-
+    
     #non member
     organization = models.CharField(_("Organization"), max_length=100)
     work = models.CharField(_("Fonction"), max_length=100)
-
-    # preference
-    work_with = models.ManyToManyField('self')
-
-    # network management
-    favorites = models.ManyToManyField('self')
-    personal_network = models.ManyToManyField('self', verbose_name="Votre reseau personnel")
-
-    mail_preferences = models.IntegerField(choices=INFORMED_BY,
-                                      default=INBOX, verbose_name=_("Recevoir mes messages par"))
-    receive_help_from_who = models.IntegerField(choices=MemberType.MEMBER_TYPES_GROUP, default=MemberType.ALL,
-    verbose_name=_("Recevoir des demandes et des offres de"))
-    preferred_job = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Quels sont vos travaux préférés ?"))
 
     objects = UserManager()
 
@@ -215,7 +219,7 @@ class VerifiedInformation(models.Model):
     Doc for verfied member class
     """
     user = models.ForeignKey(User, null=True, blank=False)
-    recomendation_letter_1 = ContentTypeRestrictedFileField(upload_to='documents/', verbose_name=_("Lettre de recommendation n°1"), null=True, blank=False, content_types=['application/pdf'], max_upload_size=5242880)
-    recomendation_letter_2 = ContentTypeRestrictedFileField(upload_to='documents/', verbose_name=_("Lettre de recommendation n°2"), null=True, blank=False, content_types=['application/pdf'], max_upload_size=5242880)
-    criminal_record = ContentTypeRestrictedFileField(upload_to='documents/', verbose_name=_("Casier judiciaire"),null=True, blank=False, content_types=['application/pdf'], max_upload_size=5242880)
+    recomendation_letter_1 = models.FileField(upload_to='documents/', verbose_name=_("Lettre de recommendation n°1"), null=True, blank=False)
+    recomendation_letter_2 = models.FileField(upload_to='documents/', verbose_name=_("Lettre de recommendation n°2"), null=True, blank=False)
+    criminal_record = models.FileField(upload_to='documents/', verbose_name=_("Casier judiciaire"),null=True, blank=False)
 

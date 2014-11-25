@@ -11,12 +11,14 @@ from registration.backends.default.views import RegistrationView as BaseRegistra
 from django.views.generic import View
 from main.forms import ProfileManagementForm, VerifiedInformationForm
 from main.models import User, VerifiedInformation
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect, HttpResponse
 import json
 import os
 from os.path import abspath, dirname
+
+from django.views.generic.edit import UpdateView
 
 def home(request):
     return render(request, 'main/home.html', locals())
@@ -70,6 +72,7 @@ def verified_member_demand_view(request):
     return render(request,'verified/verified_member_demand.html',locals())
 
 
+@user_passes_test(lambda u: not u.is_verified)
 @login_required
 def verified_member_demand_view(request):
     user = request.user
@@ -96,23 +99,6 @@ def verified_member_demand_view(request):
 
     return render(request,'verified/verified_member_demand.html',locals())
 
-@login_required
-def verified_member_r1_view(request, recomendation_letter_1):
-    return download_doc(recomendation_letter_1)
-
-@login_required
-def verified_member_r2_view(request, recomendation_letter_2):
-    return download_doc(recomendation_letter_2)
-
-@login_required
-def verified_member_cr_view(request, criminal_record):
-    return download_doc(criminal_record)
-
-def download_doc(filename):
-    url = "./media_root/documents/"+filename+".pdf"
-    response = HttpResponse(open(url,'rb'), content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename=%s.pdf' % filename
-    return response
 
 @login_required
 def member_favorite(request, user_id):
@@ -151,7 +137,6 @@ def member_personal_network(request):
         return HttpResponse(json.dumps({"name": other_user.get_full_name()}), content_type='application/json')
 
 # Classes views
-
 
 class EditProfileView(View):
     """ Return the edit page for the current logged user"""
