@@ -40,11 +40,6 @@ INFORMED_BY =(
     (INBOX, _("Boite à message")),
     (MAIL, _("Mail"))
     )
-PRIORITY = (
-    (1, _("A contacter en premier")),
-    (2, _("A contacter")),
-    (3, _("A contacter en dernier"))
-    )
 
 SCOOTER = 1
 MOTO = 2
@@ -115,7 +110,7 @@ BOOL_CHOICES = ((True, _('Oui')), (False, _('Non')))
 class VerifiedUser(models.Model):
     """
     Verified informations class
-    """ 
+    """
     have_car = models.BooleanField(default=False, choices=BOOL_CHOICES, verbose_name=_("Disposez-vous d'une voiture ?"))
     can_wheelchair = models.BooleanField(default=False, choices=BOOL_CHOICES, verbose_name=_("Pouvez-vous transporter une chaise roulante dans votre voiture ?"))
     drive_license = MultiSelectField(choices=DRIVER_LICENSE, verbose_name=_("Type de permis de conduire"), blank=True)
@@ -130,7 +125,7 @@ class VerifiedUser(models.Model):
 
     mail_preferences = models.IntegerField(choices=INFORMED_BY,
                                       default=INBOX, verbose_name=_("Recevoir mes messages par"))
-    receive_help_from_who = models.IntegerField(choices=MemberType.MEMBER_TYPES_GROUP, default=MemberType.ALL, 
+    receive_help_from_who = models.IntegerField(choices=MemberType.MEMBER_TYPES_GROUP, default=MemberType.ALL,
                                       verbose_name=_("Recevoir des demandes et des offres de"))
     offered_job = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Quels sont les tâches que vous souhaitez effectuer ?"), blank=True)
     asked_job = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Quels sont les tâches dont vous avez besoin ?"), blank=True)
@@ -165,11 +160,6 @@ class CommonInfo(models.Model):
 
     class Meta:
         abstract = True
-
-class EmergencyContact(CommonInfo):
-    user = models.ForeignKey('User', related_name="emergency_contacts")
-    order = models.IntegerField(default=0, verbose_name=_("Ordre de priorité"), choices=PRIORITY)
-
 
 class UserManager(BaseUserManager):
     """
@@ -226,7 +216,6 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
 
     #Verified member
     # social_media = [] # Commented since we don't know how it'll be traited by the third-app.
-    
 
     #non member
     organization = models.CharField(_("Organization"), max_length=100, blank=True)
@@ -263,4 +252,3 @@ class VerifiedInformation(models.Model):
     recomendation_letter_1 = models.FileField(upload_to='documents/', verbose_name=_("Lettre de recommendation n°1"), null=True, blank=False)
     recomendation_letter_2 = models.FileField(upload_to='documents/', verbose_name=_("Lettre de recommendation n°2"), null=True, blank=False)
     criminal_record = models.FileField(upload_to='documents/', verbose_name=_("Casier judiciaire"),null=True, blank=False)
-

@@ -1,6 +1,7 @@
 from django import forms
 from django.utils.translation import ugettext as _
 from main.models import User, VerifiedInformation, EmergencyContact
+from branch.models import Job
 from multiselectfield import MultiSelectField
 
 from django.forms.extras import SelectDateWidget
@@ -56,7 +57,6 @@ class CareRegistrationForm(forms.ModelForm):
         return self.cleaned_data
 
 class ProfileManagementForm(forms.ModelForm):
-    
     class Meta:
         model = User
         fields = ['email', 'phone_number', 'status', 'languages', 'location', 'mail_preferences', 'asked_job', 'offered_job', \
@@ -104,9 +104,9 @@ class ContentTypeRestrictedFileField(forms.FileField):
     def __init__(self, content_types=None, max_upload_size=5242880, *args, **kwargs):
         self.content_types = content_types
         self.max_upload_size = max_upload_size
- 
+
         super(ContentTypeRestrictedFileField, self).__init__(*args, **kwargs)
- 
+
     def clean(self, *args, **kwargs):
         data = super(ContentTypeRestrictedFileField, self).clean(*args, **kwargs)
         file = data.file
@@ -121,7 +121,7 @@ class ContentTypeRestrictedFileField(forms.FileField):
                 raise forms.ValidationError(_('Type de fichier non supporté'))
         except AttributeError:
             pass
- 
+
         return data
 
 class VerifiedInformationForm(forms.ModelForm):
@@ -133,7 +133,26 @@ class VerifiedInformationForm(forms.ModelForm):
         model = VerifiedInformation
         fields = ['recomendation_letter_1', 'recomendation_letter_2', 'criminal_record']
 
+
 class EmergencyContactCreateForm(forms.ModelForm):
     class Meta:
         model = EmergencyContact
         exclude = ['user']
+
+class NeedHelpForm(forms.ModelForm):
+
+    date = forms.DateField(label=_("Date de naissance (DD/MM/YYYY)"),
+                                 widget=SelectDateWidget(years=range(datetime.date.today().year-100, \
+                                                                     datetime.date.today().year)),
+                                 initial=datetime.date.today())
+
+    category =  MultiSelectField(verbose_name=_("Categorie"))
+
+    class Meta:
+        model = Job
+        fields = ['description', 'estimated_time', 'category','branch', 'date', 'km', 'location', 'latitude', 'longitude']
+        widgets = {
+            'latitude': forms.HiddenInput,
+            'longitude': forms.HiddenInput,
+            'location': forms.HiddenInput,
+        }

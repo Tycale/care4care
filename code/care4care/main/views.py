@@ -9,8 +9,9 @@ from django.contrib.sites.models import Site
 from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
 from django.views.generic import View
-from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm
-from main.models import User, VerifiedInformation, EmergencyContact
+from main.forms import ProfileManagementForm, VerifiedInformationForm, NeedHelpForm
+from main.models import User, VerifiedInformation
+from branch.models import Job
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect, HttpResponse
@@ -25,6 +26,8 @@ from django.views.generic.edit import UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
 
 def home(request):
+    demands = Job.objects.all()
+    offers = Job.objects.all()
     return render(request, 'main/home.html', locals())
 
 def logout(request):
@@ -206,3 +209,16 @@ class EmergencyContact(CreateView):
         form.instance.user = self.request.user
         return super(EmergencyContact, self).form_valid(form)
 
+class NeedHelpView(CreateView):
+    """
+    A registration backend for our CareRegistrationForm
+    """
+    template_name = 'profile/need_help.html'
+    form_class = NeedHelpForm
+    model = Job
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        self.object.receiver = request.user
+        self.object.real_time = self.object.estimated_time
+        return super(Job, self).form_valid(form)
