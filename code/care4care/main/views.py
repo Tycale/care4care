@@ -194,7 +194,6 @@ class RegistrationView(BaseRegistrationView):
         new_user.longitude = cleaned_data['longitude']
         new_user.latitude = cleaned_data['latitude']
         new_user.location = cleaned_data['location']
-        new_user.is_active = True
         new_user.save()
 
         signals.user_registered.send(sender=self.__class__,
