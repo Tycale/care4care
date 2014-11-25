@@ -11,7 +11,7 @@ from registration.backends.default.views import RegistrationView as BaseRegistra
 from django.views.generic import View
 from main.forms import ProfileManagementForm, VerifiedInformationForm
 from main.models import User, VerifiedInformation
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect, HttpResponse
 import os
@@ -66,6 +66,7 @@ def verified_member_demand_view(request):
     return render(request,'verified/verified_member_demand.html',locals())
 
 
+@user_passes_test(lambda u: not u.is_verified)
 @login_required
 def verified_member_demand_view(request):
     user = request.user
