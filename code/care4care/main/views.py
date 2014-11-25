@@ -40,7 +40,7 @@ def login(request):
                 return HttpResponseRedirect(redirect_to)
             else:
                 messages.add_message(request, messages.ERROR, _('Impossible de vous connecter, vous \
-                    êtes innactif. Vérifiez vos emails afin de valider votre compte.'))
+                    êtes inactif. Vérifiez vos emails afin de valider votre compte.'))
         else:
             messages.add_message(request, messages.ERROR, _('Impossible de se connecter.'))
     return render(request, 'profile/login.html',locals())
