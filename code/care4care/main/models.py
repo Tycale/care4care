@@ -40,6 +40,11 @@ INFORMED_BY =(
     (INBOX, _("Boite à message")),
     (MAIL, _("Mail"))
     )
+PRIORITY = (
+    (1, _("A contacter en premier")),
+    (2, _("A contacter")),
+    (3, _("A contacter en dernier"))
+    )
 
 class MemberType:
     MEMBER = 1
@@ -131,6 +136,11 @@ class CommonInfo(models.Model):
     class Meta:
         abstract = True
 
+class EmergencyContact(CommonInfo):
+    user = models.ForeignKey('User', related_name="emergency_contacts")
+    order = models.IntegerField(default=0, verbose_name=_("Ordre de priorité"), choices=PRIORITY)
+
+
 class UserManager(BaseUserManager):
     """
     https://github.com/django/django/blob/master/django/contrib/auth/models.py#L162
@@ -187,6 +197,7 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
     #Verified member
     # social_media = [] # Commented since we don't know how it'll be traited by the third-app.
     
+
     #non member
     organization = models.CharField(_("Organization"), max_length=100)
     work = models.CharField(_("Fonction"), max_length=100)

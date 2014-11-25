@@ -9,11 +9,12 @@ from django.contrib.sites.models import Site
 from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
 from django.views.generic import View
-from main.forms import ProfileManagementForm, VerifiedInformationForm
-from main.models import User, VerifiedInformation
+from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm
+from main.models import User, VerifiedInformation, EmergencyContact
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect, HttpResponse
+from django.views.generic.edit import CreateView
 import json
 import os
 from os.path import abspath, dirname
@@ -136,6 +137,7 @@ def member_personal_network(request, user_id):
         user.save()
         return HttpResponse(json.dumps({"name": other_user.get_full_name()}), content_type='application/json')
 
+
 # Classes views
 
 class EditProfileView(View):
@@ -199,3 +201,13 @@ class RegistrationView(BaseRegistrationView):
                                      user=new_user,
                                      request=request)
         return new_user
+
+class EmergencyContact(CreateView):
+    template_name = 'profile/emergency_contact.html'
+    form_class = EmergencyContactCreateForm
+    model = EmergencyContact
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(EmergencyContact, self).form_valid(form)
+

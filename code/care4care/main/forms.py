@@ -1,6 +1,6 @@
 from django import forms
 from django.utils.translation import ugettext as _
-from main.models import User, VerifiedInformation
+from main.models import User, VerifiedInformation, EmergencyContact
 from multiselectfield import MultiSelectField
 
 from django.forms.extras import SelectDateWidget
@@ -118,4 +118,7 @@ class VerifiedInformationForm(forms.ModelForm):
         model = VerifiedInformation
         fields = ['recomendation_letter_1', 'recomendation_letter_2', 'criminal_record']
 
-
+class EmergencyContactCreateForm(forms.ModelForm):
+    class Meta:
+        model = EmergencyContact
+        exclude = ['user']
