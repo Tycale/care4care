@@ -26,8 +26,8 @@ from django.views.generic.edit import UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
 
 def home(request):
-    demands = Job.objects.all()
-    offers = Job.objects.all()
+    demands = Job.objects.filter(donor = None)
+    offers = Job.objects.filter(receiver = None)
     return render(request, 'main/home.html', locals())
 
 def logout(request):
@@ -213,12 +213,31 @@ class NeedHelpView(CreateView):
     """
     A registration backend for our CareRegistrationForm
     """
-    template_name = 'profile/need_help.html'
+    template_name = 'job/need_help.html'
     form_class = NeedHelpForm
     model = Job
+    success_url = '/'
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
-        self.object.receiver = request.user
+        self.object = form.save(commit=False)
+        self.object.receiver = self.request.user
         self.object.real_time = self.object.estimated_time
-        return super(Job, self).form_valid(form)
+        self.object.save()
+        return super(NeedHelpView, self).form_valid(form)
+
+
+class OfferHelpView(CreateView):
+    """
+    A registration backend for our CareRegistrationForm
+    """
+    template_name = 'job/need_help.html'
+    form_class = NeedHelpForm
+    model = Job
+    success_url = '/'
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.donor = self.request.user
+        self.object.real_time = self.object.estimated_time
+        self.object.save()
+        return super(NeedHelpView, self).form_valid(form)
