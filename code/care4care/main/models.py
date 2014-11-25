@@ -122,11 +122,11 @@ class VerifiedUser(models.Model):
 
 
     # preference
-    work_with = models.ManyToManyField('self')
+    work_with = models.ManyToManyField('User',related_name="verified_work_with")
 
     # network management
-    favorites = models.ManyToManyField('self')
-    personal_network = models.ManyToManyField('self', verbose_name="Votre reseau personnel")
+    favorites = models.ManyToManyField('User',related_name="verified_favorites")
+    personal_network = models.ManyToManyField('User', verbose_name="Votre reseau personnel",related_name="verified_personal_network")
 
     mail_preferences = models.IntegerField(choices=INFORMED_BY,
                                       default=INBOX, verbose_name=_("Recevoir mes messages par"))

@@ -71,6 +71,8 @@ def user_profile(request, user_id):
 def manage_profile(request):
     """ Return the profile from the current logged user"""
     user_to_display = get_object_or_404(User, pk=request.user.id)
+    user_to_display = User.objects.select_related().get(id=request.user.id)
+
     return render(request, 'profile/user_profile.html',locals())
 
 @login_required
