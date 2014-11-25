@@ -13,7 +13,9 @@ from main.forms import ProfileManagementForm, VerifiedInformationForm
 from main.models import User, VerifiedInformation
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+import os
+from os.path import abspath, dirname
 
 def home(request):
     return render(request, 'main/home.html', locals())
@@ -88,6 +90,12 @@ def verified_member_demand_view(request):
 
     return render(request,'verified/verified_member_demand.html',locals())
 
+@login_required
+def verified_member_document_view(request, recomendation_letter_1):
+    url = "./media_root/documents/"+recomendation_letter_1+".pdf"
+    response = HttpResponse(open(url,'rb'), content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename=%s.pdf' % recomendation_letter_1
+    return response
 # Classes views
 
 

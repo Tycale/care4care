@@ -6,6 +6,7 @@ from django.core import validators
 from django.conf import settings
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import UserManager as BaseUserManager
+from main.formatChecker import ContentTypeRestrictedFileField
 
 import re
 
@@ -214,7 +215,7 @@ class VerifiedInformation(models.Model):
     Doc for verfied member class
     """
     user = models.ForeignKey(User, null=True, blank=False)
-    recomendation_letter_1=models.FileField(upload_to='documents/', verbose_name=_("Lettre de recommendation n°1"))
-    recomendation_letter_2=models.FileField(upload_to='documents/', verbose_name=_("Lettre de recommendation n°2"))
-    criminal_record=models.FileField(upload_to='documents/', verbose_name=_("Casier judiciaire"))
+    recomendation_letter_1 = ContentTypeRestrictedFileField(upload_to='documents/', verbose_name=_("Lettre de recommendation n°1"), null=True, blank=False, content_types=['application/pdf'], max_upload_size=5242880)
+    recomendation_letter_2 = ContentTypeRestrictedFileField(upload_to='documents/', verbose_name=_("Lettre de recommendation n°2"), null=True, blank=False, content_types=['application/pdf'], max_upload_size=5242880)
+    criminal_record = ContentTypeRestrictedFileField(upload_to='documents/', verbose_name=_("Casier judiciaire"),null=True, blank=False, content_types=['application/pdf'], max_upload_size=5242880)
 
