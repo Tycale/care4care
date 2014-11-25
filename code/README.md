@@ -39,7 +39,7 @@ git commit -a
 git push
 ```
 
-##Mettre à jour la base de donnée
+##Mettre à jour la base de données
 
 Une fois que vous avez toutes les dépendances, il vous faut créer la base de donnée de l'application. En testing, on utilise SQLite comme gestionnaire de base de donnée. C'est simplement un fichier. Afin de créer ce dernier, rendez-vous dans le dossier care4care et exécutez la commande suivante :
 ```
@@ -50,6 +50,18 @@ ou
 ```
 python manage.py syncdb
 ```
+
+
+##Compiler les fichiers CoffeeScript en Javascript
+Placez vos fichiers CoffeeScript dans le dossier care4care/main/static/coffee/.
+
+Dans le dossier care4care, pour compiler les fichiers CoffeeScript :
+```
+./manage.py gimmecoffee
+```
+
+Les fichiers Javascript compilés se trouvent dans le dossier care4care/main/static/js/.
+
 
 ##Lancer le serveur de développement
 
