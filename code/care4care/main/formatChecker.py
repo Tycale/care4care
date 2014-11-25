@@ -1,8 +1,6 @@
 """
     Class found on http://bixly.com/blog/accept-only-specific-file-types-in-django-file-upload/
 """
-
-
 from django.db.models import FileField
 from django.forms import forms
 from django.template.defaultfilters import filesizeformat
@@ -37,11 +35,11 @@ class ContentTypeRestrictedFileField(FileField):
             content_type = file.content_type
             if content_type in self.content_types:
                 if file._size > self.max_upload_size:
-                    raise forms.ValidationError(_('Please keep filesize under'
-                                                '%s. Current filesize %s')
+                    raise forms.ValidationError(_('Votre fichier doit peser moins de '
+                                                '%s. Taille actuelle %s')
                                                 % (filesizeformat(self.max_upload_size), filesizeformat(file._size)))
             else:
-                raise forms.ValidationError(_('Filetype not supported.'))
+                raise forms.ValidationError(_('Type de fichier non supporté'))
         except AttributeError:
             pass
  
