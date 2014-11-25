@@ -119,10 +119,10 @@ def member_favorite(request, user_id):
         return HttpResponse(json.dumps({"name": favorite_user.get_full_name()}), content_type='application/json')
 
 @login_required
-def member_personal_network(request):
+def member_personal_network(request, user_id):
     user = get_object_or_404(User, pk=request.user.id)
-    id_favorite = user_id
-    other_user = get_object_or_404(User, pk=id_favorite)
+    id_other = user_id
+    other_user = get_object_or_404(User, pk=id_other)
     if request.method == "PUT":
         user.personal_network.add(other_user)
         user.save()
