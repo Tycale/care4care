@@ -66,7 +66,7 @@ class ProfileManagementForm(forms.ModelForm):
     
     class Meta:
         model = User
-        fields = ['email', 'phone_number', 'status', 'languages', 'location', 'mail_preferences', 'preferred_job',
+        fields = ['email', 'phone_number', 'status', 'languages', 'location', 'mail_preferences', 'asked_job', 'offered_job',
         'receive_help_from_who', 'favorites', 'personal_network']
 
 

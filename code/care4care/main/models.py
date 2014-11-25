@@ -103,9 +103,13 @@ class VerifiedUser(models.Model):
 
     mail_preferences = models.IntegerField(choices=INFORMED_BY,
                                       default=INBOX, verbose_name=_("Recevoir mes messages par"))
-    receive_help_from_who = models.IntegerField(choices=MemberType.MEMBER_TYPES_GROUP, default=MemberType.ALL,
-    verbose_name=_("Recevoir des demandes et des offres de"))
-    preferred_job = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Quels sont vos travaux préférés ?"))
+    receive_help_from_who = models.IntegerField(choices=MemberType.MEMBER_TYPES_GROUP, default=MemberType.ALL, 
+                                      verbose_name=_("Recevoir des demandes et des offres de"))
+    offered_job = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Quels sont les tâches que vous souhaitez effectuer ?"))
+    asked_job = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Quels sont les tâches dont vous avez besoin ?"))
+
+    # TODO : Schedule time
+
 
 
 class CommonInfo(models.Model):
