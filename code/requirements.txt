@@ -1,4 +1,6 @@
+CoffeeScript==1.0.10
 Django==1.7.1
+PyExecJS==1.0.5
 Werkzeug==0.9.6
 astroid==1.2.1
 coverage==3.7.1
