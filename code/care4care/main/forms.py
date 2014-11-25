@@ -72,3 +72,4 @@ class VerifiedInformationForm(forms.ModelForm):
         model = VerifiedInformation
         fields = ['recomendation_letter_1', 'recomendation_letter_2', 'criminal_record']
 
+

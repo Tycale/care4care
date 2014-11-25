@@ -76,6 +76,10 @@ def verified_member_demand_view(request):
     if request.POST :
         form = VerifiedInformationForm(request.POST, request.FILES)
         if form.is_valid():
+            try:
+                old_vi.delete()
+            except UnboundLocalError:
+                pass
             obj = form.save(commit=False)
             obj.user = user
             obj.save()
