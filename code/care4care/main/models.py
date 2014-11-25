@@ -89,6 +89,25 @@ class JobCategory:
         (special,_("Special ... :D")),
         ))
 
+class VerifiedUser(models.Model):
+    """
+    Verified informations class
+    """ 
+    car = models.BooleanField(default=False)
+    # preference
+    work_with = models.ManyToManyField('self')
+
+    # network management
+    favorites = models.ManyToManyField('self')
+    personal_network = models.ManyToManyField('self', verbose_name="Votre reseau personnel")
+
+    mail_preferences = models.IntegerField(choices=INFORMED_BY,
+                                      default=INBOX, verbose_name=_("Recevoir mes messages par"))
+    receive_help_from_who = models.IntegerField(choices=MemberType.MEMBER_TYPES_GROUP, default=MemberType.ALL,
+    verbose_name=_("Recevoir des demandes et des offres de"))
+    preferred_job = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Quels sont vos travaux préférés ?"))
+
+
 class CommonInfo(models.Model):
     """
     Common informations class
@@ -126,7 +145,7 @@ class UserManager(BaseUserManager):
         super_user.save()
         return super_user
 
-class User(AbstractBaseUser, PermissionsMixin, CommonInfo):
+class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
     """
     Custom user class
     AbstractBaseUser gives us the following fields :
@@ -167,24 +186,10 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo):
 
     #Verified member
     # social_media = [] # Commented since we don't know how it'll be traited by the third-app.
-    car = models.BooleanField(default=False)
-
+    
     #non member
     organization = models.CharField(_("Organization"), max_length=100)
     work = models.CharField(_("Fonction"), max_length=100)
-
-    # preference
-    work_with = models.ManyToManyField('self')
-
-    # network management
-    favorites = models.ManyToManyField('self')
-    personal_network = models.ManyToManyField('self', verbose_name="Votre reseau personnel")
-
-    mail_preferences = models.IntegerField(choices=INFORMED_BY,
-                                      default=INBOX, verbose_name=_("Recevoir mes messages par"))
-    receive_help_from_who = models.IntegerField(choices=MemberType.MEMBER_TYPES_GROUP, default=MemberType.ALL,
-    verbose_name=_("Recevoir des demandes et des offres de"))
-    preferred_job = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Quels sont vos travaux préférés ?"))
 
     objects = UserManager()
 
