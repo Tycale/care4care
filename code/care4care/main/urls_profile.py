@@ -2,7 +2,7 @@ from django.conf.urls import patterns, url
 
 from django.views.generic.base import TemplateView
 
-from main.views import user_profile, manage_profile, EditProfileView, member_favorite
+from main.views import user_profile, manage_profile, EditProfileView, member_favorite, member_personal_network
 
 urlpatterns = patterns('',
                        url(r'^profile/$',
