@@ -23,7 +23,7 @@
             </span>
             {%  if request.user.id == user_to_display.id %}
             <a href="{% url 'edit_profile' %}">
-              <span class="glyphicon glyphicon-edit">  </span> {% trans 'Modifier' %}
+              {% bootstrap_icon "edit" %} {% trans 'Modifier' %}
             </a>
             {% endif %}
             {% if request.user.id != user_to_display.id %}
@@ -90,6 +90,25 @@
         </div>
         <div class="panel-body">
           {% for personne in user_to_display.personal_network.all %}
+          {{ personne.get_full_name }}
+          {% endfor %}
+        </div>
+      </div>
+      <!-- Emergency users -->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="text-right">
+          <span class="pull-left">
+              {% trans "Contacts en cas d'urgence" %}
+          </span>
+          <a href="{% url 'add_emergency_contact' %}">
+              {% bootstrap_icon "plus" %} {% trans 'Ajouter' %}
+          </a>
+        </div>
+          
+        </div>
+        <div class="panel-body">
+          {% for personne in user_to_display.emergency_contacts.all %}
           {{ personne.get_full_name }}
           {% endfor %}
         </div>
