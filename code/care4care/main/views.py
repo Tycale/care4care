@@ -17,6 +17,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 import os
 from os.path import abspath, dirname
 
+from django.views.generic.edit import UpdateView
+
 def home(request):
     return render(request, 'main/home.html', locals())
 
@@ -92,7 +94,6 @@ def verified_member_demand_view(request):
 
 
 # Classes views
-
 
 class EditProfileView(View):
     """ Return the edit page for the current logged user"""
