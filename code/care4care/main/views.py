@@ -9,8 +9,8 @@ from django.contrib.sites.models import Site
 from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
 from django.views.generic import View
-from main.forms import ProfileManagementForm, VerifiedInformationForm, NeedHelpForm
-from main.models import User, VerifiedInformation
+from main.forms import ProfileManagementForm, VerifiedInformationForm, NeedHelpForm, EmergencyContactCreateForm
+from main.models import User, VerifiedInformation, EmergencyContact
 from branch.models import Job
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
