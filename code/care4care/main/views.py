@@ -91,11 +91,23 @@ def verified_member_demand_view(request):
     return render(request,'verified/verified_member_demand.html',locals())
 
 @login_required
-def verified_member_document_view(request, recomendation_letter_1):
-    url = "./media_root/documents/"+recomendation_letter_1+".pdf"
+def verified_member_r1_view(request, recomendation_letter_1):
+    return download_doc(recomendation_letter_1)
+
+@login_required
+def verified_member_r2_view(request, recomendation_letter_2):
+    return download_doc(recomendation_letter_2)
+
+@login_required
+def verified_member_cr_view(request, criminal_record):
+    return download_doc(criminal_record)
+
+def download_doc(filename):
+    url = "./media_root/documents/"+filename+".pdf"
     response = HttpResponse(open(url,'rb'), content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename=%s.pdf' % recomendation_letter_1
+    response['Content-Disposition'] = 'attachment; filename=%s.pdf' % filename
     return response
+
 # Classes views
 
 
