@@ -41,6 +41,22 @@ INFORMED_BY =(
     (MAIL, _("Mail"))
     )
 
+SCOOTER = 1
+MOTO = 2
+CAR = 3
+TRUCK = 4
+BUS = 5
+TRACTOR = 6
+
+DRIVER_LICENSE =(
+    (SCOOTER, _('Vélomoteur')),
+    (MOTO, _('Moto')),
+    (CAR, _('Voiture')),
+    (TRUCK, _('Camion')),
+    (BUS, _('Bus')),
+    (TRACTOR, _('Tracteur')),
+    )
+
 class MemberType:
     MEMBER = 1
     NON_MEMBER = 2
@@ -89,11 +105,17 @@ class JobCategory:
         (special,_("Special ... :D")),
         ))
 
+BOOL_CHOICES = ((True, _('Oui')), (False, _('Non')))
+
 class VerifiedUser(models.Model):
     """
     Verified informations class
     """ 
-    car = models.BooleanField(default=False)
+    have_car = models.BooleanField(default=False, choices=BOOL_CHOICES, verbose_name=_("Disposez-vous d'une voiture ?"))
+    can_wheelchair = models.BooleanField(default=False, choices=BOOL_CHOICES, verbose_name=_("Pouvez-vous transporter une chaise roulante dans votre voiture ?"))
+    drive_license = MultiSelectField(choices=DRIVER_LICENSE, verbose_name=_("Type de permis de conduire"), blank=True)
+
+
     # preference
     work_with = models.ManyToManyField('self')
 
@@ -105,11 +127,15 @@ class VerifiedUser(models.Model):
                                       default=INBOX, verbose_name=_("Recevoir mes messages par"))
     receive_help_from_who = models.IntegerField(choices=MemberType.MEMBER_TYPES_GROUP, default=MemberType.ALL, 
                                       verbose_name=_("Recevoir des demandes et des offres de"))
-    offered_job = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Quels sont les tâches que vous souhaitez effectuer ?"))
-    asked_job = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Quels sont les tâches dont vous avez besoin ?"))
+    offered_job = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Quels sont les tâches que vous souhaitez effectuer ?"), blank=True)
+    asked_job = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Quels sont les tâches dont vous avez besoin ?"), blank=True)
 
     # TODO : Schedule time
 
+    facebook = models.URLField(verbose_name="Lien (URL) de votre profil Facebook", blank=True)
+
+    hobbies = models.TextField(verbose_name=_("Vos hobbies"), blank=True)
+    additional_info = models.TextField(verbose_name=_("Information supplémentaire"), blank=True)
 
 
 class CommonInfo(models.Model):
@@ -124,7 +150,7 @@ class CommonInfo(models.Model):
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message=_("Votre numéro de téléphone doit être au format '+999999999'. Jusqu'à 15 chiffres."))
     phone_number = models.CharField(validators=[phone_regex], max_length=16, blank=True, verbose_name=_("Numéro de téléphone (fixe)"))
     mobile_number = models.CharField(validators=[phone_regex], max_length=16, blank=True, verbose_name=_("Numéro de téléphone mobile"))
-    languages = MultiSelectField(choices=settings.LANGUAGES, verbose_name=_("Langues parlées"))
+    languages = MultiSelectField(choices=settings.LANGUAGES, verbose_name=_("Langues parlées"), blank=True)
 
     def get_full_name(self):
         return '{} {}'.format(self.first_name, self.last_name)
@@ -192,8 +218,8 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
     # social_media = [] # Commented since we don't know how it'll be traited by the third-app.
     
     #non member
-    organization = models.CharField(_("Organization"), max_length=100)
-    work = models.CharField(_("Fonction"), max_length=100)
+    organization = models.CharField(_("Organization"), max_length=100, blank=True)
+    work = models.CharField(_("Fonction"), max_length=100, blank=True)
 
     objects = UserManager()
 

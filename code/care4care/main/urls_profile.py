@@ -7,7 +7,7 @@ from main.views import user_profile, manage_profile, EditProfileView, member_fav
 urlpatterns = patterns('',
                        url(r'^profile/$',
                            manage_profile,
-                           name='profile_management'),
+                           name='profile'),
                        url(r'^profile/edit/$',
                            EditProfileView.as_view(),
                            name='edit_profile'),

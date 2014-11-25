@@ -14,11 +14,13 @@ from main.models import User, VerifiedInformation
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect, HttpResponse
+from django.core.urlresolvers import reverse
 import json
 import os
 from os.path import abspath, dirname
 
 from django.views.generic.edit import UpdateView
+from django.contrib.messages.views import SuccessMessageMixin
 
 def home(request):
     return render(request, 'main/home.html', locals())
@@ -138,29 +140,22 @@ def member_personal_network(request, user_id):
 
 # Classes views
 
-class EditProfileView(View):
+class EditProfileView(UpdateView, SuccessMessageMixin):
     """ Return the edit page for the current logged user"""
+    form_class = ProfileManagementForm
+    model = User
+    template_name = 'profile/edit_profile.html'
+    success_message = _('Profil modifié avec succès !')
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(EditProfileView, self).dispatch(*args, **kwargs)
 
-    def get(self, request):
-        user = request.user
-        form = ProfileManagementForm(instance=user)
-        return render(request,'profile/edit_profile.html',locals())
+    def get_object(self, queryset=None):
+        return self.request.user
 
-    def post(self, request):
-        user = request.user
-        form = ProfileManagementForm(request.POST,instance=user)
-        if form.is_valid():
-            form.save()
-            messages.add_message(request, messages.INFO, _('Modification sauvegardée'))
-        else:
-            form = ProfileManagementForm(instance=request.user)
-        user_to_display = user
-        request.method = "GET"
-        return HttpResponseRedirect('../')
+    def get_success_url(self):
+        return reverse('profile')
 
 
 class RegistrationView(BaseRegistrationView):
@@ -186,12 +181,12 @@ class RegistrationView(BaseRegistrationView):
         new_user.first_name = first_name
         new_user.birth_date = cleaned_data['birth_date']
         new_user.how_found = cleaned_data['how_found']
-        new_user.languages = cleaned_data['languages']
+        #new_user.languages = cleaned_data['languages']
         new_user.phone_number = cleaned_data['phone_number']
         new_user.mobile_number = cleaned_data['mobile_number']
-        new_user.longitude = cleaned_data['longitude']
-        new_user.latitude = cleaned_data['latitude']
-        new_user.location = cleaned_data['location']
+        #new_user.longitude = cleaned_data['longitude']
+        #new_user.latitude = cleaned_data['latitude']
+        #new_user.location = cleaned_data['location']
         new_user.save()
 
         signals.user_registered.send(sender=self.__class__,

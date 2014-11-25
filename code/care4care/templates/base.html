@@ -216,7 +216,7 @@
                   </button>{% endblock %}
                   {% if request.user.is_authenticated %}
                   <ul class="dropdown-menu" role="user-menu">
-                    <li><a href="{% url 'profile_management' %}">
+                    <li><a href="{% url 'profile' %}">
                     {% bootstrap_icon 'user' %} &nbsp; {% trans "Mon Profile" %}</a>
                     {% if not request.user.is_verified %}
                       <a href="{% url 'verified_member_demand' %}">
