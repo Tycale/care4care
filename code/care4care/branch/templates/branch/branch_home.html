@@ -27,7 +27,7 @@
                 {% endif %}
             </div>
             <div id="options-branch">
-                {% if branch.creator.id != request.user.id %}
+                {% if branch.creator.id != request.user.id or not request.user.is_superuser %}
                 <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-leave">
                     {% trans "Quitter cettte branche" %}
                 </button>
@@ -38,7 +38,7 @@
                 {% endif %}
             </div>
             </div>
-            {% if branch.creator.id != request.user.id %}
+            {% if branch.creator.id != request.user.id or not request.user.is_superuser %}
             <div class="modal fade" id="modal-leave" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -99,7 +99,9 @@
                     <th><i class="fa fa-user"></i> {% trans "Utilisateur" %}</th>
                     <th><i class="fa fa-bookmark"></i> {% trans "Nom complet" %}</th>
                     <th><i class="fa fa-star"></i> {% trans "Status" %}</th>
+                    {% if request.user == branch.creator or request.user.is_superuser %}
                     <th></th>
+                    {% endif %}
                 </tr>
                 </thead>
                 <tbody>
@@ -108,10 +110,12 @@
                 	    <td><a href="#">{{member.user}}</a></td>
                 	    <td>{{member.user.get_full_name}}</td>
                 	    <td>{% if member.is_admin %}{% trans "Responsable" %}{% endif %}</td>
+                        {% if request.user == branch.creator or request.user.is_superuser %}
                 	    <td>
                 	        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
                 	        <a class="btn btn-danger btn-xs" href="{% url 'branch_leave' branch_id=branch.id user_id=member.user.id %}"><i class="fa fa-trash-o "></i></a>
                 	    </td>
+                        {% endif %}
                 	</tr>
                 	{% endfor %}
                 </tbody>
