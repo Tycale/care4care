@@ -105,7 +105,7 @@ class JobCategory:
         (HANDYMAN_JOBS, _("Petits boulots manuels")),
         (GARDENING_JOBS, _("Jardinage")),
         (PETS_CARE, _("Garder des animaux")),
-        (PERSONAL_CARE, _("Soins personnels"))
+        (PERSONAL_CARE, _("Soins personnels")),
         (ADMINISTRATION, _("Administratif")),
         (OTHER, _("Autre")),
         (SPECIAL, _("Spécial ... :D")),
