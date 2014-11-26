@@ -219,7 +219,7 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
     user_type = models.IntegerField(_("Type de compte"),choices=MemberType.MEMBER_TYPES,
                                       default=MemberType.MEMBER, help_text=_('Un member pourra aider ou être aidé alors qu\'un \
                                        non-membre est un professionnel qui s\'inscrira pour avoir accès aux données d\'un \
-                                       passiant. Veuillez choisir celui qui vous correspond'))
+                                       patient. Veuillez choisir celui qui vous correspond'))
 
     how_found = MultiSelectField(choices=HOW_FOUND_CHOICES, verbose_name=_("Comment avez-vous entendu parler de Care4Care ?"))
     birth_date = models.DateField(blank=True, null=True, verbose_name=_("Date de naissance"))
