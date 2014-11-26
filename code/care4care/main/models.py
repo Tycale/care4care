@@ -123,11 +123,11 @@ class VerifiedUser(models.Model):
 
 
     # preference
-    work_with = models.ManyToManyField('User',related_name="verified_work_with")
+    work_with = models.ManyToManyField('User',related_name="verified_work_with", blank=True, null=True)
 
     # network management
-    favorites = models.ManyToManyField('User',related_name="verified_favorites")
-    personal_network = models.ManyToManyField('User', verbose_name="Votre réseau personnel",related_name="verified_personal_network")
+    favorites = models.ManyToManyField('User',related_name="verified_favorites", blank=True, null=True)
+    personal_network = models.ManyToManyField('User', verbose_name="Votre réseau personnel",related_name="verified_personal_network", blank=True, null=True)
 
     mail_preferences = models.IntegerField(choices=INFORMED_BY,
                                       default=INBOX, verbose_name=_("Recevoir mes messages par"))
@@ -231,7 +231,7 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
 
     #non member
     organization = models.CharField(_("Organization"), max_length=100, blank=True)
-    work = models.CharField(_("Fonction"), max_length=100, blank=True)
+    work = models.CharField(_("Fonction"), max_length=100, blank=True, null=True)
 
     objects = UserManager()
 

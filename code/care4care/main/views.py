@@ -17,6 +17,7 @@ from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import CreateView
+from branch.models import Branch
 
 import json
 import os
@@ -204,6 +205,11 @@ class RegistrationView(BaseRegistrationView):
                                      user=new_user,
                                      request=request)
         return new_user
+
+    def get_context_data(self, **kwargs):
+        context = super(RegistrationView, self).get_context_data(**kwargs)
+        context['branches'] = Branch.objects.all()
+        return context
 
 class EmergencyContact(CreateView):
     template_name = 'profile/emergency_contact.html'
