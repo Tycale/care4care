@@ -78,36 +78,37 @@ class MemberType:
     MEMBER_TYPES_GROUP = (
         (ALL, _("Tous")),
         (VERIFIED_MEMBER, _("Membre vérifié")),
-        (FAVORITE, _("Favoris (inclus le reseau personel)")),
+        (FAVORITE, _("Favoris (inclus le réseau personnel)")),
         )
 
 
 class JobCategory:
-    visit_at_home = 1
-    accompany_someone = 2
-    transport_by_car = 3
-    shopping = 4
-    household = 5
-    handyman_jobs = 6
-    gardening_jobs = 7
-    pets_care = 8
-    personal_care = 9
-    administration = 10
-    other = 11
-    special = 12
+    VISIT_AT_HOME = 1
+    ACCOMPANY_SOMEONE = 2
+    TRANSPORT_BY_CAR = 3
+    SHOPPING = 4
+    HOUSEHOULD = 5
+    HANDYMAN_JOBS = 6
+    GARDENING_JOBS = 7
+    PETS_CARE = 8
+    PERSONAL_CARE = 9
+    ADMINISTRATION = 10
+    OTHER = 11
+    SPECIAL = 12
 
     JOB_CATEGORIES = ((
-        (visit_at_home, _("Visite à la maison")),
-        (accompany_someone, _("Tenir compagnie")),
-        (transport_by_car, _("Transport par voiture")),
-        (shopping, _("Shopping")),
-        (household,_("Garder des maisons")),
-        (handyman_jobs,_("Petit boulots manuels")),
-        (gardening_jobs,_("Jardinage")),
-        (pets_care,_("Garder des animaux")),
-        (administration,_("Administratif")),
-        (other,_("Autre")),
-        (special,_("Special ... :D")),
+        (VISIT_AT_HOME, _("Visite à la maison")),
+        (ACCOMPANY_SOMEONE, _("Tenir compagnie")),
+        (TRANSPORT_BY_CAR, _("Transport par voiture")),
+        (SHOPPING, _("Shopping")),
+        (HOUSEHOULD, _("Garder des maisons")),
+        (HANDYMAN_JOBS, _("Petits boulots manuels")),
+        (GARDENING_JOBS, _("Jardinage")),
+        (PETS_CARE, _("Garder des animaux")),
+        (PERSONAL_CARE, _("Soins personnels"))
+        (ADMINISTRATION, _("Administratif")),
+        (OTHER, _("Autre")),
+        (SPECIAL, _("Spécial ... :D")),
         ))
 
 BOOL_CHOICES = ((True, _('Oui')), (False, _('Non')))
@@ -126,21 +127,21 @@ class VerifiedUser(models.Model):
 
     # network management
     favorites = models.ManyToManyField('User',related_name="verified_favorites")
-    personal_network = models.ManyToManyField('User', verbose_name="Votre reseau personnel",related_name="verified_personal_network")
+    personal_network = models.ManyToManyField('User', verbose_name="Votre réseau personnel",related_name="verified_personal_network")
 
     mail_preferences = models.IntegerField(choices=INFORMED_BY,
                                       default=INBOX, verbose_name=_("Recevoir mes messages par"))
     receive_help_from_who = models.IntegerField(choices=MemberType.MEMBER_TYPES_GROUP, default=MemberType.ALL,
                                       verbose_name=_("Recevoir des demandes et des offres de"))
-    offered_job = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Quels sont les tâches que vous souhaitez effectuer ?"), blank=True)
-    asked_job = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Quels sont les tâches dont vous avez besoin ?"), blank=True)
+    offered_job = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Quelles sont les tâches que vous souhaitez effectuer ?"), blank=True)
+    asked_job = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Quelles sont les tâches dont vous avez besoin ?"), blank=True)
 
     # TODO : Schedule time
 
     facebook = models.URLField(verbose_name="Lien (URL) de votre profil Facebook", blank=True)
 
     hobbies = models.TextField(verbose_name=_("Vos hobbies"), blank=True)
-    additional_info = models.TextField(verbose_name=_("Information supplémentaire"), blank=True)
+    additional_info = models.TextField(verbose_name=_("Informations supplémentaires"), blank=True)
 
 
 class CommonInfo(models.Model):
@@ -220,7 +221,7 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
                                        non-membre est un professionnel qui s\'inscrira pour avoir accès aux données d\'un \
                                        passiant. Veuillez choisir celui qui vous correspond'))
 
-    how_found = MultiSelectField(choices=HOW_FOUND_CHOICES, verbose_name=_("Comment avez-vous entendu parlé de Care4Care ?"))
+    how_found = MultiSelectField(choices=HOW_FOUND_CHOICES, verbose_name=_("Comment avez-vous entendu parler de Care4Care ?"))
     birth_date = models.DateField(blank=True, null=True, verbose_name=_("Date de naissance"))
     credit = models.IntegerField(default=0, verbose_name=_("Crédit restant")) # in minuts
 
