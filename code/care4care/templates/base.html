@@ -216,11 +216,13 @@
                   </button>{% endblock %}
                   {% if request.user.is_authenticated %}
                   <ul class="dropdown-menu" role="user-menu">
-                    <li><a href="{% url 'profile_management' %}">
-                    {% bootstrap_icon 'user' %} &nbsp; {% trans "Mon Profile" %}</a>
-                    <a href="{% url 'verified_member_demand' %}">
-                    {% bootstrap_icon 'star' %} &nbsp; {% trans "Vérifier" %}</a>
-                    </li>
+                    <li><a href="{% url 'profile' %}">
+                    {% bootstrap_icon 'user' %} &nbsp; {% trans "Mon Profil" %}</a>
+                    {% if not request.user.is_verified %}
+                      <a href="{% url 'verified_member_demand' %}">
+                      {% bootstrap_icon 'star' %} &nbsp; {% trans "Vérifier" %}</a>
+                    {% endif %}
+                   </li>
                     <li class="divider"></li>
                     <li><a href="{% url 'logout' %}">
                     {% bootstrap_icon 'log-out' %} &nbsp; {% trans "Se déconnecter" %}</a>
@@ -325,33 +327,26 @@
                   <li class="sub-menu">
                       <a href="javascript:;" >
                           <i class="fa fa-cogs"></i>
-                          <span>Components</span>
+                          <span>{% trans "News" %}</span>
                       </a>
-                      <ul class="sub">
-                          <li><a  href="calendar.html">Calendar</a></li>
-                          <li><a  href="gallery.html">Gallery</a></li>
-                          <li><a  href="todo_list.html">Todo List</a></li>
-                      </ul>
                   </li>
                   <li class="sub-menu">
                       <a href="javascript:;" >
                           <i class="fa fa-book"></i>
-                          <span>Extra Pages</span>
+                          <span>{% trans "Offres d'emploi" %}</span>
                       </a>
-                      <ul class="sub">
-                          <li><a  href="blank.html">Blank Page</a></li>
-                          <li><a  href="login.html">Login</a></li>
-                          <li><a  href="lock_screen.html">Lock Screen</a></li>
-                      </ul>
                   </li>
                   <li class="sub-menu">
                       <a href="javascript:;" >
                           <i class="fa fa-tasks"></i>
-                          <span>Forms</span>
+                          <span>{% trans "Aide" %}</span>
                       </a>
-                      <ul class="sub">
-                          <li><a  href="form_component.html">Form Components</a></li>
-                      </ul>
+                  </li>
+                  <li class="sub-menu">
+                      <a href="javascript:;" >
+                          <i class="fa fa-tasks"></i>
+                          <span>{% trans "A propos" %}</span>
+                      </a>
                   </li>
                   <li class="sub-menu">
                       <a href="javascript:;" >

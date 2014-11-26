@@ -9,13 +9,25 @@ from django.contrib.sites.models import Site
 from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
 from django.views.generic import View
-from main.forms import ProfileManagementForm, VerifiedInformationForm
-from main.models import User, VerifiedInformation
-from django.contrib.auth.decorators import login_required
+from main.forms import ProfileManagementForm, VerifiedInformationForm, NeedHelpForm, EmergencyContactCreateForm
+from main.models import User, VerifiedInformation, EmergencyContact
+from branch.models import Job
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+from django.core.urlresolvers import reverse
+from django.views.generic.edit import CreateView
+
+import json
+import os
+from os.path import abspath, dirname
+
+from django.views.generic.edit import UpdateView
+from django.contrib.messages.views import SuccessMessageMixin
 
 def home(request):
+    demands = Job.objects.filter(donor = None)
+    offers = Job.objects.filter(receiver = None)
     return render(request, 'main/home.html', locals())
 
 def logout(request):
@@ -46,7 +58,12 @@ def login(request):
 
 def user_profile(request, user_id):
     """ Get profile from a user"""
-    user_to_display = get_object_or_404(User, pk=user_id)
+    id_int = int(user_id)
+    user_to_display = get_object_or_404(User, pk=id_int)
+    user = get_object_or_404(User, pk=request.user.id)
+    is_my_friend = False
+    if (user_to_display in user.favorites.all()):
+        is_my_friend = True
     return render(request, 'profile/user_profile.html',locals())
 
 
@@ -54,6 +71,8 @@ def user_profile(request, user_id):
 def manage_profile(request):
     """ Return the profile from the current logged user"""
     user_to_display = get_object_or_404(User, pk=request.user.id)
+    user_to_display = User.objects.select_related().get(id=request.user.id)
+
     return render(request, 'profile/user_profile.html',locals())
 
 @login_required
@@ -62,6 +81,7 @@ def verified_member_demand_view(request):
     return render(request,'verified/verified_member_demand.html',locals())
 
 
+@user_passes_test(lambda u: not u.is_verified)
 @login_required
 def verified_member_demand_view(request):
     user = request.user
@@ -88,37 +108,65 @@ def verified_member_demand_view(request):
 
     return render(request,'verified/verified_member_demand.html',locals())
 
-
 def statistics(request):
     return render(request, 'statistics/statistics.html', locals())
 
 
+@login_required
+def member_favorite(request, user_id):
+    user = get_object_or_404(User, pk=request.user.id)
+    id_favorite = user_id
+    favorite_user = get_object_or_404(User, pk=id_favorite)
+    if request.method == "PUT":
+        user.favorites.add(favorite_user)
+        user.save()
+        return HttpResponse(
+            json.dumps({"name": favorite_user.get_full_name()}),
+            content_type="application/json"
+        )
+
+    elif request.method == 'DELETE':
+        user.favorites.remove(favorite_user)
+        user.save()
+        return HttpResponse(json.dumps({"name": favorite_user.get_full_name()}), content_type='application/json')
+
+@login_required
+def member_personal_network(request, user_id):
+    user = get_object_or_404(User, pk=request.user.id)
+    id_other = user_id
+    other_user = get_object_or_404(User, pk=id_other)
+    if request.method == "PUT":
+        user.personal_network.add(other_user)
+        user.save()
+        return HttpResponse(
+            json.dumps({"name": other_user.get_full_name()}),
+            content_type="application/json"
+        )
+
+    elif request.method == 'DELETE':
+        user.personal_network.remove(other_user)
+        user.save()
+        return HttpResponse(json.dumps({"name": other_user.get_full_name()}), content_type='application/json')
+
+
 # Classes views
 
-
-class EditProfileView(View):
+class EditProfileView(UpdateView, SuccessMessageMixin):
     """ Return the edit page for the current logged user"""
+    form_class = ProfileManagementForm
+    model = User
+    template_name = 'profile/edit_profile.html'
+    success_message = _('Profil modifié avec succès !')
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(EditProfileView, self).dispatch(*args, **kwargs)
 
-    def get(self, request):
-        user = request.user
-        form = ProfileManagementForm(instance=user)
-        return render(request,'profile/edit_profile.html',locals())
+    def get_object(self, queryset=None):
+        return self.request.user
 
-    def post(self, request):
-        user = request.user
-        form = ProfileManagementForm(request.POST,instance=user)
-        if form.is_valid():
-            form.save()
-            messages.add_message(request, messages.INFO, _('Modification sauvegardée'))
-        else:
-            form = ProfileManagementForm(instance=request.user)
-        user_to_display = user
-        request.method = "GET"
-        return HttpResponseRedirect('../')
+    def get_success_url(self):
+        return reverse('profile')
 
 
 class RegistrationView(BaseRegistrationView):
@@ -144,15 +192,57 @@ class RegistrationView(BaseRegistrationView):
         new_user.first_name = first_name
         new_user.birth_date = cleaned_data['birth_date']
         new_user.how_found = cleaned_data['how_found']
-        new_user.languages = cleaned_data['languages']
+        #new_user.languages = cleaned_data['languages']
         new_user.phone_number = cleaned_data['phone_number']
         new_user.mobile_number = cleaned_data['mobile_number']
-        new_user.longitude = cleaned_data['longitude']
-        new_user.latitude = cleaned_data['latitude']
-        new_user.location = cleaned_data['location']
+        #new_user.longitude = cleaned_data['longitude']
+        #new_user.latitude = cleaned_data['latitude']
+        #new_user.location = cleaned_data['location']
         new_user.save()
 
         signals.user_registered.send(sender=self.__class__,
                                      user=new_user,
                                      request=request)
         return new_user
+
+class EmergencyContact(CreateView):
+    template_name = 'profile/emergency_contact.html'
+    form_class = EmergencyContactCreateForm
+    model = EmergencyContact
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super(EmergencyContact, self).form_valid(form)
+
+class NeedHelpView(CreateView):
+    """
+    A registration backend for our CareRegistrationForm
+    """
+    template_name = 'job/need_help.html'
+    form_class = NeedHelpForm
+    model = Job
+    success_url = '/'
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.receiver = self.request.user
+        self.object.real_time = self.object.estimated_time
+        self.object.save()
+        return super(NeedHelpView, self).form_valid(form)
+
+
+class OfferHelpView(CreateView):
+    """
+    A registration backend for our CareRegistrationForm
+    """
+    template_name = 'job/need_help.html'
+    form_class = NeedHelpForm
+    model = Job
+    success_url = '/'
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.donor = self.request.user
+        self.object.real_time = self.object.estimated_time
+        self.object.save()
+        return super(NeedHelpView, self).form_valid(form)

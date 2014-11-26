@@ -100,17 +100,19 @@ $(document).ready(function () {
             var longitude = parseFloat( p.coords.longitude );
             var lo = new google.maps.LatLng(latitude, longitude);
 
-            for(var i = 0; i < locations.length; ++i){
-                var pos = new google.maps.LatLng(locations[i][1], locations[i][2]);
-                locations[i][4] = google.maps.geometry.spherical.computeDistanceBetween(lo, pos);
+            var locations_bis =  locations.slice(0)
+
+            for(var i = 0; i < location_bis.length; ++i){
+                var pos = new google.maps.LatLng(location_bis[i][1], location_bis[i][2]);
+                location_bis[i][4] = google.maps.geometry.spherical.computeDistanceBetween(lo, pos);
             }
 
-            locations.sort(function(r1, r2) {return r1[4] - r2[4];});
+            location_bis.sort(function(r1, r2) {return r1[4] - r2[4];});
 
             var nbounds = new google.maps.LatLngBounds();
 
-            for(var i = 0; i < Math.min(locations.length, 3); ++i){
-                var pos = new google.maps.LatLng(locations[i][1], locations[i][2]);
+            for(var i = 0; i < Math.min(location_bis.length, 3); ++i){
+                var pos = new google.maps.LatLng(location_bis[i][1], location_bis[i][2]);
                 nbounds.extend(pos);
             }
 

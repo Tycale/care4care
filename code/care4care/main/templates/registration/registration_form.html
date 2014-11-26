@@ -4,134 +4,75 @@
 
 {% block title %}{% trans "Inscription" %}{% endblock %}
 
-{% block extra_head %}
-<script src="{% static "js/bloodhound.min.js" %}"></script>
-<script src="http://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
-<script src="{% static "js/typeahead-addresspicker.js" %}"></script>
-<script src="{% static "js/typeahead.js" %}"></script>
-
-{% endblock %}
 
 {% block content %}
 <h3><i class="fa fa-angle-right"></i> {% trans "Inscription" %}</h3>
 
 <div class="row mt">
-	<div class="col-lg-12">
-			<form action="." role="form" method="post">
-			<h3 class="mb">{% trans "Complétez les informations suivantes afin de créer votre compte" %}</h3>
-			{% csrf_token %}
+    <div class="col-lg-12">
+        <form action="." role="form" method="post">
+            <h3 class="mb">{% trans "Complétez les informations suivantes afin de créer votre compte" %}</h3>
+            {% csrf_token %}
 
-			{% bootstrap_form_errors form %}
+            {% bootstrap_form_errors form %}
 
-			<div class="row mt">
-			<div class="col-lg-6 col-sm-12 background-gris">
-				<div class="showback">
-				<h4 class="mb"><i class="fa fa-angle-right"></i> {% trans "Informations de connexion" %}</h4>
-				{% bootstrap_field form.username %}
+            <div class="row mt">
+                <div class="col-lg-6 col-sm-12 background-gris">
+                    <div class="showback">
+                        <h4 class="mb"><i class="fa fa-angle-right"></i> {% trans "Informations de connexion" %}</h4>
+                        {% bootstrap_field form.username %}
 
-				{% bootstrap_field form.password1 %}
-				{% bootstrap_field form.password2 %}
-				</div>
-			</div>
+                        {% bootstrap_field form.password1 %}
+                        {% bootstrap_field form.password2 %}
+                    </div>
+                </div>
 
-			<div class="col-lg-6 col-sm-12 background-gris">
-				<div class="showback">
-				<h4 class="mb"><i class="fa fa-angle-right"></i> {% trans "Informations générales" %}</h4>
-				{% bootstrap_field form.first_name %}
-				{% bootstrap_field form.last_name %}
-				{% bootstrap_field form.birth_date %}
-				</div>
-			</div>
+                <div class="col-lg-6 col-sm-12 background-gris">
+                    <div class="showback">
+                        <h4 class="mb"><i class="fa fa-angle-right"></i> {% trans "Informations générales" %}</h4>
+                        {% bootstrap_field form.first_name %}
+                        {% bootstrap_field form.last_name %}
+                        {% bootstrap_field form.birth_date %}
+                    </div>
+                </div>
 
-			<div class="col-lg-6 col-sm-12 background-gris">
-				<div class="showback">
-				<h4 class="mb"><i class="fa fa-angle-right"></i> {% trans "Informations de contact" %}</h4>
-				{% bootstrap_field form.phone_number %}
-				{% bootstrap_field form.mobile_number %}
-				{% bootstrap_field form.email %}
-				{% bootstrap_field form.languages %}
-				</div>
-			</div>
+                <div class="col-lg-6 col-sm-12 background-gris">
+                    <div class="showback">
+                        <h4 class="mb"><i class="fa fa-angle-right"></i> {% trans "Informations de contact" %}</h4>
+                        {% bootstrap_field form.phone_number %}
+                        {% bootstrap_field form.mobile_number %}
+                        {% bootstrap_field form.email %}
+                    </div>
+                </div>
 
-			<div class="col-lg-6 col-sm-12 background-gris">
-				<div class="showback">
-				<h4 class="mb"><i class="fa fa-angle-right"></i> {% trans "Comment avez-vous entendu parler de nous 	?" %}</h4>
-				{% bootstrap_field form.how_found %}
-				</div>
-			</div>
+                <div class="col-lg-6 col-sm-12 background-gris">
+                    <div class="showback">
+                        <h4 class="mb"><i class="fa fa-angle-right"></i> {% trans "Comment avez-vous entendu parler de nous 	?" %}</h4>
+                        {% bootstrap_field form.how_found %}
+                    </div>
+                </div>
 
-			<div class="col-lg-6 col-sm-12 background-gris">
-				<div class="showback">
-					<h4 class="mb"><i class="fa fa-angle-right"></i> {% trans "Type de compte" %}</h4>
-					{% bootstrap_field form.user_type %}
-				</div>
-			</div>
-
-			<div class="col-sm-12 background-gris">
-				<div class="showback">
-				<h4 class="mb"><i class="fa fa-angle-right"></i> {% trans "Adresse" %}</h4>
-				<div class="row">
-					<div class="col-lg-6">
-						<input id="id_location_input" class="typeahead form-control" type="text" placeholder="{% trans "Entrez votre adresse"%}">
-					</div>
-					<div class="col-lg-6">
-						<div id="map" style="min-height:300px;"></div>
-						<br />
-						<div class="alert alert-info"><b>{% trans "Information:"%}</b> {% trans "L'emplacement sur la carte peut être approximatif" %}</div>
-					</div>
-				</div>
-				{% bootstrap_field form.location %}
-				{% bootstrap_field form.latitude %}
-				{% bootstrap_field form.longitude %}
-				</div>
-			</div>
+                <div class="col-lg-6 col-sm-12 background-gris">
+                    <div class="showback">
+                        <h4 class="mb"><i class="fa fa-angle-right"></i> {% trans "Type de compte" %}</h4>
+                        {% bootstrap_field form.user_type %}
+                    </div>
+                </div>
 
 
+            </div>
 
-			</div>
-
-			{% buttons %}
-			<button type="submit" class="btn btn-success btn-lg btn-block">
-			{% bootstrap_icon "ok" %} &nbsp; {% trans "M'inscrire" %}
-			</button>
-			{% endbuttons %}
-			</form>
-       </div>
-	</div><!-- col-lg-12-->
+            {% buttons %}
+            <button type="submit" class="btn btn-success btn-lg btn-block">
+                {% bootstrap_icon "ok" %} &nbsp; {% trans "M'inscrire" %}
+            </button>
+            {% endbuttons %}
+        </form>
+    </div>
+</div><!-- col-lg-12-->
 </div>
 {% endblock %}
 
 {% block extra_footer %}
-<script>
-$(document).ready(function () {
-// https://github.com/sgruhier/typeahead-addresspicker
-// instantiate the addressPicker suggestion engine (based on bloodhound)
-var addressPicker = new AddressPicker({
-	map: {id: '#map', center: new google.maps.LatLng(50.846975, 4.351815699999975), zoom:15,},
-	marker: {visible: true, draggable: false,}
-});
-
-// instantiate the typeahead UI
-$('#id_location_input').typeahead(null, {
-  displayKey: 'description',
-  source: addressPicker.ttAdapter()
-});
-
-// Bind some event to update map on autocomplete selection
-$('#id_location_input').bind("typeahead:selected", addressPicker.updateMap);
-$('#id_location_input').bind("typeahead:cursorchanged", addressPicker.updateMap);
-
-addressPicker.bindDefaultTypeaheadEvent($('#id_location_input'))
-
-$(addressPicker).on('addresspicker:selected', function (event, result) {
-  $('#id_latitude').val(result.lat());
-  $('#id_longitude').val(result.lng());
-  $('#id_location').val($('#id_location_input').typeahead('val'));
-});
-
-});
-
-
-</script>
 {{ form.media }}
 {% endblock %}

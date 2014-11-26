@@ -66,7 +66,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.static",
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
-    "django.core.context_processors.i18n",
+    "django.core.context_processors.request",
 )
 
 STATICFILES_FINDERS = (
@@ -122,6 +122,7 @@ DEFAULT_LANGUAGE = 0
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/assets/'
+MEDIA_URL = '/media/'
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
