@@ -17,12 +17,13 @@ from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import CreateView
-from branch.models import Branch
+from branch.models import Branch, BranchMembers
 
 import json
 import os
 from os.path import abspath, dirname
 
+from django.utils import timezone
 from django.views.generic.edit import UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
 
@@ -199,7 +200,12 @@ class RegistrationView(BaseRegistrationView):
         #new_user.longitude = cleaned_data['longitude']
         #new_user.latitude = cleaned_data['latitude']
         #new_user.location = cleaned_data['location']
+
+        
         new_user.save()
+        branch = Branch.objects.get(pk=cleaned_data['id'])
+        bm = BranchMembers(user=new_user, branch=branch, is_admin=False, joined=timezone.now())
+        bm.save()
 
         signals.user_registered.send(sender=self.__class__,
                                      user=new_user,
