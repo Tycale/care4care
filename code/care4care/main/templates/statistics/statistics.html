@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}{% load i18n %}
+
+{% block title %}{% trans "Statistiques" %}{% endblock %}
+
+{% block content %}
+<div id="stats">
+	{% load staticfiles %}
+	<script src="{% static "js/statistics.js" %}"></script>
+
+	<h3>
+		<i class="fa fa-angle-right"></i>
+		Statistics
+	</h3>
+	<canvas id="chart_line" width="400" height="200"></canvas>
+
+	<canvas id="chart_radar" width="400" height="200"></canvas>
+
+	<canvas id="chart_polar" width="400" height="200"></canvas>
+</div>
+{% endblock %}

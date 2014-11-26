@@ -88,6 +88,11 @@ def verified_member_demand_view(request):
 
     return render(request,'verified/verified_member_demand.html',locals())
 
+
+def statistics(request):
+    return render(request, 'statistics/statistics.html', locals())
+
+
 # Classes views
 
 
