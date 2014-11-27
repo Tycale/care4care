@@ -319,9 +319,10 @@
                       </a>
                   </li>
 
+                  {% if request.user.is_authenticated %}
                   <li class="sub-menu">
                       <a href="javascript:;" >
-                          <i class="fa fa-bars"></i>
+                          <i class="fa fa-globe"></i>
                           <span>{% trans "Branches" %}</span>
                       </a>
                       <ul class="sub">
@@ -342,6 +343,7 @@
                           {% endif %}
                       </ul>
                   </li>
+                  {% endif %}
 
                   <li class="sub-menu">
                       <a href="javascript:;" >
