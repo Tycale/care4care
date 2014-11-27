@@ -2442,3 +2442,8 @@ div.top-menu > ul > li > button > a {
     font-weight: bold;
 }
 
+.form-horizontal .form-group {
+  margin-right: 0px;
+  margin-left: 0px;
+}
+

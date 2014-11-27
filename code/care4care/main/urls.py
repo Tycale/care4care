@@ -10,7 +10,5 @@ urlpatterns = patterns(
     url(r'^accounts/', include('main.urls_profile')),
     url(r'^accounts/', include('main.urls_verified')),
 
-    url(r'^jobs/', include('main.urls_job')),
-
 	url(r'^statistics/$', 'main.views.statistics', name='stats')
 )

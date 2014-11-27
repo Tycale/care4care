@@ -2,7 +2,21 @@ from django.utils.translation import ugettext_lazy as _
 from django.template.defaultfilters import slugify
 from django.db import models
 
+from multiselectfield import MultiSelectField
+
 from main.models import User, JobCategory
+
+TIME_CHOICES = (
+    (1, _('Début de matinée (8h-10h)')),
+    (2, _('Fin de matinée (10h-12h)')),
+    (3, _('Midi (12h-13h)')),
+    (4, _('Début d\'après-midi (13h-16h)')),
+    (5, _('Fin d\'après-midi (16h-19h)')),
+    (6, _('Repas du soir (19h-20h)')),
+    (7, _('Début de soirée (20h-22h)')),
+    (8, _('Fin de soirée (22h-00h)')),
+    (9, _('Nuit (00h-8h)')),
+    )
 
 class Branch(models.Model):
     name = models.CharField(verbose_name=_("Nom de la branche"), max_length=255, help_text=_("Nom de la localité"))
@@ -42,15 +56,19 @@ class Job(models.Model):
     donor = models.ForeignKey(User, verbose_name=_("Donneur"), related_name="donor", null=True)
     receiver =  models.ForeignKey(User, verbose_name=_("Receveur"), related_name="receiver", null=True)
     title = models.CharField(_('Titre'), max_length=120, null=True, blank=False)
-    description = models.TextField(verbose_name=_("Description"))
-    estimated_time = models.IntegerField(verbose_name=_("Temps estimé"))
-    real_time = models.IntegerField(verbose_name=_("Temps réel"))
+    description = models.TextField(verbose_name=_("Description"), blank=True, null=True)
+    estimated_time = models.IntegerField(verbose_name=_("Temps estimé (en minutes)"))
+    real_time = models.IntegerField(verbose_name=_("Temps réel (en minutes)"), blank=True, null=True)
     category = models.IntegerField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Type d'aide"))
-    date = models.DateTimeField(verbose_name=_("Date de l'aide"))
-    km = models.IntegerField(verbose_name=_("km"))
+    date = models.DateTimeField(verbose_name=_("Date (DD/MM/YYYY)"), help_text=_('La date doit être indiquée sous le format DD/MM/YYYY où DD est le jour, MM est le mois et YYYY est l\'année.'))
+    time = MultiSelectField(choices=TIME_CHOICES, verbose_name=_("Heure(s) possible(s)"), blank=False, help_text=_('Selectionnez les heures qui vous conviennent'))
+    km = models.IntegerField(verbose_name=_("km"), blank=True, null=True)
     location = models.CharField(_('Adresse'), max_length=256, null=True, blank=True)
     latitude = models.CharField(_('Latitude'), max_length=20, null=True, blank=True)
     longitude = models.CharField(_('Longitude'), max_length=20, null=True, blank=True)
+
+    def get_verbose_category(self):
+        return JobCategory.JOB_CATEGORIES[self.category-1][1]
 
 class Comment(models.Model):
     user = models.ForeignKey(User)

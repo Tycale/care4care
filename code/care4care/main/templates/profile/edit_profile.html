@@ -115,7 +115,7 @@
         // instantiate the addressPicker suggestion engine (based on bloodhound)
         var addressPicker = new AddressPicker({
             map: {id: '#map', center: new google.maps.LatLng({{ form.latitude.value | default:'50.846975' }}, {{ form.longitude.value | default:'4.351815699999975' }}), zoom:15,},
-            marker: {visible: true, draggable: false,}
+            marker: {visible: true, draggable: false, scrollwheel: false,}
         });
 
         // instantiate the typeahead UI

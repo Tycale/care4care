@@ -86,6 +86,74 @@
 </div>
 
 <div class="row mt">
+  <div class="col-md-4 col-md-offset-2"> <a class="btn btn-primary btn-lg" href="{% url "need_help" branch_id=branch.id slug=branch.slug %}">{% trans "J'ai besoin d'aide" %}</a> </div>
+  <div class="col-md-4 col-md-offset-2"><a class="btn btn-primary btn-lg" href="{% url "offer_help" branch_id=branch.id slug=branch.slug %}">{% trans "Offrir mon aide" %}</a></div>
+</div>
+
+<div class="row mt">
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        {% trans "Demandes" %}
+      </div>
+      <div class="panel-body">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+            <th> {% trans "Branch" %}</th>
+            <th> {% trans "Demandeur" %}</th>
+            <th> {% trans "Date" %}</th>
+            <th> {% trans "Categorie" %}</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for demand in demands %}
+          <tr>
+            <td> {{ demand.branch }} </td>
+            <td> {{ demand.receiver }} </td>
+            <td> {{ demand.date }} </td>
+            <td> {{ demand.get_verbose_category }} </td>
+          </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        {% trans "Offres" %}
+      </div>
+      <div class="panel-body">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr>
+            <th> {% trans "Branch" %}</th>
+            <th> {% trans "Offreur" %}</th>
+            <th> {% trans "Date" %}</th>
+            <th> {% trans "Categorie" %}</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for offer in offers %}
+          <tr>
+            <td> {{ offer.branch }} </td>
+            <td> {{ offer.receiver }} </td>
+            <td> {{ offer.date }} </td>
+            <td> {{ offer.get_verbose_category }} </td>
+          </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row mt">
     <div class="col-lg-12">
 
     	<div class="content-panel">

@@ -148,21 +148,3 @@ class EmergencyContactCreateForm(forms.ModelForm):
     class Meta:
         model = EmergencyContact
         exclude = ['user']
-
-class NeedHelpForm(forms.ModelForm):
-
-    date = forms.DateField(label=_("Date de naissance (DD/MM/YYYY)"),
-                                 widget=SelectDateWidget(years=range(datetime.date.today().year-100, \
-                                                                     datetime.date.today().year)),
-                                 initial=datetime.date.today())
-
-    category =  MultiSelectField(verbose_name=_("Categorie"))
-
-    class Meta:
-        model = Job
-        fields = ['description', 'estimated_time', 'category','branch', 'date', 'km', 'location', 'latitude', 'longitude']
-        widgets = {
-            'latitude': forms.HiddenInput,
-            'longitude': forms.HiddenInput,
-            'location': forms.HiddenInput,
-        }

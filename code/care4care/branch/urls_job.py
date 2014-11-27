@@ -2,16 +2,10 @@ from django.conf.urls import patterns, url
 
 from django.views.generic.base import TemplateView
 
-from main.views import NeedHelpView
-
-from main.forms import NeedHelpForm
-
-from main.views import user_profile, manage_profile, EditProfileView, member_favorite, member_personal_network
+from branch.views import NeedHelpView, OfferHelpView
+from branch.forms import NeedHelpForm
 
 urlpatterns = patterns('',
-                       url(r'^$',
-                           manage_profile,
-                           name='profile_management'),
                        url(r'^needhelp/$',
                            NeedHelpView.as_view(),
                            name='need_help'),

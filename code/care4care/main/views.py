@@ -9,7 +9,7 @@ from django.contrib.sites.models import Site
 from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
 from django.views.generic import View
-from main.forms import ProfileManagementForm, VerifiedInformationForm, NeedHelpForm, EmergencyContactCreateForm
+from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm
 from main.models import User, VerifiedInformation, EmergencyContact
 from branch.models import Job
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -28,8 +28,12 @@ from django.views.generic.edit import UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
 
 def home(request):
-    demands = Job.objects.filter(donor = None)
-    offers = Job.objects.filter(receiver = None)
+    user = request.user
+    demands = Job.objects.filter(donor=None)
+    offers = Job.objects.filter(receiver=None)
+    if user.is_authenticated :
+        demands.filter(branch__in=user.membership.all())
+        offers.filter(branch__in=user.membership.all())
     return render(request, 'main/home.html', locals())
 
 def logout(request):
@@ -76,11 +80,6 @@ def manage_profile(request):
     user_to_display = User.objects.select_related().get(id=request.user.id)
 
     return render(request, 'profile/user_profile.html',locals())
-
-@login_required
-def verified_member_demand_view(request):
-    user_to_display = request.user
-    return render(request,'verified/verified_member_demand.html',locals())
 
 
 @user_passes_test(lambda u: not u.is_verified)
@@ -225,36 +224,3 @@ class EmergencyContact(CreateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super(EmergencyContact, self).form_valid(form)
-
-class NeedHelpView(CreateView):
-    """
-    A registration backend for our CareRegistrationForm
-    """
-    template_name = 'job/need_help.html'
-    form_class = NeedHelpForm
-    model = Job
-    success_url = '/'
-
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.receiver = self.request.user
-        self.object.real_time = self.object.estimated_time
-        self.object.save()
-        return super(NeedHelpView, self).form_valid(form)
-
-
-class OfferHelpView(CreateView):
-    """
-    A registration backend for our CareRegistrationForm
-    """
-    template_name = 'job/need_help.html'
-    form_class = NeedHelpForm
-    model = Job
-    success_url = '/'
-
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.donor = self.request.user
-        self.object.real_time = self.object.estimated_time
-        self.object.save()
-        return super(NeedHelpView, self).form_valid(form)
