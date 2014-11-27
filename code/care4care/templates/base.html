@@ -205,6 +205,18 @@
                   </button>
                 </li>
                 {% endif %}
+                {% if request.user.is_authenticated %}
+                <li class="credit-menu">
+                  <ul>
+                    <li>
+                      <span class="credit-text text-info">{% trans "Crédit restant :" %}</span> {{ request.user.get_verbose_credit }}
+                    </li>
+                    <li>
+                      <span  class="credit-text text-info">{% trans "Type de compte :" %}</span> {{ request.user.get_account_type | safe }}
+                    </li>
+                  </ul>
+                </li>
+                {% endif %}
                 <li class="dropdown">{% block connect %}
                   <button type="button" class="btn btn-theme03 btn-login force-size dropdown-toggle" data-toggle="dropdown">
                     <span class="glyphicon glyphicon-user"></span>
@@ -220,7 +232,7 @@
                     {% bootstrap_icon 'user' %} &nbsp; {% trans "Mon Profil" %}</a>
                     {% if not request.user.is_verified %}
                       <a href="{% url 'verified_member_demand' %}">
-                      {% bootstrap_icon 'star' %} &nbsp; {% trans "Vérifier" %}</a>
+                      {% bootstrap_icon 'star' %} &nbsp; {% trans "Devenir vérifié" %}</a>
                     {% endif %}
                    </li>
                     <li class="divider"></li>
@@ -318,10 +330,13 @@
                           <li><a href="{{ branch.branch.get_absolute_url }}"><i class="fa fa-circle-thin"></i>{{ branch.branch }}</a></li>
                         {% endfor %}
                       {% else %}
+                        <i style="margin-top: 5px; display: block;">{% trans "En tant que superuser, vous voyez toutes les branches" %}</i>
                         {% branches %}
                       {% endif %}
 
+                          {% if not request.user.is_superuser %}
                           <li><a href="{% url "branch_join" %}"><i class="fa fa-plus"></i>{% trans "Rejoindre une branche" %}</a></li>
+                          {% endif %}
                           {% if request.user.is_verified %}
                             <li><a href="{% url "branch_create" %}"><i class="fa fa-code-fork"></i>{% trans "Créer une branche" %}</a></li>
                           {% endif %}

@@ -1,4 +1,4 @@
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from multiselectfield import MultiSelectField
 from django.db import models
@@ -6,6 +6,7 @@ from django.core import validators
 from django.conf import settings
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import UserManager as BaseUserManager
+from django.core.urlresolvers import reverse
 
 import re
 
@@ -80,6 +81,9 @@ class MemberType:
         (VERIFIED_MEMBER, _("Membre vérifié")),
         (FAVORITE, _("Favoris (inclus le réseau personnel)")),
         )
+
+    VERBOSE_VM = _("Membre vérifié")
+    VERBOSE_VNM = _("Non-membre vérifié")
 
 
 class JobCategory:
@@ -243,6 +247,49 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
 
     def get_short_name(self):
         return self.first_name
+
+    def get_verbose_credit(self):
+        credit = self.credit
+        chunks = (
+            (60 * 24 * 365, ('%d année', '%d années')), #Yeah.. We never know. Maybe slaves will use this app.
+            (60 * 24 * 30, ('%d mois', '%d mois')),
+            (60 * 24 * 7, ('%d semaine', '%d semaines')),
+            (60 * 24, ('%d jour', '%d jours')),
+            (60, ('%d heure', '%d heures')),
+            (1, ('%d minute', '%d minutes'))
+        )
+        for i, (minuts, name) in enumerate(chunks):
+                count = credit // minuts
+                if count != 0:
+                    break
+        credit -= count * minuts
+        if count > 2:
+            result = (name[1] % count)
+        else :
+            result = (name[0] % count)
+        while i + 1 < len(chunks):
+            minuts2, name2 = chunks[i + 1]
+            count2 = credit // minuts2
+            if count2 != 0:
+                if count2 > 2:
+                    result += _(', ') + (name2[1] % count2)
+                else :
+                    result += _(', ') + (name2[0] % count2)
+            credit -= count2 * minuts2
+            i += 1
+        return result
+
+    def get_account_type(self):
+        if self.is_superuser :
+            return _('superuser')
+        if not self.is_verified :
+            return MemberType.MEMBER_TYPES[self.user_type-1][1] + '<a href="' + reverse('verified_member_demand') + '"> <i class="fa fa-caret-square-o-up"></i></a>'
+        else :
+            if self.user_type == MemberType.MEMBER:
+                return MemberType.VERBOSE_VM
+            if self.user_type == MemberType.NON_MEMBER:
+                return MemberType.VERBOSE_VNM
+        return _('Inconnu')
 
     def __str__(self):
         return self.username

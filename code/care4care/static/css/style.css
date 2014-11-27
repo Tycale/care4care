@@ -2426,3 +2426,19 @@ div.top-menu > ul > li > button > a {
     position: absolute;
     padding: 15px;
 }
+
+.credit-menu {
+    padding-top: 15px;
+    padding-right: 15px;
+    color: #fff;
+}
+
+
+.credit-menu a {
+    color: #fff;
+}
+
+.credit-text {
+    font-weight: bold;
+}
+
