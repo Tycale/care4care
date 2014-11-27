@@ -31,7 +31,7 @@ def home(request):
     user = request.user
     demands = Job.objects.filter(donor=None)
     offers = Job.objects.filter(receiver=None)
-    if user.is_authenticated :
+    if user.is_authenticated() :
         demands.filter(branch__in=user.membership.all())
         offers.filter(branch__in=user.membership.all())
     return render(request, 'main/home.html', locals())
