@@ -114,7 +114,7 @@ class NeedHelpView(CreateView):
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
-        return super(EditProfileView, self).dispatch(*args, **kwargs)
+        return super(NeedHelpView, self).dispatch(*args, **kwargs)
     
     def form_valid(self, form):
         form.instance.branch = Branch.objects.get(pk=self.kwargs['branch_id'])
@@ -137,7 +137,7 @@ class OfferHelpView(CreateView):
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
-        return super(EditProfileView, self).dispatch(*args, **kwargs)
+        return super(OfferHelpView, self).dispatch(*args, **kwargs)
 
     def form_valid(self, form):
         form.instance.branch = Branch.objects.get(pk=self.kwargs['branch_id'])
