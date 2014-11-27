@@ -221,7 +221,7 @@ class EmergencyContact(CreateView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(EditProfileView, self).dispatch(*args, **kwargs)
-    
+
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super(EmergencyContact, self).form_valid(form)
