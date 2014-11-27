@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load bootstrap3 %}{% load i18n %}{% load staticfiles %} {% load thumbnail %}
+{% load bootstrap3 %}{% load i18n %}{% load staticfiles %}{% load thumbnail %}
 
 {% block title %}{% trans "Gestion du profil" %}{% endblock %}
 
@@ -25,14 +25,14 @@
       <input id="user_id" value="{{ user_to_display.id }}" type="hidden"/>
       <input id="csrf_token" value="{{ csrf_token }}" type="hidden"/>
       <div class="row mt ">
-        <div class="col-sm-4"><!--left col-->
+        <div class="col-sm-6"><!--left col-->
 
           <div class="panel panel-default">
             <div class="panel-heading">
 
                   <div class="media">
                     <a class="media-left" href="#">
-                      <img src="{% thumbnail user_to_display.photo 50x50 crop %}" alt="" />
+                      <img class="img-circle" src="{% thumbnail user_to_display.photo 50x50 crop %}" />
                     </a>
                     <div class="media-body">
                       <h4 class="media-heading">  {{user_to_display.get_full_name}} </h4>
@@ -100,7 +100,7 @@
         </div>
         {% if request.user.id == user_to_display.id %}
         <!-- Emergency users -->
-        <div class="col-sm-4">
+        <div class="col-sm-6">
         <div class="panel panel-default">
           <div class="panel-heading">
             <div class="text-right">
@@ -128,7 +128,7 @@
   <div id="favoris" class="tab-pane fade ">
     <div class="row mt">
       {% if request.user.id == user_to_display.id %}
-      <div class="col-lg-4 col-sm-4">
+      <div class="col-lg-6 col-sm-6">
         <div class="panel panel-default">
           <div class="panel-heading">
             {% trans "Favoris" %}
@@ -162,7 +162,7 @@
 
   <div id="network" class="tab-pane fade">
     <div class="row mt">
-      <div class="col-lg-4 col-sm-4">
+      <div class="col-lg-6 col-sm-6">
         <div class="panel panel-default">
           <div class="panel-heading">
             {% trans "Mon réseau" %}

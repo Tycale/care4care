@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load bootstrap3 %}{% load i18n %}{% load staticfiles %}
+{% load bootstrap3 %}{% load i18n %}{% load staticfiles %}{% load jobs_extra %}
 
 
 {% block title %}{{ branch }}{% endblock %}
@@ -91,65 +91,8 @@
 </div>
 
 <div class="row mt">
-  <div class="col-md-6">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        {% trans "Demandes" %}
-      </div>
-      <div class="panel-body">
-        <table class="table table-striped table-hover">
-          <thead>
-            <tr>
-            <th> {% trans "Branch" %}</th>
-            <th> {% trans "Demandeur" %}</th>
-            <th> {% trans "Date" %}</th>
-            <th> {% trans "Categorie" %}</th>
-            </tr>
-          </thead>
-          <tbody>
-          {% for demand in demands %}
-          <tr>
-            <td> {{ demand.branch }} </td>
-            <td> {{ demand.receiver }} </td>
-            <td> {{ demand.date }} </td>
-            <td> {{ demand.get_verbose_category }} </td>
-          </tr>
-          {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-md-6">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        {% trans "Offres" %}
-      </div>
-      <div class="panel-body">
-        <table class="table table-striped table-hover">
-          <thead>
-            <tr>
-            <th> {% trans "Branch" %}</th>
-            <th> {% trans "Offreur" %}</th>
-            <th> {% trans "Date" %}</th>
-            <th> {% trans "Categorie" %}</th>
-            </tr>
-          </thead>
-          <tbody>
-          {% for offer in offers %}
-          <tr>
-            <td> {{ offer.branch }} </td>
-            <td> {{ offer.receiver }} </td>
-            <td> {{ offer.date }} </td>
-            <td> {{ offer.get_verbose_category }} </td>
-          </tr>
-          {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
+  {% show_demands request demands %}
+  {% show_offers request offers %}
 </div>
 
 

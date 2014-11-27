@@ -2447,3 +2447,7 @@ div.top-menu > ul > li > button > a {
   margin-left: 0px;
 }
 
+.form-group {
+    border-bottom: 1px solid #eff2f7;
+    padding-bottom: 10px;
+}

@@ -1,4 +1,4 @@
-{% load bootstrap3 %}{% load staticfiles %}{% load i18n %}{% load branches %}
+{% load bootstrap3 %}{% load staticfiles %}{% load i18n %}{% load branches %}{% load thumbnail %}
 <!DOCTYPE html>
 <html>
   <head>
@@ -310,12 +310,10 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
 
-                  {% comment %}
-                  <p class="centered"><a href="{% url 'home' %}"><img src="/assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
-                  <h5 class="centered">Marcel Newman</h5>
-                  {% endcomment %}
+                  
+                  <p class="centered"><a href="{% url 'profile' %}"><img src="{% thumbnail request.user.photo 60x60 crop %}" class="img-circle" width="60"></a></p>                  
 
-                  <li class="mt">
+                  <li>
                       <a href="{% url "home" %}">
                           <i class="fa fa-home"></i>
                           <span>{% trans "Accueil" %}</span>
