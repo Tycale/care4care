@@ -200,7 +200,7 @@ class RegistrationView(BaseRegistrationView):
         #new_user.latitude = cleaned_data['latitude']
         #new_user.location = cleaned_data['location']
 
-        
+
         new_user.save()
         branch = Branch.objects.get(pk=cleaned_data['id'])
         bm = BranchMembers(user=new_user, branch=branch, is_admin=False, joined=timezone.now())

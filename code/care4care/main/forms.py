@@ -60,7 +60,7 @@ class CareRegistrationForm(forms.ModelForm):
             Branch.objects.get(pk=id)
         except Branch.DoesNotExist:
             raise forms.ValidationError("Veuillez choisir une branche en choisissant un marqueur rouge sur la carte")
-        
+
         if id == -1:
             raise forms.ValidationError("Veuillez choisir une branche en choisissant un marqueur rouge sur la carte")
 
@@ -71,7 +71,7 @@ class ProfileManagementForm(forms.ModelForm):
         model = User
         fields = ['email', 'phone_number', 'status', 'languages', 'location', 'mail_preferences', 'asked_job', 'offered_job', \
             'latitude', 'longitude', 'facebook', 'additional_info', 'have_car', \
-            'can_wheelchair', 'drive_license', 'hobbies', ]
+            'can_wheelchair', 'drive_license', 'hobbies', 'photo']
         widgets = {
             'latitude': forms.HiddenInput,
             'longitude': forms.HiddenInput,

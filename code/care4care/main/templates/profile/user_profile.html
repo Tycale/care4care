@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load bootstrap3 %}{% load i18n %}{% load staticfiles %}
+{% load bootstrap3 %}{% load i18n %}{% load staticfiles %} {% load thumbnail %}
 
 {% block title %}{% trans "Gestion du profil" %}{% endblock %}
 
@@ -11,6 +11,7 @@
 {% block content %}
 <div class="mt ">
 <ul class="nav nav-tabs">
+
   <li class="active"><a data-toggle="tab" href="#profile">{% trans 'Profile' %}</a></li>
   {% if request.user.id == user_to_display.id %}
   <li><a data-toggle="tab" href="#favoris">{% trans 'Favoris' %}</a></li>
@@ -28,32 +29,39 @@
 
           <div class="panel panel-default">
             <div class="panel-heading">
-              <div class="text-right">
-                <span class="pull-left">
-                  {{user_to_display.get_full_name}}
-                </span>
-                {%  if request.user.id == user_to_display.id %}
-                <a href="{% url 'edit_profile' %}">
-                  {% bootstrap_icon "edit" %} {% trans 'Modifier' %}
-                </a>
-                {% endif %}
-                {% if request.user.id != user_to_display.id %}
 
-                {% if is_my_friend %}
-                <a href="#" class="btn btn-default btn-sm" id="add_favorite_link">
-                  <span class="glyphicon glyphicon glyphicon-star" id="is_favorite_star">  </span> {% trans 'favoris' %}
-                </a>
-                {% else %}
-                <a href="#" class="btn btn-default btn-sm" id="add_favorite_link">
-                  <span class="glyphicon glyphicon glyphicon-star-empty" id="is_favorite_star">  </span> {% trans 'favoris' %}
-                </a>
-                {% endif %}
+                  <div class="media">
+                    <a class="media-left" href="#">
+                      <img src="{% thumbnail user_to_display.photo 50x50 crop %}" alt="" />
+                    </a>
+                    <div class="media-body">
+                      <h4 class="media-heading">  {{user_to_display.get_full_name}} </h4>
+                      {%  if request.user.id == user_to_display.id %}
+                      <a href="{% url 'edit_profile' %}">
+                        {% bootstrap_icon "edit" %} {% trans 'Modifier' %}
+                      </a>
+                      {% endif %}
+                      {% if request.user.id != user_to_display.id %}
 
-                <a href="#" >
-                  <span class="glyphicon glyphicon glyphicon-user" alt="{% trans 'Ajouter à mon réseau' %}"> </span>
-                </a>
-                {% endif %}
-              </div>
+                      {% if is_my_friend %}
+                      <a href="#" class="btn btn-default btn-sm" id="add_favorite_link">
+                        <span class="glyphicon glyphicon glyphicon-star" id="is_favorite_star">  </span> {% trans 'favoris' %}
+                      </a>
+                      {% else %}
+                      <a href="#" class="btn btn-default btn-sm" id="add_favorite_link">
+                        <span class="glyphicon glyphicon glyphicon-star-empty" id="is_favorite_star">  </span> {% trans 'favoris' %}
+                      </a>
+                      {% endif %}
+
+                      <a href="#" >
+                        <span class="glyphicon glyphicon glyphicon-user" alt="{% trans 'Ajouter à mon réseau' %}"> </span>
+                      </a>
+                      {% endif %}
+                    </div>
+                  </div>
+
+
+            
             </div>
 
             <ul class="list-group">

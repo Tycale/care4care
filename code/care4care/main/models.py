@@ -7,6 +7,7 @@ from django.conf import settings
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import UserManager as BaseUserManager
 from django.core.urlresolvers import reverse
+from easy_thumbnails.fields import ThumbnailerImageField
 
 import re
 
@@ -206,6 +207,7 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
     """
     email = models.EmailField(_("Adresse email"), unique=False)
     date_joined = models.DateTimeField(auto_now_add=True)
+    photo = ThumbnailerImageField(upload_to='photos/', blank=True)
 
     username = models.CharField(_("Nom d'utilisateur"), max_length=30, unique=True,
         validators=[
@@ -286,7 +288,7 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
         if self.is_superuser :
             return _('superuser')
         if not self.is_verified :
-            return MemberType.MEMBER_TYPES[self.user_type-1][1] 
+            return MemberType.MEMBER_TYPES[self.user_type-1][1]
         else :
             if self.user_type == MemberType.MEMBER:
                 return MemberType.VERBOSE_VM
