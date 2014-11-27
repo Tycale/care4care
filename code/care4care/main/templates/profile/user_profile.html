@@ -12,8 +12,10 @@
 <div class="mt ">
 <ul class="nav nav-tabs">
   <li class="active"><a data-toggle="tab" href="#profile">{% trans 'Profile' %}</a></li>
+  {% if request.user.id == user_to_display.id %}
   <li><a data-toggle="tab" href="#favoris">{% trans 'Favoris' %}</a></li>
   <li><a data-toggle="tab" href="#network" />{% trans 'Mon Réseau' %}</a></li>
+  {% endif %}
 </ul>
 
 <div class="tab-content">
@@ -55,22 +57,30 @@
             </div>
 
             <ul class="list-group">
-              <li class="list-group-item text-right"><span class="pull-left"><strong>{% trans "Date d'inscription" %}</strong></span> {{user_to_display.date_joined}}</li>
-              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Dernière connexion" %}</strong></span> empty</li>
-              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Nom" %}</strong></span> {{user_to_display.get_full_name}} </li>
-              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Email" %}</strong></span> {{user_to_display.email}}</li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong>{% trans "Date d'inscription" %}</strong></span> &nbsp; {{user_to_display.date_joined}}</li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Nom" %}</strong></span> &nbsp; {{user_to_display.get_full_name}} </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Email" %}</strong></span> &nbsp; {{user_to_display.email}}</li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Type de compte" %}</strong></span> &nbsp; {{user_to_display.get_account_type}}</li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Status" %}</strong></span> &nbsp; {{user_to_display.get_verbose_status}}</li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Telephone Fixe" %}</strong></span> &nbsp; {{user_to_display.phone_number}} </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "GSM" %}</strong></span> &nbsp; {{user_to_display.mobile_number}} </li>
             </ul>
 
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading"> {% trans "Données professionnelles" %} <i class="fa fa-link fa-1x"></i></div>
+            <ul class="list-group">
+
+              <li class="list-group-item text-right"><span class="pull-left"><strong>{% trans "Organization" %}</strong></span> <div> &nbsp; {{user_to_display.organization}} </div> </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong>{% trans "Profession" %}</strong></span> &nbsp; {{user_to_display.work}} </li>
+            </ul>
           </div>
 
           <div class="panel panel-default">
             <div class="panel-heading"> {% trans "Site web" %} <i class="fa fa-link fa-1x"></i></div>
             <div class="panel-body"><a href="http://bootply.com">care4care.com</a></div>
           </div>
-
-          <ul class="list-group">
-            <li class="list-group-item text-muted">{% trans "Activités" %} <i class="fa fa-dashboard fa-1x"></i></li>
-          </ul>
 
           <div class="panel panel-default">
             <div class="panel-heading"> {% trans "Réseaux sociaux" %}</div>
@@ -80,7 +90,7 @@
           </div>
 
         </div>
-
+        {% if request.user.id == user_to_display.id %}
         <!-- Emergency users -->
         <div class="col-sm-4">
         <div class="panel panel-default">
@@ -102,6 +112,7 @@
           </div>
         </div>
       </div>
+      {% endif %}
 
       </div>
   </div>
@@ -125,7 +136,7 @@
               <tbody>
                 {% for personne in user_to_display.favorites.all %}
                 <tr>
-                  <td> {{ personne.get_full_name }} </td>
+                  <td> <a href="{% url 'user_profile' personne.id %}"> {{ personne.get_full_name }} </a></td>
                   <td>
                     <a href="{% url 'member_favorite' personne.id %}" class="pull-right remove_favorite_link" >
                       <li class="glyphicon glyphicon-remove"> </li>

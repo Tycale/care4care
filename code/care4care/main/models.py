@@ -279,6 +279,9 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
             i += 1
         return result
 
+    def get_verbose_status(self):
+         return STATUS[self.status-1][1]
+
     def get_account_type(self):
         if self.is_superuser :
             return _('superuser')
