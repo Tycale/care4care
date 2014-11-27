@@ -286,7 +286,7 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
         if self.is_superuser :
             return _('superuser')
         if not self.is_verified :
-            return MemberType.MEMBER_TYPES[self.user_type-1][1] + '<a href="' + reverse('verified_member_demand') + '"> <i class="fa fa-caret-square-o-up"></i></a>'
+            return MemberType.MEMBER_TYPES[self.user_type-1][1] 
         else :
             if self.user_type == MemberType.MEMBER:
                 return MemberType.VERBOSE_VM

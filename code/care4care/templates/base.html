@@ -212,7 +212,10 @@
                       <span class="credit-text text-info">{% trans "Crédit restant :" %}</span> {{ request.user.get_verbose_credit }}
                     </li>
                     <li>
-                      <span  class="credit-text text-info">{% trans "Type de compte :" %}</span> {{ request.user.get_account_type | safe }}
+                      <span  class="credit-text text-info">{% trans "Type de compte :" %}</span> {{ request.user.get_account_type }}
+                      {% if not request.user.is_verified %}
+                      <a href="{% url 'verified_member_demand' %}"> <i class="fa fa-caret-square-o-up"></i></a>
+                      {% endif %}
                     </li>
                   </ul>
                 </li>
