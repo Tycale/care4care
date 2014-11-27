@@ -71,3 +71,18 @@ Dans le dossier care4care :
 ```
 
 Vous pouvez désormais accéder au serveur web de production sur http://localhost:8000/ !
+
+## Pillow Library
+
+Si vous avez des difficultés avec la compile de la librarie Pillow sur ubuntu :
+...
+ sudo apt-get install python3-dev python3-setuptools
+...
+
+...
+sudo apt-get install libtiff5-dev libjpeg8-dev zlib1g-dev \
+  libfreetype6-dev liblcms2-dev libwebp-dev tcl8.6-dev tk8.6-dev python-tk
+...
+
+Si vous être sur un autre et que vous avez un soucis : http://pillow.readthedocs.org/installation.html#external-libraries
+ 
