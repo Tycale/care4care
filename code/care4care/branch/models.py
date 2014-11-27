@@ -41,6 +41,7 @@ class Job(models.Model):
     branch = models.ForeignKey(Branch, verbose_name=_("Branche"), related_name="branch")
     donor = models.ForeignKey(User, verbose_name=_("Donneur"), related_name="donor", null=True)
     receiver =  models.ForeignKey(User, verbose_name=_("Receveur"), related_name="receiver", null=True)
+    title = models.CharField(_('Titre'), max_length=120, null=True, blank=False)
     description = models.TextField(verbose_name=_("Description"))
     estimated_time = models.IntegerField(verbose_name=_("Temps estimé"))
     real_time = models.IntegerField(verbose_name=_("Temps réel"))
