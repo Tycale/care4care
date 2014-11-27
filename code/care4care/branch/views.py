@@ -111,6 +111,10 @@ class NeedHelpView(CreateView):
     form_class = NeedHelpForm
     model = Job
 
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(EditProfileView, self).dispatch(*args, **kwargs)
+    
     def form_valid(self, form):
         form.instance.branch = Branch.objects.get(pk=self.kwargs['branch_id'])
         form.instance.receiver = self.request.user
@@ -130,11 +134,15 @@ class OfferHelpView(CreateView):
     form_class = NeedHelpForm
     model = Job
 
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(EditProfileView, self).dispatch(*args, **kwargs)
+
     def form_valid(self, form):
         form.instance.branch = Branch.objects.get(pk=self.kwargs['branch_id'])
         form.instance.donor = self.request.user
         form.instance.real_time = form.instance.estimated_time
-        return super(NeedHelpView, self).form_valid(form)
+        return super(OfferHelpView, self).form_valid(form)
 
     def get_success_url(self):
         return Branch.objects.get(pk=self.kwargs['branch_id']).get_absolute_url()

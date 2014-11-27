@@ -64,11 +64,10 @@ def login(request):
 
 def user_profile(request, user_id):
     """ Get profile from a user"""
-    id_int = int(user_id)
-    user_to_display = get_object_or_404(User, pk=id_int)
-    user = get_object_or_404(User, pk=request.user.id)
+    user_to_display = get_object_or_404(User, pk=user_id)
+    user = request.user
     is_my_friend = False
-    if (user_to_display in user.favorites.all()):
+    if user_to_display in user.favorites.all():
         is_my_friend = True
     return render(request, 'profile/user_profile.html',locals())
 
@@ -76,8 +75,7 @@ def user_profile(request, user_id):
 @login_required
 def manage_profile(request):
     """ Return the profile from the current logged user"""
-    user_to_display = get_object_or_404(User, pk=request.user.id)
-    user_to_display = User.objects.select_related().get(id=request.user.id)
+    user_to_display = request.user
 
     return render(request, 'profile/user_profile.html',locals())
 
@@ -115,9 +113,8 @@ def statistics(request):
 
 @login_required
 def member_favorite(request, user_id):
-    user = get_object_or_404(User, pk=request.user.id)
-    id_favorite = user_id
-    favorite_user = get_object_or_404(User, pk=id_favorite)
+    user = request.user
+    favorite_user = get_object_or_404(User, pk=user_id)
     if request.method == "PUT":
         user.favorites.add(favorite_user)
         user.save()
@@ -133,9 +130,9 @@ def member_favorite(request, user_id):
 
 @login_required
 def member_personal_network(request, user_id):
-    user = get_object_or_404(User, pk=request.user.id)
+    user = request.user
     id_other = user_id
-    other_user = get_object_or_404(User, pk=id_other)
+    other_user = get_object_or_404(User, pk=user_id)
     if request.method == "PUT":
         user.personal_network.add(other_user)
         user.save()
@@ -221,6 +218,10 @@ class EmergencyContact(CreateView):
     form_class = EmergencyContactCreateForm
     model = EmergencyContact
 
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(EditProfileView, self).dispatch(*args, **kwargs)
+    
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super(EmergencyContact, self).form_valid(form)
