@@ -12,10 +12,33 @@
 		<i class="fa fa-angle-right"></i>
 		Statistics
 	</h3>
-	<canvas id="chart_line" width="400" height="200"></canvas>
 
-	<canvas id="chart_radar" width="400" height="200"></canvas>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="panel panel-default">
+			 	<div class="panel-body">
+			    	<canvas id="chart_line" width="480" height="200"></canvas>
+			  	</div>
+			</div>
+		</div>
 
-	<canvas id="chart_polar" width="400" height="200"></canvas>
+		<div class="col-md-6">
+			<div class="panel panel-default">
+			  	<div class="panel-body">
+					<canvas id="chart_radar" width="400" height="200"></canvas>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-6">
+			<div class="panel panel-default">
+			  	<div class="panel-body">
+					<canvas id="chart_polar" width="400" height="200"></canvas>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 {% endblock %}
