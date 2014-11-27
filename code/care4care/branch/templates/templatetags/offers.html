@@ -23,7 +23,7 @@
           <td> {{ offer.branch }} </td>
           {% endif %}
           <td> {{ offer.receiver }} </td>
-          <td> {{ offer.date }} </td>
+          <td> {{ offer.date | date:'l d M y' }} </td>
           <td> {{ offer.get_verbose_category }} </td>
         </tr>
         {% endfor %}

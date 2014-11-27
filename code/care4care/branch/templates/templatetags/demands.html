@@ -23,7 +23,7 @@
           <td> {{ demand.branch }} </td>
           {% endif %}
           <td> {{ demand.receiver }} </td>
-          <td> {{ demand.date }} </td>
+          <td> {{ demand.date | date:'l d M y' }}</td>
           <td> {{ demand.get_verbose_category }} </td>
         </tr>
         {% endfor %}
