@@ -34,13 +34,18 @@
                     <a class="media-left" href="#">
                       <img class="img-circle" src="{% thumbnail user_to_display.photo 50x50 crop %}" />
                     </a>
+
+                    {%  if request.user.id == user_to_display.id or request.user.is_superuser %}
+                    <!-- TODO: Fix this shit -->
+                    <a class="text-right" href="{% url 'edit_profile' user_to_display.id %}">
+                      {% bootstrap_icon "edit" %} {% trans 'Modifier' %}
+                    </a>
+                    {% endif %}
+
                     <div class="media-body">
-                      <h4 class="media-heading">  {{user_to_display.get_full_name}} </h4>
-                      {%  if request.user.id == user_to_display.id %}
-                      <a href="{% url 'edit_profile' %}">
-                        {% bootstrap_icon "edit" %} {% trans 'Modifier' %}
-                      </a>
-                      {% endif %}
+                      <h4 class="media-heading">{{user_to_display.get_full_name}} 
+                      </h4>
+                      
                       {% if request.user.id != user_to_display.id %}
 
                       {% if is_my_friend %}

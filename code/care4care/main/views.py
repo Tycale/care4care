@@ -158,13 +158,16 @@ class EditProfileView(UpdateView, SuccessMessageMixin):
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
+        obj = self.get_object()
+        if obj.id != self.request.user.id and not self.request.user.is_superuser :
+            return redirect(obj.get_absolute_url())
         return super(EditProfileView, self).dispatch(*args, **kwargs)
 
     def get_object(self, queryset=None):
-        return self.request.user
+        return User.objects.get(pk=self.kwargs['user_id'])
 
     def get_success_url(self):
-        return reverse('profile')
+        return self.get_object().get_absolute_url()
 
 
 class RegistrationView(BaseRegistrationView):

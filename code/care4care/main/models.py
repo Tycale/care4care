@@ -299,6 +299,10 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
     def __str__(self):
         return self.username
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('user_profile', (), {'user_id' : self.id})
+
 class Contact(CommonInfo):
     """
     Contact class

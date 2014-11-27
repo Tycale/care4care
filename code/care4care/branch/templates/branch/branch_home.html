@@ -123,7 +123,7 @@
                 	    <td>{% if member.is_admin %}{% trans "Responsable" %}{% endif %}</td>
                         {% if request.user == branch.creator or request.user.is_superuser %}
                 	    <td>
-                	        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                	        <a class="btn btn-primary btn-xs" href="{% url 'edit_profile' member.user.id %}"><i class="fa fa-pencil"></i></a>
                 	        <a class="btn btn-danger btn-xs" href="{% url 'branch_leave' branch_id=branch.id user_id=member.user.id %}"><i class="fa fa-trash-o "></i></a>
                 	    </td>
                         {% endif %}
