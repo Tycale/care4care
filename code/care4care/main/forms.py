@@ -94,6 +94,35 @@ class ProfileManagementForm(forms.ModelForm):
 
         return self.cleaned_data
 
+class VerifiedProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['email', 'phone_number', 'status', 'languages', 'location', 'mail_preferences', 'asked_job', 'offered_job', \
+            'latitude', 'longitude', 'facebook', 'additional_info', 'have_car', \
+            'can_wheelchair', 'drive_license', 'hobbies', 'photo', 'receive_help_from_who']
+        widgets = {
+            'latitude': forms.HiddenInput,
+            'longitude': forms.HiddenInput,
+            'location': forms.HiddenInput,
+            'have_car': forms.RadioSelect,
+            'can_wheelchair': forms.RadioSelect,
+        }
+
+    def clean(self):
+        """
+        Verifiy that the values entered into the two password fields
+        match. Note that an error here will end up in
+        ``non_field_errors()`` because it doesn't apply to a single
+        field.
+        """
+        cleaned_data = super(ProfileManagementForm, self).clean()
+        if not 'longitude' in self.cleaned_data or not self.cleaned_data['longitude']:
+            raise forms.ValidationError(_("Veuillez introduire une adresse valide via les propositions."))
+        if not 'latitude' in self.cleaned_data or not self.cleaned_data['latitude']:
+            raise forms.ValidationError(_("Veuillez introduire une adresse valide via les propositions."))
+        if not 'email' in self.cleaned_data or not self.cleaned_data['email']:
+            raise forms.ValidationError(_("Veuillez introduire une adresse e-mail valide via les propositions."))
+
 class ContentTypeRestrictedFileField(forms.FileField):
     """
     Same as FileField, but you can specify:
