@@ -69,6 +69,8 @@ def user_profile(request, user_id):
     is_my_friend = False
     if user_to_display in user.favorites.all():
         is_my_friend = True
+    if user_to_display.id == user_id:
+        pending_offers = Job.objects.filter(donor=user_to_display )
     return render(request, 'profile/user_profile.html',locals())
 
 

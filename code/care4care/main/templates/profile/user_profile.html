@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load bootstrap3 %}{% load i18n %}{% load staticfiles %}{% load thumbnail %}
+{% load bootstrap3 %}{% load i18n %}{% load staticfiles %}{% load thumbnail %}{% load jobs_extra %}
 
 {% block title %}{% trans "Gestion du profil" %}{% endblock %}
 
@@ -16,6 +16,7 @@
   {% if request.user.id == user_to_display.id %}
   <li><a data-toggle="tab" href="#favoris">{% trans 'Favoris' %}</a></li>
   <li><a data-toggle="tab" href="#network" />{% trans 'Mon Réseau' %}</a></li>
+  <li><a data-toggle="tab" href="#jobs" />{% trans 'Aides' %}</a></li>
   {% endif %}
 </ul>
 
@@ -197,6 +198,12 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div id="jobs" class="tab-pane fade in active">
+    <div class="row mt">
+      {% show_demands request pending_offers %}
     </div>
   </div>
   {% endif %}
