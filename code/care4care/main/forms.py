@@ -94,10 +94,11 @@ class ProfileManagementForm(forms.ModelForm):
 
         return self.cleaned_data
 
+
 class VerifiedProfileForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['email', 'phone_number', 'status', 'languages', 'location', 'mail_preferences', 'asked_job', 'offered_job', \
+        fields = ['email', 'phone_number', 'mobile_number', 'status', 'languages', 'location', 'mail_preferences', 'asked_job', 'offered_job', \
             'latitude', 'longitude', 'facebook', 'additional_info', 'have_car', \
             'can_wheelchair', 'drive_license', 'hobbies', 'photo', 'receive_help_from_who']
         widgets = {
@@ -115,13 +116,19 @@ class VerifiedProfileForm(forms.ModelForm):
         ``non_field_errors()`` because it doesn't apply to a single
         field.
         """
-        cleaned_data = super(ProfileManagementForm, self).clean()
+        cleaned_data = super(VerifiedProfileForm, self).clean()
         if not 'longitude' in self.cleaned_data or not self.cleaned_data['longitude']:
             raise forms.ValidationError(_("Veuillez introduire une adresse valide via les propositions."))
         if not 'latitude' in self.cleaned_data or not self.cleaned_data['latitude']:
             raise forms.ValidationError(_("Veuillez introduire une adresse valide via les propositions."))
         if not 'email' in self.cleaned_data or not self.cleaned_data['email']:
             raise forms.ValidationError(_("Veuillez introduire une adresse e-mail valide via les propositions."))
+        if not 'latitude' in self.cleaned_data or not self.cleaned_data['latitude']:
+            raise forms.ValidationError(_("Veuillez introduire une adresse valide via les propositions."))
+        if ((not 'mobile_number' in self.cleaned_data or not self.cleaned_data['mobile_number']) and (not 'phone_number' in self.cleaned_data or not self.cleaned_data['phone_number'])):
+            raise forms.ValidationError(_("Veuillez introduire au moins un numéro de téléphone (mobile ou fixe)."))
+        if (len('languages')==0) or not self.cleaned_data['languages']:
+            raise forms.ValidationError(_("Veuillez introduire une langue."))
 
 class ContentTypeRestrictedFileField(forms.FileField):
     """
