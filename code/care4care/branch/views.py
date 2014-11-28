@@ -48,8 +48,9 @@ def branch_home(request, id, slug):
         
     nb_users = BranchMembers.objects.filter(branch=branch).count()
 
-    demands = Job.objects.filter(branch__in=user.membership.all(), donor=None)
-    offers = Job.objects.filter(branch__in=user.membership.all(), receiver=None)
+    user_ids = [mb.user.id for mb in branch.membership.all()]
+    demands = Job.objects.filter(receiver__in=user_ids, donor=None, branch=branch)
+    offers = Job.objects.filter(donor__in=user_ids, receiver=None, branch=branch)
 
     return render(request,'branch/branch_home.html',locals())
 
@@ -128,6 +129,8 @@ class NeedHelpView(CreateView):
         form.instance.branch = Branch.objects.get(pk=self.kwargs['branch_id'])
         form.instance.receiver = User.objects.get(pk=self.kwargs['user_id'])
         form.instance.real_time = form.instance.estimated_time
+        form.instance.latitude = form.instance.receiver.latitude
+        form.instance.longitude = form.instance.receiver.longitude
         return super(NeedHelpView, self).form_valid(form)
     
     def get_success_url(self):
