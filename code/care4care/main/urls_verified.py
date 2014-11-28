@@ -1,12 +1,12 @@
 from django.conf.urls import patterns, url
 
-from main.views import verified_member_demand_view_1,verified_member_demand_view_2
+from main.views import verified_profile_view,verified_documents_view
 
 urlpatterns = patterns('',
                        url(r'^verified/profile/$',
-                           verified_member_demand_view_1,
-                           name='verified_member_demand_1'),
+                           verified_profile_view,
+                           name='verified_profile'),
                        url(r'^verified/documents/$',
-                           verified_member_demand_view_2,
-                           name='verified_member_demand_2'),
+                           verified_documents_view,
+                           name='verified_documents'),
                        )

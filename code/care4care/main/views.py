@@ -87,7 +87,7 @@ def manage_profile(request):
 
 @user_passes_test(lambda u: not u.is_verified)
 @login_required
-def verified_member_demand_view_1(request):
+def verified_profile_view(request):
     user = request.user
     form = ProfileManagementForm(instance=user)
     if request.POST :
@@ -95,13 +95,13 @@ def verified_member_demand_view_1(request):
         if form.is_valid():
             form.save
             messages.add_message(request, messages.INFO, _('Modification sauvegardée'))
-            return redirect('verified_member_demand_2')
-    return render(request,'verified/verified_member_demand_1.html',locals())
+            return redirect('verified_documents')
+    return render(request,'verified/verified_profile.html',locals())
 
 
 @user_passes_test(lambda u: not u.is_verified)
 @login_required
-def verified_member_demand_view_2(request):
+def verified_documents_view(request):
     user = request.user
     form = VerifiedInformationForm()
     try:
@@ -124,7 +124,7 @@ def verified_member_demand_view_2(request):
             return redirect('home')
 
     
-    return render(request,'verified/verified_member_demand_2.html',locals())
+    return render(request,'verified/verified_documents.html',locals())
 
 def statistics(request):
     return render(request, 'statistics/statistics.html', locals())
