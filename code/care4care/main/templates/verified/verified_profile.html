@@ -13,7 +13,7 @@
 {% endblock %}
 
 {% block content %}
-<h3><i class="fa fa-angle-right"></i> {% trans "Modifier mon profil" %}</h3>
+<h3><i class="fa fa-angle-right"></i> {% trans "Vérifier et compléter les informations suivantes" %}</h3>
 
 
         <form action="."  enctype="multipart/form-data" role="form" method="post">
@@ -116,7 +116,7 @@
                     {% buttons %}
                     <div class="row mt mb">
                         <div class="col-lg-12 mb"><button type="submit" class="btn btn-success btn-lg btn-block">
-                                {% bootstrap_icon "ok" %} &nbsp; {% trans "Modifier" %}
+                                {% bootstrap_icon "ok" %} &nbsp; {% trans "Continuer" %}
                         </button></div>
                         <div class="col-lg-12"><a href="{% url 'home' %}" class="btn btn-danger btn-lg btn-block">
                                 {% bootstrap_icon "remove" %} &nbsp; {% trans "Annuler" %}
