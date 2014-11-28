@@ -10,13 +10,13 @@
 
 {% block content %}
 <div class="mt ">
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs" id="myTab">
 
   <li class="active"><a data-toggle="tab" href="#profile">{% trans 'Profile' %}</a></li>
   {% if request.user.id == user_to_display.id %}
   <li><a data-toggle="tab" href="#favoris">{% trans 'Favoris' %}</a></li>
   <li><a data-toggle="tab" href="#network" />{% trans 'Mon Réseau' %}</a></li>
-  <li><a data-toggle="tab" href="#jobs" />{% trans 'Aides' %}</a></li>
+  <li><a data-toggle="tab" href="#jobs" />{% trans 'Aides en attente' %}</a></li>
   {% endif %}
 </ul>
 
@@ -209,4 +209,20 @@
   {% endif %}
 </div>
 </div>
+
+<script>
+$(document).ready(function() {
+    // show active tab on reload
+    if (location.hash !== '') $('a[href="' + location.hash + '"]').tab('show');
+
+    // remember the hash in the URL without jumping
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+       if(history.pushState) {
+            history.pushState(null, null, '#'+$(e.target).attr('href').substr(1));
+       } else {
+            location.hash = '#'+$(e.target).attr('href').substr(1);
+       }
+    });
+});
+</script>
 {% endblock %}
