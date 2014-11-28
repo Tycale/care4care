@@ -1,12 +1,11 @@
 {% extends "base.html" %}
-{% load bootstrap3 %}{% load i18n %}{% load jobs_extra %}
+{% load bootstrap3 %}{% load i18n %}{% load jobs_extra %}{% load staticfiles %}
 
 
 {% block title %}{% trans "Accueil" %}{% endblock %}
 
 
 {% block content %}
-
 <div class="row mt">
   <div class="col-md-4 col-md-offset-2"> <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#needHelpModal">{% trans "J'ai besoin d'aide" %}</button> </div>
   <div class="col-md-4 col-md-offset-2"><button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#offerHelpModal">{% trans "Offrir mon aide" %}</button></div>
@@ -73,4 +72,8 @@
   {% show_offers request offers %}
 </div>
 
+{% endblock %}
+
+{% block extra_footer %}
+<script src="{% static 'js/rowlink.js' %}"></script>
 {% endblock %}

@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}{% load i18n %}{% load staticfiles %}
+
+{% block extra_head %}
+<script src="http://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places,directions"></script>
+{% endblock %}
+
+{% block content %}
+
+<div class="row mt">
+    <div class="col-lg-12">
+            <div id="map" style="width: 100%; min-height: 300px;">
+            </div>
+            <div style="display:none;">
+            <div id="title-branch">
+                <h3><i class="fa fa-angle-right"></i> {{ object.title }}</h3>
+                <h5><i class="fa fa-location-arrow"></i>
+                  {{ object.location }}
+                </h5>
+                <h5><i class="fa fa-clock-o"></i>
+                  {{ object.estimated_time }} {% trans "minute(s)" %}
+                </h5>
+            </div>
+            </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+
+{% block extra_footer %}
+<script src="{% static 'js/rowlink.js' %}"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    var options = {
+        zoom: 16,
+        center: new google.maps.LatLng({{object.latitude}}, {{object.longitude}}),
+        disableDefaultUI: true,
+        panControl: false,
+        overviewMapControl: false,
+        streetViewControl: false,
+        scaleControl: false,
+        rotateControl: false,
+        draggable: false,
+        zoomControl: false,
+        scrollwheel: false,
+        disableDoubleClickZoom: true,
+        mapTypeId: google.maps.MapTypeId.HYBRID,
+    };
+    var directionsService = new google.maps.DirectionsService();
+    var map = new google.maps.Map(document.getElementById('map'), options);
+
+    var titleBranch = document.getElementById('title-branch');
+    map.controls[google.maps.ControlPosition.LEFT_TOP].push(titleBranch); 
+
+    var bounds = new google.maps.LatLngBounds();
+
+    var lieu = new google.maps.LatLng({{object.latitude}}, {{object.longitude}});
+    var marker = new google.maps.Marker({
+                position: lieu,
+                map: map,
+                title: '{% trans "Lieu" %}',
+            });
+
+    google.maps.event.addListener(marker, 'click', function() {
+                    infowindow = new google.maps.InfoWindow({
+                        content: '{% trans "Lieu" %}'
+                    });
+                    infowindow.open(map, marker);
+                });
+
+    {% if request.user.id != object.receiver.id  and request.user.id != object.donor.id %}    
+
+      {% if request.user.location %}
+        
+        var moi = new google.maps.LatLng({{request.user.latitude}}, {{request.user.longitude}});
+
+        var marker2 = new google.maps.Marker({
+                position: moi,
+                map: map,
+                title: '{% trans "Vous" %}',
+            });
+
+        google.maps.event.addListener(marker2, 'click', function() {
+                    infowindow = new google.maps.InfoWindow({
+                        content: '{% trans "Vous" %}'
+                    });
+                    infowindow.open(map, marker2);
+                });
+
+        bounds.extend(moi);
+        bounds.extend(lieu);
+        map.fitBounds(bounds);
+
+        var directionsDisplay = new google.maps.DirectionsRenderer();// also, constructor can get "DirectionsRendererOptions" object
+            directionsDisplay.setMap(map); // map should be already initialized.
+
+            var request = {
+                origin : moi,
+                destination : lieu,
+                travelMode : google.maps.TravelMode.DRIVING
+            };
+            directionsService.route(request, function(response, status) {
+                if (status == google.maps.DirectionsStatus.OK) {
+                    directionsDisplay.setDirections(response);
+                }
+            });
+
+      {% endif %}
+    {% endif %}
+
+    
+
+    $('.fa-bars').click(function () {
+        google.maps.event.trigger(map, 'resize');
+    });
+});
+</script>
+{% endblock %}

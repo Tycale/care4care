@@ -23,7 +23,7 @@
           {% if show_branch %}
           <td> {{ demand.branch }} </td>
           {% endif %}
-          <td><a href="#demand" class="mainlink"></a> {{ demand.title }} </td>
+          <td><a href="{% url 'see_help' branch_id=demand.branch.id slug=demand.branch.slug job_id=demand.id %}" class="mainlink"> {{ demand.title }}</a></td>
 
           <td> {{ demand.date | date:'l d M y' }}</td>
           
