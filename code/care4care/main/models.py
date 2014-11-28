@@ -127,7 +127,7 @@ class VerifiedUser(models.Model):
     drive_license = MultiSelectField(choices=DRIVER_LICENSE, verbose_name=_("Type de permis de conduire"), blank=True)
 
 
-    # preference
+    # ppl with you have ongoing job
     work_with = models.ManyToManyField('User',related_name="verified_work_with", blank=True, null=True)
 
     # network management
@@ -169,12 +169,21 @@ class CommonInfo(models.Model):
     def get_short_name(self):
         return self.first_name
 
+    def get_verbose_languages(self):
+        return ', '.join([str(l[1]) for l in settings.LANGUAGES if (l[0] in self.languages )])
+
     class Meta:
         abstract = True
 
 class EmergencyContact(CommonInfo):
     user = models.ForeignKey('User', related_name="emergency_contacts")
     order = models.IntegerField(default=0, verbose_name=_("Ordre de priorité"), choices=PRIORITY)
+
+    def get_verbose_order(self):
+        return PRIORITY[self.order-1][1]
+
+    class Meta:
+        ordering = ['order']
 
 
 class UserManager(BaseUserManager):
