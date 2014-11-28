@@ -31,7 +31,7 @@ UNSUBSCRIBE = 3
 
 STATUS = (
     (ACTIVE, _("Actif")),
-    (HOLIDAYS, _("En vacance")),
+    (HOLIDAYS, _("En vacances")),
     (UNSUBSCRIBE, _("Désactivé")),
     )
 
