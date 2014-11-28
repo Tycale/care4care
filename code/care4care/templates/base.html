@@ -310,8 +310,11 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
 
-                  
-                  <p class="centered"><a href="{% url 'profile' %}"><img src="{% thumbnail request.user.photo 60x60 crop %}" class="img-circle" width="60"></a></p>                  
+                  {% if request.user.photo %}
+                  <p class="centered"><a href="{% url 'profile' %}">
+                      <img src="{% thumbnail request.user.photo 60x60 crop %}" class="img-circle" width="60">
+                  </a></p>
+                  {% endif %}
 
                   <li>
                       <a href="{% url "home" %}">
