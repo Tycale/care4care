@@ -160,7 +160,7 @@ class CommonInfo(models.Model):
     longitude = models.CharField(_('Longitude'), max_length=20, null=True, blank=True)
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message=_("Votre numéro de téléphone doit être au format '+999999999'. Jusqu'à 15 chiffres."))
     phone_number = models.CharField(validators=[phone_regex], max_length=16, blank=True, verbose_name=_("Numéro de téléphone (fixe)"))
-    mobile_number = models.CharField(validators=[phone_regex], max_length=16, blank=True, verbose_name=_("Numéro de téléphone mobile"))
+    mobile_number = models.CharField(validators=[phone_regex], max_length=16, blank=True, verbose_name=_("Numéro de téléphone (mobile)"))
     languages = MultiSelectField(choices=settings.LANGUAGES, verbose_name=_("Langues parlées"), blank=True)
 
     def get_full_name(self):
