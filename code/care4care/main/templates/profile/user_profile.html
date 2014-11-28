@@ -17,6 +17,7 @@
   {% if request.user.id == user_to_display.id %}
   <li><a data-toggle="tab" href="#favoris">{% trans 'Favoris' %}</a></li>
   <li><a data-toggle="tab" href="#network" />{% trans 'Mon Réseau' %}</a></li>
+  <li><a data-toggle="tab" href="#ignored" />{% trans 'Utilisateurs ignorés' %}</a></li>
   <li><a data-toggle="tab" href="#jobs" />{% trans 'Aides en attente' %}</a></li>
   {% endif %}
 </ul>
@@ -40,6 +41,9 @@
                     </a>
                     <div class="media-body">
                       <h4 class="media-heading">{{user_to_display.get_full_name}}
+                        {% if request.user.id != user_to_display.id %}
+                        <a id="ignore_user" href="#" class="glyphicon glyphicon-ban-circle" data-toggle="tooltip" data-placement="right" title="{% trans 'Ignorer cette personne. Attention vous ne recevrez plus d&#39;aide de cette personne.' %}"></a>
+                        {% endif %}
                       </h4>
                     </div>
                   </div>
@@ -48,13 +52,16 @@
 
                 {% if request.user.id != user_to_display.id %}
 
-                <a href="#{{is_my_friend}}" class="btn btn-default btn-sm" id="add_favorite_link">
-                  {% if is_my_friend %}
+                {% if is_my_friend %}
+                <a href="#{{is_my_friend}}" class="btn btn-default btn-sm" id="add_favorite_link"  data-toggle="tooltip" data-placement="top" title="{% trans 'Retirer cette personne de vos favoris.' %}">
                   <span class="glyphicon glyphicon glyphicon-star" id="is_favorite_star">  </span> {% trans 'Favoris' %}
-                  {% else %}
-                  <span class="glyphicon glyphicon glyphicon-star-empty" id="is_favorite_star">  </span> {% trans 'Favoris' %}
-                  {% endif %}
                 </a>
+                {% else %}
+                <a href="#{{is_my_friend}}" class="btn btn-default btn-sm" id="add_favorite_link"  data-toggle="tooltip" data-placement="top" title="{% trans 'Ajouter cette personne de vos favoris.' %}">
+                  <span class="glyphicon glyphicon glyphicon-star-empty" id="is_favorite_star">  </span> {% trans 'Favoris' %}
+                </a>
+
+                {% endif %}
 
                 <a href="#{{is_in_my_network}}" class="btn btn-default btn-sm" id="add_network_link">
                   {% if is_in_my_network %}
@@ -171,6 +178,14 @@
     </div>
   </div>
 
+  <div id="ignored" class="tab-pane fade">
+    <div class="row mt">
+      <div class="col-lg-6 col-sm-6">
+        {% show_ignore_list request user_to_display.ignore_list.all %}
+      </div>
+    </div>
+  </div>
+
   <div id="jobs" class="tab-pane fade in active">
     <div class="row mt">
       {% show_demands request pending_offers %}
@@ -180,8 +195,107 @@
 </div>
 </div>
 
-<script>
-$(document).ready(function() {
+<script type="application/javascript">
+  var remove_favorite_success = function(name){
+    $("#add_favorite_link").attr("href","#False");
+    $("#is_favorite_star").addClass("glyphicon-star-empty");
+    $("#is_favorite_star").removeClass("glyphicon-star");
+    $.gritter.add({
+        // (string | mandatory) the heading of the notification
+        title: 'Notification',
+        // (string | mandatory) the text inside the notification
+        text: 'Utilisateur '+ name + ' a été supprimé de vos favoris',
+        // (string | optional) the image to display on the left
+        //image: 'assets/img/ui-sam.jpg',
+        // (bool | optional) if you want it to fade out on its own or just sit there
+        sticky: false,
+        // (int | optional) the time you want it to be alive for before fading out
+        time: '5000',
+        // (string | optional) the class name you want to apply to that specific message
+        //class_name: 'notification-class'
+    });
+  }
+
+  var add_favorite_success = function(name){
+    $("#add_favorite_link").attr("href","#True");
+    $("#is_favorite_star").removeClass("glyphicon-star-empty");
+    $("#is_favorite_star").addClass("glyphicon-star");
+    $.gritter.add({
+        // (string | mandatory) the heading of the notification
+        title: 'Notification',
+        // (string | mandatory) the text inside the notification
+        text: 'Utilisateur '+ name + ' a été ajouté à vos favoris',
+        // (string | optional) the image to display on the left
+        //image: 'assets/img/ui-sam.jpg',
+        // (bool | optional) if you want it to fade out on its own or just sit there
+        sticky: false,
+        // (int | optional) the time you want it to be alive for before fading out
+        time: '5000',
+        // (string | optional) the class name you want to apply to that specific message
+        //class_name: 'notification-class'
+    });
+  }
+
+  var remove_network_success = function(name){
+    $("#add_network_link").text("{% trans 'Ajouter à mon réseau' %}");
+    $("#add_network_link").attr("href","#False");
+    $.gritter.add({
+        // (string | mandatory) the heading of the notification
+        title: 'Notification',
+        // (string | mandatory) the text inside the notification
+        text: 'Utilisateur '+ name + ' a été supprimé de votre réseau',
+        // (string | optional) the image to display on the left
+        //image: 'assets/img/ui-sam.jpg',
+        // (bool | optional) if you want it to fade out on its own or just sit there
+        sticky: false,
+        // (int | optional) the time you want it to be alive for before fading out
+        time: '5000',
+        // (string | optional) the class name you want to apply to that specific message
+        //class_name: 'notification-class'
+    });
+  }
+
+  var add_network_success = function(name){
+    $("#add_network_link").text("{% trans 'Retirer de mon réseau' %}");
+    $("#add_network_link").attr("href","#True");
+    $.gritter.add({
+        // (string | mandatory) the heading of the notification
+        title: 'Notification',
+        // (string | mandatory) the text inside the notification
+        text: 'Utilisateur '+ name + ' a été ajouté à votre réseau',
+        // (string | optional) the image to display on the left
+        //image: 'assets/img/ui-sam.jpg',
+        // (bool | optional) if you want it to fade out on its own or just sit there
+        sticky: false,
+        // (int | optional) the time you want it to be alive for before fading out
+        time: '5000',
+        // (string | optional) the class name you want to apply to that specific message
+        //class_name: 'notification-class'
+    });
+  }
+
+  var add_ignore_success = function(name){
+    $.gritter.add({
+        // (string | mandatory) the heading of the notification
+        title: 'Notification',
+        // (string | mandatory) the text inside the notification
+        text: 'Utilisateur '+ name + ' a été bloqué',
+        // (string | optional) the image to display on the left
+        //image: 'assets/img/ui-sam.jpg',
+        // (bool | optional) if you want it to fade out on its own or just sit there
+        sticky: false,
+        // (int | optional) the time you want it to be alive for before fading out
+        time: '5000',
+        // (string | optional) the class name you want to apply to that specific message
+        //class_name: 'notification-class'
+    });
+  }
+
+  $(document).ready(function(){
+
+
+    $('[data-toggle="tooltip"]').tooltip();
+
     // show active tab on reload
     if (location.hash !== '') $('a[href="' + location.hash + '"]').tab('show');
 
@@ -191,58 +305,31 @@ $(document).ready(function() {
             history.pushState(null, null, '#'+$(e.target).attr('href').substr(1));
        } else {
             location.hash = '#'+$(e.target).attr('href').substr(1);
-       }
+    }});
+
+    $('#add_favorite_link').click(function (event) {
+      event.preventDefault();
+      if ($(this).attr('href') != '#True'){
+        add_favorite($("#user_id").val(),add_favorite_success("{{user_to_display.get_full_name}}"));
+      }else{
+        remove_favorite($("#user_id").val(),remove_favorite_success("{{user_to_display.get_full_name}}"));
+      }
     });
 
-    var remove_favorite_success = function(){
-      $("#add_favorite_link").attr("href","#False");
-      $("#is_favorite_star").addClass("glyphicon-star-empty");
-      $("#is_favorite_star").removeClass("glyphicon-star");
-    }
+    $('#add_network_link').click(function (event) {
+      event.preventDefault();
+      if ($(this).attr('href') == '#True'){
+        remove_network($("#user_id").val(),remove_network_success("{{user_to_display.get_full_name}}"));
+      }else{
+        add_network($("#user_id").val(),add_network_success("{{user_to_display.get_full_name}}"));
+      }
+    });
 
-    var add_favorite_success = function(){
-      $("#add_favorite_link").attr("href","#True");
-      $("#is_favorite_star").removeClass("glyphicon-star-empty");
-      $("#is_favorite_star").addClass("glyphicon-star");
-    }
-
-    var remove_network_success = function(){
-      $("#add_network_link").text("{% trans 'Ajouter à mon réseau' %}");
-      $("#add_network_link").attr("href","#False");
-    }
-
-    var add_network_success = function(){
-      $("#add_network_link").text("{% trans 'Retirer de mon réseau' %}");
-      $("#add_network_link").attr("href","#True");
-    }
-
-    var remove_favorite_from_list_success = function(id_remove){
-     $("#delete_" + id_remove).remove();
-    }
-
-    $(document).ready(function(){
-      $('#add_favorite_link').click(function () {
-        if ($(this).attr('href') != '#True'){
-          add_favorite($("#user_id").val(),add_favorite_success);
-        }else{
-          remove_favorite($("#user_id").val(),remove_favorite_success);
-        }
-      });
-
-      $('#add_network_link').click(function () {
-
-        if ($(this).attr('href') == '#True'){
-          remove_network($("#user_id").val(),remove_network_success);
-        }else{
-          add_network($("#user_id").val(),add_network_success);
-        }
-      });
-
-      $('.remove_favorite_link').click(function (event) {
+    $('#ignore_user').click(function (event) {
         event.preventDefault();
-        remove_favorite($(this).attr("href"), remove_favorite_from_list_success);
-      });
+        add_ignored($("#user_id").val(), add_ignore_success("{{user_to_display.get_full_name}}"));
     });
-});
+
+  });
 </script>
 {% endblock %}

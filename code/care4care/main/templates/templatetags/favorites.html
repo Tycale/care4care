@@ -13,10 +13,10 @@
       </thead>
       <tbody>
         {% for personne in favorites %}
-        <tr id="delete_{{personne.id}}">
+        <tr id="favorite_{{personne.id}}">
           <td> <a href="{% url 'user_profile' personne.id %}"> {{ personne.get_full_name }} </a></td>
           <td>
-            <a href="{{ personne.id }}" class="pull-right remove_favorite_link" >
+            <a href="{{ personne.id }}" class="pull-right" id="remove_favorite_link" >
               <li class="glyphicon glyphicon-remove"> </li>
             </a>
           </td>
@@ -26,3 +26,15 @@
     </table>
   </div>
 </div>
+<script type="application/javascript">
+var remove_favorite_from_list_success = function(id_remove){
+  $("#favorite_" + id_remove).remove();
+}
+
+$(document).ready(function(){
+  $('#remove_favorite_link').click(function (event) {
+    event.preventDefault();
+    remove_favorite($(this).attr("href"), remove_favorite_from_list_success);
+  });
+});
+</script>
