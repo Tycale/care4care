@@ -332,7 +332,7 @@
                       <ul class="sub">
                       {% if not request.user.is_superuser %}
                         {% for branch in request.user.membership.all %}
-                          <li><a href="{{ branch.branch.get_absolute_url }}"><i class="fa fa-circle-thin"></i>{{ branch.branch }}</a></li>
+                          <li><a href="{{ branch.branch.get_absolute_url }}"><i class="fa fa-map-marker"></i>{{ branch.branch }}</a></li>
                         {% endfor %}
                       {% else %}
                         <i style="margin-top: 5px; display: block;">{% trans "En tant que superuser, vous voyez toutes les branches" %}</i>
