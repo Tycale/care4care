@@ -181,6 +181,11 @@ class RegistrationView(BaseRegistrationView):
     A registration backend for our CareRegistrationForm
     """
 
+    def get_context_data(self, **kwargs):
+        context = super(RegistrationView, self).get_context_data(**kwargs)
+        context['branches'] = Branch.objects.all()
+        return context
+
     def register(self, request, **cleaned_data):
         username, email, password = cleaned_data['username'], cleaned_data['email'], cleaned_data['password1']
         if Site._meta.installed:
