@@ -3,7 +3,7 @@ from django.conf.urls import patterns, url
 from django.views.generic.base import TemplateView
 
 from main.views import user_profile, manage_profile, EditProfileView, member_favorite, \
-                        member_personal_network, AddEmergencyContact, EmergencyContactDetails, UpdateEmergencyContact
+                        member_personal_network, AddEmergencyContact, EmergencyContactDetails, UpdateEmergencyContact,member_ignore_list
 
 urlpatterns = patterns('',
                        url(r'^profile/$',
@@ -33,4 +33,7 @@ urlpatterns = patterns('',
                        url(r'^api/member_personal_network/(?P<user_id>\d+)/$',
                           member_personal_network,
                           name='member_personal_network'),
+                       url(r'^api/ignore_list/(?P<user_id>\d+)/$',
+                             member_ignore_list,
+                             name='member_ignore_list'),
                        )

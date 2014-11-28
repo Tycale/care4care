@@ -22,6 +22,7 @@ from django.views.generic.detail import DetailView
 
 import json
 import os
+import sys
 from os.path import abspath, dirname
 
 from django.utils import timezone
@@ -73,8 +74,6 @@ def user_profile(request, user_id):
         is_my_friend = True
     if user_to_display in user.personal_network.all():
         is_in_my_network = True
-    if user_to_display.id == user_id:
-        pending_offers = Job.objects.filter(donor=user_to_display )
     return render(request, 'profile/user_profile.html',locals())
 
 
@@ -82,7 +81,8 @@ def user_profile(request, user_id):
 def manage_profile(request):
     """ Return the profile from the current logged user"""
     user_to_display = request.user
-
+    pending_offers = Job.objects.filter(donor=user_to_display )
+    print(user_to_display.ignore_list.all())
     return render(request, 'profile/user_profile.html',locals())
 
 @user_passes_test(lambda u: not u.is_verified)
@@ -123,7 +123,7 @@ def verified_documents_view(request):
             messages.add_message(request, messages.INFO, _('Modification sauvegardée'))
             return redirect('home')
 
-    
+
     return render(request,'verified/verified_documents.html',locals())
 
 def statistics(request):
@@ -162,6 +162,29 @@ def member_personal_network(request, user_id):
 
     elif request.method == 'DELETE':
         user.personal_network.remove(other_user)
+        user.save()
+        return HttpResponse(json.dumps({"name": other_user.get_full_name()}), content_type='application/json')
+
+@login_required
+def member_ignore_list(request, user_id):
+    user = request.user
+    id_other = user_id
+    other_user = get_object_or_404(User, pk=user_id)
+    print(other_user)
+    if request.method == "PUT":
+        user.ignore_list.add(other_user)
+        try:
+          user.save()
+        except :
+          e = sys.exc_info()[0]
+          print(e)
+        return HttpResponse(
+            json.dumps({"name": other_user.get_full_name()}),
+            content_type="application/json"
+        )
+
+    elif request.method == 'DELETE':
+        user.ignore_list.remove(other_user)
         user.save()
         return HttpResponse(json.dumps({"name": other_user.get_full_name()}), content_type='application/json')
 
@@ -296,5 +319,3 @@ class UpdateEmergencyContact(UpdateView):
 
     def get_success_url(self):
         return User.objects.get(pk=self.kwargs['user_id']).get_absolute_url()
-
-

@@ -133,6 +133,7 @@ class VerifiedUser(models.Model):
     # network management
     favorites = models.ManyToManyField('User',related_name="verified_favorites", blank=True, null=True)
     personal_network = models.ManyToManyField('User', verbose_name="Votre réseau personnel",related_name="verified_personal_network", blank=True, null=True)
+    ignore_list = models.ManyToManyField('User', verbose_name="Personne ignorée",related_name="verified_ignore_list", blank=True, null=True)
 
     mail_preferences = models.IntegerField(choices=INFORMED_BY,
                                       default=INBOX, verbose_name=_("Recevoir mes messages par"))
