@@ -67,8 +67,11 @@ def user_profile(request, user_id):
     user_to_display = get_object_or_404(User, pk=user_id)
     user = request.user
     is_my_friend = False
+    is_in_my_network = False
     if user_to_display in user.favorites.all():
         is_my_friend = True
+    if user_to_display in user.personal_network.all():
+        is_in_my_network = True
     if user_to_display.id == user_id:
         pending_offers = Job.objects.filter(donor=user_to_display )
     return render(request, 'profile/user_profile.html',locals())
@@ -213,11 +216,6 @@ class RegistrationView(BaseRegistrationView):
                                      request=request)
         return new_user
 
-    def get_context_data(self, **kwargs):
-        context = super(RegistrationView, self).get_context_data(**kwargs)
-        context['branches'] = Branch.objects.all()
-        return context
-
 class EmergencyContact(CreateView):
     template_name = 'profile/emergency_contact.html'
     form_class = EmergencyContactCreateForm
@@ -229,5 +227,6 @@ class EmergencyContact(CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        form.save()
         return super(EmergencyContact, self).form_valid(form)
 

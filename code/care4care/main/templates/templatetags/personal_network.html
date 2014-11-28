@@ -1,0 +1,28 @@
+{% load i18n %}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    {% trans "Mon réseau" %}
+  </div>
+  <div class="panel-body">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th> {% trans "Nom" %} </th>
+          <th> </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for personne in network %}
+        <tr>
+          <td><a href="{% url 'user_profile' personne.id %}"> {{ personne.get_full_name }} </a> </td>
+          <td>
+            <a href="#" class="pull-right" id="remove_favorite_link" >
+              <li class="glyphicon glyphicon-remove">  </li>
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
