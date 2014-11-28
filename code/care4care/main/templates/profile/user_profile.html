@@ -108,7 +108,7 @@
           </div>
 
         </div>
-        {% if request.user.id == user_to_display.id %}
+        {% if request.user.id == user_to_display.id or request.user.is_superuser %}
         <!-- Emergency users -->
         <div class="col-sm-6">
         <div class="panel panel-default">
@@ -117,7 +117,7 @@
               <span class="pull-left">
                 {% trans "Contacts d'urgence" %}
               </span>
-              <a href="{% url 'add_emergency_contact' %}">
+              <a href="{% url 'add_emergency_contact' user_to_display.id %}">
                 {% bootstrap_icon "plus" %} {% trans 'Ajouter' %}
               </a>
             </div>

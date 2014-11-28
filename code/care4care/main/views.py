@@ -216,17 +216,26 @@ class RegistrationView(BaseRegistrationView):
                                      request=request)
         return new_user
 
-class EmergencyContact(CreateView):
+class AddEmergencyContact(CreateView):
     template_name = 'profile/emergency_contact.html'
     form_class = EmergencyContactCreateForm
     model = EmergencyContact
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
-        return super(EmergencyContact, self).dispatch(*args, **kwargs)
+        obj = self.get_object()
+        if obj.id != self.request.user.id and not self.request.user.is_superuser :
+            return redirect(obj.get_absolute_url())
+        return super(AddEmergencyContact, self).dispatch(*args, **kwargs)
+
+    def get_object(self, queryset=None):
+        return User.objects.get(pk=self.kwargs['user_id'])
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
-        form.save()
-        return super(EmergencyContact, self).form_valid(form)
+        form.instance.user = User.objects.get(pk=self.kwargs['user_id'])
+        return super(AddEmergencyContact, self).form_valid(form)
+
+    def get_success_url(self):
+        return self.get_object().get_absolute_url()
+
 
