@@ -8,7 +8,6 @@ from django.contrib.sites.models import RequestSite
 from django.contrib.sites.models import Site
 from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
-from django.views.generic import View
 from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm
 from main.models import User, VerifiedInformation, EmergencyContact
 from branch.models import Job
@@ -18,6 +17,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import CreateView
 from branch.models import Branch, BranchMembers
+
+from django.views.generic.detail import DetailView
 
 import json
 import os
@@ -192,6 +193,11 @@ class RegistrationView(BaseRegistrationView):
     A registration backend for our CareRegistrationForm
     """
 
+    def get_context_data(self, **kwargs):
+        context = super(RegistrationView, self).get_context_data(**kwargs)
+        context['branches'] = Branch.objects.all()
+        return context
+
     def register(self, request, **cleaned_data):
         username, email, password = cleaned_data['username'], cleaned_data['email'], cleaned_data['password1']
         if Site._meta.installed:
@@ -249,5 +255,46 @@ class AddEmergencyContact(CreateView):
 
     def get_success_url(self):
         return self.get_object().get_absolute_url()
+
+class EmergencyContactDetails(DetailView):
+    model = EmergencyContact
+    template_name = 'profile/emergency_details.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        obj = self.get_object()
+        # TODO: check verified_work_with
+        if obj.id != self.request.user.id and not self.request.user.is_superuser and self.request.user not in obj.verified_work_with.all():
+            return redirect(obj.get_absolute_url())
+        return super(EmergencyContactDetails, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(EmergencyContactDetails, self).get_context_data(**kwargs)
+        return context
+
+    def get_object(self):
+        return EmergencyContact.objects.get(pk=self.kwargs['emergency_id'])
+
+class UpdateEmergencyContact(UpdateView):
+    template_name = 'profile/modify_emergency.html'
+    form_class = EmergencyContactCreateForm
+    model = EmergencyContact
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        obj = self.get_object()
+        if obj.id != self.request.user.id and not self.request.user.is_superuser :
+            return redirect(obj.get_absolute_url())
+        return super(UpdateEmergencyContact, self).dispatch(*args, **kwargs)
+
+    def get_object(self):
+        return EmergencyContact.objects.get(pk=self.kwargs['emergency_id'])
+
+    def form_valid(self, form):
+        form.instance.user = User.objects.get(pk=self.kwargs['user_id'])
+        return super(UpdateEmergencyContact, self).form_valid(form)
+
+    def get_success_url(self):
+        return User.objects.get(pk=self.kwargs['user_id']).get_absolute_url()
 
 

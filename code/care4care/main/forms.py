@@ -30,7 +30,6 @@ class CareRegistrationForm(forms.ModelForm):
         fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2', \
          'how_found', 'birth_date', 'phone_number', 'mobile_number', 'user_type']
 
-
     def clean_username(self):
         # Since User.username is unique, this check is redundant,
         # but it sets a nicer error message than the ORM. See #13147.

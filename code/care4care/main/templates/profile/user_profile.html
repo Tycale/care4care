@@ -6,6 +6,7 @@
 
 {% block extra_head %}
 <script src="{% static "js/user-profile-api.js" %}"></script>
+<script src="{% static "js/rowlink.js" %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -124,9 +125,26 @@
 
           </div>
           <div class="panel-body">
-            {% for personne in user_to_display.emergency_contacts.all %}
-            {{ personne.get_full_name }}
-            {% endfor %}
+            <table class="table table-striped table-hover rowlink">
+              <thead>
+                <tr>
+                <th> {% trans "Prénom" %}</th>
+                <th> {% trans "Nom" %}</th>
+                <th> {% trans "Priorité" %}</th>
+                <th> {% trans "Modifier" %}</th>
+                </tr>
+              </thead>
+              <tbody data-link="row">
+              {% for personne in user_to_display.emergency_contacts.all %}
+              <tr>
+                <td><a href="{% url 'see_emergency_contact' personne.id %}">{{ personne.first_name }}</a></td>
+                <td>{{ personne.last_name }}</td>
+                <td>{{ personne.get_verbose_order }}</td>
+                <td><a href="{% url 'update_emergency_contact' user_to_display.id personne.id %}">{% bootstrap_icon 'edit' %} &nbsp; {% trans "Modifier" %}</a></td>
+              </tr>
+              {% endfor %}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
