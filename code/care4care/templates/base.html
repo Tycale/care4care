@@ -209,7 +209,7 @@
                 <li class="credit-menu">
                   <ul>
                     <li>
-                      <span class="credit-text text-info">{% trans "Crédit restant :" %}</span> {{ request.user.get_verbose_credit }}
+                      <span class="credit-text text-info">{% trans "Crédit restant :" %}</span> {{ request.user.get_verbose_credit | safe }}
                     </li>
                     <li>
                       <span  class="credit-text text-info">{% trans "Type de compte :" %}</span> {{ request.user.get_account_type }}

@@ -1,4 +1,5 @@
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as __
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from multiselectfield import MultiSelectField
 from django.db import models
@@ -271,6 +272,8 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
             (60, ('%d heure', '%d heures')),
             (1, ('%d minute', '%d minutes'))
         )
+        if credit < 0:
+            return str('<span class="text-danger">' + str(credit) + __(' minute(s)') + '</span>')
         for i, (minuts, name) in enumerate(chunks):
                 count = credit // minuts
                 if count != 0:
