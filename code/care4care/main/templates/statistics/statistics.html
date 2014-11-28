@@ -8,10 +8,10 @@
 	{% load staticfiles %}
 	<script src="{% static "js/statistics.js" %}"></script>
 
-	<h3>
+	<h2>
 		<i class="fa fa-angle-right"></i>
-		Statistics
-	</h3>
+		{% trans "Statistiques" %}
+	</h2>
 
 	<div class="row">
 		<div class="col-md-6">
@@ -40,5 +40,79 @@
 			</div>
 		</div>
 	</div>
+
+
+	<h3>
+		<i class="fa fa-angle-right"></i>
+		{% trans "Global" %}
+	</h3>
+
+	<div class="row">
+		<div class="col-md-6">
+			<div class="panel panel-default">
+			  	<div class="panel-body">
+			  		<h4>
+			  			<i class="fa fa-angle-right"></i>
+			  			{% trans "Nombre de comptes créés" %}
+			  		</h4>
+					<canvas id="global_registration" width="475" height="200"></canvas>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			<div class="panel panel-default">
+			  	<div class="panel-body">
+			  		<!-- <div style="display: inline"> -->
+			  			<h4>
+				  			<div style="display: inline; vertical-align: text-bottom">
+				  				<i class="fa fa-angle-right"></i>
+				  				{% trans "Statut des utilisateurs" %}
+				  			</div>
+
+				  			<div id="users_status_legend" style="display: inline; float: right; font-size: 65%; vertical-align: text-bottom;">
+							</div>
+				  		</h4>
+			  		<!-- </div> -->
+
+			  		<div id="users_status">
+						<canvas id="users_status_canvas" width="475" height="200"></canvas>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-6">
+			<div class="panel panel-default">
+			  	<div class="panel-body">
+			  		<h4>
+			  			<i class="fa fa-angle-right"></i>
+			  			{% trans "Types de comptes" %}
+			  		</h4>
+					<canvas id="account_types" width="475" height="200"></canvas>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			<div class="panel panel-default">
+			  	<div class="panel-body">
+			  		<h4>
+			  			<i class="fa fa-angle-right"></i>
+			  			{% trans "Types de jobs" %}
+			  		</h4>
+					<canvas id="job_categories" width="475" height="200"></canvas>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<h3>
+		<i class="fa fa-angle-right"></i>
+		{% trans "Par branche" %}
+	</h3>
 </div>
 {% endblock %}
