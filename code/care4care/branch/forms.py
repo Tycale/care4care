@@ -5,6 +5,8 @@ from multiselectfield import MultiSelectField
 
 from branch.models import Branch, Job
 
+from django.utils import timezone
+
 class CreateBranchForm(forms.ModelForm):
 	class Meta:
 		model = Branch
@@ -30,12 +32,23 @@ class ChooseBranchForm(forms.Form):
 		fields = ['id']
 
 class NeedHelpForm(forms.ModelForm):
-
     category =  MultiSelectField(verbose_name=_("Categorie"))
+
+    def clean_date(self):
+    	date = self.cleaned_data.get('date')
+    	if date < timezone.now():
+    		raise forms.ValidationError(_("Veuillez choisir une date dans le futur."))
+    	return date
+
+    def clean_estimated_time(self):
+    	est = self.cleaned_data.get('estimated_time')
+    	if est <= 0:
+    		raise forms.ValidationError(_("Le temps estimé doit être plus grand que 0 minute."))
+    	return est
 
     class Meta:
         model = Job
-        fields = ['description', 'estimated_time', 'category', 'date', 'time', 'location', 'latitude', 'longitude']
+        fields = ['description', 'estimated_time', 'category', 'date', 'time', 'location', 'latitude', 'longitude', 'title']
         widgets = {
             'latitude': forms.HiddenInput,
             'longitude': forms.HiddenInput,

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}{% load i18n %}
+
+{% block content %}
+
+<div class="row mt ">
+    <div class="col-sm-12"><!--left col-->
+    	<div class="panel panel-default">
+    	  <div class="panel-heading">
+    	    <h3 class="panel-title">{{ object.get_full_name }}</h3>
+    	  </div>
+    	  <div class="panel-body">
+    	   	<ul class="list-group">
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Nom" %}</strong></span> &nbsp; {{object.first_name}} </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Prénom" %}</strong></span> &nbsp; {{object.last_name}} </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Adresse" %}</strong></span> &nbsp; {{object.adresse}} </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Langue" %}</strong></span> &nbsp; {{ object.get_verbose_languages }}</li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Telephone Fixe" %}</strong></span> &nbsp; {{object.phone_number}} </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "GSM" %}</strong></span> &nbsp; {{object.mobile_number}} </li>
+            </ul>
+    	  </div>
+    	</div>
+    </div>
+</div>
+
+
+
+{% endblock %}

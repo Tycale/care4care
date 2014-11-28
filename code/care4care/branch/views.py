@@ -3,7 +3,9 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext as _
 from django.contrib import messages
+
 from django.views.generic.edit import CreateView
+from django.views.generic.detail import DetailView
 
 from branch.models import Branch, BranchMembers
 from branch.forms import NeedHelpForm, Job
@@ -115,16 +117,31 @@ class NeedHelpView(CreateView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(NeedHelpView, self).dispatch(*args, **kwargs)
-    
+
+    def get_context_data(self, **kwargs):
+        context = super(NeedHelpView, self).get_context_data(**kwargs)
+        context['user'] = User.objects.get(pk=self.kwargs['user_id'])
+        context['branch'] = Branch.objects.get(pk=self.kwargs['branch_id'])
+        return context
+
     def form_valid(self, form):
         form.instance.branch = Branch.objects.get(pk=self.kwargs['branch_id'])
-        form.instance.receiver = self.request.user
+        form.instance.receiver = User.objects.get(pk=self.kwargs['user_id'])
         form.instance.real_time = form.instance.estimated_time
         return super(NeedHelpView, self).form_valid(form)
     
     def get_success_url(self):
         return Branch.objects.get(pk=self.kwargs['branch_id']).get_absolute_url()
 
+class DetailJobView(DetailView):
+    """
+    Detail view for a Job
+    """
+    template_name = 'job/details_job.html'
+    model = Job
+
+    def get_object(self, queryset=None):
+        return Job.objects.get(pk=self.kwargs['job_id'])
 
 
 class OfferHelpView(CreateView):

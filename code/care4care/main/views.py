@@ -8,8 +8,7 @@ from django.contrib.sites.models import RequestSite
 from django.contrib.sites.models import Site
 from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
-from django.views.generic import View
-from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm
+from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm, VerifiedProfileForm
 from main.models import User, VerifiedInformation, EmergencyContact
 from branch.models import Job
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -19,8 +18,11 @@ from django.core.urlresolvers import reverse
 from django.views.generic.edit import CreateView
 from branch.models import Branch, BranchMembers
 
+from django.views.generic.detail import DetailView
+
 import json
 import os
+import sys
 from os.path import abspath, dirname
 
 from django.utils import timezone
@@ -67,8 +69,11 @@ def user_profile(request, user_id):
     user_to_display = get_object_or_404(User, pk=user_id)
     user = request.user
     is_my_friend = False
+    is_in_my_network = False
     if user_to_display in user.favorites.all():
         is_my_friend = True
+    if user_to_display in user.personal_network.all():
+        is_in_my_network = True
     return render(request, 'profile/user_profile.html',locals())
 
 
@@ -76,16 +81,29 @@ def user_profile(request, user_id):
 def manage_profile(request):
     """ Return the profile from the current logged user"""
     user_to_display = request.user
-
+    pending_offers = Job.objects.filter(donor=user_to_display )
+    print(user_to_display.ignore_list.all())
     return render(request, 'profile/user_profile.html',locals())
+
+@user_passes_test(lambda u: not u.is_verified)
+@login_required
+def verified_profile_view(request):
+    user = request.user
+    form = VerifiedProfileForm(instance=user)
+    if request.POST :
+        form = VerifiedProfileForm(request.POST)
+        if form.is_valid():
+            form.save
+            messages.add_message(request, messages.INFO, _('Modification sauvegardée'))
+            return redirect('verified_documents')
+    return render(request,'verified/verified_profile.html',locals())
 
 
 @user_passes_test(lambda u: not u.is_verified)
 @login_required
-def verified_member_demand_view(request):
+def verified_documents_view(request):
     user = request.user
     form = VerifiedInformationForm()
-
     try:
         old_vi = VerifiedInformation.objects.get(user=user)
         form = VerifiedInformationForm(instance=old_vi)
@@ -105,7 +123,8 @@ def verified_member_demand_view(request):
             messages.add_message(request, messages.INFO, _('Modification sauvegardée'))
             return redirect('home')
 
-    return render(request,'verified/verified_member_demand.html',locals())
+
+    return render(request,'verified/verified_documents.html',locals())
 
 def statistics(request):
     return render(request, 'statistics/statistics.html', locals())
@@ -146,9 +165,31 @@ def member_personal_network(request, user_id):
         user.save()
         return HttpResponse(json.dumps({"name": other_user.get_full_name()}), content_type='application/json')
 
+@login_required
+def member_ignore_list(request, user_id):
+    user = request.user
+    id_other = user_id
+    other_user = get_object_or_404(User, pk=user_id)
+    print(other_user)
+    if request.method == "PUT":
+        user.ignore_list.add(other_user)
+        try:
+          user.save()
+        except :
+          e = sys.exc_info()[0]
+          print(e)
+        return HttpResponse(
+            json.dumps({"name": other_user.get_full_name()}),
+            content_type="application/json"
+        )
+
+    elif request.method == 'DELETE':
+        user.ignore_list.remove(other_user)
+        user.save()
+        return HttpResponse(json.dumps({"name": other_user.get_full_name()}), content_type='application/json')
+
 
 # Classes views
-
 class EditProfileView(UpdateView, SuccessMessageMixin):
     """ Return the edit page for the current logged user"""
     form_class = ProfileManagementForm
@@ -174,6 +215,11 @@ class RegistrationView(BaseRegistrationView):
     """
     A registration backend for our CareRegistrationForm
     """
+
+    def get_context_data(self, **kwargs):
+        context = super(RegistrationView, self).get_context_data(**kwargs)
+        context['branches'] = Branch.objects.all()
+        return context
 
     def register(self, request, **cleaned_data):
         username, email, password = cleaned_data['username'], cleaned_data['email'], cleaned_data['password1']
@@ -211,20 +257,65 @@ class RegistrationView(BaseRegistrationView):
                                      request=request)
         return new_user
 
-    def get_context_data(self, **kwargs):
-        context = super(RegistrationView, self).get_context_data(**kwargs)
-        context['branches'] = Branch.objects.all()
-        return context
-
-class EmergencyContact(CreateView):
+class AddEmergencyContact(CreateView):
     template_name = 'profile/emergency_contact.html'
     form_class = EmergencyContactCreateForm
     model = EmergencyContact
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
-        return super(EmergencyContact, self).dispatch(*args, **kwargs)
+        obj = self.get_object()
+        if obj.id != self.request.user.id and not self.request.user.is_superuser :
+            return redirect(obj.get_absolute_url())
+        return super(AddEmergencyContact, self).dispatch(*args, **kwargs)
+
+    def get_object(self, queryset=None):
+        return User.objects.get(pk=self.kwargs['user_id'])
 
     def form_valid(self, form):
-        form.instance.user = self.request.user
-        return super(EmergencyContact, self).form_valid(form)
+        form.instance.user = User.objects.get(pk=self.kwargs['user_id'])
+        return super(AddEmergencyContact, self).form_valid(form)
+
+    def get_success_url(self):
+        return self.get_object().get_absolute_url()
+
+class EmergencyContactDetails(DetailView):
+    model = EmergencyContact
+    template_name = 'profile/emergency_details.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        obj = self.get_object()
+        # TODO: check verified_work_with
+        if obj.id != self.request.user.id and not self.request.user.is_superuser and self.request.user not in obj.verified_work_with.all():
+            return redirect(obj.get_absolute_url())
+        return super(EmergencyContactDetails, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(EmergencyContactDetails, self).get_context_data(**kwargs)
+        return context
+
+    def get_object(self):
+        return EmergencyContact.objects.get(pk=self.kwargs['emergency_id'])
+
+class UpdateEmergencyContact(UpdateView):
+    template_name = 'profile/modify_emergency.html'
+    form_class = EmergencyContactCreateForm
+    model = EmergencyContact
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        obj = self.get_object()
+        if obj.id != self.request.user.id and not self.request.user.is_superuser :
+            return redirect(obj.get_absolute_url())
+        return super(UpdateEmergencyContact, self).dispatch(*args, **kwargs)
+
+    def get_object(self):
+        return EmergencyContact.objects.get(pk=self.kwargs['emergency_id'])
+
+    def form_valid(self, form):
+        form.instance.user = User.objects.get(pk=self.kwargs['user_id'])
+        return super(UpdateEmergencyContact, self).form_valid(form)
+
+    def get_success_url(self):
+        return User.objects.get(pk=self.kwargs['user_id']).get_absolute_url()

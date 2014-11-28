@@ -30,7 +30,6 @@ class CareRegistrationForm(forms.ModelForm):
         fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2', \
          'how_found', 'birth_date', 'phone_number', 'mobile_number', 'user_type']
 
-
     def clean_username(self):
         # Since User.username is unique, this check is redundant,
         # but it sets a nicer error message than the ORM. See #13147.
@@ -69,7 +68,7 @@ class CareRegistrationForm(forms.ModelForm):
 class ProfileManagementForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['email', 'phone_number', 'status', 'languages', 'location', 'mail_preferences', 'asked_job', 'offered_job', \
+        fields = ['email', 'phone_number','mobile_number', 'status', 'languages', 'location', 'mail_preferences', 'asked_job', 'offered_job', \
             'latitude', 'longitude', 'facebook', 'additional_info', 'have_car', \
             'can_wheelchair', 'drive_license', 'hobbies', 'photo', 'receive_help_from_who']
         widgets = {
@@ -94,6 +93,42 @@ class ProfileManagementForm(forms.ModelForm):
             raise forms.ValidationError(_("Veuillez introduire une adresse valide via les propositions."))
 
         return self.cleaned_data
+
+
+class VerifiedProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['email', 'phone_number', 'mobile_number', 'status', 'languages', 'location', 'mail_preferences', 'asked_job', 'offered_job', \
+            'latitude', 'longitude', 'facebook', 'additional_info', 'have_car', \
+            'can_wheelchair', 'drive_license', 'hobbies', 'photo', 'receive_help_from_who']
+        widgets = {
+            'latitude': forms.HiddenInput,
+            'longitude': forms.HiddenInput,
+            'location': forms.HiddenInput,
+            'have_car': forms.RadioSelect,
+            'can_wheelchair': forms.RadioSelect,
+        }
+
+    def clean(self):
+        """
+        Verifiy that the values entered into the two password fields
+        match. Note that an error here will end up in
+        ``non_field_errors()`` because it doesn't apply to a single
+        field.
+        """
+        cleaned_data = super(VerifiedProfileForm, self).clean()
+        if not 'longitude' in self.cleaned_data or not self.cleaned_data['longitude']:
+            raise forms.ValidationError(_("Veuillez introduire une adresse valide via les propositions."))
+        if not 'latitude' in self.cleaned_data or not self.cleaned_data['latitude']:
+            raise forms.ValidationError(_("Veuillez introduire une adresse valide via les propositions."))
+        if not 'email' in self.cleaned_data or not self.cleaned_data['email']:
+            raise forms.ValidationError(_("Veuillez introduire une adresse e-mail valide via les propositions."))
+        if not 'latitude' in self.cleaned_data or not self.cleaned_data['latitude']:
+            raise forms.ValidationError(_("Veuillez introduire une adresse valide via les propositions."))
+        if ((not 'mobile_number' in self.cleaned_data or not self.cleaned_data['mobile_number']) and (not 'phone_number' in self.cleaned_data or not self.cleaned_data['phone_number'])):
+            raise forms.ValidationError(_("Veuillez introduire au moins un numéro de téléphone (mobile ou fixe)."))
+        if (len('languages')==0) or not self.cleaned_data['languages']:
+            raise forms.ValidationError(_("Veuillez introduire une langue."))
 
 class ContentTypeRestrictedFileField(forms.FileField):
     """
@@ -147,4 +182,23 @@ class VerifiedInformationForm(forms.ModelForm):
 class EmergencyContactCreateForm(forms.ModelForm):
     class Meta:
         model = EmergencyContact
+        exclude = ['user', 'latitude', 'longitude']
+
+class NeedHelpForm(forms.ModelForm):
+
+    date = forms.DateField(label=_("Date de naissance (DD/MM/YYYY)"),
+                                 widget=SelectDateWidget(years=range(datetime.date.today().year-100, \
+                                                                     datetime.date.today().year)),
+                                 initial=datetime.date.today())
+
+    category =  MultiSelectField(verbose_name=_("Categorie"))
+
+    class Meta:
+        model = Job
+        fields = ['description', 'estimated_time', 'category','branch', 'date', 'km', 'location', 'latitude', 'longitude']
+        widgets = {
+            'latitude': forms.HiddenInput,
+            'longitude': forms.HiddenInput,
+            'location': forms.HiddenInput,
+        }
         exclude = ['user']

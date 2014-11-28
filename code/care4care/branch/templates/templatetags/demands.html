@@ -5,26 +5,28 @@
       {% trans "Demandes" %}
     </div>
     <div class="panel-body">
-      <table class="table table-striped table-hover">
+      <table class="table table-striped table-hover rowlink">
         <thead>
           <tr>
-          {% if show_branch %}
-          <th> {% trans "Branch" %}</th>
-          {% endif %}
-          <th> {% trans "Demandeur" %}</th>
-          <th> {% trans "Date" %}</th>
-          <th> {% trans "Categorie" %}</th>
+            <th> {% trans "Categorie" %}</th>
+            {% if show_branch %}
+            <th> {% trans "Branch" %}</th>
+            {% endif %}
+            <th> {% trans "Titre" %}</th>
+            <th> {% trans "Date" %}</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody data-link="row" data-target="a.mainlink">
         {% for demand in demands %}
         <tr>
+          <td>{{ demand.get_verbose_category }}</td>
           {% if show_branch %}
           <td> {{ demand.branch }} </td>
           {% endif %}
-          <td> {{ demand.receiver }} </td>
+          <td><a href="{% url 'see_help' branch_id=demand.branch.id slug=demand.branch.slug job_id=demand.id %}" class="mainlink"> {{ demand.title }}</a></td>
+
           <td> {{ demand.date | date:'l d M y' }}</td>
-          <td> {{ demand.get_verbose_category }} </td>
+          
         </tr>
         {% endfor %}
         </tbody>

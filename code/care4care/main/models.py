@@ -1,4 +1,5 @@
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as __
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from multiselectfield import MultiSelectField
 from django.db import models
@@ -11,10 +12,12 @@ from easy_thumbnails.fields import ThumbnailerImageField
 
 import re
 
-# TODO: complete
 HOW_FOUND_CHOICES = (
-    ('amis', _("Mes amis m'en ont parlés")),
-    ('pubs', _("J'ai vu de la pub")),
+    ('internet', _("Internet")),
+    ('show', _("Présentation, brochures, flyers, ...")),
+    ('branch', _("Par une branche locale")),
+    ('member', _("Un autre membre")),
+    ('friends', _("Des amis ou de la famille m'en ont parlés")),
     ('other', _("Autre")),
     )
 
@@ -127,12 +130,13 @@ class VerifiedUser(models.Model):
     drive_license = MultiSelectField(choices=DRIVER_LICENSE, verbose_name=_("Type de permis de conduire"), blank=True)
 
 
-    # preference
+    # ppl with you have ongoing job
     work_with = models.ManyToManyField('User',related_name="verified_work_with", blank=True, null=True)
 
     # network management
     favorites = models.ManyToManyField('User',related_name="verified_favorites", blank=True, null=True)
     personal_network = models.ManyToManyField('User', verbose_name="Votre réseau personnel",related_name="verified_personal_network", blank=True, null=True)
+    ignore_list = models.ManyToManyField('User', verbose_name="Personne ignorée",related_name="verified_ignore_list", blank=True, null=True)
 
     mail_preferences = models.IntegerField(choices=INFORMED_BY,
                                       default=INBOX, verbose_name=_("Recevoir mes messages par"))
@@ -160,7 +164,7 @@ class CommonInfo(models.Model):
     longitude = models.CharField(_('Longitude'), max_length=20, null=True, blank=True)
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message=_("Votre numéro de téléphone doit être au format '+999999999'. Jusqu'à 15 chiffres."))
     phone_number = models.CharField(validators=[phone_regex], max_length=16, blank=True, verbose_name=_("Numéro de téléphone (fixe)"))
-    mobile_number = models.CharField(validators=[phone_regex], max_length=16, blank=True, verbose_name=_("Numéro de téléphone mobile"))
+    mobile_number = models.CharField(validators=[phone_regex], max_length=16, blank=True, verbose_name=_("Numéro de téléphone (mobile)"))
     languages = MultiSelectField(choices=settings.LANGUAGES, verbose_name=_("Langues parlées"), blank=True)
 
     def get_full_name(self):
@@ -169,12 +173,21 @@ class CommonInfo(models.Model):
     def get_short_name(self):
         return self.first_name
 
+    def get_verbose_languages(self):
+        return ', '.join([str(l[1]) for l in settings.LANGUAGES if (l[0] in self.languages )])
+
     class Meta:
         abstract = True
 
 class EmergencyContact(CommonInfo):
     user = models.ForeignKey('User', related_name="emergency_contacts")
     order = models.IntegerField(default=0, verbose_name=_("Ordre de priorité"), choices=PRIORITY)
+
+    def get_verbose_order(self):
+        return PRIORITY[self.order-1][1]
+
+    class Meta:
+        ordering = ['order']
 
 
 class UserManager(BaseUserManager):
@@ -260,6 +273,8 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
             (60, ('%d heure', '%d heures')),
             (1, ('%d minute', '%d minutes'))
         )
+        if credit < 0:
+            return str('<span class="text-danger">' + str(credit) + __(' minute(s)') + '</span>')
         for i, (minuts, name) in enumerate(chunks):
                 count = credit // minuts
                 if count != 0:

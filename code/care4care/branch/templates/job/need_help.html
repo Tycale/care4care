@@ -14,20 +14,25 @@
 
 {% block content %}
 
-<h3> {% trans "Demande d'aide" %}</h3>
+<h3> {% trans "Demande d'aide pour " %}{{ user.get_full_name }}{% trans " dans la branche "%}{{ branch }}</h3>
 
 <div class="row mt">
     <div class="col-lg-12">
         <form action="." class="form-horizontal style-form" role="form" method="post">
             {% csrf_token %}
+
+            {% bootstrap_form_errors form %}
+
             <div class="col-lg-12 col-sm-12 background-gris">
                 <div class="showback">
                     <h4 class="mb"> {% trans "Informations générales" %}</h4>
+                    {% bootstrap_field form.title %}
                     {% bootstrap_field form.category %}
 
                     {% bootstrap_field form.date %}
-                    {% bootstrap_field form.estimated_time %}
                     {% bootstrap_field form.time %}
+
+                    {% bootstrap_field form.estimated_time %}
                     {% bootstrap_field form.description %}
                 </div>
             </div>
@@ -37,7 +42,7 @@
               <h4 class="mb">{% trans "Adresse" %}</h4>
               <div class="row">
                 <div class="col-lg-6">
-                  <input id="id_location_input" class="typeahead form-control" type="text" placeholder="{% trans "Entrez votre adresse"%}">
+                  <input id="id_location_input" class="typeahead form-control" type="text" placeholder="{% trans "Entrez votre adresse"%}" value="{% if form.location.value %}{{ form.location.value }}{% else %}{% if user.location %}{{ user.location }}{% endif %}{% endif %}">
                 </div>
                 <div class="col-lg-6">
                   <div id="map" style="min-height:300px;"></div>
@@ -77,8 +82,8 @@ $(document).ready(function () {
 // https://github.com/sgruhier/typeahead-addresspicker
 // instantiate the addressPicker suggestion engine (based on bloodhound)
 var addressPicker = new AddressPicker({
-  map: {id: '#map', center: new google.maps.LatLng(50.846975, 4.351815699999975), zoom:15,},
-  marker: {visible: true, draggable: false, scrollwheel: false,}
+  map: {id: '#map', center: new google.maps.LatLng({% if form.latitude.value %}'{{ form.latitude.value }}'{% else %}{% if user.latitude %}'{{user.latitude}}'{% else %}'50.846975'{% endif %}{% endif %}, {% if form.longitude.value %}'{{ form.longitude.value }}'{% else %}{% if user.longitude %}'{{user.longitude}}'{% else %}'4.351815699999975'{% endif %}{% endif %}), zoom:15, scrollwheel: false},
+  marker: {visible: true, draggable: false,}
 });
 
 // instantiate the typeahead UI
