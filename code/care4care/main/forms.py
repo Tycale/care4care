@@ -137,7 +137,7 @@ class VerifiedInformationForm(forms.ModelForm):
 class EmergencyContactCreateForm(forms.ModelForm):
     class Meta:
         model = EmergencyContact
-        exclude = ['user']
+        exclude = ['user', 'latitude', 'longitude']
 
 class NeedHelpForm(forms.ModelForm):
 

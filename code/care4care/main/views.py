@@ -202,13 +202,14 @@ class RegistrationView(BaseRegistrationView):
                                      request=request)
         return new_user
 
-class EmergencyContact(CreateView):
+class AddEmergencyContact(CreateView):
     template_name = 'profile/emergency_contact.html'
     form_class = EmergencyContactCreateForm
     model = EmergencyContact
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        form.save()
         return super(EmergencyContact, self).form_valid(form)
 
 class NeedHelpView(CreateView):
