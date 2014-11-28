@@ -26,8 +26,9 @@
                     {% bootstrap_field form.category %}
 
                     {% bootstrap_field form.date %}
-                    {% bootstrap_field form.estimated_time %}
                     {% bootstrap_field form.time %}
+
+                    {% bootstrap_field form.estimated_time %}
                     {% bootstrap_field form.description %}
                 </div>
             </div>
@@ -77,8 +78,8 @@ $(document).ready(function () {
 // https://github.com/sgruhier/typeahead-addresspicker
 // instantiate the addressPicker suggestion engine (based on bloodhound)
 var addressPicker = new AddressPicker({
-  map: {id: '#map', center: new google.maps.LatLng(50.846975, 4.351815699999975), zoom:15,},
-  marker: {visible: true, draggable: false, scrollwheel: false,}
+  map: {id: '#map', center: new google.maps.LatLng(50.846975, 4.351815699999975), zoom:15, scrollwheel: false},
+  marker: {visible: true, draggable: false,}
 });
 
 // instantiate the typeahead UI

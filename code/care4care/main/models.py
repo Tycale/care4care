@@ -11,10 +11,12 @@ from easy_thumbnails.fields import ThumbnailerImageField
 
 import re
 
-# TODO: complete
 HOW_FOUND_CHOICES = (
-    ('amis', _("Mes amis m'en ont parlés")),
-    ('pubs', _("J'ai vu de la pub")),
+    ('internet', _("Internet")),
+    ('show', _("Présentation, brochures, flyers, ...")),
+    ('branch', _("Par une branche locale")),
+    ('member', _("Un autre membre")),
+    ('friends', _("Des amis ou de la famille m'en ont parlés")),
     ('other', _("Autre")),
     )
 
