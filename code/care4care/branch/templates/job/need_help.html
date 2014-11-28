@@ -42,7 +42,7 @@
               <h4 class="mb">{% trans "Adresse" %}</h4>
               <div class="row">
                 <div class="col-lg-6">
-                  <input id="id_location_input" class="typeahead form-control" type="text" placeholder="{% trans "Entrez votre adresse"%}" value="{{ form.location.value }}">
+                  <input id="id_location_input" class="typeahead form-control" type="text" placeholder="{% trans "Entrez votre adresse"%}" value="{% if form.location.value %}{{ form.location.value }}{% else %}{% if user.location %}{{ user.location }}{% endif %}{% endif %}">
                 </div>
                 <div class="col-lg-6">
                   <div id="map" style="min-height:300px;"></div>
@@ -82,7 +82,7 @@ $(document).ready(function () {
 // https://github.com/sgruhier/typeahead-addresspicker
 // instantiate the addressPicker suggestion engine (based on bloodhound)
 var addressPicker = new AddressPicker({
-  map: {id: '#map', center: new google.maps.LatLng({{ form.latitude.value | default:'50.846975' }}, {{ form.longitude.value | default:'4.351815699999975' }}), zoom:15, scrollwheel: false},
+  map: {id: '#map', center: new google.maps.LatLng({% if form.latitude.value %}'{{ form.latitude.value }}'{% else %}{% if user.latitude %}'{{user.latitude}}'{% else %}'50.846975'{% endif %}{% endif %}, {% if form.longitude.value %}'{{ form.longitude.value }}'{% else %}{% if user.longitude %}'{{user.longitude}}'{% else %}'4.351815699999975'{% endif %}{% endif %}), zoom:15, scrollwheel: false},
   marker: {visible: true, draggable: false,}
 });
 
