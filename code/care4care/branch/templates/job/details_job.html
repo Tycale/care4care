@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% load bootstrap3 %}{% load i18n %}{% load staticfiles %}
 
+{% block title %}{% trans "object.title" %}{% endblock %}
+
+
 {% block extra_head %}
 <script src="http://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places,directions"></script>
 {% endblock %}
@@ -22,6 +25,23 @@
                 </h5>
             </div>
             </div>
+    </div>
+</div>
+<div class="row mt">
+    <div class="col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                    <h2>{{object.title}}</h2>
+            </div>
+            <ul class="list-group">
+              <li class="list-group-item"><strong>{% trans "Catégorie" %}</strong><br/>&nbsp; {{object.get_category_display}}</li>
+              <li class="list-group-item"><strong> {% trans "Date" %}</strong><br/>&nbsp;  {{object.date}}</li>
+              <li class="list-group-item"><strong> {% trans "Temps estimé (en minutes)" %}</strong><br/> &nbsp; {{object.estimated_time}}</li>
+              <li class="list-group-item"><strong> {% trans "Lieu" %}</strong><br/> &nbsp; {{object.location}}</li>
+              <li class="list-group-item"><strong> {% trans "Description" %}</strong><br/> &nbsp; {{object.description}}</li>
+            </ul>
+
+          </div>
     </div>
 </div>
 
