@@ -216,11 +216,6 @@ class RegistrationView(BaseRegistrationView):
                                      request=request)
         return new_user
 
-    def get_context_data(self, **kwargs):
-        context = super(RegistrationView, self).get_context_data(**kwargs)
-        context['branches'] = Branch.objects.all()
-        return context
-
 class EmergencyContact(CreateView):
     template_name = 'profile/emergency_contact.html'
     form_class = EmergencyContactCreateForm
@@ -232,4 +227,5 @@ class EmergencyContact(CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        form.save()
         return super(EmergencyContact, self).form_valid(form)
