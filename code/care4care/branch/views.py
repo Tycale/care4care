@@ -40,11 +40,23 @@ def branch_home(request, id, slug):
     branch = get_object_or_404(Branch, pk=id)
     user = request.user
 
-    is_in = BranchMembers.objects.filter(branch=branch, user=user).count
+    bm = BranchMembers.objects.filter(branch=branch, user=user)
+    is_in = bm.count()
 
     if is_in == 0 and not user.is_superuser :
         messages.add_message(request, messages.INFO, _("Vous n'avez rien à faire ici !"))
         return redirect('home')
+
+
+    if user.is_superuser :
+        is_branch_admin = True
+        try:
+            BranchMembers.objects.get(branch=branch, user=user)
+        except BranchMembers.DoesNotExist:
+            bm = BranchMembers(branch=branch, user=user, is_admin=True, joined=timezone.now())
+            bm.save()
+    else : 
+        is_branch_admin = bm.first().is_admin
         
     nb_users = BranchMembers.objects.filter(branch=branch).count()
 
