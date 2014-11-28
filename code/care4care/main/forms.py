@@ -7,6 +7,8 @@ from multiselectfield import MultiSelectField
 from django.forms.extras import SelectDateWidget
 import datetime
 
+from branch.models import Branch
+
 from django.template.defaultfilters import filesizeformat
 
 class CareRegistrationForm(forms.ModelForm):
@@ -21,6 +23,8 @@ class CareRegistrationForm(forms.ModelForm):
                                  widget=SelectDateWidget(years=range(datetime.date.today().year-100, \
                                                                      datetime.date.today().year)),
                                  initial=datetime.date.today())
+    id = forms.IntegerField(widget=forms.HiddenInput)
+
     class Meta:
         model = User
         fields = ['username', 'first_name', 'last_name', 'email', 'password1', 'password2', \
@@ -49,10 +53,16 @@ class CareRegistrationForm(forms.ModelForm):
         if 'password1' in self.cleaned_data and 'password2' in self.cleaned_data:
             if self.cleaned_data['password1'] != self.cleaned_data['password2']:
                 raise forms.ValidationError(_("Les mots de passe ne sont pas identiques."))
-        if not 'longitude' in self.cleaned_data or not self.cleaned_data['longitude']:
-            raise forms.ValidationError(_("Veuillez introduire une adresse valide via les propositions."))
-        if not 'latitude' in self.cleaned_data or not self.cleaned_data['latitude']:
-            raise forms.ValidationError(_("Veuillez introduire une adresse valide via les propositions."))
+
+        id = self.cleaned_data.get('id')
+
+        try:
+            Branch.objects.get(pk=id)
+        except Branch.DoesNotExist:
+            raise forms.ValidationError("Veuillez choisir une branche en choisissant un marqueur rouge sur la carte")
+
+        if id == -1:
+            raise forms.ValidationError("Veuillez choisir une branche en choisissant un marqueur rouge sur la carte")
 
         return self.cleaned_data
 
@@ -61,7 +71,7 @@ class ProfileManagementForm(forms.ModelForm):
         model = User
         fields = ['email', 'phone_number', 'status', 'languages', 'location', 'mail_preferences', 'asked_job', 'offered_job', \
             'latitude', 'longitude', 'facebook', 'additional_info', 'have_car', \
-            'can_wheelchair', 'drive_license', 'hobbies', ]
+            'can_wheelchair', 'drive_license', 'hobbies', 'photo', 'receive_help_from_who']
         widgets = {
             'latitude': forms.HiddenInput,
             'longitude': forms.HiddenInput,
@@ -156,3 +166,4 @@ class NeedHelpForm(forms.ModelForm):
             'longitude': forms.HiddenInput,
             'location': forms.HiddenInput,
         }
+        exclude = ['user']

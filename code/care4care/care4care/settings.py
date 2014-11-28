@@ -45,6 +45,8 @@ INSTALLED_APPS = (
     'bootstrap3',
     'registration',
     'multiselectfield',
+    'bootstrap3_datetime',
+    'easy_thumbnails',
 )
 
 MIDDLEWARE_CLASSES = (

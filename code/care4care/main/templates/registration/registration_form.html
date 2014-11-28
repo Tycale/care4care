@@ -4,6 +4,10 @@
 
 {% block title %}{% trans "Inscription" %}{% endblock %}
 
+{% block extra_head %}
+<script src="http://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places,geometry"></script>
+<script src="{% static "js/geoPosition.js" %}"></script>
+{% endblock %}
 
 {% block content %}
 <h3><i class="fa fa-angle-right"></i> {% trans "Inscription" %}</h3>
@@ -39,9 +43,9 @@
                 <div class="col-lg-6 col-sm-12 background-gris">
                     <div class="showback">
                         <h4 class="mb"><i class="fa fa-angle-right"></i> {% trans "Informations de contact" %}</h4>
+                        {% bootstrap_field form.email %}
                         {% bootstrap_field form.phone_number %}
                         {% bootstrap_field form.mobile_number %}
-                        {% bootstrap_field form.email %}
                     </div>
                 </div>
 
@@ -59,6 +63,22 @@
                     </div>
                 </div>
 
+                <div class="col-lg-12 col-sm-12 background-gris">
+                	<div class="showback">                    
+                    	<div id="map" style="min-width: 500px; min-height: 400px; width: 100%; height: 100%;"></div>
+                    	<h3>{%trans "Branche choisie :" %}
+                    	<span class="text-danger" id="choosen_branch">
+                    	<select id="id_id" name="id" class="form-control mb">
+                    		<option value="-1">{% trans "aucune" %}</option>
+                    		{% for branch in branches %}
+                    			<option value="{{branch.id}}">{{branch}}</option>
+                    		{% endfor %}
+                    	</select>
+                    	</span></h3>
+                    	<div class="alert alert-info"><b>{% trans "Information:"%}</b> {% trans "Selectionner un emplacement (marqueur rouge) sur la carte afin de rejoindre une branche." %}</div>
+                	</div>
+                </div>
+
 
             </div>
 
@@ -74,5 +94,89 @@
 {% endblock %}
 
 {% block extra_footer %}
+<script type="text/javascript">
+$(document).ready(function () {
+    var locations = [
+        {% for b in branches %}
+        ['{{b.name}}', {{b.latitude}}, {{b.longitude}}, {{b.id}}, 0],
+        {% endfor %}
+    ];
+    
+    (function() {
+        // map options
+        var options = {
+            zoom: 8,
+            center: new google.maps.LatLng(50.846975, 4.351815699999975),
+            streetViewControl: false,
+            mapTypeControl: false,
+            scrollwheel: false,
+        };
+
+        // init map
+        var map = new google.maps.Map(document.getElementById('map'), options);
+        var bounds = new google.maps.LatLngBounds();
+
+        // set multiple marker
+        for (var i = 0; i < locations.length; ++i) {
+            var pos = new google.maps.LatLng(locations[i][1], locations[i][2]);
+            var marker = new google.maps.Marker({
+                position: pos,
+                map: map,
+                title: locations[i][0]
+            });
+            // process multiple info windows
+            (function(marker, i) {
+                // add click event
+                google.maps.event.addListener(marker, 'click', function() {
+                    $('#id_id').val(locations[i][3]);
+                    infowindow = new google.maps.InfoWindow({
+                        content: ''+locations[i][0]
+                    });
+                    infowindow.open(map, marker);
+                });
+            })(marker, i);
+            bounds.extend(pos);
+        }
+
+        map.fitBounds(bounds);
+
+        if(geoPosition.init()){  // Geolocation Initialisation
+                geoPosition.getCurrentPosition(success_callback,error_callback,{enableHighAccuracy:true});
+        }
+
+        // p : geolocation object
+        function success_callback(p){
+            var latitude = parseFloat( p.coords.latitude );
+            var longitude = parseFloat( p.coords.longitude );
+            var lo = new google.maps.LatLng(latitude, longitude);
+
+            var locations_bis =  locations.slice(0)
+
+            for(var i = 0; i < locations_bis.length; ++i){
+                var pos = new google.maps.LatLng(locations_bis[i][1], locations_bis[i][2]);
+                locations_bis[i][4] = google.maps.geometry.spherical.computeDistanceBetween(lo, pos);
+            }
+
+            locations_bis.sort(function(r1, r2) {return r1[4] - r2[4];});
+
+            var nbounds = new google.maps.LatLngBounds();
+
+            for(var i = 0; i < Math.min(locations_bis.length, 3); ++i){
+                var pos = new google.maps.LatLng(locations_bis[i][1], locations_bis[i][2]);
+                nbounds.extend(pos);
+            }
+
+            map.fitBounds(nbounds);
+        }
+
+        function error_callback(p){}
+
+        $('.fa-bars').click(function () {
+            google.maps.event.trigger(map, 'resize');
+        });
+
+    })();
+});
+</script>
 {{ form.media }}
 {% endblock %}

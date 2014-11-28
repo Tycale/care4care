@@ -9,3 +9,4 @@ venv/
 *sqlite3
 *mo
 *~
+.DS_Store

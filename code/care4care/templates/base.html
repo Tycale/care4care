@@ -1,4 +1,4 @@
-{% load bootstrap3 %}{% load staticfiles %}{% load i18n %}
+{% load bootstrap3 %}{% load staticfiles %}{% load i18n %}{% load branches %}{% load thumbnail %}
 <!DOCTYPE html>
 <html>
   <head>
@@ -205,6 +205,21 @@
                   </button>
                 </li>
                 {% endif %}
+                {% if request.user.is_authenticated %}
+                <li class="credit-menu">
+                  <ul>
+                    <li>
+                      <span class="credit-text text-info">{% trans "Crédit restant :" %}</span> {{ request.user.get_verbose_credit }}
+                    </li>
+                    <li>
+                      <span  class="credit-text text-info">{% trans "Type de compte :" %}</span> {{ request.user.get_account_type }}
+                      {% if not request.user.is_verified %}
+                      <a href="{% url 'verified_member_demand' %}"> <i class="fa fa-caret-square-o-up"></i></a>
+                      {% endif %}
+                    </li>
+                  </ul>
+                </li>
+                {% endif %}
                 <li class="dropdown">{% block connect %}
                   <button type="button" class="btn btn-theme03 btn-login force-size dropdown-toggle" data-toggle="dropdown">
                     <span class="glyphicon glyphicon-user"></span>
@@ -220,7 +235,7 @@
                     {% bootstrap_icon 'user' %} &nbsp; {% trans "Mon Profil" %}</a>
                     {% if not request.user.is_verified %}
                       <a href="{% url 'verified_member_demand' %}">
-                      {% bootstrap_icon 'star' %} &nbsp; {% trans "Vérifier" %}</a>
+                      {% bootstrap_icon 'star' %} &nbsp; {% trans "Devenir vérifié" %}</a>
                     {% endif %}
                    </li>
                     <li class="divider"></li>
@@ -295,34 +310,44 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
 
-                  {% comment %}
-                  <p class="centered"><a href="{% url 'home' %}"><img src="/assets/img/ui-sam.jpg" class="img-circle" width="60"></a></p>
-                  <h5 class="centered">Marcel Newman</h5>
-                  {% endcomment %}
+                  {% if request.user.photo %}
+                  <p class="centered"><a href="{% url 'profile' %}">
+                      <img src="{% thumbnail request.user.photo 60x60 crop %}" class="img-circle" width="60">
+                  </a></p>
+                  {% endif %}
 
-                  <li class="mt">
+                  <li>
                       <a href="{% url "home" %}">
                           <i class="fa fa-home"></i>
-                          <span>{% trans "Acceuil" %}</span>
+                          <span>{% trans "Accueil" %}</span>
                       </a>
                   </li>
 
+                  {% if request.user.is_authenticated %}
                   <li class="sub-menu">
                       <a href="javascript:;" >
-                          <i class="fa fa-bars"></i>
+                          <i class="fa fa-globe"></i>
                           <span>{% trans "Branches" %}</span>
                       </a>
                       <ul class="sub">
+                      {% if not request.user.is_superuser %}
                         {% for branch in request.user.membership.all %}
                           <li><a href="{{ branch.branch.get_absolute_url }}"><i class="fa fa-circle-thin"></i>{{ branch.branch }}</a></li>
                         {% endfor %}
+                      {% else %}
+                        <i style="margin-top: 5px; display: block;">{% trans "En tant que superuser, vous voyez toutes les branches" %}</i>
+                        {% branches %}
+                      {% endif %}
 
+                          {% if not request.user.is_superuser %}
                           <li><a href="{% url "branch_join" %}"><i class="fa fa-plus"></i>{% trans "Rejoindre une branche" %}</a></li>
+                          {% endif %}
                           {% if request.user.is_verified %}
                             <li><a href="{% url "branch_create" %}"><i class="fa fa-code-fork"></i>{% trans "Créer une branche" %}</a></li>
                           {% endif %}
                       </ul>
                   </li>
+                  {% endif %}
 
                   <li class="sub-menu">
                       <a href="javascript:;" >
@@ -366,6 +391,7 @@
                       <ul class="sub">
                           <li><a  href="morris.html">Morris</a></li>
                           <li><a  href="chartjs.html">Chartjs</a></li>
+                          <li><a  href="{% url 'stats' %}">Statistics</a></li>
                       </ul>
                   </li>
 

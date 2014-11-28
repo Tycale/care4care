@@ -2426,3 +2426,28 @@ div.top-menu > ul > li > button > a {
     position: absolute;
     padding: 15px;
 }
+
+.credit-menu {
+    padding-top: 15px;
+    padding-right: 15px;
+    color: #fff;
+}
+
+
+.credit-menu a {
+    color: #fff;
+}
+
+.credit-text {
+    font-weight: bold;
+}
+
+.form-horizontal .form-group {
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
+.form-group {
+    border-bottom: 1px solid #eff2f7;
+    padding-bottom: 10px;
+}

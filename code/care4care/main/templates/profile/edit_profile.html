@@ -15,9 +15,8 @@
 {% block content %}
 <h3><i class="fa fa-angle-right"></i> {% trans "Modifier mon profil" %}</h3>
 
-<div class="row mt">
-    <div class="col-lg-12">
-        <form action="." role="form" method="post">
+
+        <form action="."  enctype="multipart/form-data" role="form" method="post">
             {% csrf_token %}
 
             {% bootstrap_form_errors form %}
@@ -27,11 +26,10 @@
                     <div class="showback">
                         <h4 class="mb"><i class="fa fa-angle-right"></i> {% trans "Informations générales" %}</h4>
                         {% bootstrap_field form.email %}
-                        {% bootstrap_field form.phone_number %}
+                        {% bootstrap_field form.photo %}
                         {% bootstrap_field form.status %}
+                        {% bootstrap_field form.phone_number %}
                         {% bootstrap_field form.facebook %}
-                        {% bootstrap_field form.location %}
-                        {% bootstrap_field form.languages %}
                     </div>
                 </div>
 
@@ -45,9 +43,14 @@
                             {% bootstrap_field form.offered_job %}
                         </div>
                         {% bootstrap_field form.mail_preferences %}
+                        {% bootstrap_field form.receive_help_from_who %}
+
 
                     </div>
                 </div>
+
+
+                <div class="clearfix visible-lg-block"></div>
 
                 <div class="col-lg-6 col-sm-12 background-gris">
                     <div class="showback">
@@ -62,18 +65,38 @@
 
                 <div class="col-lg-6 col-sm-12 background-gris">
                     <div class="showback">
-                        <h4 class="mb"><i class="fa fa-angle-right"></i> {% trans "Informations supplémentaire" %}</h4>
+                        <h4 class="mb"><i class="fa fa-angle-right"></i> {% trans "Langues" %}</h4>
+                        {% bootstrap_field form.languages %}
+                    </div>
+                </div>
+
+
+                <div class="clearfix visible-lg-block"></div>
+
+                <div class="col-lg-6 col-sm-12 background-gris">
+                    <div class="showback">
+                        <h4 class="mb"><i class="fa fa-angle-right"></i> {% trans "Hobbies" %}</h4>
                         {% bootstrap_field form.hobbies %}
+                    </div>
+                </div>
+
+
+
+                <div class="col-lg-6 col-sm-12 background-gris">
+                    <div class="showback">
+                        <h4 class="mb"><i class="fa fa-angle-right"></i> {% trans "Informations supplémentaires" %}</h4>
                         {% bootstrap_field form.additional_info %}
                     </div>
                 </div>
+
+
 
                 <div class="col-lg-12 background-gris">
                     <div class="showback">
                         <h4 class="mb"><i class="fa fa-angle-right"></i> {% trans "Adresse" %}</h4>
                         <div class="row">
                             <div class="col-lg-6">
-                                <input id="id_location_input" class="typeahead form-control" type="text" placeholder="{% trans "Entrez votre adresse"%}">
+                                <input id="id_location_input" class="typeahead form-control" type="text" placeholder="{% trans "Entrez votre adresse"%}" value="{{ form.location.value }}">
                             </div>
                             <div class="col-lg-6">
                                 <div id="map" style="min-height:300px;"></div>
@@ -102,19 +125,18 @@
                 </div>
             </div>
         </form>
-    </div>
-</div>
 
 {% endblock %}
 
 {% block extra_footer %}
 <script>
     $(document).ready(function () {
+
         // https://github.com/sgruhier/typeahead-addresspicker
         // instantiate the addressPicker suggestion engine (based on bloodhound)
         var addressPicker = new AddressPicker({
-            map: {id: '#map', center: new google.maps.LatLng(50.846975, 4.351815699999975), zoom:15,},
-            marker: {visible: true, draggable: false,}
+            map: {id: '#map', center: new google.maps.LatLng({{ form.latitude.value | default:'50.846975' }}, {{ form.longitude.value | default:'4.351815699999975' }}), zoom:15,},
+            marker: {visible: true, draggable: false, scrollwheel: false,}
         });
 
         // instantiate the typeahead UI

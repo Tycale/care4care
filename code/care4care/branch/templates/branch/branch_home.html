@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load bootstrap3 %}{% load i18n %}{% load staticfiles %}
+{% load bootstrap3 %}{% load i18n %}{% load staticfiles %}{% load jobs_extra %}
 
 
 {% block title %}{{ branch }}{% endblock %}
@@ -27,7 +27,7 @@
                 {% endif %}
             </div>
             <div id="options-branch">
-                {% if branch.creator.id != request.user.id %}
+                {% if branch.creator.id != request.user.id or not request.user.is_superuser %}
                 <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-leave">
                     {% trans "Quitter cettte branche" %}
                 </button>
@@ -38,7 +38,7 @@
                 {% endif %}
             </div>
             </div>
-            {% if branch.creator.id != request.user.id %}
+            {% if branch.creator.id != request.user.id or not request.user.is_superuser %}
             <div class="modal fade" id="modal-leave" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -86,6 +86,17 @@
 </div>
 
 <div class="row mt">
+  <div class="col-md-4 col-md-offset-2"> <a class="btn btn-primary btn-lg" href="{% url "need_help" branch_id=branch.id slug=branch.slug %}">{% trans "J'ai besoin d'aide" %}</a> </div>
+  <div class="col-md-4 col-md-offset-2"><a class="btn btn-primary btn-lg" href="{% url "offer_help" branch_id=branch.id slug=branch.slug %}">{% trans "Offrir mon aide" %}</a></div>
+</div>
+
+<div class="row mt">
+  {% show_demands request demands show_branch=False %}
+  {% show_offers request offers show_branch=False %}
+</div>
+
+
+<div class="row mt">
     <div class="col-lg-12">
 
     	<div class="content-panel">
@@ -99,7 +110,9 @@
                     <th><i class="fa fa-user"></i> {% trans "Utilisateur" %}</th>
                     <th><i class="fa fa-bookmark"></i> {% trans "Nom complet" %}</th>
                     <th><i class="fa fa-star"></i> {% trans "Status" %}</th>
+                    {% if request.user == branch.creator or request.user.is_superuser %}
                     <th></th>
+                    {% endif %}
                 </tr>
                 </thead>
                 <tbody>
@@ -108,10 +121,12 @@
                 	    <td><a href="#">{{member.user}}</a></td>
                 	    <td>{{member.user.get_full_name}}</td>
                 	    <td>{% if member.is_admin %}{% trans "Responsable" %}{% endif %}</td>
+                        {% if request.user == branch.creator or request.user.is_superuser %}
                 	    <td>
-                	        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                	        <a class="btn btn-primary btn-xs" href="{% url 'edit_profile' member.user.id %}"><i class="fa fa-pencil"></i></a>
                 	        <a class="btn btn-danger btn-xs" href="{% url 'branch_leave' branch_id=branch.id user_id=member.user.id %}"><i class="fa fa-trash-o "></i></a>
                 	    </td>
+                        {% endif %}
                 	</tr>
                 	{% endfor %}
                 </tbody>

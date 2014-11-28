@@ -1,19 +1,23 @@
 {% extends "base.html" %}
-{% load bootstrap3 %}{% load i18n %}{% load staticfiles %}
+{% load bootstrap3 %}{% load i18n %}{% load staticfiles %}{% load thumbnail %}{% load jobs_extra %}
 
 {% block title %}{% trans "Gestion du profil" %}{% endblock %}
 
 
 {% block extra_head %}
-<script src="{% static "js/user-profile-api.js" %}"></script>
+<script src="{% static " js/user-profile-api.js" %}"></script>
 {% endblock %}
 
 {% block content %}
 <div class="mt ">
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs" id="myTab">
+
   <li class="active"><a data-toggle="tab" href="#profile">{% trans 'Profile' %}</a></li>
+  {% if request.user.id == user_to_display.id %}
   <li><a data-toggle="tab" href="#favoris">{% trans 'Favoris' %}</a></li>
   <li><a data-toggle="tab" href="#network" />{% trans 'Mon Réseau' %}</a></li>
+  <li><a data-toggle="tab" href="#jobs" />{% trans 'Aides en attente' %}</a></li>
+  {% endif %}
 </ul>
 
 <div class="tab-content">
@@ -22,19 +26,25 @@
       <input id="user_id" value="{{ user_to_display.id }}" type="hidden"/>
       <input id="csrf_token" value="{{ csrf_token }}" type="hidden"/>
       <div class="row mt ">
-        <div class="col-sm-4"><!--left col-->
+        <div class="col-sm-6"><!--left col-->
 
           <div class="panel panel-default">
             <div class="panel-heading">
+
               <div class="text-right">
-                <span class="pull-left">
-                  {{user_to_display.get_full_name}}
-                </span>
-                {%  if request.user.id == user_to_display.id %}
-                <a href="{% url 'edit_profile' %}">
-                  {% bootstrap_icon "edit" %} {% trans 'Modifier' %}
-                </a>
-                {% endif %}
+                <div class="pull-left">
+                  <div class="media">
+                    <a class="media-left" href="#">
+                      <img class="img-circle" src="{% thumbnail user_to_display.photo 50x50 crop %}" />
+                    </a>
+                    <div class="media-body">
+                      <h4 class="media-heading">{{user_to_display.get_full_name}}
+                      </h4>
+                    </div>
+                  </div>
+                </div>
+
+
                 {% if request.user.id != user_to_display.id %}
 
                 {% if is_my_friend %}
@@ -51,26 +61,41 @@
                   <span class="glyphicon glyphicon glyphicon-user" alt="{% trans 'Ajouter à mon réseau' %}"> </span>
                 </a>
                 {% endif %}
+
+                {%  if request.user.id == user_to_display.id or request.user.is_superuser %}
+                <!-- TODO: Fix this shit -->
+                <a class="text-right" href="{% url 'edit_profile' user_to_display.id %}">
+                  {% bootstrap_icon "edit" %} {% trans 'Modifier' %}
+                </a>
+                {% endif %}
               </div>
             </div>
 
             <ul class="list-group">
-              <li class="list-group-item text-right"><span class="pull-left"><strong>{% trans "Date d'inscription" %}</strong></span> {{user_to_display.date_joined}}</li>
-              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Dernière connexion" %}</strong></span> empty</li>
-              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Nom" %}</strong></span> {{user_to_display.get_full_name}} </li>
-              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Email" %}</strong></span> {{user_to_display.email}}</li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong>{% trans "Date d'inscription" %}</strong></span> &nbsp; {{user_to_display.date_joined}}</li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Nom" %}</strong></span> &nbsp; {{user_to_display.get_full_name}} </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Email" %}</strong></span> &nbsp; {{user_to_display.email}}</li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Type de compte" %}</strong></span> &nbsp; {{user_to_display.get_account_type}}</li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Status" %}</strong></span> &nbsp; {{user_to_display.get_verbose_status}}</li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Telephone Fixe" %}</strong></span> &nbsp; {{user_to_display.phone_number}} </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "GSM" %}</strong></span> &nbsp; {{user_to_display.mobile_number}} </li>
             </ul>
 
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading"> {% trans "Données professionnelles" %} <i class="fa fa-link fa-1x"></i></div>
+            <ul class="list-group">
+
+              <li class="list-group-item text-right"><span class="pull-left"><strong>{% trans "Organization" %}</strong></span> <div> &nbsp; {{user_to_display.organization}} </div> </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong>{% trans "Profession" %}</strong></span> &nbsp; {{user_to_display.work}} </li>
+            </ul>
           </div>
 
           <div class="panel panel-default">
             <div class="panel-heading"> {% trans "Site web" %} <i class="fa fa-link fa-1x"></i></div>
             <div class="panel-body"><a href="http://bootply.com">care4care.com</a></div>
           </div>
-
-          <ul class="list-group">
-            <li class="list-group-item text-muted">{% trans "Activités" %} <i class="fa fa-dashboard fa-1x"></i></li>
-          </ul>
 
           <div class="panel panel-default">
             <div class="panel-heading"> {% trans "Réseaux sociaux" %}</div>
@@ -80,9 +105,9 @@
           </div>
 
         </div>
-
+        {% if request.user.id == user_to_display.id %}
         <!-- Emergency users -->
-        <div class="col-sm-4">
+        <div class="col-sm-6">
         <div class="panel panel-default">
           <div class="panel-heading">
             <div class="text-right">
@@ -102,6 +127,7 @@
           </div>
         </div>
       </div>
+      {% endif %}
 
       </div>
   </div>
@@ -109,7 +135,7 @@
   <div id="favoris" class="tab-pane fade ">
     <div class="row mt">
       {% if request.user.id == user_to_display.id %}
-      <div class="col-lg-4 col-sm-4">
+      <div class="col-lg-6 col-sm-6">
         <div class="panel panel-default">
           <div class="panel-heading">
             {% trans "Favoris" %}
@@ -125,7 +151,7 @@
               <tbody>
                 {% for personne in user_to_display.favorites.all %}
                 <tr>
-                  <td> {{ personne.get_full_name }} </td>
+                  <td> <a href="{% url 'user_profile' personne.id %}"> {{ personne.get_full_name }} </a></td>
                   <td>
                     <a href="{% url 'member_favorite' personne.id %}" class="pull-right remove_favorite_link" >
                       <li class="glyphicon glyphicon-remove"> </li>
@@ -143,7 +169,7 @@
 
   <div id="network" class="tab-pane fade">
     <div class="row mt">
-      <div class="col-lg-4 col-sm-4">
+      <div class="col-lg-6 col-sm-6">
         <div class="panel panel-default">
           <div class="panel-heading">
             {% trans "Mon réseau" %}
@@ -174,7 +200,29 @@
       </div>
     </div>
   </div>
+
+  <div id="jobs" class="tab-pane fade in active">
+    <div class="row mt">
+      {% show_demands request pending_offers %}
+    </div>
+  </div>
   {% endif %}
 </div>
 </div>
+
+<script>
+$(document).ready(function() {
+    // show active tab on reload
+    if (location.hash !== '') $('a[href="' + location.hash + '"]').tab('show');
+
+    // remember the hash in the URL without jumping
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+       if(history.pushState) {
+            history.pushState(null, null, '#'+$(e.target).attr('href').substr(1));
+       } else {
+            location.hash = '#'+$(e.target).attr('href').substr(1);
+       }
+    });
+});
+</script>
 {% endblock %}

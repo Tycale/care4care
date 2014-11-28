@@ -18,16 +18,16 @@
 
 <div class="row mt">
     <div class="col-lg-12">
-        <form action="." role="form" method="post">
+        <form action="." class="form-horizontal style-form" role="form" method="post">
             {% csrf_token %}
-            <div class="col-lg-6 col-sm-12 background-gris">
+            <div class="col-lg-12 col-sm-12 background-gris">
                 <div class="showback">
                     <h4 class="mb"> {% trans "Informations générales" %}</h4>
                     {% bootstrap_field form.category %}
-                    {% bootstrap_field form.branch %}
+
                     {% bootstrap_field form.date %}
                     {% bootstrap_field form.estimated_time %}
-                    {% bootstrap_field form.km %}
+                    {% bootstrap_field form.time %}
                     {% bootstrap_field form.description %}
                 </div>
             </div>
@@ -78,7 +78,7 @@ $(document).ready(function () {
 // instantiate the addressPicker suggestion engine (based on bloodhound)
 var addressPicker = new AddressPicker({
   map: {id: '#map', center: new google.maps.LatLng(50.846975, 4.351815699999975), zoom:15,},
-  marker: {visible: true, draggable: false,}
+  marker: {visible: true, draggable: false, scrollwheel: false,}
 });
 
 // instantiate the typeahead UI
@@ -100,8 +100,6 @@ $(addressPicker).on('addresspicker:selected', function (event, result) {
 });
 
 });
-
-
 </script>
 {{ form.media }}
 {% endblock %}

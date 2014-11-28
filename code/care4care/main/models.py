@@ -1,4 +1,4 @@
-from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from multiselectfield import MultiSelectField
 from django.db import models
@@ -6,6 +6,8 @@ from django.core import validators
 from django.conf import settings
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import UserManager as BaseUserManager
+from django.core.urlresolvers import reverse
+from easy_thumbnails.fields import ThumbnailerImageField
 
 import re
 
@@ -78,36 +80,40 @@ class MemberType:
     MEMBER_TYPES_GROUP = (
         (ALL, _("Tous")),
         (VERIFIED_MEMBER, _("Membre vérifié")),
-        (FAVORITE, _("Favoris (inclus le reseau personel)")),
+        (FAVORITE, _("Favoris (inclus le réseau personnel)")),
         )
+
+    VERBOSE_VM = _("Membre vérifié")
+    VERBOSE_VNM = _("Non-membre vérifié")
 
 
 class JobCategory:
-    visit_at_home = 1
-    accompany_someone = 2
-    transport_by_car = 3
-    shopping = 4
-    household = 5
-    handyman_jobs = 6
-    gardening_jobs = 7
-    pets_care = 8
-    personal_care = 9
-    administration = 10
-    other = 11
-    special = 12
+    VISIT_AT_HOME = 1
+    ACCOMPANY_SOMEONE = 2
+    TRANSPORT_BY_CAR = 3
+    SHOPPING = 4
+    HOUSEHOULD = 5
+    HANDYMAN_JOBS = 6
+    GARDENING_JOBS = 7
+    PETS_CARE = 8
+    PERSONAL_CARE = 9
+    ADMINISTRATION = 10
+    OTHER = 11
+    SPECIAL = 12
 
     JOB_CATEGORIES = ((
-        (visit_at_home, _("Visite à la maison")),
-        (accompany_someone, _("Tenir compagnie")),
-        (transport_by_car, _("Transport par voiture")),
-        (shopping, _("Shopping")),
-        (household,_("Garder des maisons")),
-        (handyman_jobs,_("Petit boulots manuels")),
-        (gardening_jobs,_("Jardinage")),
-        (pets_care,_("Garder des animaux")),
-        (administration,_("Administratif")),
-        (other,_("Autre")),
-        (special,_("Special ... :D")),
+        (VISIT_AT_HOME, _("Visite à la maison")),
+        (ACCOMPANY_SOMEONE, _("Tenir compagnie")),
+        (TRANSPORT_BY_CAR, _("Transport par voiture")),
+        (SHOPPING, _("Shopping")),
+        (HOUSEHOULD, _("Garder des maisons")),
+        (HANDYMAN_JOBS, _("Petits boulots manuels")),
+        (GARDENING_JOBS, _("Jardinage")),
+        (PETS_CARE, _("Garder des animaux")),
+        (PERSONAL_CARE, _("Soins personnels")),
+        (ADMINISTRATION, _("Administratif")),
+        (OTHER, _("Autre")),
+        (SPECIAL, _("Spécial ... :D")),
         ))
 
 BOOL_CHOICES = ((True, _('Oui')), (False, _('Non')))
@@ -122,25 +128,25 @@ class VerifiedUser(models.Model):
 
 
     # preference
-    work_with = models.ManyToManyField('User',related_name="verified_work_with")
+    work_with = models.ManyToManyField('User',related_name="verified_work_with", blank=True, null=True)
 
     # network management
-    favorites = models.ManyToManyField('User',related_name="verified_favorites")
-    personal_network = models.ManyToManyField('User', verbose_name="Votre reseau personnel",related_name="verified_personal_network")
+    favorites = models.ManyToManyField('User',related_name="verified_favorites", blank=True, null=True)
+    personal_network = models.ManyToManyField('User', verbose_name="Votre réseau personnel",related_name="verified_personal_network", blank=True, null=True)
 
     mail_preferences = models.IntegerField(choices=INFORMED_BY,
                                       default=INBOX, verbose_name=_("Recevoir mes messages par"))
     receive_help_from_who = models.IntegerField(choices=MemberType.MEMBER_TYPES_GROUP, default=MemberType.ALL,
                                       verbose_name=_("Recevoir des demandes et des offres de"))
-    offered_job = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Quels sont les tâches que vous souhaitez effectuer ?"), blank=True)
-    asked_job = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Quels sont les tâches dont vous avez besoin ?"), blank=True)
+    offered_job = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Quelles sont les tâches que vous souhaitez effectuer ?"), blank=True)
+    asked_job = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Quelles sont les tâches dont vous avez besoin ?"), blank=True)
 
     # TODO : Schedule time
 
     facebook = models.URLField(verbose_name="Lien (URL) de votre profil Facebook", blank=True)
 
     hobbies = models.TextField(verbose_name=_("Vos hobbies"), blank=True)
-    additional_info = models.TextField(verbose_name=_("Information supplémentaire"), blank=True)
+    additional_info = models.TextField(verbose_name=_("Informations supplémentaires"), blank=True)
 
 
 class CommonInfo(models.Model):
@@ -201,6 +207,7 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
     """
     email = models.EmailField(_("Adresse email"), unique=False)
     date_joined = models.DateTimeField(auto_now_add=True)
+    photo = ThumbnailerImageField(upload_to='photos/', blank=True)
 
     username = models.CharField(_("Nom d'utilisateur"), max_length=30, unique=True,
         validators=[
@@ -218,9 +225,9 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
     user_type = models.IntegerField(_("Type de compte"),choices=MemberType.MEMBER_TYPES,
                                       default=MemberType.MEMBER, help_text=_('Un member pourra aider ou être aidé alors qu\'un \
                                        non-membre est un professionnel qui s\'inscrira pour avoir accès aux données d\'un \
-                                       passiant. Veuillez choisir celui qui vous correspond'))
+                                       patient. Veuillez choisir celui qui vous correspond'))
 
-    how_found = MultiSelectField(choices=HOW_FOUND_CHOICES, verbose_name=_("Comment avez-vous entendu parlé de Care4Care ?"))
+    how_found = MultiSelectField(choices=HOW_FOUND_CHOICES, verbose_name=_("Comment avez-vous entendu parler de Care4Care ?"))
     birth_date = models.DateField(blank=True, null=True, verbose_name=_("Date de naissance"))
     credit = models.IntegerField(default=0, verbose_name=_("Crédit restant")) # in minuts
 
@@ -230,7 +237,7 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
 
     #non member
     organization = models.CharField(_("Organization"), max_length=100, blank=True)
-    work = models.CharField(_("Fonction"), max_length=100, blank=True)
+    work = models.CharField(_("Fonction"), max_length=100, blank=True, null=True)
 
     objects = UserManager()
 
@@ -243,8 +250,58 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
     def get_short_name(self):
         return self.first_name
 
+    def get_verbose_credit(self):
+        credit = self.credit
+        chunks = (
+            (60 * 24 * 365, ('%d année', '%d années')), #Yeah.. We never know. Maybe slaves will use this app.
+            (60 * 24 * 30, ('%d mois', '%d mois')),
+            (60 * 24 * 7, ('%d semaine', '%d semaines')),
+            (60 * 24, ('%d jour', '%d jours')),
+            (60, ('%d heure', '%d heures')),
+            (1, ('%d minute', '%d minutes'))
+        )
+        for i, (minuts, name) in enumerate(chunks):
+                count = credit // minuts
+                if count != 0:
+                    break
+        credit -= count * minuts
+        if count > 2:
+            result = (name[1] % count)
+        else :
+            result = (name[0] % count)
+        while i + 1 < len(chunks):
+            minuts2, name2 = chunks[i + 1]
+            count2 = credit // minuts2
+            if count2 != 0:
+                if count2 > 2:
+                    result += _(', ') + (name2[1] % count2)
+                else :
+                    result += _(', ') + (name2[0] % count2)
+            credit -= count2 * minuts2
+            i += 1
+        return result
+
+    def get_verbose_status(self):
+         return STATUS[self.status-1][1]
+
+    def get_account_type(self):
+        if self.is_superuser :
+            return _('superuser')
+        if not self.is_verified :
+            return MemberType.MEMBER_TYPES[self.user_type-1][1]
+        else :
+            if self.user_type == MemberType.MEMBER:
+                return MemberType.VERBOSE_VM
+            if self.user_type == MemberType.NON_MEMBER:
+                return MemberType.VERBOSE_VNM
+        return _('Inconnu')
+
     def __str__(self):
         return self.username
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('user_profile', (), {'user_id' : self.id})
 
 class Contact(CommonInfo):
     """
