@@ -2,13 +2,13 @@
 from selenium import selenium
 import unittest, time, re
 
-class Modifier le profil(unittest.TestCase):
+class ModifyProfile(unittest.TestCase):
     def setUp(self):
         self.verificationErrors = []
         self.selenium = selenium("localhost", 4444, "*chrome", "http://127.0.0.1:8000/")
         self.selenium.start()
     
-    def test_modifier le profil(self):
+    def test_modify_profile(self):
         sel = self.selenium
         sel.open("/")
         sel.click("//button[@type='button']")

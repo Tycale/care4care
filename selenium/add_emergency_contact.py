@@ -2,13 +2,13 @@
 from selenium import selenium
 import unittest, time, re
 
-class Ajouter un contact d'urgence(unittest.TestCase):
+class AjouterUnContactDUrgence(unittest.TestCase):
     def setUp(self):
         self.verificationErrors = []
         self.selenium = selenium("localhost", 4444, "*chrome", "http://127.0.0.1:8000/")
         self.selenium.start()
     
-    def test_ajouter un contact d'urgence(self):
+    def test_ajouter_un_contact_d_urgence(self):
         sel = self.selenium
         sel.open("/accounts/profile/1/")
         sel.click("link=Ajouter")

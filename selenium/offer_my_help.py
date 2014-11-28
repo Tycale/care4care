@@ -2,13 +2,13 @@
 from selenium import selenium
 import unittest, time, re
 
-class Offrir mon aide(unittest.TestCase):
+class OffrirMonAide(unittest.TestCase):
     def setUp(self):
         self.verificationErrors = []
         self.selenium = selenium("localhost", 4444, "*chrome", "http://127.0.0.1:8000/")
         self.selenium.start()
     
-    def test_offrir mon aide(self):
+    def test_offrir_mon_aide(self):
         sel = self.selenium
         sel.open("/")
         sel.click("//section[@id='main-content']/section/div/div[2]/button")
