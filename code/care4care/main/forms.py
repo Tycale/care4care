@@ -71,7 +71,7 @@ class ProfileManagementForm(forms.ModelForm):
         model = User
         fields = ['email', 'phone_number', 'status', 'languages', 'location', 'mail_preferences', 'asked_job', 'offered_job', \
             'latitude', 'longitude', 'facebook', 'additional_info', 'have_car', \
-            'can_wheelchair', 'drive_license', 'hobbies', 'photo']
+            'can_wheelchair', 'drive_license', 'hobbies', 'photo', 'receive_help_from_who']
         widgets = {
             'latitude': forms.HiddenInput,
             'longitude': forms.HiddenInput,
