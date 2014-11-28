@@ -84,13 +84,25 @@ def manage_profile(request):
 
     return render(request, 'profile/user_profile.html',locals())
 
+@user_passes_test(lambda u: not u.is_verified)
+@login_required
+def verified_member_demand_view_1(request):
+    user = request.user
+    form = ProfileManagementForm(instance=user)
+    if request.POST :
+        form = ProfileManagementForm(request.POST)
+        if form.is_valid():
+            form.save
+            messages.add_message(request, messages.INFO, _('Modification sauvegardée'))
+            return redirect('verified_member_demand_2')
+    return render(request,'verified/verified_member_demand_1.html',locals())
+
 
 @user_passes_test(lambda u: not u.is_verified)
 @login_required
-def verified_member_demand_view(request):
+def verified_member_demand_view_2(request):
     user = request.user
     form = VerifiedInformationForm()
-
     try:
         old_vi = VerifiedInformation.objects.get(user=user)
         form = VerifiedInformationForm(instance=old_vi)
@@ -110,7 +122,8 @@ def verified_member_demand_view(request):
             messages.add_message(request, messages.INFO, _('Modification sauvegardée'))
             return redirect('home')
 
-    return render(request,'verified/verified_member_demand.html',locals())
+    
+    return render(request,'verified/verified_member_demand_2.html',locals())
 
 def statistics(request):
     return render(request, 'statistics/statistics.html', locals())
@@ -153,7 +166,6 @@ def member_personal_network(request, user_id):
 
 
 # Classes views
-
 class EditProfileView(UpdateView, SuccessMessageMixin):
     """ Return the edit page for the current logged user"""
     form_class = ProfileManagementForm
