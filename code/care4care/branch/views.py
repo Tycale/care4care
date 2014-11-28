@@ -115,10 +115,16 @@ class NeedHelpView(CreateView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(NeedHelpView, self).dispatch(*args, **kwargs)
-    
+
+    def get_context_data(self, **kwargs):
+        context = super(NeedHelpView, self).get_context_data(**kwargs)
+        context['user'] = User.objects.get(pk=self.kwargs['user_id'])
+        context['branch'] = Branch.objects.get(pk=self.kwargs['branch_id'])
+        return context
+
     def form_valid(self, form):
         form.instance.branch = Branch.objects.get(pk=self.kwargs['branch_id'])
-        form.instance.receiver = self.request.user
+        form.instance.receiver = User.objects.get(pk=self.kwargs['user_id'])
         form.instance.real_time = form.instance.estimated_time
         return super(NeedHelpView, self).form_valid(form)
     

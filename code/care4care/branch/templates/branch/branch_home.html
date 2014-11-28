@@ -86,8 +86,8 @@
 </div>
 
 <div class="row mt">
-  <div class="col-md-4 col-md-offset-2"> <a class="btn btn-primary btn-lg" href="{% url "need_help" branch_id=branch.id slug=branch.slug %}">{% trans "J'ai besoin d'aide" %}</a> </div>
-  <div class="col-md-4 col-md-offset-2"><a class="btn btn-primary btn-lg" href="{% url "offer_help" branch_id=branch.id slug=branch.slug %}">{% trans "Offrir mon aide" %}</a></div>
+  <div class="col-md-4 col-md-offset-2"> <a class="btn btn-primary btn-lg" href="{% url "need_help" branch_id=branch.id slug=branch.slug user_id=request.user.id %}">{% trans "J'ai besoin d'aide" %}</a> </div>
+  <div class="col-md-4 col-md-offset-2"><a class="btn btn-primary btn-lg" href="{% url "offer_help" branch_id=branch.id slug=branch.slug user_id=request.user.id %}">{% trans "Offrir mon aide" %}</a></div>
 </div>
 
 <div class="row mt">

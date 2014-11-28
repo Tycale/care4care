@@ -1,4 +1,5 @@
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ugettext as __
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from multiselectfield import MultiSelectField
 from django.db import models
@@ -11,10 +12,12 @@ from easy_thumbnails.fields import ThumbnailerImageField
 
 import re
 
-# TODO: complete
 HOW_FOUND_CHOICES = (
-    ('amis', _("Mes amis m'en ont parlés")),
-    ('pubs', _("J'ai vu de la pub")),
+    ('internet', _("Internet")),
+    ('show', _("Présentation, brochures, flyers, ...")),
+    ('branch', _("Par une branche locale")),
+    ('member', _("Un autre membre")),
+    ('friends', _("Des amis ou de la famille m'en ont parlés")),
     ('other', _("Autre")),
     )
 
@@ -270,6 +273,8 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
             (60, ('%d heure', '%d heures')),
             (1, ('%d minute', '%d minutes'))
         )
+        if credit < 0:
+            return str('<span class="text-danger">' + str(credit) + __(' minute(s)') + '</span>')
         for i, (minuts, name) in enumerate(chunks):
                 count = credit // minuts
                 if count != 0:

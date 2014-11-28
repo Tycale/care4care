@@ -8,7 +8,7 @@ from django.contrib.sites.models import RequestSite
 from django.contrib.sites.models import Site
 from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
-from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm
+from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm, VerifiedProfileForm
 from main.models import User, VerifiedInformation, EmergencyContact
 from branch.models import Job
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -89,9 +89,9 @@ def manage_profile(request):
 @login_required
 def verified_profile_view(request):
     user = request.user
-    form = ProfileManagementForm(instance=user)
+    form = VerifiedProfileForm(instance=user)
     if request.POST :
-        form = ProfileManagementForm(request.POST)
+        form = VerifiedProfileForm(request.POST)
         if form.is_valid():
             form.save
             messages.add_message(request, messages.INFO, _('Modification sauvegardée'))
