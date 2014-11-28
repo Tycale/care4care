@@ -35,7 +35,7 @@ class NeedHelpForm(forms.ModelForm):
 
     class Meta:
         model = Job
-        fields = ['description', 'estimated_time', 'category', 'date', 'time', 'location', 'latitude', 'longitude']
+        fields = ['description', 'estimated_time', 'category', 'date', 'time', 'location', 'latitude', 'longitude', 'title']
         widgets = {
             'latitude': forms.HiddenInput,
             'longitude': forms.HiddenInput,
