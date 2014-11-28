@@ -1,7 +1,7 @@
 {% load i18n %}
 <div class="panel panel-default">
   <div class="panel-heading">
-    {% trans "Mon réseau" %}
+    {% trans "Utilisateurs ignorés" %}
   </div>
   <div class="panel-body">
     <table class="table table-striped table-hover">
@@ -12,11 +12,11 @@
         </tr>
       </thead>
       <tbody>
-        {% for personne in network %}
-        <tr id="network_{{personne.id}}">
+        {% for personne in ignore_list %}
+        <tr id="ignored_{{personne.id}}">
           <td><a href="{% url 'user_profile' personne.id %}"> {{ personne.get_full_name }} </a> </td>
           <td>
-            <a href="{{ personne.id }}" class="pull-right" id="remove_network_link" >
+            <a href="{{ personne.id }}" class="pull-right" id="remove_ignored_link" >
               <li class="glyphicon glyphicon-remove">  </li>
             </a>
           </td>
@@ -27,13 +27,14 @@
   </div>
 </div>
 <script type="application/javascript">
-var remove_network_from_list_success = function(id_remove){
-  $("#network_" + id_remove).remove();
+var remove_ignored_from_list_success = function(id_remove){
+  $("#ignored_" + id_remove).remove();
 }
+
 $(document).ready(function(){
-  $('#remove_network_link').click(function (event) {
+  $('#remove_ignored_link').click(function (event) {
     event.preventDefault();
-    remove_network($(this).attr("href"), remove_network_from_list_success);
+    remove_ignored($(this).attr("href"), remove_ignored_from_list_success);
   });
 });
 </script>

@@ -26,7 +26,7 @@
 
         <div class="btn-group-vertical" role="group">
         {% for mbranch in request.user.membership.all %}
-        <a href="{% url "need_help" branch_id=mbranch.branch.id slug=mbranch.branch.slug user_id=request.user.id %}" class="btn btn-primary btn-lg btn-block">{{ mbranch.branch }}</a> 
+        <a href="{% url "need_help" branch_id=mbranch.branch.id slug=mbranch.branch.slug user_id=request.user.id %}" class="btn btn-primary btn-lg btn-block">{{ mbranch.branch }}</a>
         {% endfor %}
         </div>
 
@@ -54,7 +54,7 @@
 
         <div class="btn-group-vertical" role="group">
         {% for mbranch in request.user.membership.all %}
-        <a href="{% url "offer_help" branch_id=mbranch.branch.id slug=mbranch.branch.slug user_id=request.user.id %}" class="btn btn-primary btn-lg btn-block">{{ mbranch.branch }}</a> 
+        <a href="{% url "offer_help" branch_id=mbranch.branch.id slug=mbranch.branch.slug user_id=request.user.id %}" class="btn btn-primary btn-lg btn-block">{{ mbranch.branch }}</a>
         {% endfor %}
         </div>
 
