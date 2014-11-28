@@ -1,21 +1,22 @@
 {% extends "base.html" %}
-{% load bootstrap3 %}{% load i18n %}{% load staticfiles %}{% load thumbnail %}
+{% load bootstrap3 %}{% load i18n %}{% load staticfiles %}{% load thumbnail %}{% load jobs_extra %}
 
 {% block title %}{% trans "Gestion du profil" %}{% endblock %}
 
 
 {% block extra_head %}
-<script src="{% static "js/user-profile-api.js" %}"></script>
+<script src="{% static " js/user-profile-api.js" %}"></script>
 {% endblock %}
 
 {% block content %}
 <div class="mt ">
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs" id="myTab">
 
   <li class="active"><a data-toggle="tab" href="#profile">{% trans 'Profile' %}</a></li>
   {% if request.user.id == user_to_display.id %}
   <li><a data-toggle="tab" href="#favoris">{% trans 'Favoris' %}</a></li>
   <li><a data-toggle="tab" href="#network" />{% trans 'Mon Réseau' %}</a></li>
+  <li><a data-toggle="tab" href="#jobs" />{% trans 'Aides en attente' %}</a></li>
   {% endif %}
 </ul>
 
@@ -30,43 +31,44 @@
           <div class="panel panel-default">
             <div class="panel-heading">
 
+              <div class="text-right">
+                <div class="pull-left">
                   <div class="media">
                     <a class="media-left" href="#">
                       <img class="img-circle" src="{% thumbnail user_to_display.photo 50x50 crop %}" />
                     </a>
-
-                    {%  if request.user.id == user_to_display.id or request.user.is_superuser %}
-                    <!-- TODO: Fix this shit -->
-                    <a class="text-right" href="{% url 'edit_profile' user_to_display.id %}">
-                      {% bootstrap_icon "edit" %} {% trans 'Modifier' %}
-                    </a>
-                    {% endif %}
-
                     <div class="media-body">
-                      <h4 class="media-heading">{{user_to_display.get_full_name}} 
+                      <h4 class="media-heading">{{user_to_display.get_full_name}}
                       </h4>
-                      
-                      {% if request.user.id != user_to_display.id %}
-
-                      {% if is_my_friend %}
-                      <a href="#" class="btn btn-default btn-sm" id="add_favorite_link">
-                        <span class="glyphicon glyphicon glyphicon-star" id="is_favorite_star">  </span> {% trans 'favoris' %}
-                      </a>
-                      {% else %}
-                      <a href="#" class="btn btn-default btn-sm" id="add_favorite_link">
-                        <span class="glyphicon glyphicon glyphicon-star-empty" id="is_favorite_star">  </span> {% trans 'favoris' %}
-                      </a>
-                      {% endif %}
-
-                      <a href="#" >
-                        <span class="glyphicon glyphicon glyphicon-user" alt="{% trans 'Ajouter à mon réseau' %}"> </span>
-                      </a>
-                      {% endif %}
                     </div>
                   </div>
+                </div>
 
 
-            
+                {% if request.user.id != user_to_display.id %}
+
+                {% if is_my_friend %}
+                <a href="#" class="btn btn-default btn-sm" id="add_favorite_link">
+                  <span class="glyphicon glyphicon glyphicon-star" id="is_favorite_star">  </span> {% trans 'favoris' %}
+                </a>
+                {% else %}
+                <a href="#" class="btn btn-default btn-sm" id="add_favorite_link">
+                  <span class="glyphicon glyphicon glyphicon-star-empty" id="is_favorite_star">  </span> {% trans 'favoris' %}
+                </a>
+                {% endif %}
+
+                <a href="#" >
+                  <span class="glyphicon glyphicon glyphicon-user" alt="{% trans 'Ajouter à mon réseau' %}"> </span>
+                </a>
+                {% endif %}
+
+                {%  if request.user.id == user_to_display.id or request.user.is_superuser %}
+                <!-- TODO: Fix this shit -->
+                <a class="text-right" href="{% url 'edit_profile' user_to_display.id %}">
+                  {% bootstrap_icon "edit" %} {% trans 'Modifier' %}
+                </a>
+                {% endif %}
+              </div>
             </div>
 
             <ul class="list-group">
@@ -198,7 +200,29 @@
       </div>
     </div>
   </div>
+
+  <div id="jobs" class="tab-pane fade in active">
+    <div class="row mt">
+      {% show_demands request pending_offers %}
+    </div>
+  </div>
   {% endif %}
 </div>
 </div>
+
+<script>
+$(document).ready(function() {
+    // show active tab on reload
+    if (location.hash !== '') $('a[href="' + location.hash + '"]').tab('show');
+
+    // remember the hash in the URL without jumping
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+       if(history.pushState) {
+            history.pushState(null, null, '#'+$(e.target).attr('href').substr(1));
+       } else {
+            location.hash = '#'+$(e.target).attr('href').substr(1);
+       }
+    });
+});
+</script>
 {% endblock %}
