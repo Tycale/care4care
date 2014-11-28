@@ -53,5 +53,5 @@ class NeedHelpForm(forms.ModelForm):
             'latitude': forms.HiddenInput,
             'longitude': forms.HiddenInput,
             'location': forms.HiddenInput,
-            'date' : DateTimePicker(options={"format": "DD/MM/YYYY", "pickTime": False, 'language': 'fr'}),
+            'date' : DateTimePicker(options={"pickTime": False,}),
         }

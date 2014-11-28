@@ -60,7 +60,7 @@ class Job(models.Model):
     estimated_time = models.IntegerField(verbose_name=_("Temps estimé (en minutes)"))
     real_time = models.IntegerField(verbose_name=_("Temps réel (en minutes)"), blank=True, null=True)
     category = models.IntegerField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Type d'aide"))
-    date = models.DateTimeField(verbose_name=_("Date (DD/MM/YYYY)"), help_text=_('La date doit être indiquée sous le format DD/MM/YYYY où DD est le jour, MM est le mois et YYYY est l\'année.'))
+    date = models.DateTimeField(verbose_name=_("Date"))
     time = MultiSelectField(choices=TIME_CHOICES, verbose_name=_("Heure(s) possible(s)"), blank=False, help_text=_('Selectionnez les heures qui vous conviennent'))
     km = models.IntegerField(verbose_name=_("km"), blank=True, null=True)
     location = models.CharField(_('Adresse'), max_length=256, null=True, blank=True)
