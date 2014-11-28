@@ -2455,3 +2455,7 @@ div.top-menu > ul > li > button > a {
 table.rowlink > tbody > tr {
     cursor: pointer;
 }
+
+.profile-head {
+    min-height: 70px;
+}
