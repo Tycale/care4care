@@ -373,7 +373,6 @@ class UpdateEmergencyContact(UpdateView):
         return User.objects.get(pk=self.kwargs['user_id']).get_absolute_url()
 
 
-<<<<<<< HEAD
 @login_required
 def similar_jobs(request):
     return render(request, 'seek_similar_jobs/main.html')
@@ -397,7 +396,6 @@ def similar_offers(request):
         result.extend(offers.filter(branch=demand.branch, date=demand.date, category=demand.category))
 
     return render(request, 'seek_similar_jobs/main.html',locals())
-=======
 
 ### Statistics ###
 
@@ -407,4 +405,3 @@ def statistics(request):
 
 def get_registrated_users_json(request):
     return HttpResponse(Statistics.get_users_registrated_json(), content_type="application/json")
->>>>>>> 202b53fc9ca4c53d46b67dafaca93bf77c2d9d66
