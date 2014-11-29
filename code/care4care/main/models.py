@@ -153,12 +153,18 @@ class VerifiedUser(models.Model):
     additional_info = models.TextField(verbose_name=_("Informations supplémentaires"), blank=True, max_length= 300)
 
     def get_verbose_license(self):
+        if not self.drive_license:
+            return ''
         return ', '.join([str(l[1]) for l in DRIVER_LICENSE if (str(l[0]) in self.drive_license )])
 
     def get_verbose_offered_job(self):
+        if not self.offered_job:
+            return ''
         return ', '.join([str(l[1]) for l in JobCategory.JOB_CATEGORIES if (str(l[0]) in self.offered_job )])
 
     def get_verbose_asked_job(self):
+        if not self.asked_job:
+            return ''
         return ', '.join([str(l[1]) for l in JobCategory.JOB_CATEGORIES if (str(l[0]) in self.asked_job )])
 
     def get_verbose_mail(self):
@@ -187,6 +193,8 @@ class CommonInfo(models.Model):
         return self.first_name
 
     def get_verbose_languages(self):
+        if not self.languages:
+            return ''
         return ', '.join([str(l[1]) for l in settings.LANGUAGES if (l[0] in self.languages )])
 
     class Meta:
