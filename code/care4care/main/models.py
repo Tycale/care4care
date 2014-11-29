@@ -375,7 +375,7 @@ class Color:
     GREEN_RGB  = [46, 217, 138]
     ORANGE_RGB = [255, 169, 0]
 
-    def get_rgba (my_rgb, a):
+    def get_rgba(my_rgb, a):
         rgb_values = ','.join(map(str, my_rgb))
         return 'rgba('+rgb_values+', '+str(a)+')'
 
@@ -385,7 +385,7 @@ class Statistics:
     Statistics class
     """
 
-    def get_users_registrated_json ():
+    def get_users_registrated_json():
         # TODO: get stats from database
         response_data = {}
         response_data['labels'] = [
