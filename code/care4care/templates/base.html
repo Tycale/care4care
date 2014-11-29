@@ -64,7 +64,7 @@
                             <span class="badge bg-theme">4</span>
                         </a>
                         <ul class="dropdown-menu extended tasks-bar">
-                            <div class="notify-arrow notify-arrow-green"></div>
+                            <div class="notify-arrow notify-arrow-white"></div>
                             <li>
                                 <p class="green">You have 4 pending tasks</p>
                             </li>
@@ -138,7 +138,7 @@
                             {% endif %}
                         </a>
                         <ul class="dropdown-menu extended inbox">
-                            <div class="notify-arrow notify-arrow-green"></div>
+                            <div class="notify-arrow notify-arrow-white"></div>
                             <li><span> <a href="{% url 'postman_inbox' %}"> {% trans "Inbox" %}{% if unread_count %} <strong>({{ unread_count }})</strong>{% endif %}</a> </span></li>
                             <li><span><a href="{% url 'postman_sent' %}"> {% trans "Sent Messages" %}</a></span></li>
                             <li><span><a href="{% url 'postman_write' %}"> {% trans "Write" %}</a></span></li>
