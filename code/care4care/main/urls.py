@@ -12,5 +12,6 @@ urlpatterns = patterns(
 
 	url(r'^statistics/$', 'main.views.statistics', name='stats'),
     url(r'^messages/', include('main.urls_postman')),
+    url(r'^seek_jobs/', include('main.urls_seek_jobs')),
 
 )

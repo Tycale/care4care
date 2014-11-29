@@ -24,6 +24,7 @@ import json
 import os
 import sys
 from os.path import abspath, dirname
+import datetime
 
 from django.utils import timezone
 from django.views.generic.edit import UpdateView
@@ -334,3 +335,28 @@ class UpdateEmergencyContact(UpdateView):
 
     def get_success_url(self):
         return User.objects.get(pk=self.kwargs['user_id']).get_absolute_url()
+
+
+@login_required
+def similar_jobs(request):
+    return render(request, 'seek_similar_jobs/main.html')
+
+@login_required
+def similar_demands(request):
+    user = request.user
+    now = datetime.datetime.now()
+    user_offers = Job.objects.filter(donor = user, receiver__isnull = True, date__gte=now)
+
+    return render(request, 'seek_similar_jobs/main.html',locals())
+
+@login_required
+def similar_offers(request):
+    user = request.user
+    now = datetime.datetime.now()
+    user_demands = Job.objects.filter(donor__isnull = True, receiver = user, date__gte=now)
+    offers = Job.objects.filter(receiver__isnull = True, date__gte=now)
+    result = []
+    for demand in user_demands:
+        result.extend(offers.filter(branch=demand.branch, date=demand.date, category=demand.category))
+
+    return render(request, 'seek_similar_jobs/main.html',locals())

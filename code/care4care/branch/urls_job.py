@@ -14,5 +14,4 @@ urlpatterns = patterns('',
                        url(r'^details/(?P<job_id>\d+)/$',
                             DetailJobView.as_view(),
                            name='see_help'),
-                       #
                        )
