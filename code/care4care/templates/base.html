@@ -532,7 +532,7 @@
   </section>
 
     <!-- js placed at the end of the document so the pages load faster -->
-    <script src="{% static "js/bootstrap.min.js" %}"></script>
+    {% block bootstrapjs %}<script src="{% static "js/bootstrap.min.js" %}"></script>{% endblock %}
     <script src="{% static "js/jquery.cookie.js" %}"></script>
     <script src="{% static "js/jquery.hoverIntent.minified.js" %}"></script>
     <script class="include" type="text/javascript" src="{% static "js/jquery.dcjqaccordion.2.7.js" %}"></script>
@@ -550,9 +550,11 @@
 
     <script type="text/javascript" src="{% static "js/jquery.gritter.min.js" %}"></script>
 
+    {% comment %}
     <!--script for this page-->
-  <script src="{% static "js/sparkline-chart.js" %}"></script>
-  <script src="{% static "js/zabuto_calendar.js" %}"></script>
+    <script src="{% static "js/sparkline-chart.js" %}"></script>
+    <script src="{% static "js/zabuto_calendar.js" %}"></script>
+    {% endcomment %}
 
   <script type="text/javascript">
 
