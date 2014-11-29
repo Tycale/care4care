@@ -85,7 +85,7 @@ def manage_profile(request):
     print(user_to_display.ignore_list.all())
     return render(request, 'profile/user_profile.html',locals())
 
-@user_passes_test(lambda u: not u.is_verified)
+"""@user_passes_test(lambda u: not u.is_verified)
 @login_required
 def verified_profile_view(request):
     user = request.user
@@ -93,10 +93,32 @@ def verified_profile_view(request):
     if request.POST :
         form = VerifiedProfileForm(request.POST)
         if form.is_valid():
-            form.save
+            form.save()
             messages.add_message(request, messages.INFO, _('Modification sauvegardée'))
             return redirect('verified_documents')
-    return render(request,'verified/verified_profile.html',locals())
+    return render(request,'verified/verified_profile.html',locals())"""
+
+
+# Classes views
+class VerifiedProfileView(UpdateView, SuccessMessageMixin):
+    """ Return the edit page for the current logged user"""
+    form_class = ProfileManagementForm
+    model = User
+    template_name = 'verified/verified_profile.html'
+    success_message = _('Profil modifié avec succès !')
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        obj = self.get_object()
+        if obj.id != self.request.user.id and not self.request.user.is_superuser :
+            return redirect(obj.get_absolute_url())
+        return super(VerifiedProfileView, self).dispatch(*args, **kwargs)
+
+    def get_object(self, queryset=None):
+        return User.objects.get(pk=self.kwargs['user_id'])
+
+    def get_success_url(self):
+        return reverse('verified_documents')
 
 
 @user_passes_test(lambda u: not u.is_verified)
@@ -129,16 +151,6 @@ def verified_documents_view(request):
 @login_required
 def verified_display_view(request,user_id):
     user_to_display = get_object_or_404(User, pk=user_id)
-    if (user_to_display.drive_license):
-        driving_license = user_to_display.get_verbose_license()
-    if (user_to_display.languages):
-        vlanguages = user_to_display.get_verbose_languages()
-    if (user_to_display.offered_job):
-        voffered_job = user_to_display.get_verbose_offered_job()
-    if (user_to_display.asked_job):
-        vasked_job = user_to_display.get_verbose_asked_job()
-    vmail = user_to_display.get_verbose_mail()
-    vreceive = user_to_display.get_verbose_receive()
     return render(request, 'verified/verified_display.html', locals())
 
 def statistics(request):

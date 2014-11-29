@@ -169,7 +169,7 @@
                     <li>
                       <span  class="credit-text text-info">{% trans "Type de compte :" %}</span> {{ request.user.get_account_type }}
                       {% if not request.user.is_verified %}
-                      <a href="{% url 'verified_profile' %}"> <i class="fa fa-caret-square-o-up"></i></a>
+                      <a href="{% url 'verified_profile' request.user.id %}"> <i class="fa fa-caret-square-o-up"></i></a>
                       {% endif %}
                     </li>
                   </ul>
@@ -189,7 +189,7 @@
                     <li><a href="{% url 'profile' %}">
                     {% bootstrap_icon 'user' %} &nbsp; {% trans "Mon Profil" %}</a>
                     {% if not request.user.is_verified %}
-                      <a href="{% url 'verified_profile' %}">
+                      <a href="{% url 'verified_profile' user_id=request.user.id%}">
                       {% bootstrap_icon 'star' %} &nbsp; {% trans "Devenir vérifié" %}</a>
                     {% endif %}
                    </li>
