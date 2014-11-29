@@ -48,7 +48,7 @@ in the INSTALLED_APPS setting.
                         </thead>
                         <tbody data-link='row'>{% for message in pm_messages %}
                             <tr>
-                                <td class="rowlink-skip" onclick="selectTd(this)"><input type="checkbox" {% if by_conversation and message.thread_id %}name="tpks" value="{{ message.thread_id }}"{% else %}name="pks" value="{{ message.pk }}"{% endif %} /></td>
+                                <td class="rowlink-skip"><input type="checkbox" {% if by_conversation and message.thread_id %}name="tpks" value="{{ message.thread_id }}"{% else %}name="pks" value="{{ message.pk }}"{% endif %} /></td>
                                 <td>{% if message.is_new %}<strong>{% endif %}{% if message.is_replied %}<em>{% endif %}
                                             {% block pm_subject %}
                                             <a href="{% if by_conversation and message.thread_id %}{% url 'postman_view_conversation' message.thread_id %}{% else %}{{message.get_absolute_url }}{% endif %}?next={{ current_url|urlencode }}">
@@ -85,10 +85,19 @@ in the INSTALLED_APPS setting.
 
 {% block extra_footer %}
 <script type="text/javascript">
-    function selectTd(row)
-{
-    var firstInput = row.getElementsByTagName('input')[0];
-    firstInput.checked = !firstInput.checked;
-}
+$('td').click(function(ev){
+        if (ev.target.nodeName === "INPUT"){
+            return;
+        }
+
+        var cb = $(this).parent('tr').find(':checkbox').get(0);
+      
+        if ($(cb).is(':checked')){
+            $(cb).removeAttr('checked');
+        }else {
+            $(cb).attr('checked','checked');
+
+        }
+    });
 </script>
 {% endblock %}

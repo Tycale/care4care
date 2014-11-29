@@ -14,48 +14,20 @@
 
 {% block content %}
 
-<h3> {% trans "Offrir de l'aide pour " %}{{ user.get_full_name }}{% trans " dans la branche "%}{{ branch }}</h3>
+<h3>{{ user.get_full_name }} {% trans "offre de l'aide dans la branche"%} {{ branch }}</h3>
 
 <div class="row mt">
     <div class="col-lg-12">
         <form action="." class="form-horizontal style-form" role="form" method="post">
             {% csrf_token %}
 
-            {% bootstrap_form_errors form %}
-
             <div class="col-lg-12 col-sm-12 background-gris">
                 <div class="showback">
                     <h4 class="mb"> {% trans "Informations générales" %}</h4>
-                    {% bootstrap_field form.title %}
-                    {% bootstrap_field form.category %}
-
-                    {% bootstrap_field form.date %}
-                    {% bootstrap_field form.time %}
-
-                    {% bootstrap_field form.estimated_time %}
-                    {% bootstrap_field form.receive_help_from_who %}
-                    {% bootstrap_field form.description %}
+                    {% bootstrap_form form %}
                 </div>
             </div>
 
-            <div class="col-sm-12 background-gris">
-              <div class="showback">
-              <h4 class="mb">{% trans "Adresse" %}</h4>
-              <div class="row">
-                <div class="col-lg-6">
-                  <input id="id_location_input" class="typeahead form-control" type="text" placeholder="{% trans "Entrez votre adresse"%}" value="{% if form.location.value %}{{ form.location.value }}{% else %}{% if user.location %}{{ user.location }}{% endif %}{% endif %}">
-                </div>
-                <div class="col-lg-6">
-                  <div id="map" style="min-height:300px;"></div>
-                  <br />
-                  <div class="alert alert-info"><b>{% trans "Information:"%}</b> {% trans "L'emplacement sur la carte peut être approximatif" %}</div>
-                </div>
-              </div>
-              {% bootstrap_field form.location %}
-              {% bootstrap_field form.latitude %}
-              {% bootstrap_field form.longitude %}
-              </div>
-            </div>
 
             <div class="col-sm-12">
             {% buttons %}
@@ -78,34 +50,5 @@
 
 
 {% block extra_footer %}
-<script>
-$(document).ready(function () {
-// https://github.com/sgruhier/typeahead-addresspicker
-// instantiate the addressPicker suggestion engine (based on bloodhound)
-var addressPicker = new AddressPicker({
-  map: {id: '#map', center: new google.maps.LatLng({% if form.latitude.value %}'{{ form.latitude.value }}'{% else %}{% if user.latitude %}'{{user.latitude}}'{% else %}'50.846975'{% endif %}{% endif %}, {% if form.longitude.value %}'{{ form.longitude.value }}'{% else %}{% if user.longitude %}'{{user.longitude}}'{% else %}'4.351815699999975'{% endif %}{% endif %}), zoom:15, scrollwheel: false},
-  marker: {visible: true, draggable: false,}
-});
-
-// instantiate the typeahead UI
-$('#id_location_input').typeahead(null, {
-  displayKey: 'description',
-  source: addressPicker.ttAdapter()
-});
-
-// Bind some event to update map on autocomplete selection
-$('#id_location_input').bind("typeahead:selected", addressPicker.updateMap);
-$('#id_location_input').bind("typeahead:cursorchanged", addressPicker.updateMap);
-
-addressPicker.bindDefaultTypeaheadEvent($('#id_location_input'))
-
-$(addressPicker).on('addresspicker:selected', function (event, result) {
-  $('#id_latitude').val(result.lat());
-  $('#id_longitude').val(result.lng());
-  $('#id_location').val($('#id_location_input').typeahead('val'));
-});
-
-});
-</script>
 {{ form.media }}
 {% endblock %}

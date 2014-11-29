@@ -12,18 +12,16 @@
             {% if show_branch %}
             <th> {% trans "Branch" %}</th>
             {% endif %}
-            <th> {% trans "Titre" %}</th>
             <th> {% trans "Date" %}</th>
           </tr>
         </thead>
         <tbody data-link="row" data-target="a.mainlink">
         {% for offer in offers %}
         <tr>
-          <td>{{ offer.get_verbose_category }}</td>
+          <td><a href="{% url 'see_help' branch_id=offer.branch.id slug=offer.branch.slug job_id=offer.id %}" class="mainlink">{{ offer.get_verbose_category }}</a></td>
           {% if show_branch %}
           <td> {{ offer.branch }} </td>
           {% endif %}
-          <td><a href="{% url 'see_help' branch_id=offer.branch.id slug=offer.branch.slug job_id=offer.id %}" class="mainlink"> {{ offer.title }}</a></td>
 
           <td> {{ offer.date | date:'l d M y' }}</td>
           

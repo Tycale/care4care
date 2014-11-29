@@ -68,16 +68,9 @@ class OfferHelpForm(forms.ModelForm):
             raise forms.ValidationError(_("Veuillez choisir une date dans le futur."))
         return date
 
-    def clean_estimated_time(self):
-        est = self.cleaned_data.get('estimated_time')
-        if est <= 0:
-            raise forms.ValidationError(_("Le temps estimé doit être plus grand que 0 minute."))
-        return est
-
-
     class Meta:
         model = Job
-        fields = ['description', 'estimated_time', 'category', 'date', 'time', 'location', 'latitude', 'longitude', 'title', 'receive_help_from_who']
+        fields = ['category', 'date', 'time', 'receive_help_from_who',]
         widgets = {
             'latitude': forms.HiddenInput,
             'longitude': forms.HiddenInput,
