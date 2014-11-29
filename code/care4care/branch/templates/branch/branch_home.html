@@ -85,6 +85,41 @@
     </div>
 </div>
 
+{% if vdemands %}
+<div class="row mt">
+    <div class="col-lg-12">
+
+        <div class="content-panel">
+            <h4><i class="fa fa-angle-right"></i> {% trans "Demande en attente" %}</h4>
+
+            <table class="table table-striped table-advance table-hover rowlink">
+                  
+                  
+                <thead>
+                <tr>
+                    <th><i class="fa fa-user"></i> {% trans "Utilisateur" %}</th>
+                    <th><i class="fa fa-bookmark"></i> {% trans "Nom complet" %}</th>
+                    <th><i class="fa fa-star"></i> {% trans "Date" %}</th>
+                </tr>
+                </thead>
+                <tbody data-link='row'>
+                    {% for demands in vdemands %}           
+                    <tr>
+                        <a href="#">
+                        <td>{{demands.user}}</td>
+                        <td>{{demands.user.get_full_name }}</td>
+                        <td>{{demands.date}}</td>
+                        </a>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+{% endif %}
+
 <div class="row mt">
   <div class="col-md-4 col-md-offset-2"> <a class="btn btn-primary btn-lg" href="{% url "need_help" branch_id=branch.id slug=branch.slug user_id=request.user.id %}">{% trans "J'ai besoin d'aide" %}</a> </div>
   <div class="col-md-4 col-md-offset-2"><a class="btn btn-primary btn-lg" href="{% url "offer_help" branch_id=branch.id slug=branch.slug user_id=request.user.id %}">{% trans "Offrir mon aide" %}</a></div>
