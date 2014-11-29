@@ -1,17 +1,10 @@
-{% extends "postman/base.html" %}
+{% extends "messages/base.html" %}
 {% load i18n %}
+{% load staticfiles %}
 {% load bootstrap3 %}
-
-{% block extrahead %}{{ block.super }}
-{% if autocompleter_app.is_active %}
-{% load static %}
-<script type="text/javascript"src="{% static 'admin/js/jquery.min.js' %}"></script>
-{% if autocompleter_app.name == "ajax_select" %}{% if autocompleter_app.version == "1.1.4" or autocompleter_app.version == "1.1.5" %}
-<script type="text/javascript" src="{% static 'js/jquery.autocomplete.min.js' %}"></script>
-<link type="text/css" media="all" rel="stylesheet" href="{% static 'css/jquery.autocomplete.css' %}" />
-{% endif %}
-{% endif %}
-{% endif %}
+{% block extra_head %}{{ block.super }}
+<script src="{% static "js/jquery-ui-1.9.2.custom.min.js" %}"></script>
+<link type="text/css" media="all" rel="stylesheet" href="{% static "css/jquery-ui-1.9.2.custom.css" %}" />
 {% endblock %}
 
 {% block content %}
