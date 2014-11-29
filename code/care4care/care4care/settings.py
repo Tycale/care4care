@@ -47,6 +47,9 @@ INSTALLED_APPS = (
     'multiselectfield',
     'bootstrap3_datetime',
     'easy_thumbnails',
+    'postman',
+    'ajax_select',
+
 )
 
 MIDDLEWARE_CLASSES = (
@@ -155,3 +158,23 @@ SITE_ID = 1
 
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+#AutoComplete
+AJAX_SELECT_BOOTSTRAP = True
+AJAX_SELECT_INLINES = 'inline'
+
+AJAX_LOOKUP_CHANNELS = {
+       # pass a dict with the model and the field to search against
+       'user'  : {'model':'auth.user', 'search_field':'username'},
+}
+
+#Postman
+POSTMAN_DISALLOW_ANONYMOUS = True
+POSTMAN_AUTO_MODERATE_AS = True
+POSTMAN_SHOW_USER_AS = 'get_full_name'
+POSTMAN_AUTOCOMPLETER_APP = {
+    'name': '',  # default is 'ajax_select'
+    'field': '',  # default is 'AutoCompleteField'
+    'arg_name': '',  # default is 'channel'
+    'arg_default': 'user',  # no default, mandatory to enable the feature
+}

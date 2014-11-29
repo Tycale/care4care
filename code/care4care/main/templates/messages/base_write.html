@@ -1,0 +1,38 @@
+{% extends "postman/base.html" %}
+{% load i18n %}
+{% load bootstrap3 %}
+{% block extrahead %}{{ block.super }}
+{% if autocompleter_app.is_active %}
+{% load static %}
+<script type="text/javascript"src="{% static 'admin/js/jquery.min.js' %}"></script>
+{% if autocompleter_app.name == "ajax_select" %}{% if autocompleter_app.version == "1.1.4" or autocompleter_app.version == "1.1.5" %}
+<script type="text/javascript" src="{% static 'js/jquery.autocomplete.min.js' %}"></script>
+<link type="text/css" media="all" rel="stylesheet" href="{% static 'css/jquery.autocomplete.css' %}" />
+{% endif %}
+{% endif %}
+{% endif %}
+{% endblock %}
+{% block content %}
+<div id="postman">
+  <h1>{% block pm_write_title %}{% endblock %}</h1>
+  <form action="{% if next_url %}?next={{ next_url|urlencode }}{% endif %}" method="post">{% csrf_token %}
+      <span class="input-group"> {% block pm_write_recipient %}{% endblock %} </span>
+      {% bootstrap_form form %}
+
+
+    {% buttons %}
+    <div class="row mb">
+      <div class="col-sm-6">
+        <button type="submit" class="btn btn-success btn-lg btn-block">{% trans "Send" %}</button>
+      </div>
+      <div class="col-sm-6">
+        <a href="{% url 'postman_inbox' %}" class="btn btn-danger btn-lg btn-block">
+        {% bootstrap_icon "remove" %} &nbsp; {% trans "Cancel" %}
+      </a>
+      </div>
+
+    </div>
+    {% endbuttons %}
+  </form>
+</div>
+{% endblock %}
