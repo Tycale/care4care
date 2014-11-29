@@ -36,8 +36,8 @@ def branch_create(request):
     return render(request,'branch/branch_create.html', locals())
 
 
-def branch_home(request, branch_id, slug):
-    branch = get_object_or_404(Branch, pk=branch_id)
+def branch_home(request, id, slug):
+    branch = get_object_or_404(Branch, pk=id)
     user = request.user
 
     bm = BranchMembers.objects.filter(branch=branch, user=user)
