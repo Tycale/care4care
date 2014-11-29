@@ -42,7 +42,7 @@ STATUS = (
 INBOX = 1
 MAIL = 2
 
-INFORMED_BY =(
+INFORMED_BY = (
     (INBOX, _("Boite à message")),
     (MAIL, _("Mail"))
     )
@@ -59,7 +59,7 @@ TRUCK = 4
 BUS = 5
 TRACTOR = 6
 
-DRIVER_LICENSE =(
+DRIVER_LICENSE = (
     (SCOOTER, _('Vélomoteur')),
     (MOTO, _('Moto')),
     (CAR, _('Voiture')),
@@ -375,7 +375,8 @@ class Color:
     GREEN_RGB  = [46, 217, 138]
     ORANGE_RGB = [255, 169, 0]
 
-    def get_rgba(my_rgb, a):
+    @staticmethod
+    def rgba(my_rgb, a):
         rgb_values = ','.join(map(str, my_rgb))
         return 'rgba('+rgb_values+', '+str(a)+')'
 
@@ -385,10 +386,23 @@ class Statistics:
     Statistics class
     """
 
+    @staticmethod
+    def generate_line_colors(color_rgb):
+        return {
+            'fillColor': Color.rgba(color_rgb, 0.2),
+            'strokeColor': Color.rgba(color_rgb, 1),
+            'pointColor': Color.rgba(color_rgb, 1),
+            'pointStrokeColor': "#fff",
+            'pointHighlightFill': "#fff",
+            'pointHighlightStroke': Color.rgba(color_rgb, 1),
+        }
+
+
+    @staticmethod
     def get_users_registrated_json():
         # TODO: get stats from database
-        response_data = {}
-        response_data['labels'] = [
+        response = {}
+        response['labels'] = [
             __("Avril"),
             __("Mai"),
             __("Juin"),
@@ -397,15 +411,79 @@ class Statistics:
             __("Septembre"),
             __("Octobre")
         ]
-        response_data['datasets'] = [
-            {
-                'fillColor': Color.get_rgba(Color.LIGHT_BLUE_RGB, 0.2),
-                'strokeColor': Color.get_rgba(Color.LIGHT_BLUE_RGB, 1),
-                'pointColor': Color.get_rgba(Color.LIGHT_BLUE_RGB, 1),
-                'pointStrokeColor': "#fff",
-                'pointHighlightFill': "#fff",
-                'pointHighlightStroke': Color.get_rgba(Color.LIGHT_BLUE_RGB, 1),
-                'data': [10, 15, 22, 33, 48, 69, 99]
-            }
+        line_data = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
+        line_data['data'] = [10, 15, 22, 33, 48, 69, 99]
+        response['datasets'] = [line_data]
+        return json.dumps(response)
+
+
+    @staticmethod
+    def get_account_types_json():
+        members = {}
+        members['label'] = __('Membres')
+        members['value'] = 69
+        members['color'] = '#F7464A'
+
+        verif_members = {}
+        verif_members['label'] = __('Membres vérifiés')
+        verif_members['value'] = 21
+        verif_members['color'] = '#FDB45C'
+
+        non_members = {}
+        non_members['label'] = __('Non-membres')
+        non_members['value'] = 10
+        non_members['color'] = '#46BFBD'
+
+        response = [members, verif_members, non_members]
+        return json.dumps(response)
+
+
+    @staticmethod
+    def get_users_status_json():
+        response = {}
+        response['labels'] = [
+            __("Avril"),
+            __("Mai"),
+            __("Juin"),
+            __("Juillet"),
+            __("Août"),
+            __("Septembre"),
+            __("Octobre"),
         ]
-        return json.dumps(response_data)
+        line_active = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
+        line_active['data'] = [10, 14, 20, 28, 40, 61, 87]
+
+        line_holiday = Statistics.generate_line_colors(Color.GREEN_RGB)
+        line_holiday['data'] = [2, 5, 9, 14, 20, 15, 9]
+
+        line_deactivated = Statistics.generate_line_colors(Color.ORANGE_RGB)
+        line_deactivated['data'] = [0, 1, 2, 3, 4, 3, 3]
+
+        response['datasets'] = [line_active, line_holiday, line_deactivated]
+        return json.dumps(response)
+
+
+    @staticmethod
+    def get_job_categories_json():
+        response = {}
+        response['labels'] = [
+            __("Visites à domicile"),
+            __("Tenir compagnie"),
+            __("Transport par voiture"),
+            __("Shopping"),
+            __("Garder la maison"),
+            __("Boulots manuels"),
+            __("Jardinage"),
+            __("Soins personnels"),
+            __("Administratif"),
+            __("Autre"),
+            __("Spécial... :D"),
+        ]
+        datasets = []
+        first_dataset = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
+        #first_dataset['label'] = __('Membres')  # Non-necessary field
+        first_dataset['data'] = [40, 30, 60, 70, 25, 47, 39, 69, 34, 23, 69]
+        datasets.append(first_dataset)
+
+        response['datasets'] = datasets
+        return json.dumps(response)
