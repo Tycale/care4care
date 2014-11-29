@@ -9,7 +9,7 @@ from django.contrib.sites.models import Site
 from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
 from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm, VerifiedProfileForm
-from main.models import User, VerifiedInformation, EmergencyContact
+from main.models import User, VerifiedInformation, EmergencyContact, Statistics
 from branch.models import Job
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
@@ -152,9 +152,6 @@ def verified_documents_view(request):
 def verified_display_view(request,user_id):
     user_to_display = get_object_or_404(User, pk=user_id)
     return render(request, 'verified/verified_display.html', locals())
-
-def statistics(request):
-    return render(request, 'statistics/statistics.html', locals())
 
 
 @login_required
@@ -346,3 +343,14 @@ class UpdateEmergencyContact(UpdateView):
 
     def get_success_url(self):
         return User.objects.get(pk=self.kwargs['user_id']).get_absolute_url()
+
+
+
+### Statistics ###
+
+def statistics(request):
+    return render(request, 'statistics/statistics.html', locals())
+
+
+def get_registrated_users_json(request):
+    return HttpResponse(Statistics.get_users_registrated_json(), content_type="application/json")
