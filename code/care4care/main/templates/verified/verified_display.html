@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}{% load i18n %}
+
+
+{% block title %}{% trans "Demande de vérification" %}{% endblock %}
+
+
+{% block content %}
+<h3><i class="fa fa-angle-right"></i> {% trans "TODO:EXPLICATION" %}</h3>
+
+<div class="row mt">
+  <div class="col-lg-12">
+    <form action="." role="form" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div class="col-lg-12 col-sm-12 background-gris">
+            <ul class="list-group">
+              <li class="list-group-item text-right"><span class="pull-left"><strong>{% trans "Date d'inscription" %}</strong></span> &nbsp; {{user_to_display.date_joined}}</li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Nom" %}</strong></span> &nbsp; {{user_to_display.get_full_name}} </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Email" %}</strong></span> &nbsp; {{user_to_display.email}}</li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Type de compte" %}</strong></span> &nbsp; {{user_to_display.get_account_type}}</li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Status" %}</strong></span> &nbsp; {{user_to_display.get_verbose_status}}</li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Telephone Fixe" %}</strong></span> &nbsp; {{user_to_display.phone_number}} </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "GSM" %}</strong></span> &nbsp; {{user_to_display.mobile_number}} </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Lien vers le profil Facebook" %}</strong></span> &nbsp; {{user_to_display.facebook}} </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Voiture" %}</strong></span> &nbsp; {{user_to_display.have_car}} </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Peut transporter une personne en chaise roulante" %}</strong></span> &nbsp; {{user_to_display.can_wheelchair}} </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Hobbies" %}</strong></span> &nbsp; <textarea readonly style="width:100% " rows = "4">{{user_to_display.hobbies}} </textarea> </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Informations supplémentaires" %}</strong></span> &nbsp; <textarea readonly style="width:100% " rows = "4">{{user_to_display.additional_info}} </textarea> </li>
+            </ul>
+        {% buttons %}
+        <div class="row mt mb">
+          <div class="col-lg-12 mb"><button type="submit" class="btn btn-info btn-lg btn-block">
+        	{% bootstrap_icon "glyphicon glyphicon-envelope" %} &nbsp; {% trans "Fixer un rendez vous" %}
+        </button></div>
+          <div class="col-lg-12 mb"><a href="{% url 'home' %}" class="btn btn-success btn-lg btn-block">
+            {% bootstrap_icon "star" %} &nbsp; {% trans "Accorder le status de membre vérifié" %}
+            </a></div>
+            <div class="col-lg-12 membre"><button type="submit" class="btn btn-danger btn-lg btn-block">
+        	{% bootstrap_icon "remove" %} &nbsp; {% trans "Refuser la demande" %}
+        </button></div>
+        </div>
+        {% endbuttons %}
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_footer %}
+{{ form.media }}
+{% endblock %}
