@@ -19,42 +19,48 @@
               <li class="list-group-item text-right"><span class="pull-left"><strong>{% trans "Date d'inscription" %}</strong></span> &nbsp; {{user_to_display.date_joined}}</li>
               <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Email" %}</strong></span> &nbsp; {{user_to_display.email}}</li>
               <li class="list-group-item text-right"><span class="pull-left"><strong>{% trans "Adresse" %}</strong></span> &nbsp; {{user_to_display.location}}</li>
-              {% if vlanguages %}
-              <li class="list-group-item text-right"><span class="pull-left"><strong>{% trans "Langues" %}</strong></span> &nbsp; {{vlanguages}}</li>
-              {% endif %}
+              <li class="list-group-item text-right"><span class="pull-left"><strong>{% trans "Langues" %}</strong></span> &nbsp; {{user_to_display.get_verbose_languages}}</li>
               <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Type de compte" %}</strong></span> &nbsp; {{user_to_display.get_account_type}}</li>
               <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Status" %}</strong></span> &nbsp; {{user_to_display.get_verbose_status}}</li>
               <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Telephone Fixe" %}</strong></span> &nbsp; {{user_to_display.phone_number}} </li>
               <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "GSM" %}</strong></span> &nbsp; {{user_to_display.mobile_number}} </li>
-              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Lien vers le profil Facebook" %}</strong></span> &nbsp; {{user_to_display.facebook}} </li>
-              {% if voffered_job %}
-              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Tâches offertes" %}</strong></span> &nbsp; {{voffered_job}} </li>
-              {% endif %}
-              {% if vasked_job %}
-              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Tâches demandées" %}</strong></span> &nbsp; {{vasked_job}} </li>
-              {% endif %}
-              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "recevoir messages par" %}</strong></span> &nbsp; {{vmail}} </li>
-              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "recevoir les offres et les demandes par" %}</strong></span> &nbsp; {{vreceive}} </li>
-              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Voiture" %}</strong></span> &nbsp; {{user_to_display.have_car}} </li>
-              {% if driving_license %}
-              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Permis" %}</strong></span> &nbsp; {{driving_license}} </li>
-              {% endif %}
-              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Peut transporter une personne en chaise roulante" %}</strong></span> &nbsp; {{user_to_display.can_wheelchair}} </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Lien vers le profil Facebook" %}</strong></span> &nbsp; <a href="{{user_to_display.facebook}}"> <i class="fa fa-facebook"></i> Facebook </a> </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Tâches offertes" %}</strong></span> &nbsp; {{user_to_display.get_verbose_offered_job}} </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Tâches demandées" %}</strong></span> &nbsp; {{user_to_display.get_verbose_asked_job}} </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Recevoir messages par" %}</strong></span> &nbsp; {{user_to_display.get_verbose_mail}} </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Recevoir les offres et les demandes par" %}</strong></span> &nbsp; {{user_to_display.get_verbose_receive}} </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Voiture" %}</strong></span> &nbsp;
+                {% if user_to_display.have_car %}
+                  {% trans "Oui" %}
+                {% else %} 
+                  {% trans "Non" %}
+                {% endif %}
+              </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Permis" %}</strong></span> &nbsp; {{user_to_display.get_verbose_license}} </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Peut transporter une personne en chaise roulante" %}</strong></span> &nbsp;
+               {% if user_to_display.can_wheelchair %}
+                  {% trans "Oui" %}
+                {% else %} 
+                  {% trans "Non" %}
+                {% endif %}              </li>
               <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Hobbies" %}</strong></span> &nbsp; <textarea readonly style="width:100% " rows = "4">{{user_to_display.hobbies}} </textarea> </li>
               <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Informations supplémentaires" %}</strong></span> &nbsp; <textarea readonly style="width:100% " rows = "4">{{user_to_display.additional_info}} </textarea> </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Lettre de recommandation n°1" %}</strong></span> &nbsp; <a href="{{verified_documents.recomendation_letter_1.url}}"> {% bootstrap_icon "download" %} Télécharger </a> </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Lettre de recommandation n°2" %}</strong></span> &nbsp; <a href="{{verified_documents.recomendation_letter_2.url}}"> {% bootstrap_icon "download" %} Télécharger </a> </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Casier judiciare" %}</strong></span> &nbsp; <a href="{{verified_documents.criminal_record.url}}"> {% bootstrap_icon "download" %} Télécharger </a> </li>
 
             </ul>
         {% buttons %}
         <div class="row mt mb">
-          <div class="col-lg-12 mb"><button type="submit" class="btn btn-info btn-lg btn-block">
+          <div class="col-lg-12 mb"><a href="{{verified_documents.get_message_url}}" class="btn btn-info btn-lg btn-block">
         	{% bootstrap_icon "glyphicon glyphicon-envelope" %} &nbsp; {% trans "Fixer un rendez vous" %}
-        </button></div>
-          <div class="col-lg-12 mb"><a href="{% url 'home' %}" class="btn btn-success btn-lg btn-block">
+        </a></div>
+          <div class="col-lg-12 mb"><a href="{% url 'verified_giving_status' user_to_display.id %}" class="btn btn-success btn-lg btn-block">
             {% bootstrap_icon "star" %} &nbsp; {% trans "Accorder le status de membre vérifié" %}
             </a></div>
-            <div class="col-lg-12 membre"><button type="submit" class="btn btn-danger btn-lg btn-block">
+            <div class="col-lg-12 membre"><a href="{% url 'verified_refuse_status' user_to_display.id %}" class="btn btn-danger btn-lg btn-block">
         	{% bootstrap_icon "remove" %} &nbsp; {% trans "Refuser la demande" %}
-        </button></div>
+        </a></div>
         </div>
         {% endbuttons %}
         </div>

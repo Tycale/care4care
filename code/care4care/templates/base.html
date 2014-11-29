@@ -64,7 +64,7 @@
                             <span class="badge bg-theme">4</span>
                         </a>
                         <ul class="dropdown-menu extended tasks-bar">
-                            <div class="notify-arrow notify-arrow-green"></div>
+                            <div class="notify-arrow notify-arrow-white"></div>
                             <li>
                                 <p class="green">You have 4 pending tasks</p>
                             </li>
@@ -127,6 +127,7 @@
                     </li>
                     <!-- settings end -->
                     {% endcomment %}
+                    {% if request.user.is_authenticated %}
                     <!-- inbox dropdown start-->
                     {% postman_unread as unread_count %}
                     <li id="header_inbox_bar" class="dropdown">
@@ -137,7 +138,7 @@
                             {% endif %}
                         </a>
                         <ul class="dropdown-menu extended inbox">
-                            <div class="notify-arrow notify-arrow-green"></div>
+                            <div class="notify-arrow notify-arrow-white"></div>
                             <li><span> <a href="{% url 'postman_inbox' %}"> {% trans "Inbox" %}{% if unread_count %} <strong>({{ unread_count }})</strong>{% endif %}</a> </span></li>
                             <li><span><a href="{% url 'postman_sent' %}"> {% trans "Sent Messages" %}</a></span></li>
                             <li><span><a href="{% url 'postman_write' %}"> {% trans "Write" %}</a></span></li>
@@ -146,6 +147,7 @@
                         </ul>
                     </li>
                     <!-- inbox dropdown end -->
+                    {% endif %}
                 </ul>
                 <!--  notification end -->
 
@@ -169,7 +171,7 @@
                     <li>
                       <span  class="credit-text text-info">{% trans "Type de compte :" %}</span> {{ request.user.get_account_type }}
                       {% if not request.user.is_verified %}
-                      <a href="{% url 'verified_profile' %}"> <i class="fa fa-caret-square-o-up"></i></a>
+                      <a href="{% url 'verified_profile' request.user.id %}"> <i class="fa fa-caret-square-o-up"></i></a>
                       {% endif %}
                     </li>
                   </ul>
@@ -189,7 +191,7 @@
                     <li><a href="{% url 'profile' %}">
                     {% bootstrap_icon 'user' %} &nbsp; {% trans "Mon Profil" %}</a>
                     {% if not request.user.is_verified %}
-                      <a href="{% url 'verified_profile' %}">
+                      <a href="{% url 'verified_profile' user_id=request.user.id%}">
                       {% bootstrap_icon 'star' %} &nbsp; {% trans "Devenir vérifié" %}</a>
                     {% endif %}
                    </li>
@@ -339,15 +341,10 @@
                       </ul>
                   </li>
                   <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class=" fa fa-bar-chart-o"></i>
-                          <span>Charts</span>
+                      <a  href="{% url 'stats' %}">
+                        <i class=" fa fa-bar-chart-o"></i>
+                        {% trans "Statistiques" %}
                       </a>
-                      <ul class="sub">
-                          <li><a  href="morris.html">Morris</a></li>
-                          <li><a  href="chartjs.html">Chartjs</a></li>
-                          <li><a  href="{% url 'stats' %}">Statistics</a></li>
-                      </ul>
                   </li>
 
               </ul>
@@ -509,7 +506,7 @@
                         </div><!-- / calendar -->
 
                   </div><!-- /col-lg-3 -->
-              </div><! --/row -->
+              </div><!-- /row -->
               {% endblock %}
           </section>
       </section>
@@ -532,7 +529,7 @@
   </section>
 
     <!-- js placed at the end of the document so the pages load faster -->
-    <script src="{% static "js/bootstrap.min.js" %}"></script>
+    {% block bootstrapjs %}<script src="{% static "js/bootstrap.min.js" %}"></script>{% endblock %}
     <script src="{% static "js/jquery.cookie.js" %}"></script>
     <script src="{% static "js/jquery.hoverIntent.minified.js" %}"></script>
     <script class="include" type="text/javascript" src="{% static "js/jquery.dcjqaccordion.2.7.js" %}"></script>
@@ -550,9 +547,11 @@
 
     <script type="text/javascript" src="{% static "js/jquery.gritter.min.js" %}"></script>
 
+    {% comment %}
     <!--script for this page-->
-  <script src="{% static "js/sparkline-chart.js" %}"></script>
-  <script src="{% static "js/zabuto_calendar.js" %}"></script>
+    <script src="{% static "js/sparkline-chart.js" %}"></script>
+    <script src="{% static "js/zabuto_calendar.js" %}"></script>
+    {% endcomment %}
 
   <script type="text/javascript">
 

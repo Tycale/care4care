@@ -7,9 +7,6 @@ from postman.views import (InboxView, SentView, ArchivesView, TrashView,
         WriteView, ReplyView, MessageView, ConversationView,
         ArchiveView, DeleteView, UndeleteView)
 
-def mod1(message):
-    return 100
-
 urlpatterns = patterns('postman.views',
     url(r'^inbox/(?:(?P<option>'+OPTIONS+')/)?$',
         InboxView.as_view(template_name='messages/inbox.html'),

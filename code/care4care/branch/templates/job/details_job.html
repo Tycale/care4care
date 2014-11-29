@@ -21,8 +21,13 @@
                   {{ object.location }}
                 </h5>
                 <h5><i class="fa fa-clock-o"></i>
-                  {{ object.estimated_time }} {% trans "minute(s)" %}
+                  {% trans "Durée estimée du service "%}{{ object.estimated_time }} {% trans "minute(s)" %}
                 </h5>
+                {% if object.state == 4 %}
+                <h5><i class="fa fa-clock-o"></i>
+                  {% trans "Durée réelle du service "%}{{ object.real_time }} {% trans "minute(s)" %}
+                </h5>
+                {% endif %}
             </div>
             </div>
     </div>
@@ -82,6 +87,7 @@ $(document).ready(function () {
                 position: lieu,
                 map: map,
                 title: '{% trans "Lieu" %}',
+                animation: google.maps.Animation.DROP,
             });
 
     google.maps.event.addListener(marker, 'click', function() {
@@ -101,7 +107,10 @@ $(document).ready(function () {
                 position: moi,
                 map: map,
                 title: '{% trans "Vous" %}',
+                animation: google.maps.Animation.DROP,
             });
+
+        
 
         google.maps.event.addListener(marker2, 'click', function() {
                     infowindow = new google.maps.InfoWindow({
@@ -115,6 +124,7 @@ $(document).ready(function () {
         map.fitBounds(bounds);
 
         var directionsDisplay = new google.maps.DirectionsRenderer();// also, constructor can get "DirectionsRendererOptions" object
+            directionsDisplay.setOptions( { suppressMarkers: true } );
             directionsDisplay.setMap(map); // map should be already initialized.
 
             var request = {

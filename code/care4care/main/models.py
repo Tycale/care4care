@@ -9,6 +9,7 @@ from django.core.validators import RegexValidator
 from django.contrib.auth.models import UserManager as BaseUserManager
 from django.core.urlresolvers import reverse
 from easy_thumbnails.fields import ThumbnailerImageField
+import json
 
 import re
 
@@ -153,12 +154,18 @@ class VerifiedUser(models.Model):
     additional_info = models.TextField(verbose_name=_("Informations supplémentaires"), blank=True, max_length= 300)
 
     def get_verbose_license(self):
+        if not self.drive_license:
+            return ''
         return ', '.join([str(l[1]) for l in DRIVER_LICENSE if (str(l[0]) in self.drive_license )])
 
     def get_verbose_offered_job(self):
+        if not self.offered_job:
+            return ''
         return ', '.join([str(l[1]) for l in JobCategory.JOB_CATEGORIES if (str(l[0]) in self.offered_job )])
 
     def get_verbose_asked_job(self):
+        if not self.asked_job:
+            return ''
         return ', '.join([str(l[1]) for l in JobCategory.JOB_CATEGORIES if (str(l[0]) in self.asked_job )])
 
     def get_verbose_mail(self):
@@ -187,6 +194,8 @@ class CommonInfo(models.Model):
         return self.first_name
 
     def get_verbose_languages(self):
+        if not self.languages:
+            return ''
         return ', '.join([str(l[1]) for l in settings.LANGUAGES if (l[0] in self.languages )])
 
     class Meta:
@@ -350,5 +359,53 @@ class VerifiedInformation(models.Model):
     criminal_record = models.FileField(upload_to='documents/', verbose_name=_("Casier judiciaire"),null=True, blank=False)
     date = models.DateTimeField(auto_now_add=True)
 
+    def get_message_url(self):
+        return str(reverse('postman_write') + '?recipients=' + self.user.username + '&subject=' + __("Interview pour l'accord du status de membre vérifié") + '&body=' + __("Tapez ici le message que vous souhaitez envoyer pour prendre rendez-vous avec la personne ayant demandé le status de membre vérifié."))
+
     class Meta:
         ordering = ['date']
+
+
+
+class Color:
+    """
+    Colors RGB - used for the stats json
+    """
+    LIGHT_BLUE_RGB = [151, 187, 205]
+    GREEN_RGB  = [46, 217, 138]
+    ORANGE_RGB = [255, 169, 0]
+
+    def get_rgba(my_rgb, a):
+        rgb_values = ','.join(map(str, my_rgb))
+        return 'rgba('+rgb_values+', '+str(a)+')'
+
+
+class Statistics:
+    """
+    Statistics class
+    """
+
+    def get_users_registrated_json():
+        # TODO: get stats from database
+        response_data = {}
+        response_data['labels'] = [
+            __("Avril"),
+            __("Mai"),
+            __("Juin"),
+            __("Juillet"),
+            __("Août"),
+            __("Septembre"),
+            __("Octobre")
+        ]
+        response_data['datasets'] = [
+            {
+                'fillColor': Color.get_rgba(Color.LIGHT_BLUE_RGB, 0.2),
+                'strokeColor': Color.get_rgba(Color.LIGHT_BLUE_RGB, 1),
+                'pointColor': Color.get_rgba(Color.LIGHT_BLUE_RGB, 1),
+                'pointStrokeColor': "#fff",
+                'pointHighlightFill': "#fff",
+                'pointHighlightStroke': Color.get_rgba(Color.LIGHT_BLUE_RGB, 1),
+                'data': [10, 15, 22, 33, 48, 69, 99]
+            }
+        ]
+        return json.dumps(response_data)

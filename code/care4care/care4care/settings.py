@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_extensions',
     'django_jenkins',
+    'pagination',
     'main',
     'branch',
     'bootstrap3',
@@ -61,6 +62,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'pagination.middleware.PaginationMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -160,12 +162,12 @@ if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 #AutoComplete
-AJAX_SELECT_BOOTSTRAP = True
+AJAX_SELECT_BOOTSTRAP = False
 AJAX_SELECT_INLINES = 'inline'
 
 AJAX_LOOKUP_CHANNELS = {
        # pass a dict with the model and the field to search against
-       'user'  : dict(model='auth.user', search_field='username'),
+       'user'  : dict(model='main.User', search_field='username'),
 }
 
 #Postman
@@ -173,8 +175,10 @@ POSTMAN_DISALLOW_ANONYMOUS = True
 POSTMAN_AUTO_MODERATE_AS = True
 POSTMAN_SHOW_USER_AS = 'get_full_name'
 POSTMAN_AUTOCOMPLETER_APP = {
-    'name': '',  # default is 'ajax_select'
-    'field': '',  # default is 'AutoCompleteField'
-    'arg_name': '',  # default is 'channel'
+    'name': 'ajax_select',  # default is 'ajax_select'
+    'field': 'AutoCompleteField',  # default is 'AutoCompleteField'
+    'arg_name': 'channel',  # default is 'channel'
     'arg_default': 'user',  # no default, mandatory to enable the feature
 }
+
+PAGINATION_DEFAULT_PAGINATION = 15

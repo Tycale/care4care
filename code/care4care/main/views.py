@@ -9,7 +9,7 @@ from django.contrib.sites.models import Site
 from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
 from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm, VerifiedProfileForm
-from main.models import User, VerifiedInformation, EmergencyContact
+from main.models import User, VerifiedInformation, EmergencyContact, Statistics
 from branch.models import Job
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
@@ -17,11 +17,11 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import CreateView
 from branch.models import Branch, BranchMembers
+from postman.api import pm_write
 
 from django.views.generic.detail import DetailView
 
 import json
-import os
 import sys
 from os.path import abspath, dirname
 import datetime
@@ -34,7 +34,7 @@ def home(request):
     user = request.user
     demands = Job.objects.filter(donor=None)
     offers = Job.objects.filter(receiver=None)
-    if user.is_authenticated() :
+    if user.is_authenticated():
         demands.filter(branch__in=user.membership.all())
         offers.filter(branch__in=user.membership.all())
     return render(request, 'main/home.html', locals())
@@ -48,7 +48,7 @@ def login(request):
     redirect_to = request.POST.get('next',
                                    request.GET.get('next', '/'))
 
-    if request.POST and 'username' in request.POST and 'password' in request.POST :
+    if request.POST and 'username' in request.POST and 'password' in request.POST:
         username = request.POST['username'].lower()
         password = request.POST['password']
         user = authenticate(username=username, password=password)
@@ -62,7 +62,7 @@ def login(request):
                     êtes inactif. Vérifiez vos emails afin de valider votre compte.'))
         else:
             messages.add_message(request, messages.ERROR, _('Impossible de se connecter.'))
-    return render(request, 'profile/login.html',locals())
+    return render(request, 'profile/login.html', locals())
 
 
 def user_profile(request, user_id):
@@ -75,18 +75,18 @@ def user_profile(request, user_id):
         is_my_friend = True
     if user_to_display in user.personal_network.all():
         is_in_my_network = True
-    return render(request, 'profile/user_profile.html',locals())
+    return render(request, 'profile/user_profile.html', locals())
 
 
 @login_required
 def manage_profile(request):
     """ Return the profile from the current logged user"""
     user_to_display = request.user
-    pending_offers = Job.objects.filter(donor=user_to_display )
+    pending_offers = Job.objects.filter(donor=user_to_display)
     print(user_to_display.ignore_list.all())
-    return render(request, 'profile/user_profile.html',locals())
+    return render(request, 'profile/user_profile.html', locals())
 
-@user_passes_test(lambda u: not u.is_verified)
+"""@user_passes_test(lambda u: not u.is_verified)
 @login_required
 def verified_profile_view(request):
     user = request.user
@@ -94,10 +94,32 @@ def verified_profile_view(request):
     if request.POST :
         form = VerifiedProfileForm(request.POST)
         if form.is_valid():
-            form.save
+            form.save()
             messages.add_message(request, messages.INFO, _('Modification sauvegardée'))
             return redirect('verified_documents')
-    return render(request,'verified/verified_profile.html',locals())
+    return render(request,'verified/verified_profile.html', locals())"""
+
+
+# Classes views
+class VerifiedProfileView(UpdateView, SuccessMessageMixin):
+    """ Return the edit page for the current logged user"""
+    form_class = VerifiedProfileForm
+    model = User
+    template_name = 'verified/verified_profile.html'
+    success_message = _('Profil modifié avec succès !')
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        obj = self.get_object()
+        if obj.id != self.request.user.id and not self.request.user.is_superuser:
+            return redirect(obj.get_absolute_url())
+        return super(VerifiedProfileView, self).dispatch(*args, **kwargs)
+
+    def get_object(self, queryset=None):
+        return User.objects.get(pk=self.kwargs['user_id'])
+
+    def get_success_url(self):
+        return reverse('verified_documents')
 
 
 @user_passes_test(lambda u: not u.is_verified)
@@ -111,7 +133,7 @@ def verified_documents_view(request):
     except VerifiedInformation.DoesNotExist:
         pass
 
-    if request.POST :
+    if request.POST:
         form = VerifiedInformationForm(request.POST, request.FILES)
         if form.is_valid():
             try:
@@ -124,26 +146,40 @@ def verified_documents_view(request):
             messages.add_message(request, messages.INFO, _('Modification sauvegardée'))
             return redirect('home')
 
-
-    return render(request,'verified/verified_documents.html',locals())
+    return render(request,'verified/verified_documents.html', locals())
 
 @login_required
-def verified_display_view(request,user_id):
+def verified_display_view(request, user_id):
     user_to_display = get_object_or_404(User, pk=user_id)
-    if (user_to_display.drive_license):
-        driving_license = user_to_display.get_verbose_license()
-    if (user_to_display.languages):
-        vlanguages = user_to_display.get_verbose_languages()
-    if (user_to_display.offered_job):
-        voffered_job = user_to_display.get_verbose_offered_job()
-    if (user_to_display.asked_job):
-        vasked_job = user_to_display.get_verbose_asked_job()
-    vmail = user_to_display.get_verbose_mail()
-    vreceive = user_to_display.get_verbose_receive()
+    verified_documents = get_object_or_404(VerifiedInformation, user=user_id)
     return render(request, 'verified/verified_display.html', locals())
 
-def statistics(request):
-    return render(request, 'statistics/statistics.html', locals())
+
+def verified_status_giving_view(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    user.is_verified = True
+    user.save()
+    verified_documents = get_object_or_404(VerifiedInformation, user=user_id)
+    verified_documents.delete()
+    subject = _("Accord du status de membre vérifié")
+    body = _("Le status de membre vérifié vous a été accordé ! Félicitations.")
+    pm_write(request.user, user, subject, body)
+    messages.add_message(request, messages.INFO, _('Droit accordé'))
+    return redirect('home')
+
+
+@login_required
+def verified_status_refuse_view(request, user_id):
+    user = get_object_or_404(User, pk=user_id)
+    user.is_verified = False
+    user.save()
+    verified_documents = get_object_or_404(VerifiedInformation, user=user_id)
+    verified_documents.delete()
+    subject = _("Accord du status de membre vérifié")
+    body = _("Le status de membre vérifié vous a été refusé. Pour plus d'informations, contactez l'officier responsable de votre branche.")
+    pm_write(request.user, user, subject, body)
+    messages.add_message(request, messages.INFO, _('Droit refusé et demande supprimée'))
+    return redirect('home')
 
 
 @login_required
@@ -191,7 +227,7 @@ def member_ignore_list(request, user_id):
         user.ignore_list.add(other_user)
         try:
           user.save()
-        except :
+        except:
           e = sys.exc_info()[0]
           print(e)
         return HttpResponse(
@@ -216,7 +252,7 @@ class EditProfileView(UpdateView, SuccessMessageMixin):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         obj = self.get_object()
-        if obj.id != self.request.user.id and not self.request.user.is_superuser :
+        if obj.id != self.request.user.id and not self.request.user.is_superuser:
             return redirect(obj.get_absolute_url())
         return super(EditProfileView, self).dispatch(*args, **kwargs)
 
@@ -281,7 +317,7 @@ class AddEmergencyContact(CreateView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         obj = self.get_object()
-        if obj.id != self.request.user.id and not self.request.user.is_superuser :
+        if obj.id != self.request.user.id and not self.request.user.is_superuser:
             return redirect(obj.get_absolute_url())
         return super(AddEmergencyContact, self).dispatch(*args, **kwargs)
 
@@ -322,7 +358,7 @@ class UpdateEmergencyContact(UpdateView):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         obj = self.get_object()
-        if obj.id != self.request.user.id and not self.request.user.is_superuser :
+        if obj.id != self.request.user.id and not self.request.user.is_superuser:
             return redirect(obj.get_absolute_url())
         return super(UpdateEmergencyContact, self).dispatch(*args, **kwargs)
 
@@ -337,6 +373,7 @@ class UpdateEmergencyContact(UpdateView):
         return User.objects.get(pk=self.kwargs['user_id']).get_absolute_url()
 
 
+<<<<<<< HEAD
 @login_required
 def similar_jobs(request):
     return render(request, 'seek_similar_jobs/main.html')
@@ -360,3 +397,14 @@ def similar_offers(request):
         result.extend(offers.filter(branch=demand.branch, date=demand.date, category=demand.category))
 
     return render(request, 'seek_similar_jobs/main.html',locals())
+=======
+
+### Statistics ###
+
+def statistics(request):
+    return render(request, 'statistics/statistics.html', locals())
+
+
+def get_registrated_users_json(request):
+    return HttpResponse(Statistics.get_users_registrated_json(), content_type="application/json")
+>>>>>>> 202b53fc9ca4c53d46b67dafaca93bf77c2d9d66
