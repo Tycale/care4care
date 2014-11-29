@@ -1,6 +1,7 @@
 {% extends "postman/base.html" %}
 {% load i18n %}
 {% load bootstrap3 %}
+
 {% block extrahead %}{{ block.super }}
 {% if autocompleter_app.is_active %}
 {% load static %}
@@ -12,6 +13,7 @@
 {% endif %}
 {% endif %}
 {% endblock %}
+
 {% block content %}
 <div id="postman">
   <h1>{% block pm_write_title %}{% endblock %}</h1>
@@ -35,4 +37,8 @@
     {% endbuttons %}
   </form>
 </div>
+{% endblock %}
+
+{% block extra_footer %}
+{{form.media}}
 {% endblock %}
