@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_extensions',
     'django_jenkins',
+    'pagination',
     'main',
     'branch',
     'bootstrap3',
@@ -61,6 +62,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'pagination.middleware.PaginationMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -178,3 +180,5 @@ POSTMAN_AUTOCOMPLETER_APP = {
     'arg_name': 'channel',  # default is 'channel'
     'arg_default': 'user',  # no default, mandatory to enable the feature
 }
+
+PAGINATION_DEFAULT_PAGINATION = 15
