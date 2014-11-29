@@ -132,17 +132,17 @@ class VerifiedUser(models.Model):
 
 
     # ppl with you have ongoing job
-    work_with = models.ManyToManyField('User',related_name="verified_work_with", blank=True, null=True)
+    work_with = models.ManyToManyField('User', related_name="verified_work_with", blank=True, null=True)
 
     # network management
-    favorites = models.ManyToManyField('User',related_name="verified_favorites", blank=True, null=True)
-    personal_network = models.ManyToManyField('User', verbose_name="Votre réseau personnel",related_name="verified_personal_network", blank=True, null=True)
-    ignore_list = models.ManyToManyField('User', verbose_name="Personne ignorée",related_name="verified_ignore_list", blank=True, null=True)
+    favorites = models.ManyToManyField('User', related_name="verified_favorites", blank=True, null=True)
+    personal_network = models.ManyToManyField('User', verbose_name="Votre réseau personnel", related_name="verified_personal_network", blank=True, null=True)
+    ignore_list = models.ManyToManyField('User', verbose_name="Personne ignorée", related_name="verified_ignore_list", blank=True, null=True)
 
     mail_preferences = models.IntegerField(choices=INFORMED_BY,
-                                      default=INBOX, verbose_name=_("Recevoir mes messages par"))
+                                        default=INBOX, verbose_name=_("Recevoir mes messages par"))
     receive_help_from_who = models.IntegerField(choices=MemberType.MEMBER_TYPES_GROUP, default=MemberType.ALL,
-                                      verbose_name=_("Recevoir des demandes et des offres de"))
+                                        verbose_name=_("Recevoir des demandes et des offres de"))
     offered_job = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Quelles sont les tâches que vous souhaitez effectuer ?"), blank=True)
     asked_job = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Quelles sont les tâches dont vous avez besoin ?"), blank=True)
 
@@ -150,23 +150,23 @@ class VerifiedUser(models.Model):
 
     facebook = models.URLField(verbose_name="Lien (URL) de votre profil Facebook", blank=True)
 
-    hobbies = models.TextField(verbose_name=_("Vos hobbies"), blank=True, max_length= 200)
-    additional_info = models.TextField(verbose_name=_("Informations supplémentaires"), blank=True, max_length= 300)
+    hobbies = models.TextField(verbose_name=_("Vos hobbies"), blank=True, max_length=200)
+    additional_info = models.TextField(verbose_name=_("Informations supplémentaires"), blank=True, max_length=300)
 
     def get_verbose_license(self):
         if not self.drive_license:
             return ''
-        return ', '.join([str(l[1]) for l in DRIVER_LICENSE if (str(l[0]) in self.drive_license )])
+        return ', '.join([str(l[1]) for l in DRIVER_LICENSE if (str(l[0]) in self.drive_license)])
 
     def get_verbose_offered_job(self):
         if not self.offered_job:
             return ''
-        return ', '.join([str(l[1]) for l in JobCategory.JOB_CATEGORIES if (str(l[0]) in self.offered_job )])
+        return ', '.join([str(l[1]) for l in JobCategory.JOB_CATEGORIES if (str(l[0]) in self.offered_job)])
 
     def get_verbose_asked_job(self):
         if not self.asked_job:
             return ''
-        return ', '.join([str(l[1]) for l in JobCategory.JOB_CATEGORIES if (str(l[0]) in self.asked_job )])
+        return ', '.join([str(l[1]) for l in JobCategory.JOB_CATEGORIES if (str(l[0]) in self.asked_job)])
 
     def get_verbose_mail(self):
         return str(INFORMED_BY[self.mail_preferences][1])
@@ -196,7 +196,7 @@ class CommonInfo(models.Model):
     def get_verbose_languages(self):
         if not self.languages:
             return ''
-        return ', '.join([str(l[1]) for l in settings.LANGUAGES if (l[0] in self.languages )])
+        return ', '.join([str(l[1]) for l in settings.LANGUAGES if (l[0] in self.languages)])
 
     class Meta:
         abstract = True
@@ -245,22 +245,23 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
     photo = ThumbnailerImageField(upload_to='photos/', blank=True)
 
     username = models.CharField(_("Nom d'utilisateur"), max_length=30, unique=True,
-        validators=[
+        validators = [
             validators.RegexValidator(re.compile('^[\w.@+-]+$'), _("Entrez un nom d'utilisateur valide.\
              30 caractères ou moins. Peut contenir des lettres, nombres et les caractères @/./+/-/_ "), 'invalid')
-        ])
+        ]
+    )
     is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
 
     is_verified = models.BooleanField(default=False)
 
     status = models.IntegerField(choices=STATUS,
-                                      default=ACTIVE)
+                                    default=ACTIVE)
 
-    user_type = models.IntegerField(_("Type de compte"),choices=MemberType.MEMBER_TYPES,
-                                      default=MemberType.MEMBER, help_text=_('Un member pourra aider ou être aidé alors qu\'un \
-                                       non-membre est un professionnel qui s\'inscrira pour avoir accès aux données d\'un \
-                                       patient. Veuillez choisir celui qui vous correspond'))
+    user_type = models.IntegerField(_("Type de compte"), choices=MemberType.MEMBER_TYPES,
+                                    default=MemberType.MEMBER, help_text=_('Un member pourra aider ou être aidé alors qu\'un \
+                                        non-membre est un professionnel qui s\'inscrira pour avoir accès aux données d\'un \
+                                        patient. Veuillez choisir celui qui vous correspond'))
 
     how_found = MultiSelectField(choices=HOW_FOUND_CHOICES, verbose_name=_("Comment avez-vous entendu parler de Care4Care ?"))
     birth_date = models.DateField(blank=True, null=True, verbose_name=_("Date de naissance"))
@@ -298,13 +299,13 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
         if credit < 0:
             return str('<span class="text-danger">' + str(credit) + __(' minute(s)') + '</span>')
         for i, (minuts, name) in enumerate(chunks):
-                count = credit // minuts
-                if count != 0:
-                    break
+            count = credit // minuts
+            if count != 0:
+                break
         credit -= count * minuts
         if count > 2:
             result = (name[1] % count)
-        else :
+        else:
             result = (name[0] % count)
         while i + 1 < len(chunks):
             minuts2, name2 = chunks[i + 1]
@@ -312,21 +313,21 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
             if count2 != 0:
                 if count2 > 2:
                     result += _(', ') + (name2[1] % count2)
-                else :
+                else:
                     result += _(', ') + (name2[0] % count2)
             credit -= count2 * minuts2
             i += 1
         return result
 
     def get_verbose_status(self):
-         return STATUS[self.status-1][1]
+        return STATUS[self.status-1][1]
 
     def get_account_type(self):
-        if self.is_superuser :
+        if self.is_superuser:
             return _('superuser')
-        if not self.is_verified :
+        if not self.is_verified:
             return MemberType.MEMBER_TYPES[self.user_type-1][1]
-        else :
+        else:
             if self.user_type == MemberType.MEMBER:
                 return MemberType.VERBOSE_VM
             if self.user_type == MemberType.NON_MEMBER:
@@ -356,7 +357,7 @@ class VerifiedInformation(models.Model):
     user = models.ForeignKey(User, null=True, blank=False)
     recomendation_letter_1 = models.FileField(upload_to='documents/', verbose_name=_("Lettre de recommendation n°1"), null=True, blank=False)
     recomendation_letter_2 = models.FileField(upload_to='documents/', verbose_name=_("Lettre de recommendation n°2"), null=True, blank=False)
-    criminal_record = models.FileField(upload_to='documents/', verbose_name=_("Casier judiciaire"),null=True, blank=False)
+    criminal_record = models.FileField(upload_to='documents/', verbose_name=_("Casier judiciaire"), null=True, blank=False)
     date = models.DateTimeField(auto_now_add=True)
 
     def get_message_url(self):
