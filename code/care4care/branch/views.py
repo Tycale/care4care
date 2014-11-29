@@ -62,6 +62,7 @@ def branch_home(request, id, slug):
 
 
     if is_branch_admin:
+
         user_ids = [mb.user.id for mb in branch.membership.all()]
         vdemands = VerifiedInformation.objects.filter(user__in = user_ids )
 
