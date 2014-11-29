@@ -9,6 +9,7 @@ from django.core.validators import RegexValidator
 from django.contrib.auth.models import UserManager as BaseUserManager
 from django.core.urlresolvers import reverse
 from easy_thumbnails.fields import ThumbnailerImageField
+import json
 
 import re
 
@@ -363,3 +364,48 @@ class VerifiedInformation(models.Model):
 
     class Meta:
         ordering = ['date']
+
+
+
+class Color:
+    """
+    Colors RGB - used for the stats json
+    """
+    LIGHT_BLUE_RGB = [151, 187, 205]
+    GREEN_RGB  = [46, 217, 138]
+    ORANGE_RGB = [255, 169, 0]
+
+    def get_rgba(my_rgb, a):
+        rgb_values = ','.join(map(str, my_rgb))
+        return 'rgba('+rgb_values+', '+str(a)+')'
+
+
+class Statistics:
+    """
+    Statistics class
+    """
+
+    def get_users_registrated_json():
+        # TODO: get stats from database
+        response_data = {}
+        response_data['labels'] = [
+            __("Avril"),
+            __("Mai"),
+            __("Juin"),
+            __("Juillet"),
+            __("Août"),
+            __("Septembre"),
+            __("Octobre")
+        ]
+        response_data['datasets'] = [
+            {
+                'fillColor': Color.get_rgba(Color.LIGHT_BLUE_RGB, 0.2),
+                'strokeColor': Color.get_rgba(Color.LIGHT_BLUE_RGB, 1),
+                'pointColor': Color.get_rgba(Color.LIGHT_BLUE_RGB, 1),
+                'pointStrokeColor': "#fff",
+                'pointHighlightFill': "#fff",
+                'pointHighlightStroke': Color.get_rgba(Color.LIGHT_BLUE_RGB, 1),
+                'data': [10, 15, 22, 33, 48, 69, 99]
+            }
+        ]
+        return json.dumps(response_data)

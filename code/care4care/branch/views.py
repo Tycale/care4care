@@ -141,6 +141,12 @@ class NeedHelpView(CreateView):
         context['branch'] = Branch.objects.get(pk=self.kwargs['branch_id'])
         return context
 
+    def get_initial(self):
+        ruser = User.objects.get(pk=self.kwargs['user_id'])
+        return {'receive_help_from_who': 
+                    ruser.receive_help_from_who,
+                'location': ruser.location,}
+
     def form_valid(self, form):
         form.instance.branch = Branch.objects.get(pk=self.kwargs['branch_id'])
         form.instance.receiver = User.objects.get(pk=self.kwargs['user_id'])

@@ -46,9 +46,10 @@ class NeedHelpForm(forms.ModelForm):
     		raise forms.ValidationError(_("Le temps estimé doit être plus grand que 0 minute."))
     	return est
 
+
     class Meta:
         model = Job
-        fields = ['description', 'estimated_time', 'category', 'date', 'time', 'location', 'latitude', 'longitude', 'title']
+        fields = ['description', 'estimated_time', 'category', 'date', 'time', 'location', 'latitude', 'longitude', 'title', 'receive_help_from_who']
         widgets = {
             'latitude': forms.HiddenInput,
             'longitude': forms.HiddenInput,

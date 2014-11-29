@@ -10,7 +10,7 @@ urlpatterns = patterns(
     url(r'^accounts/', include('main.urls_profile')),
     url(r'^accounts/', include('main.urls_verified')),
 
-	url(r'^statistics/$', 'main.views.statistics', name='stats'),
+    url(r'^statistics/', include('main.urls_statistics')),
     url(r'^messages/', include('main.urls_postman')),
 
 )
