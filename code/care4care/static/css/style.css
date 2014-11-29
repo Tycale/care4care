@@ -2468,3 +2468,7 @@ table.rowlink > tbody > tr {
 .checkbox-inbox {
     padding-right: 20px;
 }
+
+textarea {
+    resize: none;
+}
