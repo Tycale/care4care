@@ -172,7 +172,7 @@ class OfferHelpView(CreateView):
     """
     A registration backend for our CareRegistrationForm
     """
-    template_name = 'job/need_help.html'
+    template_name = 'job/offer_help.html'
     form_class = NeedHelpForm
     model = Job
 
@@ -180,10 +180,19 @@ class OfferHelpView(CreateView):
     def dispatch(self, *args, **kwargs):
         return super(OfferHelpView, self).dispatch(*args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        context = super(OfferHelpView, self).get_context_data(**kwargs)
+        context['user'] = User.objects.get(pk=self.kwargs['user_id'])
+        context['branch'] = Branch.objects.get(pk=self.kwargs['branch_id'])
+        return context
+
     def form_valid(self, form):
         form.instance.branch = Branch.objects.get(pk=self.kwargs['branch_id'])
         form.instance.donor = self.request.user
         form.instance.real_time = form.instance.estimated_time
+        form.instance.latitude = form.instance.donor.latitude
+        form.instance.longitude = form.instance.donor.longitude
+        form.instance.is_offer = True
         return super(OfferHelpView, self).form_valid(form)
 
     def get_success_url(self):

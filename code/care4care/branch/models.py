@@ -79,6 +79,7 @@ class Job(models.Model):
 
     state = models.IntegerField(choices=JOB_STATUS_CHOICES, default=1,
                                       verbose_name=_("Status"))
+    is_offer= models.BooleanField(default=False,verbose_name=_("Est-ce une offre ?"))
 
     def get_verbose_category(self):
         return JobCategory.JOB_CATEGORIES[self.category-1][1]
