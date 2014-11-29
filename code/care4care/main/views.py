@@ -17,6 +17,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import CreateView
 from branch.models import Branch, BranchMembers
+from postman.api import pm_write
 
 from django.views.generic.detail import DetailView
 
@@ -151,7 +152,33 @@ def verified_documents_view(request):
 @login_required
 def verified_display_view(request,user_id):
     user_to_display = get_object_or_404(User, pk=user_id)
+    verified_documents = get_object_or_404(VerifiedInformation, user=user_id)
     return render(request, 'verified/verified_display.html', locals())
+
+
+def verified_status_giving_view(request,user_id):
+    user = get_object_or_404(User, pk=user_id)
+    user.is_verified = True
+    user.save()
+    verified_documents = get_object_or_404(VerifiedInformation, user=user_id)
+    verified_documents.delete()
+    subject = _("Accord du status de membre vérifié")
+    body = _("Le status de membre vérifié vous a été accordé ! Félicitations.")
+    pm_write(request.user, user, subject, body)
+    messages.add_message(request, messages.INFO, _('Droit accordé'))
+    return redirect('home')
+
+def verified_status_refuse_view(request,user_id):
+    user = get_object_or_404(User, pk=user_id)
+    user.is_verified = False
+    user.save()
+    verified_documents = get_object_or_404(VerifiedInformation, user=user_id)
+    verified_documents.delete()
+    subject = _("Accord du status de membre vérifié")
+    body = _("Le status de membre vérifié vous a été refusé. Pour plus d'informations, contactez l'officier responsable de votre branche.")
+    pm_write(request.user, user, subject, body)
+    messages.add_message(request, messages.INFO, _('Droit refusé et demande supprimée'))
+    return redirect('home')
 
 
 @login_required

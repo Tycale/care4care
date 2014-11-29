@@ -551,7 +551,7 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
 }
 
 .dropdown-menu.extended li a:hover {
-    background-color: #F7F8F9 !important;
+/*    background-color: #F7F8F9 !important; */
     color: #2E2E2E;
 }
 
@@ -736,6 +736,11 @@ ul.top-menu > li > a:hover, ul.top-menu > li > a:focus {
     border-color: transparent transparent #68dff0;
     border-bottom-color: #68dff0 !important;
     border-top-color: #68dff0 !important;
+}
+.notify-arrow-white {
+    border-color: transparent transparent #fff;
+    border-bottom-color: #fff !important;
+    border-top-color: #fff !important;
 }
 
 
@@ -2458,4 +2463,12 @@ table.rowlink > tbody > tr {
 
 .profile-head {
     min-height: 70px;
+}
+
+.checkbox-inbox {
+    padding-right: 20px;
+}
+
+textarea {
+    resize: none;
 }

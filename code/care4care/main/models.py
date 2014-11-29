@@ -359,6 +359,9 @@ class VerifiedInformation(models.Model):
     criminal_record = models.FileField(upload_to='documents/', verbose_name=_("Casier judiciaire"),null=True, blank=False)
     date = models.DateTimeField(auto_now_add=True)
 
+    def get_message_url(self):
+        return str(reverse('postman_write') + '?recipients=' + self.user.username + '&subject=' + __("Interview pour l'accord du status de membre vérifié") + '&body=' + __("Tapez ici le message que vous souhaitez envoyer pour prendre rendez-vous avec la personne ayant demandé le status de membre vérifié."))
+
     class Meta:
         ordering = ['date']
 

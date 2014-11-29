@@ -21,8 +21,13 @@
                   {{ object.location }}
                 </h5>
                 <h5><i class="fa fa-clock-o"></i>
-                  {{ object.estimated_time }} {% trans "minute(s)" %}
+                  {% trans "Durée estimée "%}{{ object.estimated_time }} {% trans "minute(s)" %}
                 </h5>
+                {% if object.state == 4 %}
+                <h5><i class="fa fa-clock-o"></i>
+                  {% trans "Durée réelle "%}{{ object.real_time }} {% trans "minute(s)" %}
+                </h5>
+                {% endif %}
             </div>
             </div>
     </div>
