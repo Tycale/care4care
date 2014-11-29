@@ -1,4 +1,68 @@
 $ ->
+    get2dContext = (id) ->
+        document.getElementById(id).getContext("2d")
+
+
+    # Create a chart
+    create_chart = (url_json, canvas_id, chart_type) ->
+        $.ajax(url_json,
+            dataType: "json"
+            success: (json_data) ->
+                context = get2dContext(canvas_id)
+                draw_chart_type(context, chart_type, json_data)
+            error: (err) ->
+                console.log("Could not load: "+url_json)
+        )
+
+
+    draw_chart_type = (context, chart_type, data) ->
+        chart = new Chart(context)
+        switch chart_type
+            when "Line"
+                chart.Line(data)
+            when "Doughnut"
+                chart.Doughnut(data)
+            when "Radar"
+                chart.Radar(data)
+
+
+    # Care4Care data charts
+
+    # Registrated users
+    create_chart("/statistics/registrated_users_json", "global_registration", "Line")
+
+
+    # TODO: How Users Discovered Care4Care
+
+
+    # Account types
+    create_chart("/statistics/account_types_json", "account_types", "Doughnut")
+
+
+    # Evolution of users status (active, on holiday, deactivated)
+    # in regard of time
+    create_chart("/statistics/users_status_json", "users_status_canvas", "Line")
+    
+    # Add legend (TODO: load those colors rgb from server?)
+    LIGHT_BLUE_RGB = [151, 187, 205]
+    GREEN_RGB  = [46, 217, 138]
+    ORANGE_RGB = [255, 169, 0]
+    get_rgba = (my_rgb, a) ->
+        "rgba(#{my_rgb[0]}, #{my_rgb[1]}, #{my_rgb[2]}, #{a})"
+    document.getElementById("users_status_legend").innerHTML = "Légende: <ul style='display: inline; padding-left: 0px;'>
+            <li style='display: inline; padding-left: 7px; color: #{get_rgba(LIGHT_BLUE_RGB, 1)}'> Actifs </li>
+            <li style='display: inline; padding-left: 7px; color: #{get_rgba(GREEN_RGB, 1)}'> En vacances </li>
+            <li style='display: inline; padding-left: 7px; color: #{get_rgba(ORANGE_RGB, 1)}'> Désactivés </li>
+        </ul>"
+
+
+    # Most done job categories
+    create_chart("/statistics/job_categories_json", "job_categories", "Radar")
+
+
+
+
+    # Tests graphs
     data =
         labels: [
             "January"
@@ -92,199 +156,3 @@ $ ->
     ]
     c_polar = document.getElementById("chart_polar").getContext("2d")
     polar_chart = new Chart(c_polar).PolarArea(polar_data)
-
-
-
-    get2dContext = (id) ->
-        document.getElementById(id).getContext("2d")
-
-
-    # Care4Care example data
-
-    # Color constants
-    LIGHT_BLUE_RGB = [151, 187, 205]
-    GREEN_RGB  = [46, 217, 138]
-    ORANGE_RGB = [255, 169, 0]
-
-    get_rgba = (my_rgb, a) ->
-        "rgba(#{my_rgb[0]}, #{my_rgb[1]}, #{my_rgb[2]}, #{a})"
-
-
-    # TODO: TRANSLATIONS !
-    users_registration =
-        labels: [
-            "Avril"
-            "Mai"
-            "Juin"
-            "Juillet"
-            "Août"
-            "Septembre"
-            "Octobre"
-        ]
-        datasets: [
-            fillColor: "rgba(151,187,205,0.2)"
-            strokeColor: "rgba(151,187,205,1)"
-            pointColor: "rgba(151,187,205,1)"
-            pointStrokeColor: "#fff"
-            pointHighlightFill: "#fff"
-            pointHighlightStroke: "rgba(151,187,205,1)"
-            data: [
-                10
-                15
-                22
-                33
-                48
-                69
-                99
-            ]
-        ]
-    global_registration = document.getElementById("global_registration").getContext("2d")
-    global_users_chart = new Chart(global_registration).Line(users_registration)
-
-
-    # Account types
-    data_account_types = [
-        {
-            label: "Membres"
-            value: 69
-            color: "#F7464A"
-        }
-        {
-            label: "Membres vérifiés"
-            value: 21
-            color: "#FDB45C"
-        }
-        {
-            label: "Non-membres"
-            value: 10
-            color: "#46BFBD"
-        }
-    ]
-    account_types = get2dContext("account_types")
-    account_types_chart = new Chart(account_types).Doughnut(data_account_types)
-
-
-
-    # TODO: How Users Discovered Care4Care
-
-
-
-    # TODO: Evolution of users status (active, on holiday, deactivated)
-    # in regard of time
-    data_users_status =
-        labels: [
-            "Avril"
-            "Mai"
-            "Juin"
-            "Juillet"
-            "Août"
-            "Septembre"
-            "Octobre"
-        ]
-        datasets: [
-            {
-                label: "Actifs"
-                fillColor: "rgba(151,187,205,0.2)"
-                strokeColor: "rgba(151,187,205,1)"
-                pointColor: "rgba(151,187,205,1)"
-                pointStrokeColor: "#fff"
-                pointHighlightFill: "#fff"
-                pointHighlightStroke: "rgba(151,187,205,1)"
-                data: [
-                    10
-                    14
-                    20
-                    28
-                    40
-                    61
-                    87
-                ]
-            }
-            {
-                label: "En vacances"
-                fillColor: "rgba(46,217,138,0.2)"
-                strokeColor: "rgba(46,217,138,1)"
-                pointColor: "rgba(46,217,138,1)"
-                pointStrokeColor: "#fff"
-                pointHighlightFill: "#fff"
-                pointHighlightStroke: "rgba(46,217,138,1)"
-                data: [
-                    2
-                    5
-                    9
-                    14
-                    20
-                    15
-                    9
-                ]
-            }
-            {
-                label: "Désactivés"
-                fillColor: get_rgba(ORANGE_RGB, 0.2)
-                strokeColor: get_rgba(ORANGE_RGB, 1)
-                pointColor: get_rgba(ORANGE_RGB, 1)
-                pointStrokeColor: "#fff"
-                pointHighlightFill: "#fff"
-                pointHighlightStroke: get_rgba(ORANGE_RGB, 1)
-                data: [
-                    0
-                    1
-                    2
-                    3
-                    4
-                    3
-                    3
-                ]
-            }
-        ]
-
-    users_status_canvas = get2dContext("users_status_canvas")
-    chart_user_status = new Chart(users_status_canvas).Line(data_users_status)
-    document.getElementById("users_status_legend").innerHTML = "Légende: <ul style='display: inline; padding-left: 0px;'>
-            <li style='display: inline; padding-left: 7px; color: #{get_rgba(LIGHT_BLUE_RGB, 1)}'> Actifs </li>
-            <li style='display: inline; padding-left: 7px; color: #{get_rgba(GREEN_RGB, 1)}'> En vacances </li>
-            <li style='display: inline; padding-left: 7px; color: #{get_rgba(ORANGE_RGB, 1)}'> Désactivés </li>
-        </ul>"
-
-
-    # Most done job categories
-    data_job_categories =
-        labels: [
-            "Visites à domicile"
-            "Tenir compagnie"
-            "Transport par voiture"
-            "Shopping"
-            "Garder la maison"
-            "Boulots manuels"
-            "Jardinage"
-            "Soins personnels"
-            "Administratif"
-            "Autre"
-            "Spécial... :D"
-        ]
-        datasets: [
-            label: "Membres"
-            fillColor: "rgba(151,187,205,0.2)"
-            strokeColor: "rgba(151,187,205,1)"
-            pointColor: "rgba(151,187,205,1)"
-            pointStrokeColor: "#fff"
-            pointHighlightFill: "#fff"
-            pointHighlightStroke: "rgba(151,187,205,1)"
-            data: [
-                40
-                30
-                60
-                70
-                25
-                47
-                39
-                69
-                34
-                23
-                69
-            ]
-        ]
-
-    job_categories = get2dContext("job_categories")
-    chart_job_categories = new Chart(job_categories).Radar(data_job_categories)
-

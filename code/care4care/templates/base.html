@@ -341,15 +341,10 @@
                       </ul>
                   </li>
                   <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class=" fa fa-bar-chart-o"></i>
-                          <span>Charts</span>
+                      <a  href="{% url 'stats' %}">
+                        <i class=" fa fa-bar-chart-o"></i>
+                        {% trans "Statistiques" %}
                       </a>
-                      <ul class="sub">
-                          <li><a  href="morris.html">Morris</a></li>
-                          <li><a  href="chartjs.html">Chartjs</a></li>
-                          <li><a  href="{% url 'stats' %}">Statistics</a></li>
-                      </ul>
                   </li>
 
               </ul>
@@ -511,7 +506,7 @@
                         </div><!-- / calendar -->
 
                   </div><!-- /col-lg-3 -->
-              </div><! --/row -->
+              </div><!-- /row -->
               {% endblock %}
           </section>
       </section>
