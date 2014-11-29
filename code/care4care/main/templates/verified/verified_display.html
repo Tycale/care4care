@@ -24,7 +24,7 @@
               <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Status" %}</strong></span> &nbsp; {{user_to_display.get_verbose_status}}</li>
               <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Telephone Fixe" %}</strong></span> &nbsp; {{user_to_display.phone_number}} </li>
               <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "GSM" %}</strong></span> &nbsp; {{user_to_display.mobile_number}} </li>
-              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Lien vers le profil Facebook" %}</strong></span> &nbsp; {{user_to_display.facebook}} </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Lien vers le profil Facebook" %}</strong></span> &nbsp; <a href="{{user_to_display.facebook}}"> <i class="fa fa-facebook"></i> Facebook </a> </li>
               <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Tâches offertes" %}</strong></span> &nbsp; {{user_to_display.get_verbose_offered_job}} </li>
               <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Tâches demandées" %}</strong></span> &nbsp; {{user_to_display.get_verbose_asked_job}} </li>
               <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Recevoir messages par" %}</strong></span> &nbsp; {{user_to_display.get_verbose_mail}} </li>
@@ -45,6 +45,9 @@
                 {% endif %}              </li>
               <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Hobbies" %}</strong></span> &nbsp; <textarea readonly style="width:100% " rows = "4">{{user_to_display.hobbies}} </textarea> </li>
               <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Informations supplémentaires" %}</strong></span> &nbsp; <textarea readonly style="width:100% " rows = "4">{{user_to_display.additional_info}} </textarea> </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Lettre de recommandation n°1" %}</strong></span> &nbsp; <a href="{{verified_documents.recomendation_letter_1.url}}"> {% bootstrap_icon "download" %} Télécharger </a> </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Lettre de recommandation n°2" %}</strong></span> &nbsp; <a href="{{verified_documents.recomendation_letter_2.url}}"> {% bootstrap_icon "download" %} Télécharger </a> </li>
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Casier judiciare" %}</strong></span> &nbsp; <a href="{{verified_documents.criminal_record.url}}"> {% bootstrap_icon "download" %} Télécharger </a> </li>
 
             </ul>
         {% buttons %}

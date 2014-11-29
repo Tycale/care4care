@@ -102,7 +102,7 @@ def verified_profile_view(request):
 # Classes views
 class VerifiedProfileView(UpdateView, SuccessMessageMixin):
     """ Return the edit page for the current logged user"""
-    form_class = ProfileManagementForm
+    form_class = VerifiedProfileForm
     model = User
     template_name = 'verified/verified_profile.html'
     success_message = _('Profil modifié avec succès !')
@@ -151,6 +151,7 @@ def verified_documents_view(request):
 @login_required
 def verified_display_view(request,user_id):
     user_to_display = get_object_or_404(User, pk=user_id)
+    verified_documents = get_object_or_404(VerifiedInformation, user=user_id)
     return render(request, 'verified/verified_display.html', locals())
 
 def statistics(request):

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load url from future %}
+{% load i18n %}{% load postman_tags %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block title %}{% trans "Messaging" %}{% endblock %}
+{% block extrahead %}{{ block.super }}
+<script src="{% static "js/jquery-ui-1.9.2.custom.min.js" %}"></script>
+{% endblock %}
