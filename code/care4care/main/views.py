@@ -154,6 +154,24 @@ def verified_display_view(request,user_id):
     verified_documents = get_object_or_404(VerifiedInformation, user=user_id)
     return render(request, 'verified/verified_display.html', locals())
 
+def verified_status_giving_view(request,user_id):
+    user = get_object_or_404(User, pk=user_id)
+    user.is_verified = True
+    user.save()
+    verified_documents = get_object_or_404(VerifiedInformation, user=user_id)
+    verified_documents.delete()
+    messages.add_message(request, messages.INFO, _('Droit accordé'))
+    return redirect('home')
+
+def verified_status_refuse_view(request,user_id):
+    user = get_object_or_404(User, pk=user_id)
+    user.is_verified = False
+    user.save()
+    verified_documents = get_object_or_404(VerifiedInformation, user=user_id)
+    verified_documents.delete()
+    messages.add_message(request, messages.INFO, _('Droit refusé et demande supprimée'))
+    return redirect('home')
+
 def statistics(request):
     return render(request, 'statistics/statistics.html', locals())
 
