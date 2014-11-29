@@ -33,43 +33,42 @@ def branch_create(request):
             messages.add_message(request, messages.INFO, _('Branche créée'))
             return redirect(obj.get_absolute_url())
 
-    return render(request,'branch/branch_create.html',locals())
+    return render(request,'branch/branch_create.html', locals())
 
 
-def branch_home(request, id, slug):
-    branch = get_object_or_404(Branch, pk=id)
+def branch_home(request, branch_id, slug):
+    branch = get_object_or_404(Branch, pk=branch_id)
     user = request.user
 
     bm = BranchMembers.objects.filter(branch=branch, user=user)
     is_in = bm.count()
 
-    if is_in == 0 and not user.is_superuser :
+    if is_in == 0 and not user.is_superuser:
         messages.add_message(request, messages.INFO, _("Vous n'avez rien à faire ici !"))
         return redirect('home')
 
 
-    if user.is_superuser :
+    if user.is_superuser:
         is_branch_admin = True
         try:
             BranchMembers.objects.get(branch=branch, user=user)
         except BranchMembers.DoesNotExist:
             bm = BranchMembers(branch=branch, user=user, is_admin=True, joined=timezone.now())
             bm.save()
-    else : 
+    else: 
         is_branch_admin = bm.first().is_admin
         
     nb_users = BranchMembers.objects.filter(branch=branch).count()
 
 
     if is_branch_admin:
-
         user_ids = [mb.user.id for mb in branch.membership.all()]
-        vdemands = VerifiedInformation.objects.filter(user__in = user_ids )
+        vdemands = VerifiedInformation.objects.filter(user__in=user_ids)
 
     demands = Job.objects.filter(receiver__in=user_ids, donor=None, branch=branch)
     offers = Job.objects.filter(donor__in=user_ids, receiver=None, branch=branch)
 
-    return render(request,'branch/branch_home.html',locals())
+    return render(request,'branch/branch_home.html', locals())
 
 @login_required
 def branch_join(request):
@@ -82,15 +81,15 @@ def branch_join(request):
         if form.is_valid():
             br_id = form.cleaned_data['id']
             branch = Branch.objects.get(pk=br_id)
-            if BranchMembers.objects.filter(branch=branch, user=user).count() > 0 :
+            if BranchMembers.objects.filter(branch=branch, user=user).count() > 0:
                 messages.add_message(request, messages.INFO, _('Vous êtes déjà dans la branche {branch}').format(branch=branch))
-            else :
+            else:
                 obj = BranchMembers(branch=branch, user=user, is_admin=False, joined=timezone.now())
                 obj.save()
                 messages.add_message(request, messages.INFO, _('Vous avez rejoins la branche {branch}').format(branch=branch))
                 return redirect(branch.get_absolute_url())
 
-    return render(request,'branch/branch_join.html',locals())
+    return render(request,'branch/branch_join.html', locals())
 
 @login_required
 def branch_leave(request, branch_id, user_id):
@@ -101,9 +100,9 @@ def branch_leave(request, branch_id, user_id):
         try:
             to_remove = BranchMembers.objects.get(branch=branch_id, user=user_id)
             to_remove.delete()
-            if user != request.user :
+            if user != request.user:
                 messages.add_message(request, messages.INFO, _('Vous avez quitté la branche {branch}').format(branch=branch))
-            else :
+            else:
                 messages.add_message(request, messages.INFO, _('{user} a été retiré de la branche {branch}').format(branch=branch, user=user))
         except:
             pass
@@ -115,14 +114,14 @@ def branch_leave(request, branch_id, user_id):
 def branch_delete(request, branch_id):
     branch = get_object_or_404(Branch, pk=branch_id)
 
-    if request.user == branch.creator or request.user.is_superuser :
+    if request.user == branch.creator or request.user.is_superuser:
         try:
             branch.delete()
             messages.add_message(request, messages.INFO, _('Vous avez supprimé la branche {branch}').format(branch=branch))
         except:
             pass
-    
     return redirect('home')
+
 
 class NeedHelpView(CreateView):
     """
@@ -144,8 +143,7 @@ class NeedHelpView(CreateView):
 
     def get_initial(self):
         ruser = User.objects.get(pk=self.kwargs['user_id'])
-        return {'receive_help_from_who': 
-                    ruser.receive_help_from_who,
+        return {'receive_help_from_who': ruser.receive_help_from_who,
                 'location': ruser.location,}
 
     def form_valid(self, form):
@@ -155,7 +153,7 @@ class NeedHelpView(CreateView):
         form.instance.latitude = form.instance.receiver.latitude
         form.instance.longitude = form.instance.receiver.longitude
         return super(NeedHelpView, self).form_valid(form)
-    
+
     def get_success_url(self):
         return Branch.objects.get(pk=self.kwargs['branch_id']).get_absolute_url()
 
