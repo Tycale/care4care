@@ -61,10 +61,10 @@ def branch_home(request, id, slug):
     nb_users = BranchMembers.objects.filter(branch=branch).count()
 
 
-
-    user_ids = [mb.user.id for mb in branch.membership.all()]
     if is_branch_admin:
-        vdemands = VerifiedInformation.objects.filter(id__in = user_ids )
+        user_ids = [mb.user.id for mb in branch.membership.all()]
+        vdemands = VerifiedInformation.objects.filter(user__in = user_ids )
+
     demands = Job.objects.filter(receiver__in=user_ids, donor=None, branch=branch)
     offers = Job.objects.filter(donor__in=user_ids, receiver=None, branch=branch)
 

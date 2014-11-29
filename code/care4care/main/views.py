@@ -150,12 +150,13 @@ def verified_documents_view(request):
     return render(request,'verified/verified_documents.html',locals())
 
 @login_required
-def verified_display_view(request,user_id):
+def verified_display_view(request, user_id):
     user_to_display = get_object_or_404(User, pk=user_id)
     verified_documents = get_object_or_404(VerifiedInformation, user=user_id)
     return render(request, 'verified/verified_display.html', locals())
 
-def verified_status_giving_view(request,user_id):
+@login_required
+def verified_status_giving_view(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     user.is_verified = True
     user.save()
@@ -167,7 +168,8 @@ def verified_status_giving_view(request,user_id):
     messages.add_message(request, messages.INFO, _('Droit accordé'))
     return redirect('home')
 
-def verified_status_refuse_view(request,user_id):
+@login_required
+def verified_status_refuse_view(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     user.is_verified = False
     user.save()
