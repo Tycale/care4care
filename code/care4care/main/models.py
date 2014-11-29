@@ -152,7 +152,20 @@ class VerifiedUser(models.Model):
     hobbies = models.TextField(verbose_name=_("Vos hobbies"), blank=True, max_length= 200)
     additional_info = models.TextField(verbose_name=_("Informations supplémentaires"), blank=True, max_length= 300)
 
+    def get_verbose_license(self):
+        return ', '.join([str(l[1]) for l in DRIVER_LICENSE if (str(l[0]) in self.drive_license )])
 
+    def get_verbose_offered_job(self):
+        return ', '.join([str(l[1]) for l in JobCategory.JOB_CATEGORIES if (str(l[0]) in self.offered_job )])
+
+    def get_verbose_asked_job(self):
+        return ', '.join([str(l[1]) for l in JobCategory.JOB_CATEGORIES if (str(l[0]) in self.asked_job )])
+
+    def get_verbose_mail(self):
+        return str(INFORMED_BY[self.mail_preferences][1])
+
+    def get_verbose_receive(self):
+        return ', '.join([str(l[1]) for l in MemberType.MEMBER_TYPES_GROUP if (l[0] == self.receive_help_from_who)])
 class CommonInfo(models.Model):
     """
     Common informations class

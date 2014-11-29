@@ -129,6 +129,16 @@ def verified_documents_view(request):
 @login_required
 def verified_display_view(request,user_id):
     user_to_display = get_object_or_404(User, pk=user_id)
+    if (user_to_display.drive_license):
+        driving_license = user_to_display.get_verbose_license()
+    if (user_to_display.languages):
+        vlanguages = user_to_display.get_verbose_languages()
+    if (user_to_display.offered_job):
+        voffered_job = user_to_display.get_verbose_offered_job()
+    if (user_to_display.asked_job):
+        vasked_job = user_to_display.get_verbose_asked_job()
+    vmail = user_to_display.get_verbose_mail()
+    vreceive = user_to_display.get_verbose_receive()
     return render(request, 'verified/verified_display.html', locals())
 
 def statistics(request):
