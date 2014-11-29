@@ -4,7 +4,15 @@ from django.db import models
 
 from multiselectfield import MultiSelectField
 
-from main.models import User, JobCategory
+from main.models import User, JobCategory, MemberType
+
+JOB_STATUS_CHOICES = (
+    (1, _('créé')),
+    (2, _('reçu proposition')),
+    (3, _('proposition acceptée')),
+    (4, _('completé')),
+    (5, _('echoué')),
+    )
 
 TIME_CHOICES = (
     (1, _('Début de matinée (8h-10h)')),
@@ -60,6 +68,8 @@ class Job(models.Model):
     estimated_time = models.IntegerField(verbose_name=_("Temps estimé (en minutes)"))
     real_time = models.IntegerField(verbose_name=_("Temps réel (en minutes)"), blank=True, null=True)
     category = models.IntegerField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Type d'aide"))
+    receive_help_from_who = models.IntegerField(choices=MemberType.MEMBER_TYPES_GROUP, default=MemberType.ALL,
+                                      verbose_name=_("Qui peut voir et répondre à la demande/offre ?"))
     date = models.DateTimeField(verbose_name=_("Date"))
     time = MultiSelectField(choices=TIME_CHOICES, verbose_name=_("Heure(s) possible(s)"), blank=False, help_text=_('Selectionnez les heures qui vous conviennent'))
     km = models.IntegerField(verbose_name=_("km"), blank=True, null=True)
@@ -67,8 +77,14 @@ class Job(models.Model):
     latitude = models.CharField(_('Latitude'), max_length=20, null=True, blank=True)
     longitude = models.CharField(_('Longitude'), max_length=20, null=True, blank=True)
 
+    state = models.IntegerField(choices=JOB_STATUS_CHOICES, default=1,
+                                      verbose_name=_("Status"))
+
     def get_verbose_category(self):
         return JobCategory.JOB_CATEGORIES[self.category-1][1]
+
+    def get_verbose_status(self):
+        return JOB_STATUS_CHOICES[self.state-1][1]
 
 class Comment(models.Model):
     user = models.ForeignKey(User)
