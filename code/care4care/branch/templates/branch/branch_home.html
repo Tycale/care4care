@@ -105,11 +105,9 @@
                 <tbody data-link='row'>
                     {% for demands in vdemands %}           
                     <tr>
-                        <a href="#">
-                        <td>{{demands.user}}</td>
+                        <td><a href="{% url 'verified_display' user_id=demands.user.id %}">{{demands.user}}</a></td>
                         <td>{{demands.user.get_full_name }}</td>
                         <td>{{demands.date}}</td>
-                        </a>
                     </tr>
                     {% endfor %}
                 </tbody>

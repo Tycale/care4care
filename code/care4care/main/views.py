@@ -126,6 +126,11 @@ def verified_documents_view(request):
 
     return render(request,'verified/verified_documents.html',locals())
 
+@login_required
+def verified_display_view(request,user_id):
+    user_to_display = get_object_or_404(User, pk=user_id)
+    return render(request, 'verified/verified_display.html', locals())
+
 def statistics(request):
     return render(request, 'statistics/statistics.html', locals())
 

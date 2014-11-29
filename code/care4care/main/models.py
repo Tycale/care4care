@@ -149,8 +149,8 @@ class VerifiedUser(models.Model):
 
     facebook = models.URLField(verbose_name="Lien (URL) de votre profil Facebook", blank=True)
 
-    hobbies = models.TextField(verbose_name=_("Vos hobbies"), blank=True)
-    additional_info = models.TextField(verbose_name=_("Informations supplémentaires"), blank=True)
+    hobbies = models.TextField(verbose_name=_("Vos hobbies"), blank=True, max_length= 200)
+    additional_info = models.TextField(verbose_name=_("Informations supplémentaires"), blank=True, max_length= 300)
 
 
 class CommonInfo(models.Model):

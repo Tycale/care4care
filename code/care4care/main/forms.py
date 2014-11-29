@@ -87,11 +87,9 @@ class ProfileManagementForm(forms.ModelForm):
         field.
         """
         cleaned_data = super(ProfileManagementForm, self).clean()
-        if not 'longitude' in self.cleaned_data or not self.cleaned_data['longitude']:
-            raise forms.ValidationError(_("Veuillez introduire une adresse valide via les propositions."))
-        if not 'latitude' in self.cleaned_data or not self.cleaned_data['latitude']:
-            raise forms.ValidationError(_("Veuillez introduire une adresse valide via les propositions."))
-
+        """
+        Pas obligé de mettre l'adresse
+        """
         return self.cleaned_data
 
 
