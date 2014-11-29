@@ -18,7 +18,7 @@ in the INSTALLED_APPS setting.
   <p>{% trans "Sorry, this page number is invalid." %}</p>
   {% else %}
   {% if pm_messages %}
-  {% block pm_by_modes %}<div id="pm_by_modes">
+  {% block pm_by_modes %}<div id="pm_by_modes" class="pull-right">
     <span class="pm_by_mode">{% if by_message %}<a href="{{ by_conversation_url }}">{% endif %}{% trans "by conversation" %}{% if by_message %}</a>{% endif %}</span>
     <span class="pm_by_mode">{% if by_conversation %}<a href="{{ by_message_url }}">{% endif %}{% trans "by message" %}{% if by_conversation %}</a>{% endif %}</span>
   </div>{% endblock pm_by_modes %}

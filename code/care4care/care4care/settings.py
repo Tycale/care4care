@@ -165,7 +165,7 @@ AJAX_SELECT_INLINES = 'inline'
 
 AJAX_LOOKUP_CHANNELS = {
        # pass a dict with the model and the field to search against
-       'user'  : {'model':'auth.user', 'search_field':'username'},
+       'user'  : dict(model='auth.user', search_field='username'),
 }
 
 #Postman
