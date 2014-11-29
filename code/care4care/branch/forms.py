@@ -7,6 +7,7 @@ from branch.models import Branch, Job
 
 from django.utils import timezone
 
+from branch.widgets import OneJobSelect
 
 class CreateBranchForm(forms.ModelForm):
     class Meta:
@@ -47,7 +48,6 @@ class NeedHelpForm(forms.ModelForm):
             raise forms.ValidationError(_("Le temps estimé doit être plus grand que 0 minute."))
         return est
 
-
     class Meta:
         model = Job
         fields = ['description', 'estimated_time', 'category', 'date', 'time', 'location', 'latitude', 'longitude', 'title', 'receive_help_from_who']
@@ -55,7 +55,8 @@ class NeedHelpForm(forms.ModelForm):
             'latitude': forms.HiddenInput,
             'longitude': forms.HiddenInput,
             'location': forms.HiddenInput,
-            'date' : DateTimePicker(options={"pickTime": False,}),
+            'date': DateTimePicker(options={"pickTime": False,}),
+            'category': OneJobSelect,
         }
 
 class OfferHelpForm(forms.ModelForm):

@@ -67,7 +67,7 @@ class Job(models.Model):
     description = models.TextField(verbose_name=_("Description"), blank=True, null=True)
     estimated_time = models.IntegerField(verbose_name=_("Temps estimé (en minutes)"))
     real_time = models.IntegerField(verbose_name=_("Temps réel (en minutes)"), blank=True, null=True)
-    category = models.IntegerField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Type d'aide"))
+    category = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Type d'aide"))
     receive_help_from_who = models.IntegerField(choices=MemberType.MEMBER_TYPES_GROUP, default=MemberType.ALL,
                                       verbose_name=_("Qui peut voir et répondre à la demande/offre ?"))
     date = models.DateTimeField(verbose_name=_("Date"))
@@ -82,7 +82,9 @@ class Job(models.Model):
     is_offer= models.BooleanField(default=False,verbose_name=_("Est-ce une offre ?"))
 
     def get_verbose_category(self):
-        return JobCategory.JOB_CATEGORIES[self.category-1][1]
+        if not self.category:
+            return ''
+        return ', '.join([str(l[1]) for l in JobCategory.JOB_CATEGORIES if (str(l[0]) in self.category)])
 
     def get_verbose_status(self):
         return JOB_STATUS_CHOICES[self.state-1][1]

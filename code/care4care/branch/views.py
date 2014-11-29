@@ -7,12 +7,11 @@ from django.contrib import messages
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
 
-from branch.models import Branch, BranchMembers
-from branch.forms import NeedHelpForm, Job
+from branch.models import Branch, BranchMembers, Job
 
 from main.models import User, VerifiedInformation
 
-from branch.forms import CreateBranchForm, ChooseBranchForm
+from branch.forms import CreateBranchForm, ChooseBranchForm, OfferHelpForm, NeedHelpForm
 from django.utils import timezone
 from django.core.urlresolvers import reverse
 
@@ -173,7 +172,7 @@ class OfferHelpView(CreateView):
     A registration backend for our CareRegistrationForm
     """
     template_name = 'job/offer_help.html'
-    form_class = NeedHelpForm
+    form_class = OfferHelpForm
     model = Job
 
     @method_decorator(login_required)
