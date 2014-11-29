@@ -402,6 +402,20 @@ def similar_offers(request):
 def statistics(request):
     return render(request, 'statistics/statistics.html', locals())
 
+# Return json-type HttpResponse from method() result
+def get_json_from(method):
+    return HttpResponse(method, content_type="application/json")
+
 
 def get_registrated_users_json(request):
-    return HttpResponse(Statistics.get_users_registrated_json(), content_type="application/json")
+    return get_json_from(Statistics.get_users_registrated_json())
+
+def get_account_types_json(request):
+    return get_json_from(Statistics.get_account_types_json())
+
+def get_users_status_json(request):
+    return get_json_from(Statistics.get_users_status_json())
+
+def get_job_categories_json(request):
+    return get_json_from(Statistics.get_job_categories_json())
+
