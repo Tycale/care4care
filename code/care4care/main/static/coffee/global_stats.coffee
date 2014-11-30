@@ -1,4 +1,4 @@
-$ ->    
+$ ->
     # Care4Care data charts
 
     # Registrated users
