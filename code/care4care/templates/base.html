@@ -344,13 +344,14 @@
                       </ul>
                   </li>
 
-                  <!-- TODO: show only if user is admin -->
+                  {% if request.user.is_superuser %}
                   <li class="sub-menu">
                       <a  href="{% url 'stats' %}">
                         <i class=" fa fa-bar-chart-o"></i>
                         {% trans "Statistiques" %}
                       </a>
                   </li>
+                  {% endif %}
 
               </ul>
               <!-- sidebar menu end-->
