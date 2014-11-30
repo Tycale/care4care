@@ -9,6 +9,8 @@ from django.core.validators import RegexValidator
 from django.contrib.auth.models import UserManager as BaseUserManager
 from django.core.urlresolvers import reverse
 from easy_thumbnails.fields import ThumbnailerImageField
+#from branch.models import Job
+import datetime
 import json
 
 import re
@@ -399,12 +401,21 @@ class Statistics:
         }
 
 
+    @staticmethod
+    def get_last_6_months():
+        print("last_6m")
+        last_6m = [datetime.date.today() - datetime.timedelta(months=-i) for i in range(1, 6)]
+        print('last_6m =', last_6m)
+        return [str(d.month) for d in last_6m]
+
+
     # Global statistics
 
     @staticmethod
     def get_users_registrated_json():
         # TODO: get stats from database
         response = {}
+        """
         response['labels'] = [
             __("Avril"),
             __("Mai"),
@@ -414,8 +425,31 @@ class Statistics:
             __("Septembre"),
             __("Octobre")
         ]
+        """
+        response['labels'] = get_last_6_months()
         line_data = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
         line_data['data'] = [10, 15, 22, 33, 48, 69, 99]
+        """
+        print("before 6m")
+        users_6m = User.objects.filter(pub_date__gte=timezone.now() + timezone.delta(months=-6))
+        values = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0}
+        # Not really correct
+        now = timezone.now()
+        print('now =', now)
+        six_months_ago = now + timezone.delta(months=-6)
+        print('six_months_ago =', six_months_ago)
+        for u in users_6m:
+            reg_months = u.date_joined
+            print(reg_months)
+            m = -6
+            m_months_ago = now + timezone.delta(months=m)
+            for i in range(m, -1):
+                if reg_months < i:
+                    values[i] += 1
+                    break
+        print('values =', values)
+        line_data['data'] = values
+        """
         response['datasets'] = [line_data]
         return json.dumps(response)
 
@@ -424,20 +458,24 @@ class Statistics:
     def get_account_types_json():
         members = {}
         members['label'] = __('Membres')
-        members['value'] = 69
+        #members['value'] = 69
+        members['value'] = User.objects.filter(user_type=MemberType.MEMBER).count()
         members['color'] = '#F7464A'
 
         verif_members = {}
         verif_members['label'] = __('Membres vérifiés')
-        verif_members['value'] = 21
+        #verif_members['value'] = 21
+        verif_members['value'] = User.objects.filter(user_type=MemberType.VERIFIED_MEMBER).count()
         verif_members['color'] = '#FDB45C'
 
         non_members = {}
         non_members['label'] = __('Non-membres')
-        non_members['value'] = 10
+        #non_members['value'] = 10
+        non_members['value'] = User.objects.filter(user_type=MemberType.NON_MEMBER).count()
         non_members['color'] = '#46BFBD'
 
         response = [members, verif_members, non_members]
+
         return json.dumps(response)
 
 
@@ -469,7 +507,7 @@ class Statistics:
     @staticmethod
     def get_job_categories_json():
         response = {}
-        response['labels'] = [
+        """response['labels'] = [
             __("Visites à domicile"),
             __("Tenir compagnie"),
             __("Transport par voiture"),
@@ -477,15 +515,24 @@ class Statistics:
             __("Garder la maison"),
             __("Boulots manuels"),
             __("Jardinage"),
+            __("Garder des animaux),
             __("Soins personnels"),
             __("Administratif"),
             __("Autre"),
             __("Spécial... :D"),
-        ]
+        ]"""
+        response['labels'] = [str(l[1]) for l in JobCategory.JOB_CATEGORIES]
         datasets = []
         first_dataset = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
-        #first_dataset['label'] = __('Membres')  # Non-necessary field
-        first_dataset['data'] = [40, 30, 60, 70, 25, 47, 39, 69, 34, 23, 69]
+        #first_dataset['label'] = __('Jobs effectués par catégorie')  # Non-necessary field
+        first_dataset['data'] = [40, 30, 60, 70, 25, 47, 39, 69, 34, 23, 31, 69]
+        print('wtf is this shit')
+        #values = [Job.objects.filter(category=l[0]).count() for l in JobCategory.JOB_CATEGORIES]
+        #print("values =", values)
+        #if len(values) == 0:
+        #    print('wtf')
+        #first_dataset['data'] = values
+
         datasets.append(first_dataset)
 
         response['datasets'] = datasets
@@ -515,6 +562,11 @@ class Statistics:
         #first_dataset['label'] = __('Membres')  # Non-necessary field
         first_dataset['data'] = [40, 30, 60, 70, 25, 47, 39, 69, 34, 23, 69]
         datasets.append(first_dataset)
+        #nb_demands = Demand.objects.filter(receiver=user_to_display).count()
+        #[Job.objects.filter(category=l[0]).count() for l in JobCategory.JOB_CATEGORIES]
+
+        #cat_values = [Demand.objects.filter(receiver=user_id, category=l[0]).count() for l in JobCategory.JOB_CATEGORIES]
+        #first_dataset['data'] = cat_values
 
         response['datasets'] = datasets
         return json.dumps(response)
@@ -557,6 +609,7 @@ class Statistics:
             __("Septembre"),
             __("Octobre"),
         ]
+        #filter(pub_date__gte=timezone.now() + timezone.delta(months=-6))
         datasets = []
         first_dataset = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
         #first_dataset['label'] = __('Membres')  # Non-necessary field
