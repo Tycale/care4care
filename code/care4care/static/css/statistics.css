@@ -1,0 +1,24 @@
+
+.stats_title {
+	display: inline;
+	vertical-align: text-bottom;
+}
+
+.legend_container {
+	display: inline;
+	float: right;
+	font-size: 65%;
+	vertical-align: text-bottom;
+}
+
+
+.legend_container ul {
+	display: inline;
+	padding-left: 0px;
+}
+
+
+.legend_container li {
+	display: inline;
+	padding-left: 7px;
+}

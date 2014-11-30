@@ -21,6 +21,7 @@ from postman.api import pm_write
 
 from django.views.generic.detail import DetailView
 
+from main.models import Color
 import json
 import sys
 from os.path import abspath, dirname
@@ -409,6 +410,9 @@ def similar_offers(request):
 ### Statistics ###
 
 def statistics(request):
+    LIGHT_BLUE_RGB = Color.rgba(Color.LIGHT_BLUE_RGB, 1)
+    GREEN_RGB = Color.rgba(Color.GREEN_RGB, 1)
+    ORANGE_RGB = Color.rgba(Color.ORANGE_RGB, 1)
     return render(request, 'statistics/statistics.html', locals())
 
 # Return json-type HttpResponse from method() result
