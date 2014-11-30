@@ -30,6 +30,18 @@ TIME_CHOICES = (
     (9, _('Nuit (00h-8h)')),
     )
 
+SHORT_TIME = (
+    _('8h-10h'),
+    _('10h-12h'),
+    _('12h-13h'),
+    _('13h-16h'),
+    _('16h-19h'),
+    _('19h-20h'),
+    _('20h-22h'),
+    _('22h-00h'),
+    _('00h-8h'),
+    )
+
 class Branch(models.Model):
     name = models.CharField(verbose_name=_("Nom de la branche"), max_length=255, help_text=_("Nom de la localité"))
     slug = models.SlugField()
@@ -97,6 +109,11 @@ class Job(models.Model):
         if not self.time:
             return ''
         return ', '.join([str(l[1]) for l in TIME_CHOICES if (str(l[0]) in self.time)])
+
+    def get_short_time(self):
+        if not self.time:
+            return ''
+        return ', '.join([str(SHORT_TIME[l[0]-1]) for l in TIME_CHOICES if (str(l[0]) in self.time)])
 
     class Meta:
         abstract = True

@@ -29,7 +29,7 @@
           <td><a href="{% url 'see_demand' branch_id=demand.branch.id slug=demand.branch.slug demand_id=demand.id %}" class="mainlink"> {{ demand.title }}</a></td>
 
           <td>{{ demand.date | naturalday:'SHORT_DATE_FORMAT' }}</td>
-          <td>{{ demand.get_verbose_time }}</td>
+          <td>{{ demand.get_short_time }}</td>
           
         </tr>
         {% endfor %}
