@@ -399,6 +399,8 @@ class Statistics:
         }
 
 
+    # Global statistics
+
     @staticmethod
     def get_users_registrated_json():
         # TODO: get stats from database
@@ -489,6 +491,9 @@ class Statistics:
         response['datasets'] = datasets
         return json.dumps(response)
 
+
+    # User statistics
+
     @staticmethod
     def get_user_job_categories_json(user_id):
         response = {}
@@ -509,6 +514,74 @@ class Statistics:
         first_dataset = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
         #first_dataset['label'] = __('Membres')  # Non-necessary field
         first_dataset['data'] = [40, 30, 60, 70, 25, 47, 39, 69, 34, 23, 69]
+        datasets.append(first_dataset)
+
+        response['datasets'] = datasets
+        return json.dumps(response)
+
+
+    @staticmethod
+    def get_user_job_avg_time_json(user_id):
+        response = {}
+        response['labels'] = [
+            __("Visites à domicile"),
+            __("Tenir compagnie"),
+            __("Transport par voiture"),
+            __("Shopping"),
+            __("Garder la maison"),
+            __("Boulots manuels"),
+            __("Jardinage"),
+            __("Soins personnels"),
+            __("Administratif"),
+            __("Autre"),
+            __("Spécial... :D"),
+        ]
+        datasets = []
+        first_dataset = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
+        #first_dataset['label'] = __('Membres')  # Non-necessary field
+        first_dataset['data'] = [40, 30, 60, 70, 25, 47, 39, 69, 34, 23, 69]
+        datasets.append(first_dataset)
+
+        response['datasets'] = datasets
+        return json.dumps(response)
+
+
+    @staticmethod
+    def get_user_km_json(user_id):
+        response = {}
+        response['labels'] = [
+            __("Mai"),
+            __("Juin"),
+            __("Juillet"),
+            __("Août"),
+            __("Septembre"),
+            __("Octobre"),
+        ]
+        datasets = []
+        first_dataset = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
+        #first_dataset['label'] = __('Membres')  # Non-necessary field
+        first_dataset['data'] = [10, 20, 30, 42, 25, 28]
+        datasets.append(first_dataset)
+
+        response['datasets'] = datasets
+        return json.dumps(response)
+
+
+    @staticmethod
+    def get_user_jobs_amount_json(user_id):
+        response = {}
+        response['labels'] = [
+            __("Mai"),
+            __("Juin"),
+            __("Juillet"),
+            __("Août"),
+            __("Septembre"),
+            __("Octobre"),
+        ]
+        datasets = []
+        first_dataset = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
+        #first_dataset['label'] = __('Membres')  # Non-necessary field
+        first_dataset['data'] = [10, 20, 30, 42, 25, 28]
         datasets.append(first_dataset)
 
         response['datasets'] = datasets
