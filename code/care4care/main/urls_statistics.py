@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url
 from main.views import statistics, get_registrated_users_json, get_account_types_json,\
-                        get_users_status_json, get_job_categories_json
+                        get_users_status_json, get_job_categories_json, get_user_job_categories_json
 
 
 urlpatterns = patterns(
@@ -10,4 +10,7 @@ urlpatterns = patterns(
     url(r'^account_types_json$', get_account_types_json, name='stats_account_types_json'),
     url(r'^users_status_json$', get_users_status_json, name='stats_users_status_json'),
     url(r'^job_categories_json$', get_job_categories_json, name='stats_job_categories_json'),
+    url(r'^job_categories_json/(?P<user_id>\d+)/$',
+        get_user_job_categories_json,
+        name='user_stats_job_categories_json'),
 )

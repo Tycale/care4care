@@ -431,3 +431,6 @@ def get_users_status_json(request):
 
 def get_job_categories_json(request):
     return get_json_from(Statistics.get_job_categories_json())
+
+def get_user_job_categories_json(request, user_id):
+    return get_json_from(Statistics.get_user_job_categories_json(user_id))

@@ -488,3 +488,28 @@ class Statistics:
 
         response['datasets'] = datasets
         return json.dumps(response)
+
+    @staticmethod
+    def get_user_job_categories_json(user_id):
+        response = {}
+        response['labels'] = [
+            __("Visites à domicile"),
+            __("Tenir compagnie"),
+            __("Transport par voiture"),
+            __("Shopping"),
+            __("Garder la maison"),
+            __("Boulots manuels"),
+            __("Jardinage"),
+            __("Soins personnels"),
+            __("Administratif"),
+            __("Autre"),
+            __("Spécial... :D"),
+        ]
+        datasets = []
+        first_dataset = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
+        #first_dataset['label'] = __('Membres')  # Non-necessary field
+        first_dataset['data'] = [40, 30, 60, 70, 25, 47, 39, 69, 34, 23, 69]
+        datasets.append(first_dataset)
+
+        response['datasets'] = datasets
+        return json.dumps(response)
