@@ -15,7 +15,7 @@ JOB_STATUS_CHOICES = (
     (2, _('reçu proposition')),
     (3, _('proposition acceptée')),
     (4, _('completé')),
-    (5, _('echoué')),
+    (5, _('échoué')),
     )
 
 TIME_CHOICES = (
