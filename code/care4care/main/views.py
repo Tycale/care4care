@@ -41,7 +41,7 @@ def home(request):
         offers = Offer.objects.filter(branch__in=branch_ids).all()
         if demands.count() > 3 or offers.count() > 3:
             not_enough = False
-    
+
     if not_enough:
         demands = Demand.objects.all()
         offers = Offer.objects.all()
@@ -195,6 +195,8 @@ def member_favorite(request, user_id):
     user = request.user
     favorite_user = get_object_or_404(User, pk=user_id)
     if request.method == "PUT":
+        if favorite_user in user.ignore_list.all():
+            return HttpResponse(json.dumps({"name": favorite_user.get_full_name()}), status=422)
         user.favorites.add(favorite_user)
         user.save()
         return HttpResponse(
@@ -232,6 +234,8 @@ def member_ignore_list(request, user_id):
     other_user = get_object_or_404(User, pk=user_id)
     if request.method == "PUT":
         user.ignore_list.add(other_user)
+        user.personal_network.remove(other_user)
+        user.favorites.remove(other_user)
         try:
           user.save()
         except:
@@ -427,4 +431,3 @@ def get_users_status_json(request):
 
 def get_job_categories_json(request):
     return get_json_from(Statistics.get_job_categories_json())
-

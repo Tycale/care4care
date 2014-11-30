@@ -25,6 +25,25 @@
 
 <div class="tab-content">
 
+  <div class="modal fade bs-ignore-modal-sm" id="ignore_user_modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Ignorer cette personne</h4>
+        </div>
+        <div class="modal-body">
+          <p>  {% trans 'êtes vous sur de vouloir Ignorer cette personne ? elle sera supprimée de vos favoris et de votre réseau et vous ne recevrez plus d&#39;aide de celle çi.' %}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'Annuler' %}</button>
+          <button type="button" class="btn btn-primary" id="ignore_user">{% trans 'Confirmer' %}</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+
   <div id="profile" class="tab-pane fade in active">
       <input id="user_id" value="{{ user_to_display.id }}" type="hidden"/>
       <input id="csrf_token" value="{{ csrf_token }}" type="hidden"/>
@@ -43,7 +62,7 @@
                     <div class="media-body">
                       <h4 class="media-heading">{{user_to_display.get_full_name}}
                         {% if request.user.id != user_to_display.id %}
-                        <a id="ignore_user" href="#" class="glyphicon glyphicon-ban-circle" data-toggle="tooltip" data-placement="right" title="{% trans 'Ignorer cette personne. Attention vous ne recevrez plus d&#39;aide de cette personne.' %}"></a>
+                        <a href="#" class="glyphicon glyphicon-ban-circle" data-toggle="modal" data-target=".bs-ignore-modal-sm"></a>
                         {% endif %}
                       </h4>
                     </div>
@@ -207,7 +226,8 @@
     $("#add_favorite_link").attr("href","#False");
     $("#is_favorite_star").addClass("glyphicon-star-empty");
     $("#is_favorite_star").removeClass("glyphicon-star");
-    $.gritter.add({
+    if (name){
+      $.gritter.add({
         // (string | mandatory) the heading of the notification
         title: 'Notification',
         // (string | mandatory) the text inside the notification
@@ -220,14 +240,16 @@
         time: '5000',
         // (string | optional) the class name you want to apply to that specific message
         //class_name: 'notification-class'
-    });
+      });
+    }
   }
 
   var add_favorite_success = function(name){
     $("#add_favorite_link").attr("href","#True");
     $("#is_favorite_star").removeClass("glyphicon-star-empty");
     $("#is_favorite_star").addClass("glyphicon-star");
-    $.gritter.add({
+    if (name){
+      $.gritter.add({
         // (string | mandatory) the heading of the notification
         title: 'Notification',
         // (string | mandatory) the text inside the notification
@@ -240,13 +262,32 @@
         time: '5000',
         // (string | optional) the class name you want to apply to that specific message
         //class_name: 'notification-class'
+      });
+    }
+  }
+
+  var add_favorite_fail = function(){
+    $.gritter.add({
+      // (string | mandatory) the heading of the notification
+      title: 'Notification',
+      // (string | mandatory) the text inside the notification
+      text: "Impossible d'ajouter l'utilisateur "+ name + " à vos favoris car il est ignoré",
+      // (string | optional) the image to display on the left
+      //image: 'assets/img/ui-sam.jpg',
+      // (bool | optional) if you want it to fade out on its own or just sit there
+      sticky: false,
+      // (int | optional) the time you want it to be alive for before fading out
+      time: '5000',
+      // (string | optional) the class name you want to apply to that specific message
+      //class_name: 'notification-class'
     });
   }
 
   var remove_network_success = function(name){
     $("#add_network_link").text("{% trans 'Ajouter à mon réseau' %}");
     $("#add_network_link").attr("href","#False");
-    $.gritter.add({
+    if (name){
+      $.gritter.add({
         // (string | mandatory) the heading of the notification
         title: 'Notification',
         // (string | mandatory) the text inside the notification
@@ -259,13 +300,15 @@
         time: '5000',
         // (string | optional) the class name you want to apply to that specific message
         //class_name: 'notification-class'
-    });
+      });
+    }
   }
 
   var add_network_success = function(name){
     $("#add_network_link").text("{% trans 'Retirer de mon réseau' %}");
     $("#add_network_link").attr("href","#True");
-    $.gritter.add({
+    if (name){
+      $.gritter.add({
         // (string | mandatory) the heading of the notification
         title: 'Notification',
         // (string | mandatory) the text inside the notification
@@ -278,10 +321,31 @@
         time: '5000',
         // (string | optional) the class name you want to apply to that specific message
         //class_name: 'notification-class'
+      });
+    }
+  }
+
+  var add_network_fail = function(){
+    $.gritter.add({
+      // (string | mandatory) the heading of the notification
+      title: 'Notification',
+      // (string | mandatory) the text inside the notification
+      text: "Impossible d'ajouter l'utilisateur "+ name + " à votre réseau car il est ignoré",
+      // (string | optional) the image to display on the left
+      //image: 'assets/img/ui-sam.jpg',
+      // (bool | optional) if you want it to fade out on its own or just sit there
+      sticky: false,
+      // (int | optional) the time you want it to be alive for before fading out
+      time: '5000',
+      // (string | optional) the class name you want to apply to that specific message
+      //class_name: 'notification-class'
     });
   }
 
   var add_ignore_success = function(name){
+    $('#ignore_user_modal').modal('hide')
+    remove_favorite_success();
+    remove_network_success();
     $.gritter.add({
         // (string | mandatory) the heading of the notification
         title: 'Notification',
@@ -317,24 +381,23 @@
     $('#add_favorite_link').click(function (event) {
       event.preventDefault();
       if ($(this).attr('href') != '#True'){
-        add_favorite($("#user_id").val(),add_favorite_success("{{user_to_display.get_full_name}}"));
+        add_favorite($("#user_id").val(),add_favorite_success, add_favorite_fail );
       }else{
-        remove_favorite($("#user_id").val(),remove_favorite_success("{{user_to_display.get_full_name}}"));
+        remove_favorite($("#user_id").val(),remove_favorite_success);
       }
     });
 
     $('#add_network_link').click(function (event) {
       event.preventDefault();
       if ($(this).attr('href') == '#True'){
-        remove_network($("#user_id").val(),remove_network_success("{{user_to_display.get_full_name}}"));
+        remove_network($("#user_id").val(),remove_network_success);
       }else{
-        add_network($("#user_id").val(),add_network_success("{{user_to_display.get_full_name}}"));
+        add_network($("#user_id").val(),add_network_success, add_network_fail);
       }
     });
 
     $('#ignore_user').click(function (event) {
-        event.preventDefault();
-        add_ignored($("#user_id").val(), add_ignore_success("{{user_to_display.get_full_name}}"));
+        add_ignored($("#user_id").val(), add_ignore_success);
     });
 
   });
