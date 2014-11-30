@@ -57,9 +57,11 @@
               <li class="list-group-item"><strong>{% trans "Catégorie" %}</strong><br/>&nbsp; {{object.get_category_display}}</li>
               <li class="list-group-item"><strong> {% trans "Date" %}</strong><br/>&nbsp;  {{ object.date|naturalday:'DATE_FORMAT' }}</li>
               <li class="list-group-item"><strong> {% trans "Heures de disponibilité" %}</strong><br/>&nbsp;  {{object.get_verbose_time}}</li>
-              <li class="list-group-item"><strong> {% trans "Durée estimée du service" %}</strong><br/> &nbsp; {{object.estimated_time}}</li>
+              <li class="list-group-item"><strong> {% trans "Durée estimée du service" %}</strong><br/> &nbsp; {{object.estimated_time}} {% trans "minutes" %}</li>
               <li class="list-group-item"><strong> {% trans "Lieu" %}</strong><br/> &nbsp; {{object.location}}</li>
+              {% if object.description %}
               <li class="list-group-item"><strong> {% trans "Description" %}</strong><br/> &nbsp; {{object.description}}</li>
+              {% endif %}
             </ul>
 
           </div>
