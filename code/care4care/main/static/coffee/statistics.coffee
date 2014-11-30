@@ -9,13 +9,13 @@ $ ->
             dataType: "json"
             success: (json_data) ->
                 context = get2dContext(canvas_id)
-                draw_chart_type(context, chart_type, json_data)
+                draw_chart_type(context, json_data, chart_type)
             error: (err) ->
                 console.log("Could not load: "+url_json)
         )
 
 
-    draw_chart_type = (context, chart_type, data) ->
+    draw_chart_type = (context, data, chart_type) ->
         chart = new Chart(context)
         switch chart_type
             when "Line"
@@ -42,18 +42,6 @@ $ ->
     # Evolution of users status (active, on holiday, deactivated)
     # in regard of time
     create_chart("/statistics/users_status_json", "users_status_canvas", "Line")
-    
-    # Add legend (TODO: load those colors rgb from server?)
-    LIGHT_BLUE_RGB = [151, 187, 205]
-    GREEN_RGB  = [46, 217, 138]
-    ORANGE_RGB = [255, 169, 0]
-    get_rgba = (my_rgb, a) ->
-        "rgba(#{my_rgb[0]}, #{my_rgb[1]}, #{my_rgb[2]}, #{a})"
-    document.getElementById("users_status_legend").innerHTML = "Légende: <ul style='display: inline; padding-left: 0px;'>
-            <li style='display: inline; padding-left: 7px; color: #{get_rgba(LIGHT_BLUE_RGB, 1)}'> Actifs </li>
-            <li style='display: inline; padding-left: 7px; color: #{get_rgba(GREEN_RGB, 1)}'> En vacances </li>
-            <li style='display: inline; padding-left: 7px; color: #{get_rgba(ORANGE_RGB, 1)}'> Désactivés </li>
-        </ul>"
 
 
     # Most done job categories
@@ -63,6 +51,7 @@ $ ->
 
 
     # Tests graphs
+    ###
     data =
         labels: [
             "January"
@@ -156,3 +145,4 @@ $ ->
     ]
     c_polar = document.getElementById("chart_polar").getContext("2d")
     polar_chart = new Chart(c_polar).PolarArea(polar_data)
+    ###
