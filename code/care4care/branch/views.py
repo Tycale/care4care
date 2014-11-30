@@ -136,7 +136,7 @@ class CreateDemandView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(CreateDemandView, self).get_context_data(**kwargs)
-        context['user'] = User.objects.get(pk=self.kwargs['user_id'])
+        context['ruser'] = User.objects.get(pk=self.kwargs['user_id'])
         context['branch'] = Branch.objects.get(pk=self.kwargs['branch_id'])
         return context
 
@@ -171,7 +171,7 @@ class CreateOfferView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(CreateOfferView, self).get_context_data(**kwargs)
-        context['user'] = User.objects.get(pk=self.kwargs['user_id'])
+        context['ruser'] = User.objects.get(pk=self.kwargs['user_id'])
         context['branch'] = Branch.objects.get(pk=self.kwargs['branch_id'])
         return context
 
