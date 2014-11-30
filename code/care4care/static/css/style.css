@@ -2420,11 +2420,37 @@ div.top-menu > ul > li > button > a {
     position: absolute;
     padding-left: 20px;
     color: rgba(255, 255, 255, 1);
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);;
+    text-shadow: 0px 0px 40px rgba(0, 0, 0, 1);
+    margin-top: 20px;
+    margin-left: 5px;
+    padding: 5px;
+}
+
+#title-branch h3{
+    margin-top: 0px;
+}
+
+#title-branch:hover {
+    background-color: rgba(255, 255, 255, 0.82);
+    color: #000;
+    border-radius: 20px;
+    text-shadow: none;
 }
 
 #title-branch h5 {
     padding-left: 15px;
+}
+
+#title-right a {
+    color: rgba(255, 255, 255, 1);
+} 
+
+#title-right {
+    position: absolute;
+    padding-right: 20px;
+    padding-top: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
+    text-align: center;
 }
 
 #options-branch {
@@ -2452,10 +2478,10 @@ div.top-menu > ul > li > button > a {
   margin-left: 0px;
 }
 
-.form-group {
+/*.form-group {
     border-bottom: 1px solid #eff2f7;
     padding-bottom: 10px;
-}
+}*/
 
 table.rowlink > tbody > tr {
     cursor: pointer;
@@ -2471,4 +2497,44 @@ table.rowlink > tbody > tr {
 
 textarea {
     resize: none;
+}
+
+.adp-directions {
+    width: 100%;
+}
+
+.vertical-align {
+    display: flex;
+    align-items: center;
+}
+
+.commentList {
+    padding:0;
+    list-style:none;
+    overflow:auto;
+}
+.commentList li {
+    margin:0;
+    margin-top:10px;
+}
+.commentList li > div {
+    display:table-cell;
+}
+.commenterImage {
+    width:30px;
+    margin-right:5px;
+    height:100%;
+    float:left;
+}
+.commenterImage img {
+    width:100%;
+    border-radius:50%;
+}
+.commentText p {
+    margin:0;
+}
+.sub-text {
+    color:#aaa;
+    font-family:verdana;
+    font-size:11px;
 }

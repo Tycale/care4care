@@ -196,6 +196,9 @@
                     {% endif %}
                    </li>
                     <li class="divider"></li>
+                    {% if request.user.is_superuser %}
+                    <li><a href="/admin/">{% bootstrap_icon 'star' %} &nbsp; {% trans "Administration" %}</a></li>
+                    {% endif %}
                     <li><a href="{% url 'logout' %}">
                     {% bootstrap_icon 'log-out' %} &nbsp; {% trans "Se déconnecter" %}</a>
                     </li>

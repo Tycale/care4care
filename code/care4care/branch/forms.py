@@ -3,7 +3,7 @@ from django.utils.translation import ugettext as _
 from bootstrap3_datetime.widgets import DateTimePicker
 from multiselectfield import MultiSelectField
 
-from branch.models import Branch, Job
+from branch.models import Branch, Demand, Offer, Comment
 
 from django.utils import timezone
 
@@ -33,6 +33,14 @@ class ChooseBranchForm(forms.Form):
     class Meta:
         fields = ['id']
 
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['comment']
+        widgets = {
+          'comment': forms.Textarea(attrs={'rows':3,}),
+        }
+
 class NeedHelpForm(forms.ModelForm):
     category = MultiSelectField(verbose_name=_("Categorie"))
 
@@ -49,7 +57,7 @@ class NeedHelpForm(forms.ModelForm):
         return est
 
     class Meta:
-        model = Job
+        model = Demand
         fields = ['description', 'estimated_time', 'category', 'date', 'time', 'location', 'latitude', 'longitude', 'title', 'receive_help_from_who']
         widgets = {
             'latitude': forms.HiddenInput,
@@ -69,7 +77,7 @@ class OfferHelpForm(forms.ModelForm):
         return date
 
     class Meta:
-        model = Job
+        model = Offer
         fields = ['category', 'date', 'time', 'receive_help_from_who',]
         widgets = {
             'latitude': forms.HiddenInput,

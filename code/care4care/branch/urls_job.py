@@ -2,16 +2,19 @@ from django.conf.urls import patterns, url
 
 from django.views.generic.base import TemplateView
 
-from branch.views import NeedHelpView, OfferHelpView, DetailJobView
+from branch.views import CreateDemandView, CreateOfferView, DetailDemandView, DetailOfferView
 
 urlpatterns = patterns('',
-                       url(r'^needhelp/(?P<user_id>\d+)/$',
-                           NeedHelpView.as_view(),
-                           name='need_help'),
-                       url(r'^offerhelp/(?P<user_id>\d+)/$',
-                            OfferHelpView.as_view(),
-                           name='offer_help'),
-                       url(r'^details/(?P<job_id>\d+)/$',
-                            DetailJobView.as_view(),
-                           name='see_help'),
+                       url(r'^new/demand/(?P<user_id>\d+)/$',
+                           CreateDemandView.as_view(),
+                           name='create_demand'),
+                       url(r'^new/offer/(?P<user_id>\d+)/$',
+                            CreateOfferView.as_view(),
+                           name='create_offer'),
+                       url(r'^demand/(?P<demand_id>\d+)/$',
+                            DetailDemandView.as_view(),
+                           name='see_demand'),
+                       url(r'^offer/(?P<offer_id>\d+)/$',
+                            DetailOfferView.as_view(),
+                           name='see_offer'),
                        )

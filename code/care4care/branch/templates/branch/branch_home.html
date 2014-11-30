@@ -107,7 +107,7 @@
                     <tr>
                         <td><a href="{% url 'verified_display' user_id=demands.user.id %}">{{demands.user}}</a></td>
                         <td>{{demands.user.get_full_name }}</td>
-                        <td>{{demands.date}}</td>
+                        <td>{{demands.date|date:'DATE_FORMAT'}}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -119,8 +119,8 @@
 {% endif %}
 
 <div class="row mt">
-  <div class="col-md-4 col-md-offset-2"> <a class="btn btn-primary btn-lg" href="{% url "need_help" branch_id=branch.id slug=branch.slug user_id=request.user.id %}">{% trans "J'ai besoin d'aide" %}</a> </div>
-  <div class="col-md-4 col-md-offset-2"><a class="btn btn-primary btn-lg" href="{% url "offer_help" branch_id=branch.id slug=branch.slug user_id=request.user.id %}">{% trans "Offrir mon aide" %}</a></div>
+  <div class="col-md-6 col-sm-12 text-center"><a class="btn btn-primary btn-lg" href="{% url "create_demand" branch_id=branch.id slug=branch.slug user_id=request.user.id %}">{% trans "J'ai besoin d'aide" %}</a></div>
+  <div class="col-md-6 col-sm-12 text-center"><a class="btn btn-primary btn-lg" href="{% url "create_offer" branch_id=branch.id slug=branch.slug user_id=request.user.id %}">{% trans "Offrir mon aide" %}</a></div>
 </div>
 
 <div class="row mt">
@@ -200,6 +200,9 @@ $(document).ready(function () {
 
     $('.fa-bars').click(function () {
         google.maps.event.trigger(map, 'resize');
+    });
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
     });
 });
 </script>

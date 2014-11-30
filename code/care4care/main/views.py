@@ -10,7 +10,7 @@ from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
 from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm, VerifiedProfileForm
 from main.models import User, VerifiedInformation, EmergencyContact, Statistics
-from branch.models import Job
+from branch.models import Demand, Offer
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect, HttpResponse
@@ -32,11 +32,19 @@ from django.contrib.messages.views import SuccessMessageMixin
 
 def home(request):
     user = request.user
-    demands = Job.objects.filter(donor=None)
-    offers = Job.objects.filter(receiver=None)
+
+    not_enough = True
     if user.is_authenticated():
-        demands.filter(branch__in=user.membership.all())
-        offers.filter(branch__in=user.membership.all())
+        branch_ids = [b.branch.id for b in user.membership.all()]
+        demands = Demand.objects.filter(branch__in=branch_ids).all()
+        offers = Offer.objects.filter(branch__in=branch_ids).all()
+        if demands.count() > 3 or offers.count() > 3:
+            not_enough = False
+    
+    if not_enough:
+        demands = Demand.objects.all()
+        offers = Offer.objects.all()
+
     return render(request, 'main/home.html', locals())
 
 def logout(request):
@@ -82,7 +90,7 @@ def user_profile(request, user_id):
 def manage_profile(request):
     """ Return the profile from the current logged user"""
     user_to_display = request.user
-    pending_offers = Job.objects.filter(donor=user_to_display)
+    pending_offers = Offer.objects.filter(donor=user_to_display)
     print(user_to_display.ignore_list.all())
     return render(request, 'profile/user_profile.html', locals())
 
