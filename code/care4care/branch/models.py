@@ -61,7 +61,7 @@ class BranchMembers(models.Model):
     joined = models.DateTimeField(verbose_name=_("date d'arrivé"))
 
     class Meta:
-        ordering = ['is_admin']
+        ordering = ['-is_admin']
 
 class Comment(models.Model):
     user = models.ForeignKey(User)

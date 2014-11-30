@@ -133,7 +133,9 @@
     <div class="col-lg-12">
 
     	<div class="content-panel">
-            <h4><i class="fa fa-angle-right"></i> {% trans "Liste des membres" %}</h4>
+            {% with mall=branch.membership.all%}
+            <h4><i class="fa fa-angle-right"></i> {% trans "Liste des membres" %}
+            </h4>
 
             <table class="table table-striped table-advance table-hover rowlink">
 	    	  	  
@@ -143,27 +145,52 @@
                     <th><i class="fa fa-user"></i> {% trans "Utilisateur" %}</th>
                     <th><i class="fa fa-bookmark"></i> {% trans "Nom complet" %}</th>
                     <th><i class="fa fa-star"></i> {% trans "Status" %}</th>
-                    {% if request.user == branch.creator or request.user.is_superuser %}
-                    <th></th>
+                    {% if is_branch_admin %}
+                    <th><i class="fa fa-gears"></i> {% trans "Administrer" %}</th>
                     {% endif %}
+                    <th><i class="fa fa-comments"></i> {% trans "Ecrire" %}
+                    {% if is_branch_admin %}
+                    <br /><a class="btn btn-primary btn-xs" href="{% url 'postman_write' all_usernames %}">
+                        {% trans "Ecrire à tous" %}
+                        </a>
+                    {% endif %}
+                    </th>
                 </tr>
                 </thead>
                 <tbody data-link='row'>
-                	{% for member in branch.membership.all %}          	
+                	{% for member in mall %}          	
                 	<tr>
                 	    <td><a href="{{ member.user.get_absolute_url }}">{{member.user}}</a></td>
                 	    <td>{{ member.user.get_full_name }}</td>
+                        {% if not is_branch_admin %}
                 	    <td>{% if member.is_admin %}{% trans "Responsable" %}{% endif %}</td>
-                        {% if request.user == branch.creator or request.user.is_superuser %}
+                        {% else %}
+                        <td>
+                            {% if not member.is_admin %}
+                            <a class="btn btn-primary btn-xs" href="{% url 'branch_promote' branch_id=branch.id user_id=member.user.id %}">{% trans "Promouovir responsable" %}</a>
+                            {% else %}
+                                {% if member.user.id != branch.creator.id %}
+                                <a class="btn btn-primary btn-xs" href="{% url 'branch_demote' branch_id=branch.id user_id=member.user.id %}">{% trans "Retirer responsable" %}</a>
+                                {% else %}
+                                {% trans "Créateur" %}
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                        {% endif %}
+                        {% if is_branch_admin %}
                 	    <td>
-                	        <a class="btn btn-primary btn-xs" href="{% url 'edit_profile' member.user.id %}"><i class="fa fa-pencil"></i></a>
-                	        <a class="btn btn-danger btn-xs" href="{% url 'branch_leave' branch_id=branch.id user_id=member.user.id %}"><i class="fa fa-trash-o "></i></a>
+                            <a class="btn btn-primary btn-xs" href="{% url 'create_demand' branch_id=branch.id slug=branch.slug user_id=member.user.id %}"><i class="fa fa-plus"> {% trans "demande" %}</i></a>
+                            <a class="btn btn-primary btn-xs" href="{% url 'create_offer' branch_id=branch.id slug=branch.slug user_id=member.user.id %}"><i class="fa fa-plus"> {% trans "offre" %}</i></a>
+                	        <a class="btn btn-primary btn-xs" href="{% url 'edit_profile' member.user.id %}"><i class="fa fa-pencil"> {% trans "Modifier" %}</i></a>
+                	        <a class="btn btn-danger btn-xs" href="{% url 'branch_leave' branch_id=branch.id user_id=member.user.id %}"><i class="fa fa-trash-o"> {% trans "Quitter" %}</i></a>
                 	    </td>
                         {% endif %}
+                        <td><a href="{% url 'postman_write' member.user.username %}"><i class="fa fa-comments"> {% trans "écrire" %}</i></a></td>
                 	</tr>
                 	{% endfor %}
                 </tbody>
             </table>
+            {% endwith %}
         </div>
 
     </div>

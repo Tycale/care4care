@@ -63,6 +63,7 @@ def branch_home(request, branch_id, slug):
 
     if is_branch_admin:
         vdemands = VerifiedInformation.objects.filter(user__in=user_ids)
+        all_usernames = ':'.join([b.user.username for b in BranchMembers.objects.filter(branch=branch)])
 
     demands = Demand.objects.filter(receiver__in=user_ids, branch=branch)
     offers = Offer.objects.filter(donor__in=user_ids, branch=branch)
@@ -107,6 +108,38 @@ def branch_leave(request, branch_id, user_id):
             pass
     
     return redirect('home')
+
+@login_required
+def branch_promote(request, branch_id, user_id):
+    branch = get_object_or_404(Branch, pk=branch_id)
+    user = get_object_or_404(User, pk=user_id)
+
+    if request.user == branch.creator or request.user.is_superuser:
+        try:
+            to_promote = BranchMembers.objects.get(branch=branch_id, user=user_id)
+            to_promote.is_admin = True
+            to_promote.save()
+            messages.add_message(request, messages.INFO, _('{user} a été promu administrateur de la branche {branch}').format(branch=branch, user=user))
+        except:
+            pass
+    
+    return redirect(branch.get_absolute_url())
+
+@login_required
+def branch_demote(request, branch_id, user_id):
+    branch = get_object_or_404(Branch, pk=branch_id)
+    user = get_object_or_404(User, pk=user_id)
+
+    if request.user == branch.creator or request.user.is_superuser:
+        try:
+            to_demote = BranchMembers.objects.get(branch=branch_id, user=user_id)
+            to_demote.is_admin = False
+            to_demote.save()
+            messages.add_message(request, messages.INFO, _('{user} n\'est plus administrateur de la branche {branch}').format(branch=branch, user=user))
+        except:
+            pass
+    
+    return redirect(branch.get_absolute_url())
 
 
 @login_required
