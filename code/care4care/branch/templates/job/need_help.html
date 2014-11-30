@@ -44,6 +44,7 @@
               <div class="row">
                 <div class="col-lg-6">
                   <input id="id_location_input" class="typeahead form-control" type="text" placeholder="{% trans "Entrez votre adresse"%}" value="{% if form.location.value %}{{ form.location.value }}{% else %}{% if ruser.location %}{{ ruser.location }}{% endif %}{% endif %}">
+                  <div class="alert alert-danger"><b>{% trans "Information:"%}</b> {% trans "Si vous ne souhaitez pas révéler entièrement votre adresse, n'indiquez que la rue ou un endroit proche. Vous pourrez préciser ensuite votre adresse exacte à la personne qui se proposera afin de vous aider dans votre tâche." %}</div>
                 </div>
                 <div class="col-lg-6">
                   <div id="map" style="min-height:300px;"></div>
