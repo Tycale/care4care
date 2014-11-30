@@ -38,7 +38,7 @@ function remove(url_base,user_id, success_function) {
       url: url_param,
       success: function(r) {
         if (r){
-          success_function(user_id)
+          success_function(r["name"],user_id)
         }
       },
       error : function(xhr,errmsg,err) {

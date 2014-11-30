@@ -511,7 +511,7 @@ class Statistics:
             __("Spécial... :D"),
         ]
         datasets = []
-        first_dataset = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
+        first_dataset = Statistics.generate_line_colors(Color.GREEN_RGB)
         #first_dataset['label'] = __('Membres')  # Non-necessary field
         first_dataset['data'] = [40, 30, 60, 70, 25, 47, 39, 69, 34, 23, 69]
         datasets.append(first_dataset)
@@ -537,7 +537,7 @@ class Statistics:
             __("Spécial... :D"),
         ]
         datasets = []
-        first_dataset = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
+        first_dataset = Statistics.generate_line_colors(Color.GREEN_RGB)
         #first_dataset['label'] = __('Membres')  # Non-necessary field
         first_dataset['data'] = [40, 30, 60, 70, 25, 47, 39, 69, 34, 23, 69]
         datasets.append(first_dataset)

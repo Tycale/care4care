@@ -84,6 +84,7 @@ def user_profile(request, user_id):
         is_my_friend = True
     if user_to_display in user.personal_network.all():
         is_in_my_network = True
+
     return render(request, 'profile/user_profile.html', locals())
 
 
