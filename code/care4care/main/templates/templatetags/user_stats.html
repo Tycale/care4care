@@ -1,0 +1,75 @@
+{% load i18n %}
+
+
+{% block content %}
+<div id="stats">
+  {% load staticfiles %}
+  <script src="{% static "js/statistics.js" %}"></script>
+  <link rel="stylesheet" type="text/css" href="{% static "css/statistics.css" %}" />
+
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-default">
+          <div class="panel-body">
+            <!-- <div style="display: inline"> -->
+              <h4>
+                <div class="stats_title">
+                  <i class="fa fa-angle-right"></i>
+                  {% trans "Statut des utilisateurs" %}
+                </div>
+
+                <div id="users_status_legend" class="legend_container">
+                  {% trans "Légende" %}:
+                  <ul>
+                        <li style="color: {{ LIGHT_BLUE_RGB }}">
+                          {% trans "Actifs" %}
+                        </li>
+                        <li style="color: {{ GREEN_RGB }}">
+                          {% trans "En vacances" %}
+                        </li>
+                        <li style="color: {{ ORANGE_RGB }}">
+                          {% trans "Désactivés" %}
+                        </li>
+                    </ul>
+              </div>
+              </h4>
+            <!-- </div> -->
+
+            <div id="users_status">
+            <canvas id="users_status_canvas" width="475" height="200"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-default">
+          <div class="panel-body">
+            <h4>
+              <i class="fa fa-angle-right"></i>
+              {% trans "Types de comptes" %}
+            </h4>
+          <canvas id="account_types" width="475" height="200"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="panel panel-default">
+          <div class="panel-body">
+            <h4>
+              <i class="fa fa-angle-right"></i>
+              {% trans "Types de jobs" %}
+            </h4>
+          <canvas id="job_categories" width="475" height="200"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
