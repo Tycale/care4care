@@ -76,6 +76,7 @@ class UpdateNeedHelpForm(NeedHelpForm):
             'longitude': forms.HiddenInput,
             'location': forms.HiddenInput,
             'date': DateTimePicker(options={"pickTime": False,}),
+            'category': OneJobSelect,
         }
 
 

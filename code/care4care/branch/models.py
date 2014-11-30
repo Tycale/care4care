@@ -85,7 +85,7 @@ class Job(models.Model):
     category = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Type d'aide"))
     receive_help_from_who = models.IntegerField(choices=MemberType.MEMBER_TYPES_GROUP, default=MemberType.ALL,
                                       verbose_name=_("Qui peut voir et répondre à la demande/offre ?"))
-    date = models.DateField(verbose_name=_("Date"))
+    date = models.DateTimeField(verbose_name=_("Date"))
     time = MultiSelectField(choices=TIME_CHOICES, verbose_name=_("Heures de disponibilité"), blank=False, help_text=_('Selectionnez les heures qui vous conviennent'))
 
     def get_verbose_category(self):
