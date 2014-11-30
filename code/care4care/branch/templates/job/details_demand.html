@@ -72,6 +72,7 @@
 
           </div>
     </div>
+    {% if request.user.id != object.receiver.id and request.user.location %}   
     <div class="col-md-6 col-sm-12">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -96,6 +97,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
     <div class="col-md-12 col-sm-12">
         <div class="panel panel-default">
             <div class="panel-heading">
