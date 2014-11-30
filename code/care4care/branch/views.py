@@ -224,7 +224,7 @@ class CreateOfferView(CreateView):
     template_name = 'job/offer_help.html'
     form_class = OfferHelpForm
     model = Offer
-
+    
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(CreateOfferView, self).dispatch(*args, **kwargs)
@@ -251,6 +251,10 @@ class DetailOfferView(CreateView): # This view is over-hacked. Don't take it as 
     model = Comment
     form_class = CommentForm
 
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(DetailOfferView, self).dispatch(*args, **kwargs)
+
     def get_object(self, queryset=None):
         return Offer.objects.get(pk=self.kwargs['offer_id'])
 
@@ -275,6 +279,10 @@ class DetailDemandView(CreateView): # This view is over-hacked. Don't take it as
     model = Comment
     form_class = CommentForm
 
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(DetailDemandView, self).dispatch(*args, **kwargs)
+    
     def get_object(self, queryset=None):
         return Demand.objects.get(pk=self.kwargs['demand_id'])
 
