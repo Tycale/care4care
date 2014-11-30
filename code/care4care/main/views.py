@@ -91,7 +91,6 @@ def manage_profile(request):
     """ Return the profile from the current logged user"""
     user_to_display = request.user
     pending_offers = Offer.objects.filter(donor=user_to_display)
-    print(user_to_display.ignore_list.all())
     return render(request, 'profile/user_profile.html', locals())
 
 """@user_passes_test(lambda u: not u.is_verified)
@@ -230,14 +229,12 @@ def member_ignore_list(request, user_id):
     user = request.user
     id_other = user_id
     other_user = get_object_or_404(User, pk=user_id)
-    print(other_user)
     if request.method == "PUT":
         user.ignore_list.add(other_user)
         try:
           user.save()
         except:
           e = sys.exc_info()[0]
-          print(e)
         return HttpResponse(
             json.dumps({"name": other_user.get_full_name()}),
             content_type="application/json"

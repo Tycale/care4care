@@ -68,11 +68,23 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4>
-                    {% trans "Directions" %}
+                    {% trans "Itinéraire" %}
+                    <div role="group" class="pull-right btn-group">
+                    <button type="button" class="btn btn-default {% if not request.GET.walk %}active{% endif %}" onClick="window.location.href='?'">{% trans "En voiture" %}</button>
+                    <button type="button" class="btn btn-default {% if request.GET.walk %}active{% endif %}" onClick="window.location.href='?walk=1'">{% trans "A pied" %}</button>
+                </div>
                 </h4>
             </div>
             <div class="panel-body">
-                <div id="directions-panel"></div>
+                <div id="directions-panel">
+                    {% if not request.user.location %}
+                    <div class="alert alert-info" role="alert">
+                        <span class="fa fa-info"></span>
+                          {% trans "Vous devez indiquer votre adresse personnelle afin d'avoir l'itinéraire" %}
+                          <a href="{% url 'edit_profile' request.user.id %}">{% trans "Compléter mon profile" %}</a>
+                    </div>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
@@ -203,7 +215,11 @@ $(document).ready(function () {
             var request = {
                 origin : moi,
                 destination : lieu,
-                travelMode : google.maps.TravelMode.DRIVING
+                {% if request.GET.walk %}
+                travelMode : google.maps.TravelMode.WALKING,
+                {% else %}
+                travelMode : google.maps.TravelMode.DRIVING,
+                {% endif %}
             };
             directionsService.route(request, function(response, status) {
                 if (status == google.maps.DirectionsStatus.OK) {

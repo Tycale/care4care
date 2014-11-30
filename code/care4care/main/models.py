@@ -242,7 +242,7 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
     """
     email = models.EmailField(_("Adresse email"), unique=False)
     date_joined = models.DateTimeField(auto_now_add=True)
-    photo = ThumbnailerImageField(upload_to='photos/', blank=True)
+    photo = ThumbnailerImageField(upload_to='photos/', blank=False, default='photos/default_avatar.png')
 
     username = models.CharField(_("Nom d'utilisateur"), max_length=30, unique=True,
         validators = [
