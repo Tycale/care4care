@@ -7,6 +7,7 @@ from branch.models import Branch, Demand, Offer, Comment
 
 from django.utils import timezone
 
+from django.utils import formats
 from branch.widgets import OneJobSelect
 
 class CreateBranchForm(forms.ModelForm):
@@ -52,6 +53,8 @@ class NeedHelpForm(forms.ModelForm):
 
     def clean_estimated_time(self):
         est = self.cleaned_data.get('estimated_time')
+        if not est :
+            raise forms.ValidationError(_("Indiquez une estimation."))
         if est <= 0:
             raise forms.ValidationError(_("Le temps estimé doit être plus grand que 0 minute."))
         return est
@@ -78,7 +81,6 @@ class UpdateNeedHelpForm(NeedHelpForm):
             'date': DateTimePicker(options={"pickTime": False,}),
             'category': OneJobSelect,
         }
-
 
 class OfferHelpForm(forms.ModelForm):
     category = MultiSelectField(verbose_name=_("Categorie"))
