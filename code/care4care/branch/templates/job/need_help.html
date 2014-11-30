@@ -27,7 +27,9 @@
                 <div class="showback">
                     <h4 class="mb"> {% trans "Informations générales" %}</h4>
                     {% bootstrap_field form.title %}
+                    {% if not update %}
                     {% bootstrap_field form.category %}
+                    {% endif %}
 
                     {% bootstrap_field form.date %}
                     {% bootstrap_field form.time %}

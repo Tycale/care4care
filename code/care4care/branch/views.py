@@ -11,7 +11,7 @@ from branch.models import Branch, BranchMembers, Demand, Offer, Comment
 
 from main.models import User, VerifiedInformation
 
-from branch.forms import CreateBranchForm, ChooseBranchForm, OfferHelpForm, NeedHelpForm, CommentForm
+from branch.forms import CreateBranchForm, ChooseBranchForm, OfferHelpForm, NeedHelpForm, CommentForm, UpdateNeedHelpForm
 from django.utils import timezone
 from django.core.urlresolvers import reverse
 
@@ -194,7 +194,7 @@ class UpdateDemandView(UpdateView):
     A registration backend for our CareRegistrationForm
     """
     template_name = 'job/need_help.html'
-    form_class = NeedHelpForm
+    form_class = UpdateNeedHelpForm
     model = Demand
 
     @method_decorator(login_required)
@@ -208,6 +208,7 @@ class UpdateDemandView(UpdateView):
         context = super(UpdateDemandView, self).get_context_data(**kwargs)
         context['ruser'] = self.get_object().receiver
         context['branch'] = self.get_object().branch
+        context['update'] = True
         return context
 
     def form_valid(self, form):
@@ -224,7 +225,7 @@ class CreateOfferView(CreateView):
     template_name = 'job/offer_help.html'
     form_class = OfferHelpForm
     model = Offer
-    
+
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(CreateOfferView, self).dispatch(*args, **kwargs)
@@ -282,7 +283,7 @@ class DetailDemandView(CreateView): # This view is over-hacked. Don't take it as
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         return super(DetailDemandView, self).dispatch(*args, **kwargs)
-    
+
     def get_object(self, queryset=None):
         return Demand.objects.get(pk=self.kwargs['demand_id'])
 

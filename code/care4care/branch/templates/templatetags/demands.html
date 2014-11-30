@@ -15,6 +15,7 @@
             {% endif %}
             <th>{% trans "Titre" %}</th>
             <th>{% trans "Date" %}</th>
+            <th>{% trans "Heure" %}</th>
           </tr>
         </thead>
         <tbody data-link="row" data-target="a.mainlink">
@@ -27,7 +28,8 @@
           {% endif %}
           <td><a href="{% url 'see_demand' branch_id=demand.branch.id slug=demand.branch.slug demand_id=demand.id %}" class="mainlink"> {{ demand.title }}</a></td>
 
-          <td> {{ demand.date | naturalday:'SHORT_DATE_FORMAT' }}</td>
+          <td>{{ demand.date | naturalday:'SHORT_DATE_FORMAT' }}</td>
+          <td>{{ demand.get_verbose_time }}</td>
           
         </tr>
         {% endfor %}
