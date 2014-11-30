@@ -13,12 +13,13 @@
 <div class="mt ">
 <ul class="nav nav-tabs" id="myTab">
 
-  <li class="active"><a data-toggle="tab" href="#profile">{% trans 'Profile' %}</a></li>
+  <li class="active"><a data-toggle="tab" href="#profile">{% trans 'Profil' %}</a></li>
   {% if request.user.id == user_to_display.id %}
   <li><a data-toggle="tab" href="#favoris">{% trans 'Favoris' %}</a></li>
   <li><a data-toggle="tab" href="#network" />{% trans 'Mon Réseau' %}</a></li>
   <li><a data-toggle="tab" href="#ignored" />{% trans 'Utilisateurs ignorés' %}</a></li>
   <li><a data-toggle="tab" href="#jobs" />{% trans 'Aides en attente' %}</a></li>
+  <li><a data-toggle="tab" href="#stats" />{% trans 'Statistiques' %}</a></li>
   {% endif %}
 </ul>
 
@@ -189,6 +190,12 @@
   <div id="jobs" class="tab-pane fade in active">
     <div class="row mt">
       {% show_demands request pending_offers %}
+    </div>
+  </div>
+
+  <div id="stats" class="tab-pane fade in active">
+    <div class="row mt">
+      
     </div>
   </div>
   {% endif %}

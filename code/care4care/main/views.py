@@ -389,7 +389,7 @@ def similar_demands(request):
     now = datetime.datetime.now()
     user_offers = Job.objects.filter(donor = user, receiver__isnull = True, date__gte=now)
 
-    return render(request, 'seek_similar_jobs/main.html',locals())
+    return render(request, 'seek_similar_jobs/main.html', locals())
 
 @login_required
 def similar_offers(request):
@@ -401,7 +401,7 @@ def similar_offers(request):
     for demand in user_demands:
         result.extend(offers.filter(branch=demand.branch, date=demand.date, category=demand.category))
 
-    return render(request, 'seek_similar_jobs/main.html',locals())
+    return render(request, 'seek_similar_jobs/main.html', locals())
 
 ### Statistics ###
 
