@@ -68,8 +68,8 @@
 </div>
 
 <div class="row mt">
-  {% show_demands request demands %}
-  {% show_offers request offers %}
+  {% show_demands request demands show_branch=False %}
+  {% show_offers request offers show_branch=False %}
 </div>
 
 {% endblock %}

@@ -27,7 +27,7 @@
           {% endif %}
 
           <td>{{ offer.date | naturalday:'SHORT_DATE_FORMAT' }}</td>
-          <td>{{ offer.get_verbose_time }}</td>
+          <td>{{ offer.get_short_time }}</td>
         </tr>
         {% endfor %}
         </tbody>

@@ -154,6 +154,16 @@ def branch_delete(request, branch_id):
             pass
     return redirect('home')
 
+@login_required
+def delete_demand(request, branch_id, slug, demand_id):
+    demand = get_object_or_404(Demand, pk=demand_id)
+
+    if request.user == demand.receiver or request.user.is_superuser or \
+       request.user in demand.branch.membership.values_list('id', flat=True).filter(is_admin=True):
+       demand.delete()
+       messages.add_message(request, messages.INFO, _('Vous avez supprimé la demande {demand}').format(demand=demand))
+       return redirect(demand.branch.get_absolute_url())
+    return redirect('home')
 
 class CreateDemandView(CreateView):
     """
