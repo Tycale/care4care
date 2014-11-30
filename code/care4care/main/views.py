@@ -423,19 +423,31 @@ PERMISSION_DENIED = "Permission denied. This event will be reported."
 
 @login_required
 def get_registrated_users_json(request):
-    return get_json_from(Statistics.get_users_registrated_json())
+    if request.user.is_superuser:
+        return get_json_from(Statistics.get_users_registrated_json())
+    else:
+        return HttpResponse(PERMISSION_DENIED, status=401)
 
 @login_required
 def get_account_types_json(request):
-    return get_json_from(Statistics.get_account_types_json())
+    if request.user.is_superuser:
+        return get_json_from(Statistics.get_account_types_json())
+    else:
+        return HttpResponse(PERMISSION_DENIED, status=401)
 
 @login_required
 def get_users_status_json(request):
-    return get_json_from(Statistics.get_users_status_json())
+    if request.user.is_superuser:
+        return get_json_from(Statistics.get_users_status_json())
+    else:
+        return HttpResponse(PERMISSION_DENIED, status=401)
 
 @login_required
 def get_job_categories_json(request):
-    return get_json_from(Statistics.get_job_categories_json())
+    if request.user.is_superuser:
+        return get_json_from(Statistics.get_job_categories_json())
+    else:
+        return HttpResponse(PERMISSION_DENIED, status=401)
 
 @login_required
 def get_user_job_categories_json(request, user_id):
