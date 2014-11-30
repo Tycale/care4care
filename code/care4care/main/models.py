@@ -452,13 +452,13 @@ class Statistics:
             __("Octobre"),
         ]
         line_active = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
-        line_active['data'] = [10, 14, 20, 28, 40, 61, 87]
+        line_active['data'] = [10, 12, 15, 20, 31, 51, 87]
 
         line_holiday = Statistics.generate_line_colors(Color.GREEN_RGB)
-        line_holiday['data'] = [2, 5, 9, 14, 20, 15, 9]
+        line_holiday['data'] = [0, 3, 6, 12, 15, 15, 9]
 
         line_deactivated = Statistics.generate_line_colors(Color.ORANGE_RGB)
-        line_deactivated['data'] = [0, 1, 2, 3, 4, 3, 3]
+        line_deactivated['data'] = [0, 0, 1, 1, 2, 3, 3]
 
         response['datasets'] = [line_active, line_holiday, line_deactivated]
         return json.dumps(response)
