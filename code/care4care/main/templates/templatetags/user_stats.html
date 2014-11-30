@@ -73,7 +73,7 @@
 var get_json_url = function(json_url, user_id) {
   return "/statistics/"+json_url+"/"+user_id+"/";
 }
-var user_job_stats_url = get_json_url("job_categories_json", {{ user_id }});
+var user_job_stats_url = get_json_url("user_job_categories_json", {{ user_id }});
 var user_job_avg_time_url = get_json_url("user_job_avg_time_json",{{ user_id }});
 var user_km_url = get_json_url("user_km_json", {{ user_id }})
 var user_jobs_amount_url = get_json_url("user_jobs_amount_json", {{ user_id }})

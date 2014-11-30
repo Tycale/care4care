@@ -9,7 +9,7 @@ from django.contrib.sites.models import Site
 from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
 from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm, VerifiedProfileForm
-from main.models import User, VerifiedInformation, EmergencyContact, Statistics
+from main.models import User, VerifiedInformation, EmergencyContact
 from branch.models import Demand, Offer
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
@@ -21,8 +21,7 @@ from postman.api import pm_write
 
 from django.views.generic.detail import DetailView
 
-from main.models import Color
-import json
+from ajax.views import *
 import sys
 from os.path import abspath, dirname
 import datetime

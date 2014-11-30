@@ -15,7 +15,7 @@ urlpatterns = patterns(
     url(r'^job_categories_json$', get_job_categories_json, name='stats_job_categories_json'),
 
     # User statistics
-    url(r'^job_categories_json/(?P<user_id>\d+)/$',
+    url(r'^user_job_categories_json/(?P<user_id>\d+)/$',
         get_user_job_categories_json,
         name='user_stats_job_categories_json'),
     url(r'^user_job_avg_time_json/(?P<user_id>\d+)/$',
