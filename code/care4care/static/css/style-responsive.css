@@ -3,7 +3,7 @@
     .custom-bar-chart {
         margin-bottom: 40px;
     }
-
+    
 }
 
 @media (min-width: 768px) and (max-width: 979px) {
@@ -14,11 +14,27 @@
     }
 
     /*chat room*/
+    .btn {
+        margin-bottom: 5px;
+    }
 
+    .wrapper{
+        margin-top: 100px;
+    }
+    ul.sidebar-menu {
+        margin-top: 100px;
+    }
 
 }
 
 @media (max-width: 768px) {
+
+    .wrapper{
+        margin-top: 120px;
+    }
+    ul.sidebar-menu {
+        margin-top: 120px;
+    }
 
     .header {
         position: absolute;
@@ -226,8 +242,25 @@
         width: 100%;
     }
 
+    .btn {
+        margin-bottom: 5px;
+    }
+
 }
 
+@media (max-width: 610px) {
+
+    .wrapper{
+        margin-top: 150px;
+    }
+    ul.sidebar-menu {
+        margin-top: 150px;
+    }
+
+    .header {
+        position: absolute;
+    }
+}
 
 
 @media (max-width: 480px) {
@@ -252,9 +285,20 @@
         border-color:#ccc ;
     }
 
+    .btn {
+        margin-bottom: 5px;
+    }
+
 }
 
-@media (max-width:320px) {
+@media (max-width:360px) {
+    .wrapper{
+        margin-top: 200px;
+    }
+    ul.sidebar-menu {
+        margin-top: 200px;
+    }
+
     .login-social-link a {
         padding: 15px 17px !important;
     }
@@ -286,6 +330,10 @@
     .cmt-form {
         display: inline-block;
         width: 75%;
+    }
+
+    .btn {
+        margin-bottom: 5px;
     }
 
 }

@@ -7,8 +7,8 @@
 
 {% block content %}
 <div class="row mt">
-  <div class="col-md-4 col-md-offset-2"> <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#needHelpModal">{% trans "J'ai besoin d'aide" %}</button> </div>
-  <div class="col-md-4 col-md-offset-2"><button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#offerHelpModal">{% trans "Offrir mon aide" %}</button></div>
+  <div class="col-md-6 col-sm-12 text-center"> <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#needHelpModal">{% trans "J'ai besoin d'aide" %}</button> </div>
+  <div class="col-md-6 col-sm-12 text-center"><button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#offerHelpModal">{% trans "Offrir mon aide" %}</button></div>
 </div>
 
 <!-- need help Modal -->
@@ -25,7 +25,7 @@
 
         <div class="btn-group-vertical" role="group">
         {% for mbranch in request.user.membership.all %}
-        <a href="{% url "need_help" branch_id=mbranch.branch.id slug=mbranch.branch.slug user_id=request.user.id %}" class="btn btn-primary btn-lg btn-block">{{ mbranch.branch }}</a>
+        <a href="{% url "create_demand" branch_id=mbranch.branch.id slug=mbranch.branch.slug user_id=request.user.id %}" class="btn btn-primary btn-lg btn-block">{{ mbranch.branch }}</a>
         {% endfor %}
         </div>
 
@@ -53,7 +53,7 @@
 
         <div class="btn-group-vertical" role="group">
         {% for mbranch in request.user.membership.all %}
-        <a href="{% url "offer_help" branch_id=mbranch.branch.id slug=mbranch.branch.slug user_id=request.user.id %}" class="btn btn-primary btn-lg btn-block">{{ mbranch.branch }}</a>
+        <a href="{% url "create_offer" branch_id=mbranch.branch.id slug=mbranch.branch.slug user_id=request.user.id %}" class="btn btn-primary btn-lg btn-block">{{ mbranch.branch }}</a>
         {% endfor %}
         </div>
 

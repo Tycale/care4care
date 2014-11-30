@@ -7,11 +7,11 @@ from django.contrib import messages
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
 
-from branch.models import Branch, BranchMembers, Job
+from branch.models import Branch, BranchMembers, Demand, Offer, Comment
 
 from main.models import User, VerifiedInformation
 
-from branch.forms import CreateBranchForm, ChooseBranchForm, OfferHelpForm, NeedHelpForm
+from branch.forms import CreateBranchForm, ChooseBranchForm, OfferHelpForm, NeedHelpForm, CommentForm
 from django.utils import timezone
 from django.core.urlresolvers import reverse
 
@@ -35,8 +35,8 @@ def branch_create(request):
     return render(request,'branch/branch_create.html', locals())
 
 
-def branch_home(request, id, slug):
-    branch = get_object_or_404(Branch, pk=id)
+def branch_home(request, branch_id, slug):
+    branch = get_object_or_404(Branch, pk=branch_id)
     user = request.user
 
     bm = BranchMembers.objects.filter(branch=branch, user=user)
@@ -59,13 +59,14 @@ def branch_home(request, id, slug):
         
     nb_users = BranchMembers.objects.filter(branch=branch).count()
 
+    user_ids = [mb.user.id for mb in branch.membership.all()]
 
     if is_branch_admin:
-        user_ids = [mb.user.id for mb in branch.membership.all()]
         vdemands = VerifiedInformation.objects.filter(user__in=user_ids)
+        all_usernames = ':'.join([b.user.username for b in BranchMembers.objects.filter(branch=branch)])
 
-    demands = Job.objects.filter(receiver__in=user_ids, donor=None, branch=branch)
-    offers = Job.objects.filter(donor__in=user_ids, receiver=None, branch=branch)
+    demands = Demand.objects.filter(receiver__in=user_ids, branch=branch)
+    offers = Offer.objects.filter(donor__in=user_ids, branch=branch)
 
     return render(request,'branch/branch_home.html', locals())
 
@@ -108,6 +109,38 @@ def branch_leave(request, branch_id, user_id):
     
     return redirect('home')
 
+@login_required
+def branch_promote(request, branch_id, user_id):
+    branch = get_object_or_404(Branch, pk=branch_id)
+    user = get_object_or_404(User, pk=user_id)
+
+    if request.user == branch.creator or request.user.is_superuser:
+        try:
+            to_promote = BranchMembers.objects.get(branch=branch_id, user=user_id)
+            to_promote.is_admin = True
+            to_promote.save()
+            messages.add_message(request, messages.INFO, _('{user} a été promu administrateur de la branche {branch}').format(branch=branch, user=user))
+        except:
+            pass
+    
+    return redirect(branch.get_absolute_url())
+
+@login_required
+def branch_demote(request, branch_id, user_id):
+    branch = get_object_or_404(Branch, pk=branch_id)
+    user = get_object_or_404(User, pk=user_id)
+
+    if request.user == branch.creator or request.user.is_superuser:
+        try:
+            to_demote = BranchMembers.objects.get(branch=branch_id, user=user_id)
+            to_demote.is_admin = False
+            to_demote.save()
+            messages.add_message(request, messages.INFO, _('{user} n\'est plus administrateur de la branche {branch}').format(branch=branch, user=user))
+        except:
+            pass
+    
+    return redirect(branch.get_absolute_url())
+
 
 @login_required
 def branch_delete(request, branch_id):
@@ -122,78 +155,111 @@ def branch_delete(request, branch_id):
     return redirect('home')
 
 
-class NeedHelpView(CreateView):
+class CreateDemandView(CreateView):
     """
     A registration backend for our CareRegistrationForm
     """
     template_name = 'job/need_help.html'
     form_class = NeedHelpForm
-    model = Job
+    model = Demand
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
-        return super(NeedHelpView, self).dispatch(*args, **kwargs)
+        return super(CreateDemandView, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        context = super(NeedHelpView, self).get_context_data(**kwargs)
-        context['user'] = User.objects.get(pk=self.kwargs['user_id'])
+        context = super(CreateDemandView, self).get_context_data(**kwargs)
+        context['ruser'] = User.objects.get(pk=self.kwargs['user_id'])
         context['branch'] = Branch.objects.get(pk=self.kwargs['branch_id'])
         return context
 
     def get_initial(self):
         ruser = User.objects.get(pk=self.kwargs['user_id'])
         return {'receive_help_from_who': ruser.receive_help_from_who,
-                'location': ruser.location,}
+                'location': ruser.location,
+                'latitude': ruser.latitude,
+                'longitude': ruser.longitude}
 
     def form_valid(self, form):
         form.instance.branch = Branch.objects.get(pk=self.kwargs['branch_id'])
         form.instance.receiver = User.objects.get(pk=self.kwargs['user_id'])
-        form.instance.real_time = form.instance.estimated_time
-        form.instance.latitude = form.instance.receiver.latitude
-        form.instance.longitude = form.instance.receiver.longitude
-        return super(NeedHelpView, self).form_valid(form)
+        #form.instance.real_time = form.instance.estimated_time
+        return super(CreateDemandView, self).form_valid(form)
 
     def get_success_url(self):
         return Branch.objects.get(pk=self.kwargs['branch_id']).get_absolute_url()
 
-class DetailJobView(DetailView):
-    """
-    Detail view for a Job
-    """
-    template_name = 'job/details_job.html'
-    model = Job
 
-    def get_object(self, queryset=None):
-        return Job.objects.get(pk=self.kwargs['job_id'])
-
-
-class OfferHelpView(CreateView):
+class CreateOfferView(CreateView):
     """
     A registration backend for our CareRegistrationForm
     """
     template_name = 'job/offer_help.html'
     form_class = OfferHelpForm
-    model = Job
+    model = Offer
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
-        return super(OfferHelpView, self).dispatch(*args, **kwargs)
+        return super(CreateOfferView, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
-        context = super(OfferHelpView, self).get_context_data(**kwargs)
-        context['user'] = User.objects.get(pk=self.kwargs['user_id'])
+        context = super(CreateOfferView, self).get_context_data(**kwargs)
+        context['ruser'] = User.objects.get(pk=self.kwargs['user_id'])
         context['branch'] = Branch.objects.get(pk=self.kwargs['branch_id'])
         return context
 
     def form_valid(self, form):
         form.instance.branch = Branch.objects.get(pk=self.kwargs['branch_id'])
-        form.instance.donor = self.request.user
-        form.instance.real_time = form.instance.estimated_time
-        form.instance.latitude = form.instance.donor.latitude
-        form.instance.longitude = form.instance.donor.longitude
-        form.instance.is_offer = True
-        return super(OfferHelpView, self).form_valid(form)
+        form.instance.donor = User.objects.get(pk=self.kwargs['user_id'])
+        return super(CreateOfferView, self).form_valid(form)
 
     def get_success_url(self):
         return Branch.objects.get(pk=self.kwargs['branch_id']).get_absolute_url()
 
+class DetailOfferView(CreateView): # This view is over-hacked. Don't take it as a reference.
+    """
+    Detail view for a Offer
+    """
+    template_name = 'job/details_offer.html'
+    model = Comment
+    form_class = CommentForm
+
+    def get_object(self, queryset=None):
+        return Offer.objects.get(pk=self.kwargs['offer_id'])
+
+    def get_context_data(self, **kwargs):
+        context = super(DetailOfferView, self).get_context_data(**kwargs)
+        context['object'] = self.get_object()
+        return context
+
+    def form_valid(self, form):
+        form.instance.content_object = self.get_object()
+        form.instance.user = self.request.user
+        return super(DetailOfferView, self).form_valid(form)
+
+    def get_success_url(self):
+        return self.get_object().get_absolute_url() + '#' + str(self.object.id)
+
+class DetailDemandView(CreateView): # This view is over-hacked. Don't take it as a reference.
+    """
+    Detail view for a Demand
+    """
+    template_name = 'job/details_demand.html'
+    model = Comment
+    form_class = CommentForm
+
+    def get_object(self, queryset=None):
+        return Demand.objects.get(pk=self.kwargs['demand_id'])
+
+    def get_context_data(self, **kwargs):
+        context = super(DetailDemandView, self).get_context_data(**kwargs)
+        context['object'] = self.get_object()
+        return context
+
+    def form_valid(self, form):
+        form.instance.content_object = self.get_object()
+        form.instance.user = self.request.user
+        return super(DetailDemandView, self).form_valid(form)
+
+    def get_success_url(self):
+        return self.get_object().get_absolute_url() + '#' + str(self.object.id)

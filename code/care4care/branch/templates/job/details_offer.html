@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}{% load i18n %}{% load staticfiles thumbnail humanize %}
+
+{% block title %}{% trans "object.title" %}{% endblock %}
+
+{% block content %}
+
+<div class="row mt">
+    <div class="col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                
+                <h2>
+                      <a class="float-right" href="{{ object.donor.get_absolute_url }}">
+                        <img class="img-circle" src="{% thumbnail object.donor.photo 60x60 crop %}" />
+                      {{object.donor.get_full_name}}</a> {% trans "offre son aide dans la branche " %}<a href="{{object.branch.get_absolute_url}}"> {{object.branch}}</a>
+                </h2>
+            </div>
+            <ul class="list-group">
+              <li class="list-group-item"><strong>{% trans "Catégorie" %}</strong><br/>&nbsp; {{object.get_category_display}}</li>
+              <li class="list-group-item"><strong> {% trans "Date" %}</strong><br/>&nbsp;  {{ object.date|naturalday:'DATE_FORMAT' }}</li>
+              <li class="list-group-item"><strong> {% trans "Heures de disponibilité" %}</strong><br/>&nbsp;  {{object.get_verbose_time}}</li>
+              {% if object.description %}
+              <li class="list-group-item"><strong> {% trans "Description" %}</strong><br/> &nbsp; {{object.description}}</li>
+              {% endif %}
+            </ul>
+
+          </div>
+    </div>
+    <div class="col-md-12 col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>
+                    {% trans "Commentaires" %}
+                </h4>
+            </div>
+            <div class="panel-body">
+
+            <ul class="commentList">
+                {% for comment in object.comments.all %}
+                <li id='{{comment.id}}'>
+                    <div class="commenterImage">
+                      <img src="{% thumbnail comment.user.photo 50x50 crop %}" />
+                    </div>
+                    <div class="commentText">
+                        <p class="text-info">{{comment.user.get_full_name}} {% trans "a écrit:" %}</p>
+                        <p>{{comment.comment}}</p>
+                        <span class="date sub-text">{{ comment.date|naturaltime}}</span>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>      
+            
+            <form action="." class="style-form" role="form" method="post">
+                <div class="row vertical-align">
+                    <div class="col-md-10 col-sm-12">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    </div>
+                    <div class="col-md-2 col-sm-12">
+                    {% buttons %}
+                      <button type="submit" class="btn btn-success btn-lg pull-right">
+                        {% bootstrap_icon "ok" %} &nbsp; {% trans "Commenter" %}
+                      </button>
+                    </div>
+                </div>
+                </form>
+                {% endbuttons %}
+            </div>
+            
+            </div>
+    </div>
+</div>
+{% endblock %}
+

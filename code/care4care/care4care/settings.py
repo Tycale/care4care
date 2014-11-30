@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'django_extensions',
     'django_jenkins',
     'pagination',
@@ -167,7 +168,7 @@ AJAX_SELECT_INLINES = 'inline'
 
 AJAX_LOOKUP_CHANNELS = {
        # pass a dict with the model and the field to search against
-       'user'  : dict(model='main.User', search_field='username'),
+       'user'  : ('care4care.lookups', 'UserLookup'),
 }
 
 #Postman

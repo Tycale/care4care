@@ -10,7 +10,7 @@ from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
 from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm, VerifiedProfileForm
 from main.models import User, VerifiedInformation, EmergencyContact, Statistics
-from branch.models import Job
+from branch.models import Demand, Offer
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect, HttpResponse
@@ -32,11 +32,19 @@ from django.contrib.messages.views import SuccessMessageMixin
 
 def home(request):
     user = request.user
-    demands = Job.objects.filter(donor=None)
-    offers = Job.objects.filter(receiver=None)
+
+    not_enough = True
     if user.is_authenticated():
-        demands.filter(branch__in=user.membership.all())
-        offers.filter(branch__in=user.membership.all())
+        branch_ids = [b.branch.id for b in user.membership.all()]
+        demands = Demand.objects.filter(branch__in=branch_ids).all()
+        offers = Offer.objects.filter(branch__in=branch_ids).all()
+        if demands.count() > 3 or offers.count() > 3:
+            not_enough = False
+    
+    if not_enough:
+        demands = Demand.objects.all()
+        offers = Offer.objects.all()
+
     return render(request, 'main/home.html', locals())
 
 def logout(request):
@@ -82,8 +90,7 @@ def user_profile(request, user_id):
 def manage_profile(request):
     """ Return the profile from the current logged user"""
     user_to_display = request.user
-    pending_offers = Job.objects.filter(donor=user_to_display)
-    print(user_to_display.ignore_list.all())
+    pending_offers = Offer.objects.filter(donor=user_to_display)
     return render(request, 'profile/user_profile.html', locals())
 
 """@user_passes_test(lambda u: not u.is_verified)
@@ -222,14 +229,12 @@ def member_ignore_list(request, user_id):
     user = request.user
     id_other = user_id
     other_user = get_object_or_404(User, pk=user_id)
-    print(other_user)
     if request.method == "PUT":
         user.ignore_list.add(other_user)
         try:
           user.save()
         except:
           e = sys.exc_info()[0]
-          print(e)
         return HttpResponse(
             json.dumps({"name": other_user.get_full_name()}),
             content_type="application/json"
