@@ -419,28 +419,46 @@ def statistics(request):
 def get_json_from(method):
     return HttpResponse(method, content_type="application/json")
 
-
+@login_required
 def get_registrated_users_json(request):
     return get_json_from(Statistics.get_users_registrated_json())
 
+@login_required
 def get_account_types_json(request):
     return get_json_from(Statistics.get_account_types_json())
 
+@login_required
 def get_users_status_json(request):
     return get_json_from(Statistics.get_users_status_json())
 
+@login_required
 def get_job_categories_json(request):
     return get_json_from(Statistics.get_job_categories_json())
 
+@login_required
 def get_user_job_categories_json(request, user_id):
-    return get_json_from(Statistics.get_user_job_categories_json(user_id))
+    if request.user.id == int(user_id) or request.user.is_superuser:
+        return get_json_from(Statistics.get_user_job_categories_json(user_id))
+    else:
+        return HttpResponse(json.dumps({"message": "This event will be reported"}), status=401)
 
+@login_required
 def get_user_job_avg_time_json(request, user_id):
-    return get_json_from(Statistics.get_user_job_avg_time_json(user_id))
+    if request.user.id == int(user_id) or request.user.is_superuser:
+        return get_json_from(Statistics.get_user_job_avg_time_json(user_id))
+    else:
+        return HttpResponse(json.dumps({"message": "This event will be reported"}), status=401)
 
+@login_required
 def get_user_km_json(request, user_id):
-    return get_json_from(Statistics.get_user_km_json(user_id))
+    if request.user.id == int(user_id) or request.user.is_superuser:
+        return get_json_from(Statistics.get_user_km_json(user_id))
+    else:
+        return HttpResponse(json.dumps({"message": "This event will be reported"}), status=401)
 
+@login_required
 def get_user_jobs_amount_json(request, user_id):
-    return get_json_from(Statistics.get_user_jobs_amount_json(user_id))
-
+    if request.user.id == int(user_id) or request.user.is_superuser:
+        return get_json_from(Statistics.get_user_jobs_amount_json(user_id))
+    else:
+        return HttpResponse(json.dumps({"message": "This event will be reported"}), status=401)
