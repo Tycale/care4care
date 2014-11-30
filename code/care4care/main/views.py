@@ -174,7 +174,7 @@ def verified_status_giving_view(request, user_id):
     body = _("Le status de membre vérifié vous a été accordé ! Félicitations.")
     pm_write(request.user, user, subject, body)
     messages.add_message(request, messages.INFO, _('Droit accordé'))
-    return redirect('home')
+    return redirect(user.get_absolute_url())
 
 
 @login_required
@@ -188,7 +188,7 @@ def verified_status_refuse_view(request, user_id):
     body = _("Le status de membre vérifié vous a été refusé. Pour plus d'informations, contactez l'officier responsable de votre branche.")
     pm_write(request.user, user, subject, body)
     messages.add_message(request, messages.INFO, _('Droit refusé et demande supprimée'))
-    return redirect('home')
+    return redirect(user.get_absolute_url())
 
 
 @login_required

@@ -2538,3 +2538,8 @@ textarea {
     font-family:verdana;
     font-size:11px;
 }
+
+#title-manage a{
+    margin-bottom: 5px;
+    margin-right: 2px;
+}

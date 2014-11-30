@@ -37,17 +37,40 @@
                     {{ object.receiver.get_full_name }}
                 </a>
             </div>
+            <div id="title-manage">
+                {% if can_manage %}
+                <a class="btn btn-primary" href="{% url 'update_demand' branch_id=object.branch.id slug=object.branch.slug demand_id=object.id %}">{% bootstrap_icon 'pencil' %} {% trans "Modifier" %}</a>
+                <a class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">{% bootstrap_icon 'trash' %} {% trans "Supprimer" %}</a>
+                {% endif %}
+            </div>
             </div>
     </div>
 </div>
-<div class="row mt">
 
-    <div class="col-sm-12">
-        {% if can_manage %}
-        <a class="btn btn-primary btn-block mb" href="{% url 'update_demand' branch_id=object.branch.id slug=object.branch.slug demand_id=object.id %}">{% bootstrap_icon 'pencil' %} {% trans "Modifier" %}</a>
-        {% endif %}
+<!-- need help Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{% trans "fermer" %}</span></button>
+        <h4 class="modal-title" id="deleteLabel">{% trans "Supprimer" %}</h4>
+      </div>
+      <div class="modal-body">
+          {% blocktrans %}
+          Êtes-vous sûr de vouloir SUPPRIMER votre demande {{object.title}} ? <br />
+          Cette action est irréversible. <br />
+          {% endblocktrans %}
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "fermer" %}</button>
+          <a href="{% url 'delete_demand' branch_id=object.branch.id slug=object.branch.slug demand_id=object.id %}"
+      class="btn btn-danger">{% trans "SUPPRIMER" %}</a>
+      </div>
     </div>
+  </div>
+</div>
 
+<div class="row mt">
     <div class="col-md-6 col-sm-12">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -174,7 +197,10 @@ $(document).ready(function () {
     map.controls[google.maps.ControlPosition.LEFT_TOP].push(titleBranch); 
 
     var rightBranch = document.getElementById('title-right');
-    map.controls[google.maps.ControlPosition.RIGHT_TOP].push(rightBranch); 
+    map.controls[google.maps.ControlPosition.RIGHT_TOP].push(rightBranch);
+
+    var rightBranch = document.getElementById('title-manage');
+    map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(rightBranch); 
     
     var bounds = new google.maps.LatLngBounds();
 
