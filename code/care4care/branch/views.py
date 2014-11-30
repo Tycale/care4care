@@ -4,14 +4,14 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext as _
 from django.contrib import messages
 
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.detail import DetailView
 
 from branch.models import Branch, BranchMembers, Demand, Offer, Comment
 
 from main.models import User, VerifiedInformation
 
-from branch.forms import CreateBranchForm, ChooseBranchForm, OfferHelpForm, NeedHelpForm, CommentForm
+from branch.forms import CreateBranchForm, ChooseBranchForm, OfferHelpForm, NeedHelpForm, CommentForm, UpdateNeedHelpForm
 from django.utils import timezone
 from django.core.urlresolvers import reverse
 
@@ -187,7 +187,35 @@ class CreateDemandView(CreateView):
         return super(CreateDemandView, self).form_valid(form)
 
     def get_success_url(self):
-        return Branch.objects.get(pk=self.kwargs['branch_id']).get_absolute_url()
+        return self.object.get_absolute_url()
+
+class UpdateDemandView(UpdateView):
+    """
+    A registration backend for our CareRegistrationForm
+    """
+    template_name = 'job/need_help.html'
+    form_class = UpdateNeedHelpForm
+    model = Demand
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(UpdateDemandView, self).dispatch(*args, **kwargs)
+
+    def get_object(self):
+        return Demand.objects.get(pk=self.kwargs['demand_id'])
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateDemandView, self).get_context_data(**kwargs)
+        context['ruser'] = self.get_object().receiver
+        context['branch'] = self.get_object().branch
+        context['update'] = True
+        return context
+
+    def form_valid(self, form):
+        return super(UpdateDemandView, self).form_valid(form)
+
+    def get_success_url(self):
+        return self.object.get_absolute_url()
 
 
 class CreateOfferView(CreateView):
@@ -224,6 +252,10 @@ class DetailOfferView(CreateView): # This view is over-hacked. Don't take it as 
     model = Comment
     form_class = CommentForm
 
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(DetailOfferView, self).dispatch(*args, **kwargs)
+
     def get_object(self, queryset=None):
         return Offer.objects.get(pk=self.kwargs['offer_id'])
 
@@ -248,12 +280,21 @@ class DetailDemandView(CreateView): # This view is over-hacked. Don't take it as
     model = Comment
     form_class = CommentForm
 
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(DetailDemandView, self).dispatch(*args, **kwargs)
+
     def get_object(self, queryset=None):
         return Demand.objects.get(pk=self.kwargs['demand_id'])
 
     def get_context_data(self, **kwargs):
         context = super(DetailDemandView, self).get_context_data(**kwargs)
         context['object'] = self.get_object()
+        if self.request.user == self.get_object().receiver \
+            or self.request.user in self.get_object().branch.membership.values_list('id', flat=True).filter(is_admin=True) \
+            or self.request.user.is_superuser:
+            print('can_manage')
+            context['can_manage'] = True
         return context
 
     def form_valid(self, form):

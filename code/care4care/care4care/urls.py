@@ -13,5 +13,6 @@ urlpatterns = patterns(
     (r'^lookups/', include(ajax_select_urls)),
     url(r'branch/', include('branch.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^translate/', include('rosetta.urls')),
     (r'^i18n/', include('django.conf.urls.i18n')),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

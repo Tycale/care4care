@@ -51,7 +51,7 @@ INSTALLED_APPS = (
     'easy_thumbnails',
     'postman',
     'ajax_select',
-
+    'rosetta',
 )
 
 MIDDLEWARE_CLASSES = (

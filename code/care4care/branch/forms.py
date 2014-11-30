@@ -42,7 +42,7 @@ class CommentForm(forms.ModelForm):
         }
 
 class NeedHelpForm(forms.ModelForm):
-    category = MultiSelectField(verbose_name=_("Categorie"))
+    category = MultiSelectField(verbose_name=_("Categorie"), max_choices=1)
 
     def clean_date(self):
         date = self.cleaned_data.get('date')
@@ -66,6 +66,18 @@ class NeedHelpForm(forms.ModelForm):
             'date': DateTimePicker(options={"pickTime": False,}),
             'category': OneJobSelect,
         }
+
+class UpdateNeedHelpForm(NeedHelpForm):
+    class Meta:
+        model = Demand
+        fields = ['description', 'estimated_time', 'date', 'time', 'location', 'latitude', 'longitude', 'title', 'receive_help_from_who']
+        widgets = {
+            'latitude': forms.HiddenInput,
+            'longitude': forms.HiddenInput,
+            'location': forms.HiddenInput,
+            'date': DateTimePicker(options={"pickTime": False,}),
+        }
+
 
 class OfferHelpForm(forms.ModelForm):
     category = MultiSelectField(verbose_name=_("Categorie"))

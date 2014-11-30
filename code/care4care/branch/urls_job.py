@@ -2,12 +2,15 @@ from django.conf.urls import patterns, url
 
 from django.views.generic.base import TemplateView
 
-from branch.views import CreateDemandView, CreateOfferView, DetailDemandView, DetailOfferView
+from branch.views import CreateDemandView, CreateOfferView, DetailDemandView, DetailOfferView, UpdateDemandView
 
 urlpatterns = patterns('',
                        url(r'^new/demand/(?P<user_id>\d+)/$',
                            CreateDemandView.as_view(),
                            name='create_demand'),
+                       url(r'^update/demand/(?P<demand_id>\d+)/$',
+                           UpdateDemandView.as_view(),
+                           name='update_demand'),
                        url(r'^new/offer/(?P<user_id>\d+)/$',
                             CreateOfferView.as_view(),
                            name='create_offer'),

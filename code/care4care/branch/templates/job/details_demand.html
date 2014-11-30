@@ -41,6 +41,13 @@
     </div>
 </div>
 <div class="row mt">
+
+    <div class="col-sm-12">
+        {% if can_manage %}
+        <a class="btn btn-primary btn-block mb" href="{% url 'update_demand' branch_id=object.branch.id slug=object.branch.slug demand_id=object.id %}">{% bootstrap_icon 'pencil' %} {% trans "Modifier" %}</a>
+        {% endif %}
+    </div>
+
     <div class="col-md-6 col-sm-12">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -49,11 +56,10 @@
                         <img class="img-circle" src="{% thumbnail object.receiver.photo 50x50 crop %}" />
                     </a>
                     {{object.title}}
-                    
                 </h4>
             </div>
             <ul class="list-group">
-              <li class="list-group-item"><strong>{% trans "Demandeur" %}</strong><br/>&nbsp; <a href="{{ object.receiver.get_absolute_url }}">{{object.receiver.get_full_name}}</a> {% trans "dans la branche" %} <a href="object.branch.get_absolute_url">{{object.branch}}</a></li>
+              <li class="list-group-item"><strong>{% trans "Demandeur" %}</strong><br/>&nbsp; <a href="{{ object.receiver.get_absolute_url }}">{{object.receiver.get_full_name}}</a> {% trans "dans la branche" %} <a href="{{object.branch.get_absolute_url}}">{{object.branch}}</a></li>
               <li class="list-group-item"><strong>{% trans "Catégorie" %}</strong><br/>&nbsp; {{object.get_category_display}}</li>
               <li class="list-group-item"><strong> {% trans "Date" %}</strong><br/>&nbsp;  {{ object.date|naturalday:'DATE_FORMAT' }}</li>
               <li class="list-group-item"><strong> {% trans "Heures de disponibilité" %}</strong><br/>&nbsp;  {{object.get_verbose_time}}</li>

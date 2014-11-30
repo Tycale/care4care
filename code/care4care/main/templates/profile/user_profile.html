@@ -33,7 +33,7 @@
           <h4 class="modal-title">Ignorer cette personne</h4>
         </div>
         <div class="modal-body">
-          <p>  {% trans 'êtes vous sur de vouloir Ignorer cette personne ? elle sera supprimée de vos favoris et de votre réseau et vous ne recevrez plus d&#39;aide de celle çi.' %}</p>
+          <p>  {% trans 'Êtes vous sur de vouloir Ignorer cette personne ? elle sera supprimée de vos favoris et de votre réseau et vous ne recevrez plus d&#39;aide de celle-ci.' %}</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'Annuler' %}</button>
@@ -70,8 +70,7 @@
                 </div>
 
 
-                {% if request.user.id != user_to_display.id %}
-
+                {% if request.user.id != user_to_display.id and user_to_display not in request.user.ignore_list.all %}
                 {% if is_my_friend %}
                 <a href="#{{is_my_friend}}" class="btn btn-default btn-sm" id="add_favorite_link"  data-toggle="tooltip" data-placement="top" title="{% trans 'Retirer cette personne de vos favoris.' %}">
                   <span class="glyphicon glyphicon glyphicon-star" id="is_favorite_star">  </span> {% trans 'Favoris' %}
@@ -214,7 +213,7 @@
 
   <div id="stats" class="tab-pane fade in active">
     <div class="mt">
-      {% show_user_stats request user_to_display.id %}
+      {% show_user_stats request user_id %}
     </div>
   </div>
   {% endif %}
@@ -343,7 +342,9 @@
   }
 
   var add_ignore_success = function(name){
-    $('#ignore_user_modal').modal('hide')
+    $('#ignore_user_modal').modal('hide');
+    $('#add_favorite_link').hide();
+    $('#add_network_link').hide();
     remove_favorite_success();
     remove_network_success();
     $.gritter.add({

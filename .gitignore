@@ -10,3 +10,4 @@ venv/
 *mo
 *~
 .DS_Store
+media_root/

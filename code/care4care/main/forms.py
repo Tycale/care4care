@@ -19,7 +19,7 @@ class CareRegistrationForm(forms.ModelForm):
     password2 = forms.CharField(widget=forms.PasswordInput,
                                 label=_("Mot de passe (à nouveau)"))
 
-    birth_date = forms.DateField(label=_("Date de naissance (DD/MM/YYYY)"),
+    birth_date = forms.DateField(label=_("Date de naissance"),
                                  widget=SelectDateWidget(years=range(datetime.date.today().year-100, \
                                                                      datetime.date.today().year)),
                                  initial=datetime.date.today())
