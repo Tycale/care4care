@@ -272,9 +272,10 @@
                   {% if not request.user.is_verified %}
                   <a href="{% url 'verified_profile' request.user.id %}"> <i class="fa fa-caret-square-o-up"></i></a><p class="centered">
                   {% endif %}
+                  <hr class="menu-sep"/>
                   {% endif %}
 
-                  <hr class="menu-sep"/>
+                  
 
                   <li>
                       <a href="{% url "home" %}">
