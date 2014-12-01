@@ -8,7 +8,7 @@ from django.contrib.sites.models import RequestSite
 from django.contrib.sites.models import Site
 from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
-from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm, VerifiedProfileForm
+from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm, VerifiedProfileForm, JobSearchForm
 from main.models import User, VerifiedInformation, EmergencyContact
 from branch.models import Demand, Offer
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -45,6 +45,10 @@ def home(request):
     if not_enough:
         demands = Demand.objects.all()
         offers = Offer.objects.all()
+
+    nb_branch = Branch.objects.all().count()
+    branches = Branch.objects.all()
+    nb_users = User.objects.all().count()
 
     return render(request, 'main/home.html', locals())
 
@@ -399,7 +403,11 @@ def similar_jobs(request):
 def similar_demands(request):
     user = request.user
     now = datetime.datetime.now()
-    user_offers = Job.objects.filter(donor = user, receiver__isnull = True, date__gte=now)
+    user_offers = Offer.objects.filter(donor = user, date__gte=now)
+    demands = Demand.objects.filter(date__gte=now).exclude(receiver=user)
+    result_demands = []
+    for offer in user_offers:
+        result_demands.extend(demands.filter(branch=offer.branch, date=offer.date, category=offer.category))
 
     return render(request, 'seek_similar_jobs/main.html', locals())
 
@@ -407,11 +415,11 @@ def similar_demands(request):
 def similar_offers(request):
     user = request.user
     now = datetime.datetime.now()
-    user_demands = Job.objects.filter(donor__isnull = True, receiver = user, date__gte=now)
-    offers = Job.objects.filter(receiver__isnull = True, date__gte=now)
-    result = []
+    user_demands = Demand.objects.filter(receiver = user, date__gte=now)
+    offers = Offer.objects.filter(date__gte=now).exclude(donor=user)
+    result_offers = []
     for demand in user_demands:
-        result.extend(offers.filter(branch=demand.branch, date=demand.date, category=demand.category))
+        result_offers.extend(offers.filter(branch=demand.branch, date=demand.date, category=demand.category))
 
     return render(request, 'seek_similar_jobs/main.html', locals())
 
@@ -499,3 +507,13 @@ def search_view(request):
     userlist = User.objects.filter(Q(first_name__icontains=input) | Q(last_name__icontains=input) | Q(username__icontains=input))
     return render(request, 'search/search.html', locals())
 
+@login_required
+def job_search_view(request):
+    form = JobSearchForm()
+    return render(request,'search/job.html', locals())
+
+def job_result_view(request):
+    user = request.user
+    demands = Demand.objects.all()
+    offers = Offer.objects.all()
+    return render(request, 'search/job_result.html',locals())

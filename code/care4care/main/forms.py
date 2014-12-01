@@ -1,13 +1,12 @@
 from django import forms
 from django.utils.translation import ugettext as _
-from main.models import User, VerifiedInformation, EmergencyContact
-from branch.models import Job
+from main.models import User, VerifiedInformation, EmergencyContact, JobType, MemberType
+from branch.models import Job, Branch, JobCategory, TIME_CHOICES
 from multiselectfield import MultiSelectField
+from bootstrap3_datetime.widgets import DateTimePicker
 
 from django.forms.extras import SelectDateWidget
 import datetime
-
-from branch.models import Branch
 
 from django.template.defaultfilters import filesizeformat
 
@@ -182,3 +181,16 @@ class EmergencyContactCreateForm(forms.ModelForm):
         model = EmergencyContact
         exclude = ['user', 'latitude', 'longitude']
 
+class JobSearchForm(forms.Form):
+    job_type =  forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=JobType.JOB_TYPES, label = _("Type de job"))
+    category = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=JobCategory.JOB_CATEGORIES, label = _("Catégorie du job"))
+    date1 = forms.DateTimeField(label = _("A partir du"),widget=DateTimePicker(options={"pickTime": False,}))
+    date2 = forms.DateTimeField(label = _("jusqu'au"),widget=DateTimePicker(options={"pickTime": False,}))
+    receive_help_from_who = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=MemberType.MEMBER_TYPES_GROUP, label = _("Catégorie du job"))
+    time = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=TIME_CHOICES, label = _("A quelle heure ?"))
+
+    def clean(self):
+        cleaned_data = super(JobSearchForm, self).clean()
+        if 'date2' < 'date1' or self.cleaned_data['date2'] < self.cleaned_data['date1']:
+            raise forms.ValidationError(_("Incohérence dans les dates."))
+ 

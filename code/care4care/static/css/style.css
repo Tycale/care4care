@@ -2585,3 +2585,18 @@ textarea {
 #search input[type="text"]:focus {
     width: 200px;
     }
+
+
+#title-home {
+    padding-left: 20px;
+    padding-right: 20px;
+    color: #FFF;
+    text-transform: uppercase;
+    font-family: 'Ruda', sans-serif;
+    background-color: rgba(53, 126, 189, 0.9);
+    border-bottom-right-radius: 20px;
+}
+
+#title-home h3 {
+    margin: 5px;
+}
