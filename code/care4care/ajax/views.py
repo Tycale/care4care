@@ -67,6 +67,10 @@ class Statistics:
         last_m = [datetime.date.today() + datetime.timedelta(weeks=4*(-i)) for i in range(0, n)]
         return [MONTHS[d.month] for d in reversed(last_m)]
 
+    @staticmethod
+    def get_job_labels():
+        return [str(l[1]) for l in JobCategory.JOB_CATEGORIES]
+
 
     # Global statistics
 
@@ -167,7 +171,7 @@ class Statistics:
             __("Autre"),
             __("Spécial... :D"),
         ]"""
-        response['labels'] = [str(l[1]) for l in JobCategory.JOB_CATEGORIES]
+        response['labels'] = Statistics.get_job_labels()
         datasets = []
         first_dataset = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
         #first_dataset['label'] = __('Jobs effectués par catégorie')  # Non-necessary field
