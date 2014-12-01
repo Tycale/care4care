@@ -67,6 +67,10 @@ class Statistics:
         last_m = [datetime.date.today() + datetime.timedelta(weeks=4*(-i)) for i in range(0, n)]
         return [MONTHS[d.month] for d in reversed(last_m)]
 
+    @staticmethod
+    def get_job_labels():
+        return [str(l[1]) for l in JobCategory.JOB_CATEGORIES]
+
 
     # Global statistics
 
@@ -167,7 +171,7 @@ class Statistics:
             __("Autre"),
             __("Spécial... :D"),
         ]"""
-        response['labels'] = [str(l[1]) for l in JobCategory.JOB_CATEGORIES]
+        response['labels'] = Statistics.get_job_labels()
         datasets = []
         first_dataset = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
         #first_dataset['label'] = __('Jobs effectués par catégorie')  # Non-necessary field
@@ -189,30 +193,16 @@ class Statistics:
     def get_user_job_categories_json(user_id):
         print("get_user_job_categories_json")
         response = {}
-        response['labels'] = [
-            __("Visites à domicile"),
-            __("Tenir compagnie"),
-            __("Transport par voiture"),
-            __("Shopping"),
-            __("Garder la maison"),
-            __("Boulots manuels"),
-            __("Jardinage"),
-            __("Soins personnels"),
-            __("Administratif"),
-            __("Autre"),
-            __("Spécial... :D"),
-        ]
+        response['labels'] = Statistics.get_job_labels()
         datasets = []
         first_dataset = Statistics.generate_line_colors(Color.GREEN_RGB)
         #first_dataset['label'] = __('Membres')  # Non-necessary field
-        #get user
+        # get user
         user = User.objects.get(pk=user_id);
-        #group by django
+        # group by django
         nb_demands = Demand.objects.filter(receiver=user).values('category').annotate(number=Count('category'));
-        #construct data list
-        data_list = []
-        for cat in JobCategory.JOB_CATEGORIES:
-            data_list.append(0)
+        # construct data list
+        data_list = [0 for i in range(0, len(JobCategory.JOB_CATEGORIES))]
         for d in nb_demands:
             index = int(d["category"])
             data_list[index-1] = d["number"]
@@ -226,19 +216,7 @@ class Statistics:
     @staticmethod
     def get_user_job_avg_time_json(user_id):
         response = {}
-        response['labels'] = [
-            __("Visites à domicile"),
-            __("Tenir compagnie"),
-            __("Transport par voiture"),
-            __("Shopping"),
-            __("Garder la maison"),
-            __("Boulots manuels"),
-            __("Jardinage"),
-            __("Soins personnels"),
-            __("Administratif"),
-            __("Autre"),
-            __("Spécial... :D"),
-        ]
+        response['labels'] = Statistics.get_job_labels()
         datasets = []
         first_dataset = Statistics.generate_line_colors(Color.GREEN_RGB)
 
