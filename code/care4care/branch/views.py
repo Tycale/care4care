@@ -3,15 +3,14 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext as _
 from django.contrib import messages
-
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.detail import DetailView
 
-from branch.models import Branch, BranchMembers, Demand, Offer, Comment
-
+from branch.models import Branch, BranchMembers, Demand, Offer, Comment, DemandProposition
 from main.models import User, VerifiedInformation
 
-from branch.forms import CreateBranchForm, ChooseBranchForm, OfferHelpForm, NeedHelpForm, CommentForm, UpdateNeedHelpForm
+from branch.forms import CreateBranchForm, ChooseBranchForm, OfferHelpForm, NeedHelpForm, \
+            CommentForm, UpdateNeedHelpForm, VolunteerForm
 from django.utils import timezone
 from django.core.urlresolvers import reverse
 
@@ -367,6 +366,8 @@ class DetailDemandView(CreateView): # This view is over-hacked. Don't take it as
         context = super(DetailDemandView, self).get_context_data(**kwargs)
         obj = self.get_object()
         context['object'] = obj
+        if self.request.user in obj.volunteers.all():
+            context['already_volunteer'] = True
         if can_manage_branch_specific(obj.receiver, self.request.user, obj.branch):
             context['can_manage'] = True
         return context
@@ -378,3 +379,29 @@ class DetailDemandView(CreateView): # This view is over-hacked. Don't take it as
 
     def get_success_url(self):
         return self.get_object().get_absolute_url() + '#' + str(self.object.id)
+
+class CreateVolunteerView(CreateView):
+    """
+    A registration backend for our CareRegistrationForm
+    """
+    template_name = 'job/volunteer_demand.html'
+    form_class = VolunteerForm
+    model = DemandProposition
+
+    def form_valid(self, form):
+        form.instance.demand = Demand.objects.get(pk=self.kwargs['demand_id'])
+        form.instance.user = User.objects.get(pk=self.kwargs['volunteer_id'])
+        return super(CreateVolunteerView, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateVolunteerView, self).get_context_data(**kwargs)
+        context['demand'] = Demand.objects.get(pk=self.kwargs['volunteer_id'])
+        return context
+
+    def get_initial(self):
+        return {'km': self.request.GET.get('km',0),}
+
+    def get_success_url(self):
+        return Demand.objects.get(pk=self.kwargs['demand_id']).get_absolute_url()
+
+

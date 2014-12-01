@@ -3,7 +3,7 @@ from django.conf.urls import patterns, url
 from django.views.generic.base import TemplateView
 
 from branch.views import CreateDemandView, CreateOfferView, DetailDemandView, DetailOfferView, \
-                          UpdateDemandView, UpdateOfferView
+                          UpdateDemandView, UpdateOfferView, CreateVolunteerView
 
 urlpatterns = patterns('',
                        url(r'^new/demand/(?P<user_id>\d+)/$',
@@ -30,4 +30,8 @@ urlpatterns = patterns('',
                        url(r'^offer/(?P<offer_id>\d+)/$',
                             DetailOfferView.as_view(),
                            name='see_offer'),
+                       # volunteer
+                       url(r'^volunteer/(?P<volunteer_id>\d+)/demand/(?P<demand_id>\d+)/$',
+                            CreateVolunteerView.as_view(),
+                            name='volunteer_demand'),
                        )

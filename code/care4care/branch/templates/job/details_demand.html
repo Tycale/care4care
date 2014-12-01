@@ -38,6 +38,9 @@
                 </a>
             </div>
             <div id="title-manage">
+                {% if object.receiver.id != request.user.id and not already_volunteer %}
+                <a class="btn btn-primary" id="appendKm" href="{% url 'volunteer_demand' branch_id=object.branch.id slug=object.branch.slug demand_id=object.id volunteer_id=request.user.id %}">{% bootstrap_icon 'gift' %} {% trans "Offrir mon aide" %}</a>
+                {% endif %}
                 {% if can_manage %}
                 <a class="btn btn-primary" href="{% url 'update_demand' branch_id=object.branch.id slug=object.branch.slug demand_id=object.id %}">{% bootstrap_icon 'pencil' %} {% trans "Modifier" %}</a>
                 <a class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">{% bootstrap_icon 'trash' %} {% trans "Supprimer" %}</a>
@@ -91,7 +94,22 @@
               {% if object.description %}
               <li class="list-group-item"><strong> {% trans "Description" %}</strong><br/> &nbsp; {{object.description}}</li>
               {% endif %}
+              
+              {% if object.receiver.id != request.user.id and not already_volunteer %}
+              <li class="list-group-item">
+              <a class="btn btn-primary btn-block" id="appendKm" href="{% url 'volunteer_demand' branch_id=object.branch.id slug=object.branch.slug demand_id=object.id volunteer_id=request.user.id %}">{% bootstrap_icon 'gift' %} {% trans "Offrir mon aide" %}</a>
+              </li>
+              {% endif %}
+
+              {% if already_volunteer %}
+              <li class="list-group-item">
+              <strong>
+              {% bootstrap_icon 'star' %} {% trans "Vous êtes volontaire pour cette tâche !" %}
+              </strong>
+              </li>
+              {% endif %}
             </ul>
+            
 
           </div>
     </div>
@@ -272,6 +290,10 @@ $(document).ready(function () {
                     }
                     $('#timeTravel').html(Math.floor(totalDuration/60));
                     $('#distanceTravel').html(Math.floor(totalDistance/1000));
+                    $("a#appendKm").each(function() {
+                       var _href = $(this).attr("href"); 
+                       $(this).attr("href", _href + '?km=' + Math.floor(totalDistance/1000));
+                    });
                 }
             });
 

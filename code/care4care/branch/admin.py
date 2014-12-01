@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from branch.models import Demand, Offer, Comment, Branch
+from branch.models import Demand, Offer, Comment, Branch, DemandProposition
 
 class OfferAdmin(admin.ModelAdmin):
     list_display = ('category', 'get_user', 'branch', 'date',)
@@ -24,8 +24,11 @@ class CommentAdmin(admin.ModelAdmin):
 class BranchAdmin(admin.ModelAdmin):
     pass
 
+class DemandPropositionAdmin(admin.ModelAdmin):
+    pass
+
 admin.site.register(Demand, DemandAdmin)
 admin.site.register(Offer, OfferAdmin)
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(Branch, BranchAdmin)
-
+admin.site.register(DemandProposition, DemandPropositionAdmin)

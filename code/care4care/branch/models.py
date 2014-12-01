@@ -132,6 +132,7 @@ class Demand(Job):
     estimated_time = models.IntegerField(verbose_name=_("Temps estimé (en minutes)"), blank=True, null=True)
     real_time = models.IntegerField(verbose_name=_("Temps réel (en minutes)"), blank=True, null=True)
     comments = GenericRelation(Comment)
+    volunteers = models.ManyToManyField(User, null=True, blank=True, through='DemandProposition', related_name="volunteers", verbose_name=_("Propositions"))
 
     @models.permalink
     def get_absolute_url(self):
@@ -150,4 +151,14 @@ class Offer(Job):
         return '{} - {}'.format(self.donor, self.branch)
 
 
+class DemandProposition(models.Model):
+    user = models.ForeignKey(User, related_name='uservol')
+    demand = models.ForeignKey(Demand, related_name='propositions')
+    comment = models.TextField(verbose_name=_("Commentaire (facultatif)"), blank=True, null=True)
+    created = models.DateTimeField(verbose_name=_("date d'arrivé"), auto_now=True)
+    accepted = models.BooleanField(verbose_name=_("Proposition acceptée"), default=False)
+    km = models.IntegerField(verbose_name=_("Distance depuis domicile"), blank=True, null=True)
+
+    class Meta:
+        ordering = ['-created']
 
