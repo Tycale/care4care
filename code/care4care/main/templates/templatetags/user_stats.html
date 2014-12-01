@@ -4,10 +4,6 @@
 <link rel="stylesheet" type="text/css" href="{% static "css/statistics.css" %}" />
 
 <div id="stats">
-  <h3>
-    <i class="fa fa-angle-right"></i>
-    {% trans "Demandes" %}
-  </h3>
 
   <div class="row">
     <div class="col-md-6">
@@ -42,7 +38,7 @@
           <div class="panel-body">
             <h4>
               <i class="fa fa-angle-right"></i>
-              {% trans "Demandes de jobs effectuées les 6 derniers mois" %}
+              {% trans "Jobs effectués les 6 derniers mois" %}
             </h4>
           <canvas id="user_jobs_amount" width="475" height="200"></canvas>
         </div>
@@ -61,12 +57,6 @@
       </div>
     </div>
   </div>
-
-
-  <h3>
-    <i class="fa fa-angle-right"></i>
-    {% trans "Offres" %}
-  </h3>
 
 </div>
 <script type="application/javascript">
