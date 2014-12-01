@@ -264,12 +264,24 @@ class Statistics:
         N_MONTHS = 6
         response['labels'] = Statistics.get_last_n_months(N_MONTHS)
         truncate_date = connection.ops.date_trunc_sql('month','date')
-        jobs_amount = Demand.objects.extra({'month':truncate_date}).values('month').annotate(created_count=Count('id'))
+        now = datetime.datetime.now()
+        # get date minus 6 months (in number of weeks actually)
+        i_months_ago =  now - timezone.timedelta(weeks=4*(N_MONTHS-1))
+        # set the day to one
+        i_months_ago =  i_months_ago.replace(day=1, hour=0, minute=0)
+        jobs_amount = Demand.objects.filter(date__gte=i_months_ago, date__lte=now).extra({'month':truncate_date}).values('month').annotate(created_count=Count('id'))
+        data_list = [0 for i in range(0, N_MONTHS)]
+        baseIndex = i_months_ago.month
+        # the base index is the first month and is equal to the index 0 in the data_list
+        # the key is the month number
+        for job in jobs_amount:
+            key = int(job["month"][5:7])
+            data_list[key - baseIndex] = job["created_count"]
 
         datasets = []
         first_dataset = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
         #first_dataset['label'] = __('Membres')  # Non-necessary field
-        first_dataset['data'] = [10, 20, 30, 42, 25, 28]
+        first_dataset['data'] = data_list
         datasets.append(first_dataset)
 
         response['datasets'] = datasets
