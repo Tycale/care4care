@@ -484,3 +484,12 @@ def get_user_jobs_amount_json(request, user_id):
         return get_json_from(Statistics.get_user_jobs_amount_json(user_id))
     else:
         return HttpResponse(PERMISSION_DENIED, status=401)
+
+### Search ###
+@login_required
+def search_view(request):
+    input = request.GET.get('q')
+    userlist = User.objects.filter(first_name__icontains=input) | User.objects.filter(last_name__icontains=input)
+    if(len(userlist)>0):
+        display = True
+    return render(request, 'search/search.html', locals())

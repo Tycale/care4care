@@ -13,5 +13,6 @@ urlpatterns = patterns(
     url(r'^statistics/', include('main.urls_statistics')),
     url(r'^messages/', include('main.urls_postman')),
     url(r'^seek_jobs/', include('main.urls_seek_jobs')),
+    url(r'^search/', include('main.urls_search')),
 
 )

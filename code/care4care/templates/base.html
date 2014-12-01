@@ -163,6 +163,11 @@
                 </li>
                 {% endif %}
                 {% if request.user.is_authenticated %}
+                <li class="search-bar">
+                  <form method="get" action="{% url 'search' %}" id="search">
+                    <input name="q" type="text" size="30" placeholder="Trouver un membre..." />
+                  </form>
+                </li>
                 <li class="credit-menu">
                   <ul>
                     <li>

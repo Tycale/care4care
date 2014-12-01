@@ -2543,3 +2543,28 @@ textarea {
     margin-bottom: 5px;
     margin-right: 2px;
 }
+
+.search-bar {
+    padding-top: 15px;
+    padding-right: 0px;
+    color: #fff;
+}
+
+#search input[type="text"] {
+    background: url(../img/search-white.png) no-repeat 10px 6px #fff;
+    border: 1px solid #d1d1d1;
+    color: #000;
+    width: 200px;
+    padding: 5px 15px 5px 35px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    -webkit-transition: all 0.7s ease 0s;
+    -moz-transition: all 0.7s ease 0s;
+    -o-transition: all 0.7s ease 0s;
+    transition: all 0.7s ease 0s;
+    }
+
+#search input[type="text"]:focus {
+    width: 200px;
+    }
