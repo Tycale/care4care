@@ -77,7 +77,8 @@ class MemberType:
 
     MEMBER_TYPES = (
         (MEMBER, _("Membre")),
-        (NON_MEMBER, _("Non-membre"))
+        (NON_MEMBER, _("Non-membre")),
+        (VERIFIED_MEMBER, _("Membre vérifié"))
         )
 
     MEMBER_TYPES_GROUP = (
