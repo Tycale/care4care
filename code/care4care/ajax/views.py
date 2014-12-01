@@ -36,6 +36,7 @@ class Color:
     GREEN_HEX  = '#2ED98A'
     ORANGE_RGB = [255, 169, 0]
     ORANGE_HEX = '#FFA900'
+    RED_HEX = '#F7464A'
 
 
     @staticmethod
@@ -48,6 +49,17 @@ class Statistics:
     """
     Statistics class
     """
+
+    # Account status colors
+    ACTIVE_COLOR_HEX = Color.GREEN_HEX
+    ON_HOLIDAY_COLOR_HEX = Color.LIGHT_BLUE_HEX
+    DISABLED_COLOR_HEX = Color.ORANGE_HEX
+
+    # Account types colors
+    MEMBER_COLOR_HEX = Color.ORANGE_HEX
+    VERIFIED_MEMBER_COLOR_HEX = Color.GREEN_HEX
+    NON_MEMBER_COLOR_HEX = Color.LIGHT_BLUE_HEX
+
 
     @staticmethod
     def generate_line_colors(color_rgb):
@@ -78,18 +90,6 @@ class Statistics:
     def get_users_registrated_json():
         response = {}
 
-        """
-        response['labels'] = [
-            __("Juin"),
-            __("Juillet"),
-            __("Août"),
-            __("Septembre"),
-            __("Octobre"),
-            __("Novembre),
-            __("Décembre)
-        ]
-        """
-
         N_MONTHS = 7
 
         response['labels'] = Statistics.get_last_n_months(N_MONTHS)
@@ -114,19 +114,19 @@ class Statistics:
         members['label'] = __('Membres')
         #members['value'] = 69
         members['value'] = User.objects.filter(user_type=MemberType.MEMBER).count()
-        members['color'] = '#F7464A'
+        members['color'] = Statistics.MEMBER_COLOR_HEX
 
         verif_members = {}
         verif_members['label'] = __('Membres vérifiés')
         #verif_members['value'] = 21
         verif_members['value'] = User.objects.filter(user_type=MemberType.VERIFIED_MEMBER).count()
-        verif_members['color'] = '#FDB45C'
+        verif_members['color'] = Statistics.VERIFIED_MEMBER_COLOR_HEX
 
         non_members = {}
         non_members['label'] = __('Non-membres')
         #non_members['value'] = 10
         non_members['value'] = User.objects.filter(user_type=MemberType.NON_MEMBER).count()
-        non_members['color'] = '#46BFBD'
+        non_members['color'] = Statistics.NON_MEMBER_COLOR_HEX
 
         response = [members, verif_members, non_members]
 
@@ -138,17 +138,17 @@ class Statistics:
         actives = {}
         actives['label'] = __('Actifs')
         actives['value'] = 80
-        actives['color'] = Color.LIGHT_BLUE_HEX
+        actives['color'] = Statistics.ACTIVE_COLOR_HEX
 
         on_holiday = {}
         on_holiday['label'] = __('En vacances')
         on_holiday['value'] = 18
-        on_holiday['color'] = Color.GREEN_HEX
+        on_holiday['color'] = Statistics.ON_HOLIDAY_COLOR_HEX
 
         disabled = {}
         disabled['label'] = __('Désactivés')
         disabled['value'] = 2
-        disabled['color'] = Color.ORANGE_HEX
+        disabled['color'] = Statistics.DISABLED_COLOR_HEX
 
         response = [actives, on_holiday, disabled]
         return json.dumps(response)
@@ -264,12 +264,24 @@ class Statistics:
         N_MONTHS = 6
         response['labels'] = Statistics.get_last_n_months(N_MONTHS)
         truncate_date = connection.ops.date_trunc_sql('month','date')
-        jobs_amount = Demand.objects.extra({'month':truncate_date}).values('month').annotate(created_count=Count('id'))
+        now = datetime.datetime.now()
+        # get date minus 6 months (in number of weeks actually)
+        i_months_ago =  now - timezone.timedelta(weeks=4*(N_MONTHS-1))
+        # set the day to one
+        i_months_ago =  i_months_ago.replace(day=1, hour=0, minute=0)
+        jobs_amount = Demand.objects.filter(date__gte=i_months_ago, date__lte=now).extra({'month':truncate_date}).values('month').annotate(created_count=Count('id'))
+        data_list = [0 for i in range(0, N_MONTHS)]
+        baseIndex = i_months_ago.month
+        # the base index is the first month and is equal to the index 0 in the data_list
+        # the key is the month number
+        for job in jobs_amount:
+            key = int(job["month"][5:7])
+            data_list[key - baseIndex] = job["created_count"]
 
         datasets = []
         first_dataset = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
         #first_dataset['label'] = __('Membres')  # Non-necessary field
-        first_dataset['data'] = [10, 20, 30, 42, 25, 28]
+        first_dataset['data'] = data_list
         datasets.append(first_dataset)
 
         response['datasets'] = datasets
