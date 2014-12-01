@@ -193,30 +193,16 @@ class Statistics:
     def get_user_job_categories_json(user_id):
         print("get_user_job_categories_json")
         response = {}
-        response['labels'] = [
-            __("Visites à domicile"),
-            __("Tenir compagnie"),
-            __("Transport par voiture"),
-            __("Shopping"),
-            __("Garder la maison"),
-            __("Boulots manuels"),
-            __("Jardinage"),
-            __("Soins personnels"),
-            __("Administratif"),
-            __("Autre"),
-            __("Spécial... :D"),
-        ]
+        response['labels'] = Statistics.get_job_labels()
         datasets = []
         first_dataset = Statistics.generate_line_colors(Color.GREEN_RGB)
         #first_dataset['label'] = __('Membres')  # Non-necessary field
-        #get user
+        # get user
         user = User.objects.get(pk=user_id);
-        #group by django
+        # group by django
         nb_demands = Demand.objects.filter(receiver=user).values('category').annotate(number=Count('category'));
-        #construct data list
-        data_list = []
-        for cat in JobCategory.JOB_CATEGORIES:
-            data_list.append(0)
+        # construct data list
+        data_list = [0 for i in range(0, len(JobCategory.JOB_CATEGORIES))]
         for d in nb_demands:
             index = int(d["category"])
             data_list[index-1] = d["number"]
