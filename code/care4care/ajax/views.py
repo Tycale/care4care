@@ -1,7 +1,7 @@
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext as __
 from branch.models import Demand, Job
-from main.models import User, MemberType, JobCategory
+from main.models import *
 from django.utils import timezone
 from django.db.models import Count, Avg
 import datetime
@@ -53,7 +53,7 @@ class Statistics:
     # Account status colors
     ACTIVE_COLOR_HEX = Color.GREEN_HEX
     ON_HOLIDAY_COLOR_HEX = Color.LIGHT_BLUE_HEX
-    DISABLED_COLOR_HEX = Color.ORANGE_HEX
+    UNSUBSCRIBED_COLOR_HEX = Color.ORANGE_HEX
 
     # Account types colors
     MEMBER_COLOR_HEX = Color.ORANGE_HEX
@@ -137,40 +137,29 @@ class Statistics:
     def get_users_status_json():
         actives = {}
         actives['label'] = __('Actifs')
-        actives['value'] = 80
+        #actives['value'] = 80
+        actives['value'] = User.objects.filter(status=STATUS[ACTIVE-1][0]).count()
         actives['color'] = Statistics.ACTIVE_COLOR_HEX
 
         on_holiday = {}
         on_holiday['label'] = __('En vacances')
-        on_holiday['value'] = 18
+        #on_holiday['value'] = 18
+        on_holiday['value'] = User.objects.filter(status=STATUS[HOLIDAYS-1][0]).count()
         on_holiday['color'] = Statistics.ON_HOLIDAY_COLOR_HEX
 
-        disabled = {}
-        disabled['label'] = __('Désactivés')
-        disabled['value'] = 2
-        disabled['color'] = Statistics.DISABLED_COLOR_HEX
+        unsubscribed = {}
+        unsubscribed['label'] = __('Désactivés')
+        #unsubscribed['value'] = 2
+        unsubscribed['value'] = User.objects.filter(status=STATUS[UNSUBSCRIBE-1][0]).count()
+        unsubscribed['color'] = Statistics.UNSUBSCRIBED_COLOR_HEX
 
-        response = [actives, on_holiday, disabled]
+        response = [actives, on_holiday, unsubscribed]
         return json.dumps(response)
 
 
     @staticmethod
     def get_job_categories_json():
         response = {}
-        """response['labels'] = [
-            __("Visites à domicile"),
-            __("Tenir compagnie"),
-            __("Transport par voiture"),
-            __("Shopping"),
-            __("Garder la maison"),
-            __("Boulots manuels"),
-            __("Jardinage"),
-            __("Garder des animaux),
-            __("Soins personnels"),
-            __("Administratif"),
-            __("Autre"),
-            __("Spécial... :D"),
-        ]"""
         response['labels'] = Statistics.get_job_labels()
         datasets = []
         first_dataset = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)

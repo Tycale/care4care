@@ -421,7 +421,7 @@ def statistics(request):
     # Account status color
     ACTIVE_COLOR_HEX = Statistics.ACTIVE_COLOR_HEX
     ON_HOLIDAY_COLOR_HEX = Statistics.ON_HOLIDAY_COLOR_HEX
-    DISABLED_COLOR_HEX = Statistics.DISABLED_COLOR_HEX
+    UNSUBSCRIBED_COLOR_HEX = Statistics.UNSUBSCRIBED_COLOR_HEX
 
     # Account types colors
     MEMBER_COLOR_HEX = Statistics.MEMBER_COLOR_HEX
