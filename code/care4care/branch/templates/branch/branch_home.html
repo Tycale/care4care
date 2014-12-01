@@ -27,11 +27,12 @@
                 {% endif %}
             </div>
             <div id="options-branch">
-                {% if branch.creator.id != request.user.id or not request.user.is_superuser %}
+                {% if branch.creator.id != request.user.id %}
                 <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-leave">
                     {% trans "Quitter cettte branche" %}
                 </button>
-                {% else %}
+                {% endif %}
+                {% if branch.creator.is == request.user.id or request.user.is_superuser %}
                 <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-delete">
                     {% trans "Supprimer cettte branche" %}
                 </button>
@@ -157,10 +158,10 @@
                     </th>
                 </tr>
                 </thead>
-                <tbody data-link='row'>
+                <tbody data-link="row" data-target="a.mainlink">
                 	{% for member in mall %}          	
                 	<tr>
-                	    <td><a href="{{ member.user.get_absolute_url }}">{{member.user}}</a></td>
+                	    <td><a href="{{ member.user.get_absolute_url }}" class="mainlink">{{member.user}}</a></td>
                 	    <td>{{ member.user.get_full_name }}</td>
                         {% if not is_branch_admin %}
                 	    <td>{% if member.is_admin %}{% trans "Responsable" %}{% endif %}</td>
@@ -170,7 +171,7 @@
                             <a class="btn btn-primary btn-xs" href="{% url 'branch_promote' branch_id=branch.id user_id=member.user.id %}">{% trans "Promouovir responsable" %}</a>
                             {% else %}
                                 {% if member.user.id != branch.creator.id %}
-                                <a class="btn btn-primary btn-xs" href="{% url 'branch_demote' branch_id=branch.id user_id=member.user.id %}">{% trans "Retirer responsable" %}</a>
+                                <a class="btn btn-danger btn-xs" href="{% url 'branch_demote' branch_id=branch.id user_id=member.user.id %}">{% trans "Retirer responsable" %}</a>
                                 {% else %}
                                 {% trans "Créateur" %}
                                 {% endif %}
@@ -182,7 +183,9 @@
                             <a class="btn btn-primary btn-xs" href="{% url 'create_demand' branch_id=branch.id slug=branch.slug user_id=member.user.id %}"><i class="fa fa-plus"> {% trans "demande" %}</i></a>
                             <a class="btn btn-primary btn-xs" href="{% url 'create_offer' branch_id=branch.id slug=branch.slug user_id=member.user.id %}"><i class="fa fa-plus"> {% trans "offre" %}</i></a>
                 	        <a class="btn btn-primary btn-xs" href="{% url 'edit_profile' member.user.id %}"><i class="fa fa-pencil"> {% trans "Modifier" %}</i></a>
+                            {% if member.user.id != branch.creator.id %}
                 	        <a class="btn btn-danger btn-xs" href="{% url 'branch_leave' branch_id=branch.id user_id=member.user.id %}"><i class="fa fa-trash-o"> {% trans "Quitter" %}</i></a>
+                            {% endif %}
                 	    </td>
                         {% endif %}
                         <td><a href="{% url 'postman_write' member.user.username %}"><i class="fa fa-comments"> {% trans "écrire" %}</i></a></td>

@@ -15,7 +15,7 @@ JOB_STATUS_CHOICES = (
     (2, _('reçu proposition')),
     (3, _('proposition acceptée')),
     (4, _('completé')),
-    (5, _('échoué')),
+    (5, _('echoué')),
     )
 
 TIME_CHOICES = (
@@ -71,6 +71,12 @@ class BranchMembers(models.Model):
     branch = models.ForeignKey(Branch, related_name='membership')
     is_admin = models.BooleanField(default=False)
     joined = models.DateTimeField(verbose_name=_("date d'arrivé"))
+
+    def __str__(self):
+        res = '{} in {}'.format(self.user, self.branch)
+        if self.is_admin:
+            res += ' [admin]'
+        return res
 
     class Meta:
         ordering = ['-is_admin']

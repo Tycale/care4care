@@ -6,7 +6,7 @@ from multiselectfield import MultiSelectField
 from branch.models import Branch, Demand, Offer, Comment
 
 from django.utils import timezone
-
+from datetime import timedelta
 from django.utils import formats
 from branch.widgets import OneJobSelect
 
@@ -47,7 +47,7 @@ class NeedHelpForm(forms.ModelForm):
 
     def clean_date(self):
         date = self.cleaned_data.get('date')
-        if date < timezone.now():
+        if date < timezone.now() - timezone.timedelta(hours=24):
             raise forms.ValidationError(_("Veuillez choisir une date dans le futur."))
         return date
 

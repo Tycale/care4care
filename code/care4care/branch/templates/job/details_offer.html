@@ -9,12 +9,11 @@
     <div class="col-xs-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                
-                <h2>
+                <h4>
                       <a class="float-right" href="{{ object.donor.get_absolute_url }}">
                         <img class="img-circle" src="{% thumbnail object.donor.photo 60x60 crop %}" />
                       {{object.donor.get_full_name}}</a> {% trans "offre son aide dans la branche " %}<a href="{{object.branch.get_absolute_url}}"> {{object.branch}}</a>
-                </h2>
+                </h4>
             </div>
             <ul class="list-group">
               <li class="list-group-item"><strong>{% trans "Catégorie" %}</strong><br/>&nbsp; {{object.get_category_display}}</li>
@@ -27,6 +26,20 @@
 
           </div>
     </div>
+    {% if can_manage %}
+    <div class="col-md-12 col-sm-12 mb">
+      <div class="col-md-6 col-sm-6">
+        <a href="{% url 'update_offer' branch_id=object.branch.id slug=object.branch.slug offer_id=object.id %}" class="btn btn-primary btn-block">
+          {% bootstrap_icon "pencil" %} {% trans "Modifier" %}
+        </a>
+      </div>
+      <div class="col-md-6 col-sm-6">
+        <a href="{% url 'delete_offer' branch_id=object.branch.id slug=object.branch.slug offer_id=object.id %}" class="btn btn-danger btn-block">
+         {% bootstrap_icon "trash" %} {% trans "Supprimer" %}
+        </a>
+      </div>
+    </div>
+    {% endif %}
     <div class="col-md-12 col-sm-12">
         <div class="panel panel-default">
             <div class="panel-heading">

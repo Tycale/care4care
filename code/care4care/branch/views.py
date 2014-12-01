@@ -15,6 +15,8 @@ from branch.forms import CreateBranchForm, ChooseBranchForm, OfferHelpForm, Need
 from django.utils import timezone
 from django.core.urlresolvers import reverse
 
+from main.utils import can_manage, is_branch_admin, refuse, can_manage_branch_specific, is_in_branch
+
 @login_required
 @user_passes_test(lambda u: u.is_verified)
 def branch_create(request):
@@ -43,12 +45,12 @@ def branch_home(request, branch_id, slug):
     is_in = bm.count()
 
     if is_in == 0 and not user.is_superuser:
-        messages.add_message(request, messages.INFO, _("Vous n'avez rien à faire ici !"))
-        return redirect('home')
+        return refuse(request)
 
 
     if user.is_superuser:
         is_branch_admin = True
+        # if superUser is not already in the branch, add him
         try:
             BranchMembers.objects.get(branch=branch, user=user)
         except BranchMembers.DoesNotExist:
@@ -96,7 +98,7 @@ def branch_leave(request, branch_id, user_id):
     branch = get_object_or_404(Branch, pk=branch_id)
     user = get_object_or_404(User, pk=user_id)
 
-    if user == request.user or request.user == branch.creator or request.user.is_superuser:
+    if can_manage(user, request.user) and user.id != branch.creator :
         try:
             to_remove = BranchMembers.objects.get(branch=branch_id, user=user_id)
             to_remove.delete()
@@ -106,6 +108,8 @@ def branch_leave(request, branch_id, user_id):
                 messages.add_message(request, messages.INFO, _('{user} a été retiré de la branche {branch}').format(branch=branch, user=user))
         except:
             pass
+    else :
+        return refuse(request)
     
     return redirect('home')
 
@@ -114,7 +118,7 @@ def branch_promote(request, branch_id, user_id):
     branch = get_object_or_404(Branch, pk=branch_id)
     user = get_object_or_404(User, pk=user_id)
 
-    if request.user == branch.creator or request.user.is_superuser:
+    if is_branch_admin(request.user, branch) or request.user.is_superuser:
         try:
             to_promote = BranchMembers.objects.get(branch=branch_id, user=user_id)
             to_promote.is_admin = True
@@ -122,6 +126,8 @@ def branch_promote(request, branch_id, user_id):
             messages.add_message(request, messages.INFO, _('{user} a été promu administrateur de la branche {branch}').format(branch=branch, user=user))
         except:
             pass
+    else :
+        return refuse(request)
     
     return redirect(branch.get_absolute_url())
 
@@ -130,7 +136,7 @@ def branch_demote(request, branch_id, user_id):
     branch = get_object_or_404(Branch, pk=branch_id)
     user = get_object_or_404(User, pk=user_id)
 
-    if request.user == branch.creator or request.user.is_superuser:
+    if is_branch_admin(request.user, branch) or request.user.is_superuser:
         try:
             to_demote = BranchMembers.objects.get(branch=branch_id, user=user_id)
             to_demote.is_admin = False
@@ -138,7 +144,8 @@ def branch_demote(request, branch_id, user_id):
             messages.add_message(request, messages.INFO, _('{user} n\'est plus administrateur de la branche {branch}').format(branch=branch, user=user))
         except:
             pass
-    
+    else :
+        return refuse(request)
     return redirect(branch.get_absolute_url())
 
 
@@ -152,17 +159,29 @@ def branch_delete(request, branch_id):
             messages.add_message(request, messages.INFO, _('Vous avez supprimé la branche {branch}').format(branch=branch))
         except:
             pass
+    else:
+        return refuse(request)
     return redirect('home')
 
 @login_required
 def delete_demand(request, branch_id, slug, demand_id):
     demand = get_object_or_404(Demand, pk=demand_id)
 
-    if request.user == demand.receiver or request.user.is_superuser or \
-       request.user in demand.branch.membership.values_list('id', flat=True).filter(is_admin=True):
+    if can_manage_branch_specific(demand.receiver, request.user, demand.branch):
        demand.delete()
        messages.add_message(request, messages.INFO, _('Vous avez supprimé la demande {demand}').format(demand=demand))
        return redirect(demand.branch.get_absolute_url())
+    else:
+        return refuse(request)
+
+@login_required
+def delete_offer(request, branch_id, slug, offer_id):
+    offer = get_object_or_404(Offer, pk=offer_id)
+
+    if can_manage_branch_specific(offer.donor, request.user, offer.branch):
+       offer.delete()
+       messages.add_message(request, messages.INFO, _('Vous avez supprimé l\'offre {offer}').format(offer=offer))
+       return redirect(offer.branch.get_absolute_url())
     return redirect('home')
 
 class CreateDemandView(CreateView):
@@ -175,6 +194,9 @@ class CreateDemandView(CreateView):
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
+        if not is_in_branch(User.objects.get(pk=self.kwargs['user_id']), 
+            Branch.objects.get(pk=self.kwargs['branch_id'])):
+            return refuse(self.request)
         return super(CreateDemandView, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -209,6 +231,9 @@ class UpdateDemandView(UpdateView):
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
+        obj = self.get_object()
+        if not can_manage_branch_specific(obj.receiver, self.request.user, obj.branch):
+            return refuse(self.request)
         return super(UpdateDemandView, self).dispatch(*args, **kwargs)
 
     def get_object(self):
@@ -227,6 +252,37 @@ class UpdateDemandView(UpdateView):
     def get_success_url(self):
         return self.object.get_absolute_url()
 
+class UpdateOfferView(UpdateView):
+    """
+    A registration backend for our CareRegistrationForm
+    """
+    template_name = 'job/offer_help.html'
+    form_class = OfferHelpForm
+    model = Offer
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        obj = self.get_object()
+        if not can_manage_branch_specific(obj.donor, self.request.user, obj.branch):
+            return refuse(self.request)
+        return super(UpdateOfferView, self).dispatch(*args, **kwargs)
+
+    def get_object(self):
+        return Offer.objects.get(pk=self.kwargs['offer_id'])
+
+    def get_context_data(self, **kwargs):
+        context = super(UpdateOfferView, self).get_context_data(**kwargs)
+        context['ruser'] = self.get_object().receiver
+        context['branch'] = self.get_object().branch
+        context['update'] = True
+        return context
+
+    def form_valid(self, form):
+        return super(UpdateOfferView, self).form_valid(form)
+
+    def get_success_url(self):
+        return self.object.get_absolute_url()
+
 
 class CreateOfferView(CreateView):
     """
@@ -238,6 +294,9 @@ class CreateOfferView(CreateView):
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
+        if not is_in_branch(User.objects.get(pk=self.kwargs['user_id']), 
+            Branch.objects.get(pk=self.kwargs['branch_id'])):
+            return refuse(self.request)
         return super(CreateOfferView, self).dispatch(*args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -264,6 +323,8 @@ class DetailOfferView(CreateView): # This view is over-hacked. Don't take it as 
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
+        if not is_in_branch(self.request.user, self.get_object().branch):
+            return refuse(self.request)
         return super(DetailOfferView, self).dispatch(*args, **kwargs)
 
     def get_object(self, queryset=None):
@@ -271,7 +332,10 @@ class DetailOfferView(CreateView): # This view is over-hacked. Don't take it as 
 
     def get_context_data(self, **kwargs):
         context = super(DetailOfferView, self).get_context_data(**kwargs)
-        context['object'] = self.get_object()
+        obj = self.get_object()
+        context['object'] = obj
+        if can_manage_branch_specific(obj.donor, self.request.user, obj.branch):
+            context['can_manage'] = True
         return context
 
     def form_valid(self, form):
@@ -292,6 +356,8 @@ class DetailDemandView(CreateView): # This view is over-hacked. Don't take it as
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
+        if not is_in_branch(self.request.user, self.get_object().branch):
+            return refuse(self.request)
         return super(DetailDemandView, self).dispatch(*args, **kwargs)
 
     def get_object(self, queryset=None):
@@ -299,11 +365,9 @@ class DetailDemandView(CreateView): # This view is over-hacked. Don't take it as
 
     def get_context_data(self, **kwargs):
         context = super(DetailDemandView, self).get_context_data(**kwargs)
-        context['object'] = self.get_object()
-        if self.request.user == self.get_object().receiver \
-            or self.request.user in self.get_object().branch.membership.values_list('id', flat=True).filter(is_admin=True) \
-            or self.request.user.is_superuser:
-            print('can_manage')
+        obj = self.get_object()
+        context['object'] = obj
+        if can_manage_branch_specific(obj.receiver, self.request.user, obj.branch):
             context['can_manage'] = True
         return context
 

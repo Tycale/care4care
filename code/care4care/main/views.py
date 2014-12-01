@@ -29,6 +29,7 @@ import datetime
 from django.utils import timezone
 from django.views.generic.edit import UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
+from main.utils import can_manage, is_branch_admin, refuse, can_manage_branch_specific, is_in_branch
 
 def home(request):
     user = request.user
@@ -160,11 +161,16 @@ def verified_documents_view(request):
 def verified_display_view(request, user_id):
     user_to_display = get_object_or_404(User, pk=user_id)
     verified_documents = get_object_or_404(VerifiedInformation, user=user_id)
+    if not can_manage(user_to_display, request.user) or user_to_display.id == request.user.id:
+        return refuse(request)
     return render(request, 'verified/verified_display.html', locals())
 
 
+@login_required
 def verified_status_giving_view(request, user_id):
     user = get_object_or_404(User, pk=user_id)
+    if not can_manage(user, request.user) or user.id == request.user.id:
+        return refuse(request)
     user.is_verified = True
     user.save()
     verified_documents = get_object_or_404(VerifiedInformation, user=user_id)
@@ -179,6 +185,8 @@ def verified_status_giving_view(request, user_id):
 @login_required
 def verified_status_refuse_view(request, user_id):
     user = get_object_or_404(User, pk=user_id)
+    if not can_manage(user, request.user) or user.id == request.user.id:
+        return refuse(request)
     user.is_verified = False
     user.save()
     verified_documents = get_object_or_404(VerifiedInformation, user=user_id)
