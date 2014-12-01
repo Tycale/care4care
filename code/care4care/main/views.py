@@ -8,7 +8,7 @@ from django.contrib.sites.models import RequestSite
 from django.contrib.sites.models import Site
 from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
-from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm, VerifiedProfileForm
+from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm, VerifiedProfileForm, JobSearchForm
 from main.models import User, VerifiedInformation, EmergencyContact
 from branch.models import Demand, Offer
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -499,3 +499,13 @@ def search_view(request):
     userlist = User.objects.filter(Q(first_name__icontains=input) | Q(last_name__icontains=input) | Q(username__icontains=input))
     return render(request, 'search/search.html', locals())
 
+@login_required
+def job_search_view(request):
+    form = JobSearchForm()
+    return render(request,'search/job.html', locals())
+
+def job_result_view(request):
+    user = request.user
+    demands = Demand.objects.all()
+    offers = Offer.objects.all()
+    return render(request, 'search/job_result.html',locals())
