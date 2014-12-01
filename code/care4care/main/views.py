@@ -399,7 +399,11 @@ def similar_jobs(request):
 def similar_demands(request):
     user = request.user
     now = datetime.datetime.now()
-    user_offers = Job.objects.filter(donor = user, receiver__isnull = True, date__gte=now)
+    user_offers = Offer.objects.filter(donor = user, date__gte=now)
+    demands = Demand.objects.filter(date__gte=now).exclude(receiver=user)
+    result_demands = []
+    for offer in user_offers:
+        result_demands.extend(demands.filter(branch=offer.branch, date=offer.date, category=offer.category))
 
     return render(request, 'seek_similar_jobs/main.html', locals())
 
@@ -407,11 +411,11 @@ def similar_demands(request):
 def similar_offers(request):
     user = request.user
     now = datetime.datetime.now()
-    user_demands = Job.objects.filter(donor__isnull = True, receiver = user, date__gte=now)
-    offers = Job.objects.filter(receiver__isnull = True, date__gte=now)
-    result = []
+    user_demands = Demand.objects.filter(receiver = user, date__gte=now)
+    offers = Offer.objects.filter(date__gte=now).exclude(donor=user)
+    result_offers = []
     for demand in user_demands:
-        result.extend(offers.filter(branch=demand.branch, date=demand.date, category=demand.category))
+        result_offers.extend(offers.filter(branch=demand.branch, date=demand.date, category=demand.category))
 
     return render(request, 'seek_similar_jobs/main.html', locals())
 
