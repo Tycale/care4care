@@ -60,7 +60,7 @@ class Statistics:
 
     @staticmethod
     def get_last_n_months(n):
-        last_m = [datetime.date.today() + datetime.timedelta(weeks=4*(-i)) for i in range(1, n+1)]
+        last_m = [datetime.date.today() + datetime.timedelta(weeks=4*(-i)) for i in range(0, n)]
         return [MONTHS[d.month] for d in reversed(last_m)]
 
 
@@ -72,13 +72,13 @@ class Statistics:
 
         """
         response['labels'] = [
-            __("Avril"),
-            __("Mai"),
             __("Juin"),
             __("Juillet"),
             __("Août"),
             __("Septembre"),
-            __("Octobre")
+            __("Octobre"),
+            __("Novembre),
+            __("Décembre)
         ]
         """
 
@@ -87,20 +87,14 @@ class Statistics:
         response['labels'] = Statistics.get_last_n_months(N_MONTHS)
         line_data = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
         #line_data['data'] = [10, 15, 22, 33, 48, 69, 99]
-
-        users_nm = User.objects.filter(date_joined__gte=timezone.now() + timezone.timedelta(weeks=4*(-N_MONTHS)))
-        values = dict.fromkeys(range(1, N_MONTHS+1), 0)
-        # Not really correct
+        values = []
         now = timezone.now()
-        six_months_ago = now + timezone.timedelta(weeks=4*(-N_MONTHS))
-        for u in users_nm:
-            reg_months = u.date_joined
-            for i in range(-N_MONTHS, 0):
-                i_months_ago = now + timezone.timedelta(weeks=4*i)
-                if reg_months < i_months_ago:
-                    values[i] += 1
-                    break
-        line_data['data'] = [values[v] for v in values]
+        # Does not correspond to real months, rather every 4 weeks
+        for i in range(-N_MONTHS+2, 2):
+            i_months_ago = now + timezone.timedelta(weeks=4*i)
+            users_im = User.objects.filter(date_joined__lte=i_months_ago).count()
+            values.append(users_im)
+        line_data['data'] = values
 
         response['datasets'] = [line_data]
         return json.dumps(response)
