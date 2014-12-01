@@ -10,14 +10,6 @@ from multiselectfield import MultiSelectField
 
 from main.models import User, JobCategory, MemberType
 
-JOB_STATUS_CHOICES = (
-    (1, _('créé')),
-    (2, _('reçu proposition')),
-    (3, _('proposition acceptée')),
-    (4, _('completé')),
-    (5, _('echoué')),
-    )
-
 TIME_CHOICES = (
     (1, _('Début de matinée (8h-10h)')),
     (2, _('Fin de matinée (10h-12h)')),
@@ -133,6 +125,7 @@ class Demand(Job):
     real_time = models.IntegerField(verbose_name=_("Temps réel (en minutes)"), blank=True, null=True)
     comments = GenericRelation(Comment)
     volunteers = models.ManyToManyField(User, null=True, blank=True, through='DemandProposition', related_name="volunteers", verbose_name=_("Propositions"))
+    closed = models.BooleanField(verbose_name=_("Vontaire assigné"), default=False)
 
     @models.permalink
     def get_absolute_url(self):

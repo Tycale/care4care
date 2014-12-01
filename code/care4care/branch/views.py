@@ -13,8 +13,9 @@ from branch.forms import CreateBranchForm, ChooseBranchForm, OfferHelpForm, Need
             CommentForm, UpdateNeedHelpForm, VolunteerForm
 from django.utils import timezone
 from django.core.urlresolvers import reverse
-
+from django.utils import formats
 from main.utils import can_manage, is_branch_admin, refuse, can_manage_branch_specific, is_in_branch
+from postman.api import pm_write
 
 @login_required
 @user_passes_test(lambda u: u.is_verified)
@@ -181,6 +182,50 @@ def delete_offer(request, branch_id, slug, offer_id):
        offer.delete()
        messages.add_message(request, messages.INFO, _('Vous avez supprimé l\'offre {offer}').format(offer=offer))
        return redirect(offer.branch.get_absolute_url())
+    return redirect('home')
+
+@login_required
+def volunteer_decline(request, volunteer_id):
+    demandProposition = DemandProposition.objects.get(pk=volunteer_id)
+    demand = demandProposition.demand
+
+    if can_manage_branch_specific(demand.receiver, request.user, demand.branch):
+        demandProposition.delete()
+        messages.add_message(request, messages.INFO, _('Vous avez refusé cette aide'))
+        return redirect(demand.get_absolute_url())
+    return redirect('home')
+
+# TODO : finish
+@login_required
+def volunteer_accept(request, volunteer_id):
+    demandProposition = DemandProposition.objects.get(pk=volunteer_id)
+    demand = demandProposition.demand
+
+    if can_manage_branch_specific(demand.receiver, request.user, demand.branch):
+        demandProposition.accepted = True
+        demandProposition.save()
+
+        subject = _("Je vous ai choisi pour '") + demand.title + "'" 
+        body = _(" Je vous ai choisi pour effectuer le job '") + demand.title + "'"
+        body += '\n\n' + _('Lieu : ') + demand.location
+        body += '\n' + _('Date : ') + formats.date_format(demand.date, "DATE_FORMAT")
+        body += '\n' + _('Heure(s) désirée(s) : ') + demand.get_verbose_time()
+        body += '\n' + _('Description : ') + demand.description
+        body += '\n\n' + _('N\'hésitez pas à me contacter pour de plus amples informations')
+        body += '\n' + _('À bientôt,') + '\n'
+        body += demand.receiver.first_name
+
+        pm_write(demand.receiver, demandProposition.user, subject, body)
+
+        for vol in DemandProposition.objects.filter(demand=demand, accepted=False):
+            vol.delete()
+
+        demand.closed = True
+        demand.donor = demandProposition.user
+        demand.save()
+
+        messages.add_message(request, messages.INFO, _('Vous avez accepté cette aide !'))
+        return redirect(demand.get_absolute_url())
     return redirect('home')
 
 class CreateDemandView(CreateView):
@@ -395,7 +440,7 @@ class CreateVolunteerView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(CreateVolunteerView, self).get_context_data(**kwargs)
-        context['demand'] = Demand.objects.get(pk=self.kwargs['volunteer_id'])
+        context['demand'] = Demand.objects.get(pk=self.kwargs['demand_id'])
         return context
 
     def get_initial(self):
