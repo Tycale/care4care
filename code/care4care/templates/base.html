@@ -165,29 +165,14 @@
                 {% if request.user.is_authenticated %}
                 <li class="search-bar">
                   <form method="get" action="{% url 'search' %}" id="search">
-                    <input name="q" type="text" size="30" placeholder="Trouver un membre..." />
+                    <input name="q" type="text" size="30" placeholder="{% trans "Trouver un membre..."%}" />
                   </form>
-                </li>
-                <li class="credit-menu">
-                  <ul>
-                    <li>
-                      <span class="credit-text text-info">{% trans "Crédit restant :" %}</span> {{ request.user.get_verbose_credit | safe }}
-                    </li>
-                    <li>
-                      <span  class="credit-text text-info">{% trans "Type de compte :" %}</span> {{ request.user.get_account_type }}
-                      {% if not request.user.is_verified %}
-                      <a href="{% url 'verified_profile' request.user.id %}"> <i class="fa fa-caret-square-o-up"></i></a>
-                      {% endif %}
-                    </li>
-                  </ul>
                 </li>
                 {% endif %}
                 <li class="dropdown">{% block connect %}
                   <button type="button" class="btn btn-theme03 btn-login force-size dropdown-toggle" data-toggle="dropdown">
                     <span class="glyphicon glyphicon-user"></span>
-                    {% if request.user.is_authenticated %}
-                      {{ request.user.get_full_name }} <span class="caret"></span>
-                    {% else %}
+                    {% if not request.user.is_authenticated %}
                       {% trans "Se connecter" %} <span class="caret"></span>
                     {% endif %}
                   </button>{% endblock %}
@@ -275,11 +260,22 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
 
-                  {% if request.user.photo %}
+                  {% if request.user.is_authenticated %}
+                  <p class="centered muser"><a href="{% url 'profile' %}">{{request.user.get_full_name}}</a></p>
                   <p class="centered"><a href="{% url 'profile' %}">
                       <img src="{% thumbnail request.user.photo 60x60 crop %}" class="img-circle" width="60">
                   </a></p>
+
+                  <p class="centered credit-p"><span class="credit-text">{% trans "Crédit restant :" %}</span> {{ request.user.get_verbose_credit | safe }}</p>
+
+                  <p class="centered credit-p"><span class="credit-text">{% trans "Type de compte :" %}</span> {{ request.user.get_account_type }}
+                  {% if not request.user.is_verified %}
+                  <a href="{% url 'verified_profile' request.user.id %}"> <i class="fa fa-caret-square-o-up"></i></a><p class="centered">
                   {% endif %}
+                  <hr class="menu-sep"/>
+                  {% endif %}
+
+                  
 
                   <li>
                       <a href="{% url "home" %}">
@@ -314,6 +310,41 @@
                   </li>
                   <li class="sub-menu">
                     <a href="javascript:;" >
+                      <i class="fa fa-user"></i>
+                      <span>{% trans "Mon profile" %}</span>
+                    </a>
+
+                    <ul class="sub">
+                    <li><span><a href="{% url 'profile' %}"> {% trans "Mon Profil" %}</a></span></li>
+                    </ul>
+
+                    {% if not request.user.is_verified %}
+                      <ul class="sub">
+                      <li><span><a href="{% url 'verified_profile' user_id=request.user.id %}"> {% bootstrap_icon 'star' %} &nbsp; {% trans "Devenir vérifié" %}</a></span></li>
+                      </ul>
+                    {% endif %}
+
+                    {% if request.user.is_superuser %}
+                    <ul class="sub">
+                    <li><span><a href="/admin/">  {% trans "Administration" %}</a></span></li>
+                    </ul>
+                    {% endif %}
+                    <ul class="sub">
+                    <li><span><a href="{% url 'logout' %}"> {% trans "Se déconnecter" %}</a></span></li>
+                    </ul>
+
+                  </li>
+                  {% if request.user.is_authenticated %}
+                    <li class="sub-menu">
+                      <a href="{% url "job_search" %}" >
+                          <i class="fa fa-search"></i>
+                          <span>{% trans "Rechercher un job" %}</span>
+                      </a>
+                    </li>
+                    {% endif %}
+
+                  <li class="sub-menu">
+                    <a href="javascript:;" >
                       <i class="fa fa-envelope"></i>
                       <span>{% trans "Messages" %}</span>
                     </a>
@@ -341,35 +372,14 @@
                           <span>{% trans "News" %}</span>
                       </a>
                   </li>
+
                   <li class="sub-menu">
                       <a href="javascript:;" >
                           <i class="fa fa-book"></i>
-                          <span>{% trans "Offres d'emploi" %}</span>
-                      </a>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="fa fa-tasks"></i>
                           <span>{% trans "Aide" %}</span>
                       </a>
                   </li>
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="fa fa-tasks"></i>
-                          <span>{% trans "A propos" %}</span>
-                      </a>
-                  </li>
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
-                          <i class="fa fa-th"></i>
-                          <span>Data Tables</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="basic_table.html">Basic Table</a></li>
-                          <li><a  href="responsive_table.html">Responsive Table</a></li>
-                      </ul>
-                  </li>
-
+                  
                   {% if request.user.is_superuser %}
                   <li class="sub-menu">
                       <a  href="{% url 'stats' %}">

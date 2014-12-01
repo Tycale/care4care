@@ -121,6 +121,15 @@ class JobCategory:
 
 BOOL_CHOICES = ((True, _('Oui')), (False, _('Non')))
 
+class JobType:
+    OFFRE = 1
+    DEMAND = 2
+
+    JOB_TYPES = ((
+        (OFFRE, _("Offre")),
+        (DEMAND, _("Demand"))
+        ))
+
 class VerifiedUser(models.Model):
     """
     Verified informations class

@@ -33,9 +33,27 @@
 			<div class="panel panel-default">
 			  	<div class="panel-body">
 			  		<h4>
-			  			<i class="fa fa-angle-right"></i>
-			  			{% trans "Types de comptes" %}
+			  			<div class="stats_title">
+			  				<i class="fa fa-angle-right"></i>
+			  				{% trans "Types de comptes" %}
+			  			</div>
+
+			  			<div class="legend_container">
+			  				{% trans "Légende" %}:
+			  				<ul>
+					            <li style="color: {{ MEMBER_COLOR_HEX }}">
+					            	{% trans "Membres" %}
+					            </li>
+					            <li style="color: {{ VERIFIED_MEMBER_COLOR_HEX }}">
+					            	{% trans "Membres vérifiés" %}
+					            </li>
+					            <li style="color: {{ NON_MEMBER_COLOR_HEX }}">
+					            	{% trans "Non-membres" %}
+					            </li>
+					        </ul>
+						</div>
 			  		</h4>
+
 					<canvas id="account_types" width="475" height="200"></canvas>
 				</div>
 			</div>
@@ -56,22 +74,20 @@
 			  			<div id="users_status_legend" class="legend_container">
 			  				{% trans "Légende" %}:
 			  				<ul>
-					            <li style="color: {{ LIGHT_BLUE_RGB }}">
+					            <li style="color: {{ ACTIVE_COLOR_HEX }}">
 					            	{% trans "Actifs" %}
 					            </li>
-					            <li style="color: {{ GREEN_RGB }}">
+					            <li style="color: {{ ON_HOLIDAY_COLOR_HEX }}">
 					            	{% trans "En vacances" %}
 					            </li>
-					            <li style="color: {{ ORANGE_RGB }}">
+					            <li style="color: {{ DISABLED_COLOR_HEX }}">
 					            	{% trans "Désactivés" %}
 					            </li>
 					        </ul>
 						</div>
 			  		</h4>
 
-			  		<div id="users_status">
-						<canvas id="users_status_canvas" width="475" height="200"></canvas>
-					</div>
+					<canvas id="users_status_canvas" width="475" height="200"></canvas>
 				</div>
 			</div>
 		</div>

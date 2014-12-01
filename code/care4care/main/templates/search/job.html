@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}{% load i18n %}{% load staticfiles %}
+
+
+{% block title %}{% trans "Rechercher un job" %}{% endblock %}
+
+{% block content %}
+<h3><i class="fa fa-angle-right"></i> {% trans "Rechercher un job" %}</h3>
+<form action="result/"  enctype="multipart/form-data" role="form" method="post">
+	{% csrf_token %}
+
+	<div class="row mt">
+		 <div class="col-lg-6 col-sm-12 background-gris">
+         	<div class="showback">
+          	 	{% bootstrap_field form.job_type %}
+          	 	{% bootstrap_field form.category %}
+            </div>
+         </div>
+         <div class="col-lg-6 col-sm-12 background-gris">
+         	<div class="showback">
+          	 	{% bootstrap_field form.receive_help_from_who %}
+          	 	{% bootstrap_field form.time %}
+            </div>
+         </div>
+         <div class="col-lg-12 col-sm-12 background-gris">
+         	<div class="showback">
+          	 	{% bootstrap_field form.date1 %}
+          	 	{% bootstrap_field form.date2 %}
+            </div>
+         </div>
+    </div>
+    {% buttons %}
+	    <div class="row mt mb">
+	        <div class="col-lg-12 mb"><button type="submit" class="btn btn-success btn-lg btn-block">
+	                {% bootstrap_icon "ok" %} &nbsp; {% trans "Continuer" %}
+	        </button></div>
+	    </div>
+    {% endbuttons %}
+</form>
+{% endblock %}
+
+{% block extra_footer %}
+{{ form.media }}
+{% endblock %}

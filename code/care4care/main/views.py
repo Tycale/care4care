@@ -8,7 +8,7 @@ from django.contrib.sites.models import RequestSite
 from django.contrib.sites.models import Site
 from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
-from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm, VerifiedProfileForm
+from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm, VerifiedProfileForm, JobSearchForm
 from main.models import User, VerifiedInformation, EmergencyContact
 from branch.models import Demand, Offer
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -18,7 +18,7 @@ from django.core.urlresolvers import reverse
 from django.views.generic.edit import CreateView
 from branch.models import Branch, BranchMembers
 from postman.api import pm_write
-
+from django.db.models import Q
 from django.views.generic.detail import DetailView
 
 from ajax.views import *
@@ -45,6 +45,10 @@ def home(request):
     if not_enough:
         demands = Demand.objects.all()
         offers = Offer.objects.all()
+
+    nb_branch = Branch.objects.all().count()
+    branches = Branch.objects.all()
+    nb_users = User.objects.all().count()
 
     return render(request, 'main/home.html', locals())
 
@@ -422,9 +426,16 @@ def similar_offers(request):
 ### Statistics ###
 
 def statistics(request):
-    LIGHT_BLUE_RGB = Color.rgba(Color.LIGHT_BLUE_RGB, 1)
-    GREEN_RGB = Color.rgba(Color.GREEN_RGB, 1)
-    ORANGE_RGB = Color.rgba(Color.ORANGE_RGB, 1)
+    # Account status color
+    ACTIVE_COLOR_HEX = Statistics.ACTIVE_COLOR_HEX
+    ON_HOLIDAY_COLOR_HEX = Statistics.ON_HOLIDAY_COLOR_HEX
+    DISABLED_COLOR_HEX = Statistics.DISABLED_COLOR_HEX
+
+    # Account types colors
+    MEMBER_COLOR_HEX = Statistics.MEMBER_COLOR_HEX
+    VERIFIED_MEMBER_COLOR_HEX = Statistics.VERIFIED_MEMBER_COLOR_HEX
+    NON_MEMBER_COLOR_HEX = Statistics.NON_MEMBER_COLOR_HEX
+
     return render(request, 'statistics/statistics.html', locals())
 
 # Return json-type HttpResponse from method() result
@@ -493,7 +504,16 @@ def get_user_jobs_amount_json(request, user_id):
 @login_required
 def search_view(request):
     input = request.GET.get('q')
-    userlist = User.objects.filter(first_name__icontains=input) | User.objects.filter(last_name__icontains=input) | User.objects.filter(username__icontains=input)
-    if(len(userlist)>0):
-        display = True
+    userlist = User.objects.filter(Q(first_name__icontains=input) | Q(last_name__icontains=input) | Q(username__icontains=input))
     return render(request, 'search/search.html', locals())
+
+@login_required
+def job_search_view(request):
+    form = JobSearchForm()
+    return render(request,'search/job.html', locals())
+
+def job_result_view(request):
+    user = request.user
+    demands = Demand.objects.all()
+    offers = Offer.objects.all()
+    return render(request, 'search/job_result.html',locals())

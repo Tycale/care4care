@@ -2464,6 +2464,22 @@ div.top-menu > ul > li > button > a {
     color: #fff;
 }
 
+.menu-sep {
+    margin-bottom: 0px;
+}
+.text-tiny{
+    font-size: 50%;
+}
+.muser a{
+    color: #aeb2b7;
+    font-weight: bold;
+}
+
+.credit-p{
+    color: #aeb2b7;
+    margin-top: 1px;
+    margin-bottom: 1px;
+}
 
 .credit-menu a {
     color: #fff;
@@ -2471,6 +2487,7 @@ div.top-menu > ul > li > button > a {
 
 .credit-text {
     font-weight: bold;
+    color: #fff;
 }
 
 .form-horizontal .form-group {
@@ -2546,7 +2563,7 @@ textarea {
 
 .search-bar {
     padding-top: 15px;
-    padding-right: 0px;
+    padding-right: 15px;
     color: #fff;
 }
 
@@ -2568,3 +2585,18 @@ textarea {
 #search input[type="text"]:focus {
     width: 200px;
     }
+
+
+#title-home {
+    padding-left: 20px;
+    padding-right: 20px;
+    color: #FFF;
+    text-transform: uppercase;
+    font-family: 'Ruda', sans-serif;
+    background-color: rgba(53, 126, 189, 0.9);
+    border-bottom-right-radius: 20px;
+}
+
+#title-home h3 {
+    margin: 5px;
+}
