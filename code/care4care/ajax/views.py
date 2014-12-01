@@ -1,10 +1,12 @@
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext as __
-from branch.models import Demand
+from branch.models import Demand, Job
 from main.models import User, MemberType, JobCategory
 from django.utils import timezone
+from django.db.models import Count, Avg
 import datetime
 import json
+from django.db import connection
 
 
 MONTHS = {
@@ -67,7 +69,7 @@ class Statistics:
     @staticmethod
     def get_users_registrated_json():
         response = {}
-        
+
         """
         response['labels'] = [
             __("Avril"),
@@ -81,7 +83,7 @@ class Statistics:
         """
 
         N_MONTHS = 7
-        
+
         response['labels'] = Statistics.get_last_n_months(N_MONTHS)
         line_data = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
         #line_data['data'] = [10, 15, 22, 33, 48, 69, 99]
@@ -217,14 +219,20 @@ class Statistics:
         datasets = []
         first_dataset = Statistics.generate_line_colors(Color.GREEN_RGB)
         #first_dataset['label'] = __('Membres')  # Non-necessary field
-        first_dataset['data'] = [40, 30, 60, 70, 25, 47, 39, 69, 34, 23, 69]
+        #get user
+        user = User.objects.get(pk=user_id);
+        #group by django
+        nb_demands = Demand.objects.filter(receiver=user).values('category').annotate(number=Count('category'));
+        #construct data list
+        data_list = []
+        for cat in JobCategory.JOB_CATEGORIES:
+            data_list.append(0)
+        for d in nb_demands:
+            index = int(d["category"])
+            data_list[index-1] = d["number"]
+
+        first_dataset['data'] = data_list
         datasets.append(first_dataset)
-        #nb_demands = Demand.objects.filter(receiver=user_to_display).count()
-        #[Job.objects.filter(category=l[0]).count() for l in JobCategory.JOB_CATEGORIES]
-
-        #cat_values = [Demand.objects.filter(receiver=user_id, category=l[0]).count() for l in JobCategory.JOB_CATEGORIES]
-        #first_dataset['data'] = cat_values
-
         response['datasets'] = datasets
         return json.dumps(response)
 
@@ -247,8 +255,19 @@ class Statistics:
         ]
         datasets = []
         first_dataset = Statistics.generate_line_colors(Color.GREEN_RGB)
-        #first_dataset['label'] = __('Membres')  # Non-necessary field
-        first_dataset['data'] = [40, 30, 60, 70, 25, 47, 39, 69, 34, 23, 69]
+
+        user = User.objects.get(pk=user_id);
+        #group by django
+        nb_demands = Demand.objects.filter(receiver=user).values('category').annotate(average_rating=Avg('estimated_time'));
+        #construct data list
+        data_list = []
+        for cat in JobCategory.JOB_CATEGORIES:
+            data_list.append(0)
+        for d in nb_demands:
+            index = int(d["category"])
+            data_list[index-1] = d["average_rating"]
+
+        first_dataset['data'] = data_list
         datasets.append(first_dataset)
 
         response['datasets'] = datasets
@@ -258,14 +277,11 @@ class Statistics:
     @staticmethod
     def get_user_km_json(user_id):
         response = {}
-        response['labels'] = [
-            __("Mai"),
-            __("Juin"),
-            __("Juillet"),
-            __("Août"),
-            __("Septembre"),
-            __("Octobre"),
-        ]
+
+        N_MONTHS = 6
+
+        response['labels'] = Statistics.get_last_n_months(N_MONTHS)
+
         #filter(pub_date__gte=timezone.now() + timezone.delta(months=-6))
         datasets = []
         first_dataset = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
@@ -280,14 +296,12 @@ class Statistics:
     @staticmethod
     def get_user_jobs_amount_json(user_id):
         response = {}
-        response['labels'] = [
-            __("Mai"),
-            __("Juin"),
-            __("Juillet"),
-            __("Août"),
-            __("Septembre"),
-            __("Octobre"),
-        ]
+
+        N_MONTHS = 6
+        response['labels'] = Statistics.get_last_n_months(N_MONTHS)
+        truncate_date = connection.ops.date_trunc_sql('month','date')
+        jobs_amount = Demand.objects.extra({'month':truncate_date}).values('month').annotate(created_count=Count('id'))
+
         datasets = []
         first_dataset = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
         #first_dataset['label'] = __('Membres')  # Non-necessary field
