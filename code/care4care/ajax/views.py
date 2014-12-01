@@ -216,19 +216,7 @@ class Statistics:
     @staticmethod
     def get_user_job_avg_time_json(user_id):
         response = {}
-        response['labels'] = [
-            __("Visites à domicile"),
-            __("Tenir compagnie"),
-            __("Transport par voiture"),
-            __("Shopping"),
-            __("Garder la maison"),
-            __("Boulots manuels"),
-            __("Jardinage"),
-            __("Soins personnels"),
-            __("Administratif"),
-            __("Autre"),
-            __("Spécial... :D"),
-        ]
+        response['labels'] = Statistics.get_job_labels()
         datasets = []
         first_dataset = Statistics.generate_line_colors(Color.GREEN_RGB)
 
