@@ -31,8 +31,12 @@ class Color:
     Colors RGB - used for the stats json
     """
     LIGHT_BLUE_RGB = [151, 187, 205]
+    LIGHT_BLUE_HEX = '#97BBCD'
     GREEN_RGB  = [46, 217, 138]
+    GREEN_HEX  = '#2ED98A'
     ORANGE_RGB = [255, 169, 0]
+    ORANGE_HEX = '#FFA900'
+
 
     @staticmethod
     def rgba(my_rgb, a):
@@ -127,26 +131,22 @@ class Statistics:
 
     @staticmethod
     def get_users_status_json():
-        response = {}
-        response['labels'] = [
-            __("Avril"),
-            __("Mai"),
-            __("Juin"),
-            __("Juillet"),
-            __("Août"),
-            __("Septembre"),
-            __("Octobre"),
-        ]
-        line_active = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
-        line_active['data'] = [10, 12, 15, 20, 31, 51, 87]
+        actives = {}
+        actives['label'] = __('Actifs')
+        actives['value'] = 80
+        actives['color'] = Color.LIGHT_BLUE_HEX
 
-        line_holiday = Statistics.generate_line_colors(Color.GREEN_RGB)
-        line_holiday['data'] = [0, 3, 6, 12, 15, 15, 9]
+        on_holiday = {}
+        on_holiday['label'] = __('En vacances')
+        on_holiday['value'] = 18
+        on_holiday['color'] = Color.GREEN_HEX
 
-        line_deactivated = Statistics.generate_line_colors(Color.ORANGE_RGB)
-        line_deactivated['data'] = [0, 0, 1, 1, 2, 3, 3]
+        disabled = {}
+        disabled['label'] = __('Désactivés')
+        disabled['value'] = 2
+        disabled['color'] = Color.ORANGE_HEX
 
-        response['datasets'] = [line_active, line_holiday, line_deactivated]
+        response = [actives, on_holiday, disabled]
         return json.dumps(response)
 
 
@@ -172,17 +172,9 @@ class Statistics:
         first_dataset = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
         #first_dataset['label'] = __('Jobs effectués par catégorie')  # Non-necessary field
         #first_dataset['data'] = [40, 30, 60, 70, 25, 47, 39, 69, 34, 23, 31, 69]
-        print('wtf is this shit')
         values = []
         for l in JobCategory.JOB_CATEGORIES:
-            print(l)
-            print(str(l[0]))
-            print(Demand.objects.all())
-            print(Demand.objects.filter(category__in=str(l[0])))
             values.append(Demand.objects.filter(category__in=str(l[0])).count())
-        print("values =", values)
-        if len(values) == 0:
-            print('wtf')
         first_dataset['data'] = values
 
         datasets.append(first_dataset)

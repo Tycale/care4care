@@ -14,7 +14,7 @@ $ ->
 
     # Evolution of users status (active, on holiday, deactivated)
     # in regard of time
-    create_chart("/statistics/users_status_json", "users_status_canvas", "Line")
+    create_chart("/statistics/users_status_json", "users_status_canvas", "Doughnut")
 
 
     # Most done job categories
