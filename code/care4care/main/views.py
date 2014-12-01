@@ -489,7 +489,7 @@ def get_user_jobs_amount_json(request, user_id):
 @login_required
 def search_view(request):
     input = request.GET.get('q')
-    userlist = User.objects.filter(first_name__icontains=input) | User.objects.filter(last_name__icontains=input)
+    userlist = User.objects.filter(first_name__icontains=input) | User.objects.filter(last_name__icontains=input) | User.objects.filter(username__icontains=input)
     if(len(userlist)>0):
         display = True
     return render(request, 'search/search.html', locals())
