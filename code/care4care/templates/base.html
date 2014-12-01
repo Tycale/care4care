@@ -165,7 +165,7 @@
                 {% if request.user.is_authenticated %}
                 <li class="search-bar">
                   <form method="get" action="{% url 'search' %}" id="search">
-                    <input name="q" type="text" size="30" placeholder="Trouver un membre..." />
+                    <input name="q" type="text" size="30" placeholder="{% trans "Trouver un membre..."%}" />
                   </form>
                 </li>
                 {% endif %}

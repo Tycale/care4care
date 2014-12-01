@@ -46,6 +46,10 @@ def home(request):
         demands = Demand.objects.all()
         offers = Offer.objects.all()
 
+    nb_branch = Branch.objects.all().count()
+    branches = Branch.objects.all()
+    nb_users = User.objects.all().count()
+
     return render(request, 'main/home.html', locals())
 
 def logout(request):

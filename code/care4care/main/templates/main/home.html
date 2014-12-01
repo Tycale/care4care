@@ -4,8 +4,31 @@
 
 {% block title %}{% trans "Accueil" %}{% endblock %}
 
+{% block extra_head %}
+<script src="http://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places&language={{request.LANGUAGE_CODE}}"></script>
+{% endblock %}
 
 {% block content %}
+<div class="row mt">
+    <div class="col-lg-12">
+            <div id="map" style="width: 100%; min-height: 300px;">
+            </div>
+            <div style="display:none;">
+            <div id="title-home">
+                <h2>Care4Care</h2>
+                <h4>{% trans "Réseau d'entre-aide citoyenne" %}</h4>
+                <h5><i class="fa fa-globe"></i>
+                  {{nb_branch}} {% trans "branches" %}
+                </h5>
+                <h5><i class="fa fa-user"></i>
+                  {{nb_users}} {% trans "utilisateurs" %}
+                </h5>
+            </div>
+            </div>
+    </div>
+</div>
+
+
 <div class="row mt">
   <div class="col-md-6 col-sm-12 text-center"> <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#needHelpModal">{% trans "J'ai besoin d'aide" %}</button> </div>
   <div class="col-md-6 col-sm-12 text-center"><button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#offerHelpModal">{% trans "Offrir mon aide" %}</button></div>
@@ -77,8 +100,54 @@
 {% block extra_footer %}
 <script src="{% static 'js/rowlink.js' %}"></script>
 <script type="text/javascript">
-  $(function () {
+$(document).ready(function () {
+    var locations = [
+        {% for b in branches %}
+        ['{{b.name}}', {{b.latitude}}, {{b.longitude}}, {{b.id}}, 0],
+        {% endfor %}
+    ];
+    var options = {
+        zoom: 13,
+        disableDefaultUI: true,
+        panControl: false,
+        overviewMapControl: false,
+        streetViewControl: false,
+        scaleControl: false,
+        rotateControl: false,
+        draggable: false,
+        zoomControl: false,
+        scrollwheel: false,
+        disableDoubleClickZoom: true,
+        mapTypeId: google.maps.MapTypeId.HYBRID,
+    };
+    var map = new google.maps.Map(document.getElementById('map'), options);
+    var bounds = new google.maps.LatLngBounds();
+
+    var titleBranch = document.getElementById('title-home');
+    map.controls[google.maps.ControlPosition.LEFT_TOP].push(titleBranch);
+
+    var titleBot = document.getElementById('title-bot');
+    map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(titleBot);
+
+    // set multiple marker
+    for (var i = 0; i < locations.length; ++i) {
+        var pos = new google.maps.LatLng(locations[i][1], locations[i][2]);
+        var marker = new google.maps.Marker({
+            position: pos,
+            map: map,
+            title: locations[i][0]
+        });
+        bounds.extend(pos);
+    }
+
+    map.fitBounds(bounds);
+
+    $('.fa-bars').click(function () {
+        google.maps.event.trigger(map, 'resize');
+    });
+    $(function () {
       $('[data-toggle="tooltip"]').tooltip()
     });
+});
 </script>
 {% endblock %}
