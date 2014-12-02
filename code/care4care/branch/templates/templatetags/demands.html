@@ -1,16 +1,11 @@
 {% load i18n thumbnail humanize %}
-{% load pagination_tags %}
-{% autopaginate demands 10 %}
 <div class="col-md-6">
   <div class="panel panel-default">
     <div class="panel-heading">
           {% trans "Demandes" %}
-      <div class="pull-right">
-      {% paginate %}
-      </div>
     </div>
     <div class="panel-body">
-      <table class="table table-striped table-hover rowlink">
+      <table class="table table-striped table-hover rowlink table-fixedheader">
         <thead>
           <tr>
             <th>{% trans "Membre" %}</th>
