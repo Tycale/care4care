@@ -8,7 +8,7 @@ from django.contrib.sites.models import RequestSite
 from django.contrib.sites.models import Site
 from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
-from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm, VerifiedProfileForm, JobSearchForm
+from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm, VerifiedProfileForm, JobSearchForm, GiftForm
 from main.models import User, VerifiedInformation, EmergencyContact, JobCategory, JobType, MemberType
 from branch.models import Demand, Offer
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -583,7 +583,11 @@ def job_search_view(request):
 @login_required
 def credits_view(request):
     user = request.user
+    #TODO : Rajouter le champ finish = true dans job et offer et finish = false dans les autres.
     jobs = Demand.objects.filter(closed=True,donor=user).all()
+    offer = Demand.objects.filter(closed=True,receiver=user).all()
+    jobs_pending = Demand.objects.filter(closed=True,donor=user).all()
+    offer_pending = Demand.objects.filter(closed=True,receiver=user).all()
     num_jobs = len(jobs)
     average_time_job = 0
     km = 0
@@ -593,7 +597,15 @@ def credits_view(request):
     if num_jobs != 0:
         average_time_job = average_time_job/num_jobs
 
+    form = GiftForm(ruser=user)
+    if request.POST:
+        form = GiftForm(request.POST, ruser=user)
+        if form.is_valid():
+            user = User.objects.filter(username=form.cleaned_data['user'])
+            if not user :
+                return render(request,'credits/menu.html', locals())
 
+            return redirect('home')
 
 
     return render(request,'credits/menu.html', locals())
