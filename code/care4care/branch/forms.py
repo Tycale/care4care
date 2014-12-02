@@ -102,11 +102,16 @@ class OfferHelpForm(forms.ModelForm):
         }
 
 class VolunteerForm(forms.ModelForm):
-
     class Meta:
         model = DemandProposition
         fields = ['comment', 'km', 'time',]
         widgets = {
             'km' : forms.HiddenInput,
         }
+
+class ForceVolunteerForm(forms.ModelForm):
+    class Meta:
+        model = DemandProposition
+        fields = ['user', 'comment', 'km', 'time',]
+
 

@@ -10,12 +10,13 @@ from branch.models import Branch, BranchMembers, Demand, Offer, Comment, DemandP
 from main.models import User, VerifiedInformation
 
 from branch.forms import CreateBranchForm, ChooseBranchForm, OfferHelpForm, NeedHelpForm, \
-            CommentForm, UpdateNeedHelpForm, VolunteerForm
+            CommentForm, UpdateNeedHelpForm, VolunteerForm, ForceVolunteerForm
 from django.utils import timezone
 from django.core.urlresolvers import reverse
 from django.utils import formats
 from main.utils import can_manage, is_branch_admin, refuse, can_manage_branch_specific, is_in_branch
 from postman.api import pm_write
+from django.core.urlresolvers import resolve
 
 @login_required
 @user_passes_test(lambda u: u.is_verified)
@@ -220,6 +221,7 @@ def volunteer_accept(request, volunteer_id):
             vol.delete()
 
         demand.closed = True
+        demand.km = demandProposition.km
         demand.donor = demandProposition.user
         demand.save()
 
@@ -384,9 +386,19 @@ class DetailOfferView(CreateView): # This view is over-hacked. Don't take it as 
     def form_valid(self, form):
         form.instance.content_object = self.get_object()
         form.instance.user = self.request.user
+
         return super(DetailOfferView, self).form_valid(form)
 
     def get_success_url(self):
+
+        subject = self.request.user.get_full_name() + ' ' + _("a commenté votre offre") 
+        body = self.request.user.get_full_name() + ' ' + _("a commenté votre offre") 
+        body += '\n\n' + _('Commentaire : ') + self.object.comment
+        body += '\n\n' + _('Vous pouvez lui répondre en vous rendant sur votre offre :')
+        body += '\n' + 'http://' + self.request.META['HTTP_HOST'] + self.get_object().get_absolute_url()
+
+        pm_write(self.request.user, self.get_object().donor, subject, body)
+
         return self.get_object().get_absolute_url() + '#' + str(self.object.id)
 
 class DetailDemandView(CreateView): # This view is over-hacked. Don't take it as a reference.
@@ -422,6 +434,15 @@ class DetailDemandView(CreateView): # This view is over-hacked. Don't take it as
         return super(DetailDemandView, self).form_valid(form)
 
     def get_success_url(self):
+
+        subject = self.request.user.get_full_name() + ' ' + _("a commenté votre demande '") + self.get_object().title + '\'' 
+        body = self.request.user.get_full_name() + ' ' + _("a commenté votre demande '") + self.get_object().title + '\''        
+        body += '\n\n' + _('Commentaire : ') + self.object.comment
+        body += '\n\n' + _('Vous pouvez lui répondre en vous rendant sur votre demande:')
+        body += '\n' + 'http://' + self.request.META['HTTP_HOST'] + self.get_object().get_absolute_url()
+
+        pm_write(self.request.user, self.get_object().receiver, subject, body)
+
         return self.get_object().get_absolute_url() + '#' + str(self.object.id)
 
 class CreateVolunteerView(CreateView):
@@ -431,6 +452,10 @@ class CreateVolunteerView(CreateView):
     template_name = 'job/volunteer_demand.html'
     model = DemandProposition
     form_class = VolunteerForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(CreateVolunteerView, self).dispatch(*args, **kwargs)
 
     def form_valid(self, form):
         form.instance.demand = Demand.objects.get(pk=self.kwargs['demand_id'])
@@ -449,17 +474,38 @@ class CreateVolunteerView(CreateView):
 
     def get_success_url(self):
         demand = Demand.objects.get(pk=self.kwargs['demand_id'])
-        volunteer = User.objects.get(pk=self.kwargs['volunteer_id'])
+        volunteer = self.object.user
 
         subject = volunteer.get_full_name() + ' ' + _("vous offre son aide pour '") + demand.title + "'" 
         body = volunteer.get_full_name() + ' ' + _("vous offre son aide pour '") + demand.title + "'" 
         body += '\n\n' + _('Commentaire : ') + self.object.comment
         body += '\n' + _('Km de chez vous : ') + str(self.object.km)
         body += '\n' + _('Heure(s) choisies(s) : ') + self.object.get_verbose_time()
-        body += '\n\n' + _('Vous pouvez accepter son offre d\'aide en vous rendant sur votre demande d\'aide.')
+        body += '\n\n' + _('Vous pouvez accepter son offre d\'aide en vous rendant sur votre demande d\'aide:')
+        body += '\n' + 'http://' + self.request.META['HTTP_HOST'] + demand.get_absolute_url()
 
         pm_write(volunteer, demand.receiver, subject, body)
 
         return demand.get_absolute_url()
+
+class ForceCreateVolunteerView(CreateVolunteerView):
+    form_class = ForceVolunteerForm
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        demand = Demand.objects.get(pk=self.kwargs['demand_id'])
+        if not can_manage_branch_specific(demand.receiver, self.request.user, demand.branch):
+            return refuse(self.request)
+        return super(CreateVolunteerView, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(ForceCreateVolunteerView, self).get_context_data(**kwargs)
+        context['form'].fields['user'].queryset = context['demand'].branch.members.all()
+        return context
+
+    def form_valid(self, form):
+        demand = Demand.objects.get(pk=self.kwargs['demand_id'])
+        form.instance.demand = demand
+        return super(CreateVolunteerView, self).form_valid(form) #correct
 
 

@@ -45,7 +45,9 @@
                 {% endif %}
 
                 {% if can_manage %}
+                {% if not object.closed %}
                 <a class="btn btn-primary" href="{% url 'update_demand' branch_id=object.branch.id slug=object.branch.slug demand_id=object.id %}">{% bootstrap_icon 'pencil' %} {% trans "Modifier" %}</a>
+                {% endif %}
                 <a class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">{% bootstrap_icon 'trash' %} {% trans "Supprimer" %}</a>
                 {% endif %}
             </div>
@@ -211,6 +213,25 @@
         </div>
     </div>
     {% endif %}
+
+    {% if can_manage and not object.closed and request.user.id != object.receiver %}
+    <div class="col-md-12 col-sm-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>
+                    {% trans "Le coin de l'administrateur" %}
+                </h4>
+            </div>
+            <div class="panel-body">
+            {% if not object.closed %}
+                <a class="btn btn-primary" href="{% url 'force_volunteer_demand' branch_id=object.branch.id slug=object.branch.slug  demand_id=object.id %}">{% trans "Ajouter (forcer) une personne à la liste des volontaires" %} </a>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+
     <div class="col-md-12 col-sm-12">
         <div class="panel panel-default">
             <div class="panel-heading">
