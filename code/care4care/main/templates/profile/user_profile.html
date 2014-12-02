@@ -24,7 +24,8 @@
 </ul>
 
 <div class="tab-content">
-
+  
+  {% if request.user.id != user_to_display.id %}
   <div class="modal fade bs-ignore-modal-sm" id="ignore_user_modal">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -42,7 +43,7 @@
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
-
+  {% endif %}
 
   <div id="profile" class="tab-pane fade in active">
       <input id="user_id" value="{{ user_to_display.id }}" type="hidden"/>
