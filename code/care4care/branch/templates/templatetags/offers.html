@@ -5,7 +5,7 @@
       {% trans "Offres" %}
     </div>
     <div class="panel-body">
-      <table class="table table-striped table-hover rowlink table-fixedheader">
+      <table id="offers" data-toggle="table" data-height="250" class="striped table rowlink">
         <thead>
           <tr>
             <th>{% trans "Membre" %}</th>
@@ -41,3 +41,8 @@
     </div>
   </div>
 </div>
+<script>
+$(function() {
+$(".sortable").click();
+});
+</script>
