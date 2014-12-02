@@ -228,7 +228,7 @@ class Statistics:
         data_list = [0 for i in range(0, len(JobCategory.JOB_CATEGORIES))]
         for d in nb_demands:
             for (i, job_cat) in enumerate(JobCategory.JOB_CATEGORIES):
-                if d['category'] == str(job_cat[0]):
+                if d['category'] == job_cat[0] and d['help_time'] is not None:
                     data_list[i] += d['help_time']
 
         first_dataset['data'] = data_list
@@ -297,7 +297,8 @@ class Statistics:
         # the key is the month number
         for job in jobs_amount:
             key = int(job['month'][5:7])
-            data_list[key - baseIndex] = job['created_count']
+            if job['created_count'] is not None:
+                data_list[key - baseIndex] = job['created_count']
 
         datasets = []
         first_dataset = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
