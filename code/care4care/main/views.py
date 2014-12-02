@@ -9,7 +9,7 @@ from django.contrib.sites.models import Site
 from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
 from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm, VerifiedProfileForm, JobSearchForm
-from main.models import User, VerifiedInformation, EmergencyContact
+from main.models import User, VerifiedInformation, EmergencyContact, MemberType
 from branch.models import Demand, Offer
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
@@ -172,6 +172,7 @@ def verified_status_giving_view(request, user_id):
     if not can_manage(user, request.user) or user.id == request.user.id:
         return refuse(request)
     user.is_verified = True
+    user.user_type = MemberType.VERIFIED_MEMBER
     user.save()
     verified_documents = get_object_or_404(VerifiedInformation, user=user_id)
     verified_documents.delete()
@@ -419,14 +420,9 @@ def similar_offers(request):
 
     return render(request, 'seek_similar_jobs/main.html', locals())
 
-
 ### Statistics ###
 
-@login_required
 def statistics(request):
-    if not request.user.is_superuser:
-        return redirect('home')
-
     # Account status color
     ACTIVE_COLOR_HEX = Statistics.ACTIVE_COLOR_HEX
     ON_HOLIDAY_COLOR_HEX = Statistics.ON_HOLIDAY_COLOR_HEX
@@ -447,66 +443,59 @@ PERMISSION_DENIED = "Permission denied. This event will be reported."
 
 @login_required
 def get_registrated_users_json(request):
-    if not request.user.is_superuser:
+    if request.user.is_superuser:
+        return get_json_from(Statistics.get_users_registrated_json())
+    else:
         return HttpResponse(PERMISSION_DENIED, status=401)
-
-    return get_json_from(Statistics.get_users_registrated_json())
-
 
 @login_required
 def get_account_types_json(request):
-    if not request.user.is_superuser:
+    if request.user.is_superuser:
+        return get_json_from(Statistics.get_account_types_json())
+    else:
         return HttpResponse(PERMISSION_DENIED, status=401)
-    return get_json_from(Statistics.get_account_types_json())
-
 
 @login_required
 def get_users_status_json(request):
-    if not request.user.is_superuser:
+    if request.user.is_superuser:
+        return get_json_from(Statistics.get_users_status_json())
+    else:
         return HttpResponse(PERMISSION_DENIED, status=401)
-
-    return get_json_from(Statistics.get_users_status_json())
-
 
 @login_required
 def get_job_categories_json(request):
-    if not request.user.is_superuser:
+    if request.user.is_superuser:
+        return get_json_from(Statistics.get_job_categories_json())
+    else:
         return HttpResponse(PERMISSION_DENIED, status=401)
-
-    return get_json_from(Statistics.get_job_categories_json())
-
 
 @login_required
 def get_user_job_categories_json(request, user_id):
-    if request.user.id != int(user_id) or not request.user.is_superuser:
+    if request.user.id == int(user_id) or request.user.is_superuser:
+        return get_json_from(Statistics.get_user_job_categories_json(user_id))
+    else:
         return HttpResponse(PERMISSION_DENIED, status=401)
-
-    return get_json_from(Statistics.get_user_job_categories_json(user_id))
-
 
 @login_required
 def get_user_job_avg_time_json(request, user_id):
-    if request.user.id != int(user_id) or not request.user.is_superuser:
+    if request.user.id == int(user_id) or request.user.is_superuser:
+        return get_json_from(Statistics.get_user_job_avg_time_json(user_id))
+    else:
         return HttpResponse(PERMISSION_DENIED, status=401)
-
-    return get_json_from(Statistics.get_user_job_avg_time_json(user_id))
-
 
 @login_required
 def get_user_km_json(request, user_id):
-    if request.user.id != int(user_id) or not request.user.is_superuser:
+    if request.user.id == int(user_id) or request.user.is_superuser:
+        return get_json_from(Statistics.get_user_km_json(user_id))
+    else:
         return HttpResponse(PERMISSION_DENIED, status=401)
-
-    return get_json_from(Statistics.get_user_km_json(user_id))
-
 
 @login_required
 def get_user_jobs_amount_json(request, user_id):
-    if request.user.id != int(user_id) or not request.user.is_superuser:
+    if request.user.id == int(user_id) or request.user.is_superuser:
+        return get_json_from(Statistics.get_user_jobs_amount_json(user_id))
+    else:
         return HttpResponse(PERMISSION_DENIED, status=401)
-
-    return get_json_from(Statistics.get_user_jobs_amount_json(user_id))
-
 
 ### Search ###
 @login_required
@@ -520,8 +509,17 @@ def job_search_view(request):
     form = JobSearchForm()
     return render(request,'search/job.html', locals())
 
+@login_required
 def job_result_view(request):
+    form = JobSearchForm()
     user = request.user
+    if(request.method=='POST'):
+        form = JobSearchForm(request.POST)
+        if not form.is_valid():
+            return redirect('search_job')
+
+
+
     demands = Demand.objects.all()
     offers = Offer.objects.all()
     return render(request, 'search/job_result.html',locals())
