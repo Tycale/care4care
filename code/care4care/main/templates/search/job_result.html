@@ -10,14 +10,14 @@
 
         <div class="col-lg-12 col-sm-12 content-panel">
 
-           
+
             <h1> {% trans "Résultats de la recherche" %}
             </h1>
             {% if demands %}
             {% show_demands request demands show_branch=False %}
             {% endif %}
             {% if offers %}
-            {% show_offers request offers show_branch=False %} 
+            {% show_offers request offers show_branch=False %}
             {% endif %}
 
         </div>

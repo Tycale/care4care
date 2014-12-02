@@ -1,8 +1,13 @@
 {% load i18n thumbnail humanize %}
+{% load pagination_tags %}
+{% autopaginate demands 10 %}
 <div class="col-md-6">
   <div class="panel panel-default">
     <div class="panel-heading">
-      {% trans "Demandes" %}
+          {% trans "Demandes" %}
+      <div class="pull-right">
+      {% paginate %}
+      </div>
     </div>
     <div class="panel-body">
       <table class="table table-striped table-hover rowlink">
@@ -30,7 +35,7 @@
 
           <td>{{ demand.date | naturalday:'SHORT_DATE_FORMAT' }}</td>
           <td>{{ demand.get_short_time }}</td>
-          
+
         </tr>
         {% empty %}
         <tr>
