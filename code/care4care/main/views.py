@@ -521,12 +521,12 @@ def job_search_view(request):
             
 
             if not form.cleaned_data['date1']:
-                date1 = datetime.datetime.now()
+                date1 = timezone.now()
             else:
                 date1 = form.cleaned_data['date1']
 
             if not form.cleaned_data['date2']:
-                date2 = datetime.datetime.max
+                date2 = timezone.datetime.max
             else:
                 date2 = form.cleaned_data['date2']
 
