@@ -62,7 +62,7 @@
                     <div class="media-body">
                       <h4 class="media-heading">{{user_to_display.get_full_name}}
                         {% if request.user.id != user_to_display.id %}
-                        <a href="#" class="glyphicon glyphicon-ban-circle" data-toggle="modal" data-target=".bs-ignore-modal-sm"></a>
+                        <a href="#" class="glyphicon glyphicon-ban-circle red_icon" data-toggle="modal" data-target=".bs-ignore-modal-sm" title="{% trans 'Ignorer cette personne' %}"></a>
                         {% endif %}
                       </h4>
                     </div>
@@ -76,7 +76,7 @@
                   <span class="glyphicon glyphicon glyphicon-star" id="is_favorite_star">  </span> {% trans 'Favoris' %}
                 </a>
                 {% else %}
-                <a href="#{{is_my_friend}}" class="btn btn-default btn-sm" id="add_favorite_link"  data-toggle="tooltip" data-placement="top" title="{% trans 'Ajouter cette personne de vos favoris.' %}">
+                <a href="#{{is_my_friend}}" class="btn btn-default btn-sm" id="add_favorite_link"  data-toggle="tooltip" data-placement="top" title="{% trans 'Ajouter cette personne à vos favoris.' %}">
                   <span class="glyphicon glyphicon glyphicon-star-empty" id="is_favorite_star">  </span> {% trans 'Favoris' %}
                 </a>
 
