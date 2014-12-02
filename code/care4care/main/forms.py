@@ -5,7 +5,7 @@ from main.models import User, VerifiedInformation, EmergencyContact, JobType, Me
 from branch.models import Job, Branch, JobCategory, TIME_CHOICES
 from multiselectfield import MultiSelectField
 from bootstrap3_datetime.widgets import DateTimePicker
-
+from ajax_select.fields import AutoCompleteWidget
 from django.forms.extras import SelectDateWidget
 import datetime
 
@@ -203,10 +203,10 @@ class JobSearchForm(forms.Form):
                 raise forms.ValidationError(_("Incohérence dans les dates."))
 
 class GiftForm(forms.Form):
-    user = forms.CharField(label = _("Username"))
+    user = forms.CharField(label = _("Username"), widget=AutoCompleteWidget('user'))
     amount = forms.IntegerField(min_value=1,initial=1,label = _("Montant de temps (plus que 1)"))
     message = forms.CharField(required=False,widget=forms.Textarea,label = _("Message"))
- 
+    
     def __init__(self, *args, **kwargs):
         self.ruser = kwargs.pop('ruser')
         super(GiftForm, self).__init__(*args, **kwargs)
@@ -215,3 +215,5 @@ class GiftForm(forms.Form):
         cleaned_data = super(GiftForm, self).clean()
         if self.cleaned_data['amount'] > self.ruser.credit:
             raise forms.ValidationError(_("Vous ne pouvez pas donner plus d'heure que ce que vous avez."))
+
+

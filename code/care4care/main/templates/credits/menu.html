@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load bootstrap3 %}{% load i18n %}{% load staticfiles %}{% load jobs_extra %}
 
+{% block extra_head %}{{ block.super }}
+<script src="{% static "js/jquery-ui-1.9.2.custom.min.js" %}"></script>
+<link type="text/css" media="all" rel="stylesheet" href="{% static "css/jquery-ui-1.9.2.custom.css" %}" />
+{% endblock %}
 
 {% block title %}{% trans "Mes crédits" %}{% endblock %}
 
@@ -67,5 +71,6 @@
 {% endblock %}
 
 {% block extra_footer %}
-{{ form.media }}
+{{form.media}}
 {% endblock %}
+
