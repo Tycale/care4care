@@ -195,7 +195,6 @@ def volunteer_decline(request, volunteer_id):
         return redirect(demand.get_absolute_url())
     return redirect('home')
 
-# TODO : finish
 @login_required
 def volunteer_accept(request, volunteer_id):
     demandProposition = DemandProposition.objects.get(pk=volunteer_id)
@@ -430,8 +429,8 @@ class CreateVolunteerView(CreateView):
     A registration backend for our CareRegistrationForm
     """
     template_name = 'job/volunteer_demand.html'
-    form_class = VolunteerForm
     model = DemandProposition
+    form_class = VolunteerForm
 
     def form_valid(self, form):
         form.instance.demand = Demand.objects.get(pk=self.kwargs['demand_id'])
@@ -440,13 +439,27 @@ class CreateVolunteerView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(CreateVolunteerView, self).get_context_data(**kwargs)
-        context['demand'] = Demand.objects.get(pk=self.kwargs['demand_id'])
+        demand = Demand.objects.get(pk=self.kwargs['demand_id'])
+        context['demand'] = demand
+        context['possible_time'] = demand.time
         return context
 
     def get_initial(self):
-        return {'km': self.request.GET.get('km',0),}
+        return {'km': self.request.GET.get('km', 0),}
 
     def get_success_url(self):
-        return Demand.objects.get(pk=self.kwargs['demand_id']).get_absolute_url()
+        demand = Demand.objects.get(pk=self.kwargs['demand_id'])
+        volunteer = User.objects.get(pk=self.kwargs['volunteer_id'])
+
+        subject = volunteer.get_full_name() + ' ' + _("vous offre son aide pour '") + demand.title + "'" 
+        body = volunteer.get_full_name() + ' ' + _("vous offre son aide pour '") + demand.title + "'" 
+        body += '\n\n' + _('Commentaire : ') + self.object.comment
+        body += '\n' + _('Km de chez vous : ') + str(self.object.km)
+        body += '\n' + _('Heure(s) choisies(s) : ') + self.object.get_verbose_time()
+        body += '\n\n' + _('Vous pouvez accepter son offre d\'aide en vous rendant sur votre demande d\'aide.')
+
+        pm_write(volunteer, demand.receiver, subject, body)
+
+        return demand.get_absolute_url()
 
 

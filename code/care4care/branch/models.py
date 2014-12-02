@@ -151,6 +151,12 @@ class DemandProposition(models.Model):
     created = models.DateTimeField(verbose_name=_("date d'arrivé"), auto_now=True)
     accepted = models.BooleanField(verbose_name=_("Proposition acceptée"), default=False)
     km = models.IntegerField(verbose_name=_("Distance depuis domicile"), blank=True, null=True)
+    time = MultiSelectField(choices=TIME_CHOICES, verbose_name=_("Heure(s) choisie(s)"), blank=False, help_text=_('Selectionnez les heures qui vous conviennent'))
+
+    def get_verbose_time(self):
+        if not self.time:
+            return ''
+        return ', '.join([str(l[1]) for l in TIME_CHOICES if (str(l[0]) in self.time)])
 
     class Meta:
         ordering = ['-created']

@@ -44,6 +44,23 @@
 
 
 {% block extra_footer %}
-<script>
+<script type="text/javascript">
 {{ form.media }}
+$(document).ready(function () {
+  var to_keep = [
+  {% for pt in possible_time %}
+    {{pt}}-1,
+  {% endfor %}
+  ]
+  var total_checkbox = $("div.checkbox").length;
+  for(var i=0; i < total_checkbox; i++){
+
+    if($.inArray(i, to_keep) ){
+      $('#id_time_'+i+'').parent().parent().remove();
+    } else {}
+  }
+  
+  
+});
+</script>
 {% endblock %}
