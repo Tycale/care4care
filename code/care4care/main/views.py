@@ -572,3 +572,18 @@ def job_search_view(request):
 
     return render(request,'search/job.html', locals())
 
+### CREDIT ###
+
+@login_required
+def credits_view(request):
+    user = request.user
+    jobs = Demand.objects.filter(closed=True,donor=user).all()
+    num_jobs = len(jobs)
+    average_time_job = 0
+    for job in jobs :
+        average_time_job += job.real_time
+    if num_jobs != 0:
+        average_time_job = average_time_job/num_jobs
+
+
+    return render(request,'credits/menu.html', locals())
