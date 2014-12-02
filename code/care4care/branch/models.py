@@ -145,6 +145,9 @@ class Demand(Job):
     def __str__(self):
         return '{} - {} - {}'.format(self.title, self.receiver, self.branch)
 
+    class Meta:
+        ordering = ['date']
+
 class Offer(Job):
     comments = GenericRelation(Comment)
 
@@ -153,6 +156,9 @@ class Offer(Job):
         return ('see_offer', (), {'branch_id': self.branch.id, 'slug': self.branch.slug, 'offer_id': self.id})
     def __str__(self):
         return '{} - {}'.format(self.donor, self.branch)
+
+    class Meta:
+        ordering = ['date']
 
 
 class DemandProposition(models.Model):
