@@ -1,15 +1,12 @@
 {% load i18n %}
-{% load pagination_tags %}
-{% autopaginate network 10 %}
 <div class="panel panel-default">
   <div class="panel-heading">
     {% trans "Mon réseau" %}
     <div class="pull-right">
-    {% paginate %}
     </div>
   </div>
   <div class="panel-body">
-    <table class="table table-striped table-hover">
+    <table id="network_table" data-toggle="table"  class="table table-striped table-hover" data-pagination="true">
       <thead>
         <tr>
           <th> {% trans "Nom" %} </th>
@@ -42,6 +39,13 @@ var remove_network_from_list_success = function(name,id_remove){
   $("#network_" + id_remove).remove();
 }
 $(document).ready(function(){
+
+  $('#network_table').bootstrapTable(); // init via javascript
+
+  $(window).resize(function () {
+      $('#network_table').bootstrapTable('resetView');
+  });
+
   $('.remove_network_link').click(function (event) {
     event.preventDefault();
     remove_network($(this).attr("href"), remove_network_from_list_success);

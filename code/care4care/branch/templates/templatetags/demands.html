@@ -38,8 +38,12 @@
 </div>
 </div>
 </div>
-<script>
-$(function() {
-$(".sortable").click();
+<script type="application/javascript">
+$(function () {
+    $('#demands').bootstrapTable(); // init via javascript
+
+    $(window).resize(function () {
+        $('#demands').bootstrapTable('resetView');
+    });
 });
 </script>
