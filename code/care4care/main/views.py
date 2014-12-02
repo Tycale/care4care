@@ -43,6 +43,11 @@ def home(request):
         demands = Demand.objects.all()
         offers = Offer.objects.all()
 
+    date_now = timezone.now() + timezone.timedelta(hours=-24)
+
+    demands = demands.filter(date__gte=date_now)
+    offers = offers.filter(date__gte=date_now)
+
     nb_branch = Branch.objects.all().count()
     branches = Branch.objects.all()
     nb_users = User.objects.all().count()
@@ -79,12 +84,13 @@ def user_profile(request, user_id):
     """ Get profile from a user"""
     user_to_display = get_object_or_404(User, pk=user_id)
     user = request.user
-    is_my_friend = False
-    is_in_my_network = False
-    if user_to_display in user.favorites.all():
-        is_my_friend = True
-    if user_to_display in user.personal_network.all():
-        is_in_my_network = True
+    if user.is_authenticated():
+        is_my_friend = False
+        is_in_my_network = False
+        if user_to_display in user.favorites.all():
+            is_my_friend = True
+        if user_to_display in user.personal_network.all():
+            is_in_my_network = True
 
     return render(request, 'profile/user_profile.html', locals())
 
@@ -521,12 +527,12 @@ def job_search_view(request):
             
 
             if not form.cleaned_data['date1']:
-                date1 = datetime.datetime.now()
+                date1 = timezone.now()
             else:
                 date1 = form.cleaned_data['date1']
 
             if not form.cleaned_data['date2']:
-                date2 = datetime.datetime.max
+                date2 = timezone.datetime.max
             else:
                 date2 = form.cleaned_data['date2']
 

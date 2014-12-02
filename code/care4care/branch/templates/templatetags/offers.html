@@ -1,8 +1,13 @@
 {% load i18n thumbnail humanize %}
+{% load pagination_tags %}
+{% autopaginate offers 10 %}
 <div class="col-md-6">
   <div class="panel panel-default">
     <div class="panel-heading">
       {% trans "Offres" %}
+      <div class="pull-right">
+      {% paginate %}
+      </div>
     </div>
     <div class="panel-body">
       <table class="table table-striped table-hover rowlink">
