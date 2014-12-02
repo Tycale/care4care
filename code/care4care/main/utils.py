@@ -3,6 +3,7 @@ from main.models import User
 from django.utils.translation import ugettext as _
 from django.contrib import messages
 from django.shortcuts import redirect
+from main.models import JobCategory, MemberType
 
 def is_branch_admin(user, branch):
 	try:
