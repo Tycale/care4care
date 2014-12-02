@@ -6,9 +6,10 @@
 
 {% block content %}
 <h3><i class="fa fa-angle-right"></i> {% trans "Rechercher un job" %}</h3>
-<form action="result/"  enctype="multipart/form-data" role="form" method="post">
+<form action="." role="form" method="post">
 	{% csrf_token %}
 
+  {% bootstrap_form_errors form %}
 	<div class="row mt">
 		 <div class="col-lg-6 col-sm-12 background-gris">
          	<div class="showback">
