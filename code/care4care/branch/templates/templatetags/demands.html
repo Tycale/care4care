@@ -32,6 +32,12 @@
           <td>{{ demand.get_short_time }}</td>
           
         </tr>
+        {% empty %}
+        <tr>
+          <td colspan="{% if show_branch %}6{% else %}5{% endif %}">
+            <p class="text-info text-center">{% trans "Aucune demande" %}</p>
+          </td>
+        </tr>
         {% endfor %}
         </tbody>
       </table>

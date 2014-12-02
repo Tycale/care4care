@@ -34,15 +34,11 @@ from main.utils import can_manage, is_branch_admin, refuse, can_manage_branch_sp
 def home(request):
     user = request.user
 
-    not_enough = True
     if user.is_authenticated():
         branch_ids = [b.branch.id for b in user.membership.all()]
         demands = Demand.objects.filter(branch__in=branch_ids).all()
         offers = Offer.objects.filter(branch__in=branch_ids).all()
-        if demands.count() > 3 or offers.count() > 3:
-            not_enough = False
-
-    if not_enough:
+    else :
         demands = Demand.objects.all()
         offers = Offer.objects.all()
 
