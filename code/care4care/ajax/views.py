@@ -3,7 +3,7 @@ from django.utils.translation import ugettext as __
 from branch.models import Demand, Job
 from main.models import *
 from django.utils import timezone
-from django.db.models import Count, Avg
+from django.db.models import Count, Avg, Sum
 import datetime
 import json
 from django.db import connection
@@ -178,8 +178,8 @@ class Statistics:
         #first_dataset['label'] = __('Jobs effectués par catégorie')  # Non-necessary field
         #first_dataset['data'] = [40, 30, 60, 70, 25, 47, 39, 69, 34, 23, 31, 69]
         values = []
-        for l in JobCategory.JOB_CATEGORIES:
-            values.append(Demand.objects.filter(category__in=str(l[0])).count())
+        for job in JobCategory.JOB_CATEGORIES:
+            values.append(Demand.objects.filter(category__in=str(job[0])).count())
         first_dataset['data'] = values
 
         datasets.append(first_dataset)
@@ -201,12 +201,14 @@ class Statistics:
         # get user
         user = User.objects.get(pk=user_id);
         # group by django
-        nb_demands = Demand.objects.filter(donor=user).values('category').annotate(number=Count('category'));
+        nb_demands = Demand.objects.filter(donor=user).values('category').annotate(number=Count('category'))
         # construct data list
         data_list = [0 for i in range(0, len(JobCategory.JOB_CATEGORIES))]
+        print('before demands')
         for d in nb_demands:
-            index = int(d["category"])
-            data_list[index-1] = d["number"]
+            for (i, job_cat) in enumerate(JobCategory.JOB_CATEGORIES):
+                if d['category'] == str(job_cat[0]):
+                    data_list[i] += 1
 
         first_dataset['data'] = data_list
         datasets.append(first_dataset)
@@ -223,14 +225,13 @@ class Statistics:
 
         user = User.objects.get(pk=user_id)
         #group by django
-        nb_demands = Demand.objects.filter(donor=user).values('category').annotate(average_rating=Avg('estimated_time'));
+        nb_demands = Demand.objects.filter(donor=user).values('category').annotate(help_time=Avg('estimated_time'));
         #construct data list
-        data_list = []
-        for cat in JobCategory.JOB_CATEGORIES:
-            data_list.append(0)
+        data_list = [0 for i in range(0, len(JobCategory.JOB_CATEGORIES))]
         for d in nb_demands:
-            index = int(d["category"])
-            data_list[index-1] = d["average_rating"]
+            for (i, job_cat) in enumerate(JobCategory.JOB_CATEGORIES):
+                if d['category'] == str(job_cat[0]):
+                    data_list[i] += d['help_time']
 
         first_dataset['data'] = data_list
         datasets.append(first_dataset)
@@ -246,21 +247,23 @@ class Statistics:
 
         N_MONTHS = 6
         response['labels'] = Statistics.get_last_n_months(N_MONTHS)
-        truncate_date = connection.ops.date_trunc_sql('month','date')
+
+        truncate_date = connection.ops.date_trunc_sql('month', 'date')
         now = datetime.datetime.now()
+        this_month = Statistics.get_last_day_of_month(now)
         # get date minus 6 months (in number of weeks actually)
-        i_months_ago =  now - timezone.timedelta(weeks=4*(N_MONTHS-1))
-        # set the day to one
-        i_months_ago =  i_months_ago.replace(day=1, hour=0, minute=0)
+        i_months_ago = this_month - timezone.timedelta(weeks=4*N_MONTHS)
+        # set the last day of that month
+        i_months_ago = Statistics.get_last_day_of_month(i_months_ago)
         user = User.objects.get(pk=user_id)
-        jobs_amount = Demand.objects.filter(donor=user, date__gte=i_months_ago, date__lte=now).extra({'month':truncate_date}).values('month').annotate(created_count=Count('id'))
+        jobs_amount = Demand.objects.filter(donor=user, date__gte=i_months_ago, date__lte=now).extra({'month': truncate_date}).values('month').annotate(created_count=Count('id'))
         data_list = [0 for i in range(0, N_MONTHS)]
         baseIndex = i_months_ago.month
         # the base index is the first month and is equal to the index 0 in the data_list
         # the key is the month number
         for job in jobs_amount:
-            key = int(job["month"][5:7])
-            data_list[key - baseIndex] = job["created_count"]
+            key = int(job['month'][5:7])
+            data_list[key - baseIndex] = job['created_count']
 
         datasets = []
         first_dataset = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
@@ -274,18 +277,35 @@ class Statistics:
 
 
     @staticmethod
-    def get_user_km_json(user_id):
+    def get_user_time_amount_json(user_id):
         response = {}
 
         N_MONTHS = 6
 
         response['labels'] = Statistics.get_last_n_months(N_MONTHS)
 
-        #filter(pub_date__gte=timezone.now() + timezone.delta(months=-6))
+        truncate_date = connection.ops.date_trunc_sql('month', 'date')
+        now = datetime.datetime.now()
+        this_month = Statistics.get_last_day_of_month(now)
+        # get date minus 6 months (in number of weeks actually)
+        i_months_ago = this_month - timezone.timedelta(weeks=4*N_MONTHS)
+        # set the last day of that month
+        i_months_ago = Statistics.get_last_day_of_month(i_months_ago)
+        user = User.objects.get(pk=user_id)
+        jobs_amount = Demand.objects.filter(donor=user, date__gte=i_months_ago, date__lte=now).extra({'month': truncate_date}).values('month').annotate(created_count=Sum('real_time'))
+        data_list = [0 for i in range(0, N_MONTHS)]
+        baseIndex = i_months_ago.month
+        # the base index is the first month and is equal to the index 0 in the data_list
+        # the key is the month number
+        for job in jobs_amount:
+            key = int(job['month'][5:7])
+            data_list[key - baseIndex] = job['created_count']
+
         datasets = []
         first_dataset = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
         #first_dataset['label'] = __('Membres')  # Non-necessary field
-        first_dataset['data'] = [10, 20, 30, 42, 25, 28]
+        #first_dataset['data'] = [10, 20, 30, 42, 25, 28]
+        first_dataset['data'] = data_list
         datasets.append(first_dataset)
 
         response['datasets'] = datasets

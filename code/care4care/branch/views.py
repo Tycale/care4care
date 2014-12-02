@@ -71,6 +71,11 @@ def branch_home(request, branch_id, slug):
     demands = Demand.objects.filter(receiver__in=user_ids, branch=branch)
     offers = Offer.objects.filter(donor__in=user_ids, branch=branch)
 
+    date_now = timezone.now() + timezone.timedelta(hours=-24)
+
+    demands = demands.filter(date__gte=date_now)
+    offers = offers.filter(date__gte=date_now)
+
     return render(request,'branch/branch_home.html', locals())
 
 @login_required
@@ -260,7 +265,7 @@ class CreateDemandView(CreateView):
     def form_valid(self, form):
         form.instance.branch = Branch.objects.get(pk=self.kwargs['branch_id'])
         form.instance.receiver = User.objects.get(pk=self.kwargs['user_id'])
-        #form.instance.real_time = form.instance.estimated_time
+        form.instance.real_time = form.instance.estimated_time
         return super(CreateDemandView, self).form_valid(form)
 
     def get_success_url(self):

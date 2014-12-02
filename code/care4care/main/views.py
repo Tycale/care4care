@@ -9,17 +9,18 @@ from django.contrib.sites.models import Site
 from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
 from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm, VerifiedProfileForm, JobSearchForm
-from main.models import User, VerifiedInformation, EmergencyContact, MemberType
+from main.models import User, VerifiedInformation, EmergencyContact, JobCategory, JobType, MemberType
 from branch.models import Demand, Offer
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import CreateView
-from branch.models import Branch, BranchMembers
+from branch.models import Branch, BranchMembers, TIME_CHOICES
 from postman.api import pm_write
 from django.db.models import Q
 from django.views.generic.detail import DetailView
+
 
 from ajax.views import *
 import sys
@@ -41,6 +42,11 @@ def home(request):
     else :
         demands = Demand.objects.all()
         offers = Offer.objects.all()
+
+    date_now = timezone.now() + timezone.timedelta(hours=-24)
+
+    demands = demands.filter(date__gte=date_now)
+    offers = offers.filter(date__gte=date_now)
 
     nb_branch = Branch.objects.all().count()
     branches = Branch.objects.all()
@@ -78,12 +84,13 @@ def user_profile(request, user_id):
     """ Get profile from a user"""
     user_to_display = get_object_or_404(User, pk=user_id)
     user = request.user
-    is_my_friend = False
-    is_in_my_network = False
-    if user_to_display in user.favorites.all():
-        is_my_friend = True
-    if user_to_display in user.personal_network.all():
-        is_in_my_network = True
+    if user.is_authenticated():
+        is_my_friend = False
+        is_in_my_network = False
+        if user_to_display in user.favorites.all():
+            is_my_friend = True
+        if user_to_display in user.personal_network.all():
+            is_in_my_network = True
 
     return render(request, 'profile/user_profile.html', locals())
 
@@ -443,55 +450,66 @@ PERMISSION_DENIED = "Permission denied. This event will be reported."
 
 @login_required
 def get_registrated_users_json(request):
-    if request.user.is_superuser:
-        return get_json_from(Statistics.get_users_registrated_json())
-    else:
+    if not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
+
+    return get_json_from(Statistics.get_users_registrated_json())
+
 
 @login_required
 def get_account_types_json(request):
-    if request.user.is_superuser:
-        return get_json_from(Statistics.get_account_types_json())
-    else:
+    if not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
+    return get_json_from(Statistics.get_account_types_json())
+
 
 @login_required
 def get_users_status_json(request):
-    if request.user.is_superuser:
-        return get_json_from(Statistics.get_users_status_json())
-    else:
+    if not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
+
+    return get_json_from(Statistics.get_users_status_json())
+
 
 @login_required
 def get_job_categories_json(request):
-    if request.user.is_superuser:
-        return get_json_from(Statistics.get_job_categories_json())
-    else:
+    if not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
+
+    return get_json_from(Statistics.get_job_categories_json())
+
 
 @login_required
 def get_user_job_categories_json(request, user_id):
-    if request.user.id != int(user_id) and not request.user.is_superuser:
+    if request.user.id != user_id and not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
+
     return get_json_from(Statistics.get_user_job_categories_json(user_id))
+
 
 @login_required
 def get_user_job_avg_time_json(request, user_id):
-    if request.user.id != int(user_id) and not request.user.is_superuser:
+    if request.user.id != user_id and not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
+
     return get_json_from(Statistics.get_user_job_avg_time_json(user_id))
 
-@login_required
-def get_user_km_json(request, user_id):
-    if request.user.id != int(user_id) and not request.user.is_superuser:
-        return HttpResponse(PERMISSION_DENIED, status=401)
-    return get_json_from(Statistics.get_user_km_json(user_id))
 
 @login_required
 def get_user_jobs_amount_json(request, user_id):
     if request.user.id != int(user_id) and not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
+
     return get_json_from(Statistics.get_user_jobs_amount_json(user_id))
+
+
+@login_required
+def get_user_time_amount_json(request, user_id):
+    if request.user.id != int(user_id) and not request.user.is_superuser:
+        return HttpResponse(PERMISSION_DENIED, status=401)
+
+    return get_json_from(Statistics.get_user_time_amount_json(user_id))
+
 
 ### Search ###
 @login_required
@@ -503,19 +521,60 @@ def search_view(request):
 @login_required
 def job_search_view(request):
     form = JobSearchForm()
+    if request.method == 'POST':
+        form = JobSearchForm(request.POST)
+        if form.is_valid():
+            
+
+            if not form.cleaned_data['date1']:
+                date1 = timezone.now()
+            else:
+                date1 = form.cleaned_data['date1']
+
+            if not form.cleaned_data['date2']:
+                date2 = timezone.datetime.max
+            else:
+                date2 = form.cleaned_data['date2']
+
+            if not form.cleaned_data['category']:
+                category = [str(l[0]) for l in JobCategory.JOB_CATEGORIES]
+                print(category)
+            else:
+                category = form.cleaned_data['category']
+
+            if not form.cleaned_data['job_type']:
+                job_type = [str(l[0]) for l in JobType.JOB_TYPES]
+            else:
+                job_type = form.cleaned_data['job_type']
+
+            if not form.cleaned_data['receive_help_from_who']:
+                receive_help_from_who = [str(l[0]) for l in MemberType.MEMBER_TYPES_GROUP]
+            else:
+                receive_help_from_who = form.cleaned_data['receive_help_from_who']
+
+            if not form.cleaned_data['time']:
+                time = [str(l[0]) for l in TIME_CHOICES]
+            else:
+                time = form.cleaned_data['time']
+
+            request_time = Q(time__contains=time[0])
+            for l in time[1:] :
+                request_time |= Q(time__contains=l)
+
+            request_category = Q(category__contains=category[0])
+            for l in category[1:] :
+                request_category |= Q(category__contains=l)
+
+            if str(JobType.OFFRE) in job_type:
+                print("test")
+                offers = Offer.objects.filter(Q(date__gte=date1) &  Q(date__lte=date2) & Q(receive_help_from_who__in = receive_help_from_who) & request_time & request_category).all()
+
+            if str(JobType.DEMAND) in job_type:
+                print(job_type)
+                demands = Demand.objects.filter(Q(date__gte=date1) &  Q(date__lte=date2) & Q(receive_help_from_who__in = receive_help_from_who) & request_time & request_category & Q(closed=False)).all()
+
+            
+            return render(request, 'search/job_result.html',locals())
+
     return render(request,'search/job.html', locals())
 
-@login_required
-def job_result_view(request):
-    form = JobSearchForm()
-    user = request.user
-    if(request.method=='POST'):
-        form = JobSearchForm(request.POST)
-        if not form.is_valid():
-            return redirect('search_job')
-
-
-
-    demands = Demand.objects.all()
-    offers = Offer.objects.all()
-    return render(request, 'search/job_result.html',locals())
