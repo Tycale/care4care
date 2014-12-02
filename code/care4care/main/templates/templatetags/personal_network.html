@@ -21,7 +21,7 @@
         <tr id="network_{{personne.id}}">
           <td><a href="{% url 'user_profile' personne.id %}"> {{ personne.get_full_name }} </a> </td>
           <td>
-            <a href="{{ personne.id }}" class="pull-right" id="remove_network_link" >
+            <a href="{{ personne.id }}" class="pull-right remove_network_link" >
               <li class="glyphicon glyphicon-remove">  </li>
             </a>
           </td>
