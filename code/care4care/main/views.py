@@ -45,8 +45,8 @@ def home(request):
 
     date_now = timezone.now() + timezone.timedelta(hours=-24)
 
-    demands = demands.filter(date__gte=date_now)
-    offers = offers.filter(date__gte=date_now)
+    demands = demands.up_to_date()
+    offers = offers.up_to_date()
 
     nb_branch = Branch.objects.all().count()
     branches = Branch.objects.all()

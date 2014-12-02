@@ -6,8 +6,11 @@ from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 
-from multiselectfield import MultiSelectField
+from django.db.models.query import QuerySet
+from model_utils.managers import PassThroughManager
 
+from multiselectfield import MultiSelectField
+from django.utils import timezone
 from main.models import User, JobCategory, MemberType
 
 TIME_CHOICES = (
@@ -87,6 +90,11 @@ class Comment(models.Model):
     class Meta:
         ordering = ['date']
 
+class JobManager(QuerySet):
+    def up_to_date(self):
+        date_now = timezone.now() + timezone.timedelta(hours=-24)
+        return self.filter(date__gte=date_now)
+
 class Job(models.Model):
     branch = models.ForeignKey(Branch, verbose_name=_("Branche"), related_name="%(class)s_branch")
     donor = models.ForeignKey(User, verbose_name=_("Donneur"), related_name="%(class)s_donor", null=True)
@@ -113,7 +121,7 @@ class Job(models.Model):
             return ''
         return ', '.join([str(SHORT_TIME[l[0]-1]) for l in TIME_CHOICES if (str(l[0]) in self.time)])
 
-
+    objects = PassThroughManager.for_queryset_class(JobManager)()
 
     class Meta:
         abstract = True
@@ -129,7 +137,7 @@ class Demand(Job):
     volunteers = models.ManyToManyField(User, null=True, blank=True, through='DemandProposition', related_name="volunteers", verbose_name=_("Propositions"))
     closed = models.BooleanField(verbose_name=_("Vontaire assigné"), default=False)
     km = models.IntegerField(verbose_name=_("Distance depuis domicile"), blank=True, null=True)
-    
+
     @models.permalink
     def get_absolute_url(self):
         return ('see_demand', (), {'branch_id': self.branch.id, 'slug': self.branch.slug, 'demand_id': self.id})

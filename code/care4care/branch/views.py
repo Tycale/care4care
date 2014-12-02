@@ -7,7 +7,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.detail import DetailView
 
 from branch.models import Branch, BranchMembers, Demand, Offer, Comment, DemandProposition
-from main.models import User, VerifiedInformation
+from main.models import User, VerifiedInformation, JobCategory, MemberType
 
 from branch.forms import CreateBranchForm, ChooseBranchForm, OfferHelpForm, NeedHelpForm, \
             CommentForm, UpdateNeedHelpForm, VolunteerForm, ForceVolunteerForm
@@ -37,6 +37,42 @@ def branch_create(request):
 
     return render(request,'branch/branch_create.html', locals())
 
+
+def discriminate_demands(request, demands):
+    exclude_demand_ids = []
+    for demand in demands :
+        if demand.receive_help_from_who == MemberType.ALL:
+            continue
+        elif demand.receive_help_from_who == MemberType.VERIFIED_MEMBER:
+            if not request.user.is_verified:
+                exclude_demand_ids.append(demand.id)
+        elif demand.receive_help_from_who == MemberType.FAVORITE:
+            if not request.user.verified_personal_network.filter(user=demand.receiver).exists():
+                exclude_demand_ids.append(demand.id)
+
+    while request.user.id in exclude_demand_ids:
+        exclude_demand_ids.remove()
+
+    demands = demands.exclude(id__in=exclude_demand_ids)
+    return demands
+
+def discriminate_offers(request, offers):
+    exclude_offer_ids = []
+    for offer in offers :
+        if offer.receive_help_from_who == MemberType.ALL:
+            continue
+        elif offer.receive_help_from_who == MemberType.VERIFIED_MEMBER:
+            if not request.user.is_verified:
+                exclude_offer_ids.append(offer.id)
+        elif offer.receive_help_from_who == MemberType.FAVORITE:
+            if not request.user.verified_personal_network.filter(user=offer.donor).exists():
+                exclude_offer_ids.append(offer.id)
+
+    while request.user.id in exclude_offer_ids:
+        exclude_offer_ids.remove()
+
+    offers = offers.exclude(id__in=exclude_offer_ids)
+    return offers
 
 def branch_home(request, branch_id, slug):
     branch = get_object_or_404(Branch, pk=branch_id)
@@ -73,8 +109,12 @@ def branch_home(request, branch_id, slug):
 
     date_now = timezone.now() + timezone.timedelta(hours=-24)
 
-    demands = demands.filter(date__gte=date_now)
-    offers = offers.filter(date__gte=date_now)
+    demands = demands.up_to_date()
+    offers = offers.up_to_date()
+
+    if not is_branch_admin:
+        demands = discriminate_demands(request, demands)
+        offers = discriminate_offers(request, offers)
 
     return render(request,'branch/branch_home.html', locals())
 
