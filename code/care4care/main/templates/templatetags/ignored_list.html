@@ -21,7 +21,7 @@
         <tr id="ignored_{{personne.id}}">
           <td><a href="{% url 'user_profile' personne.id %}"> {{ personne.get_full_name }} </a> </td>
           <td>
-            <a href="{{ personne.id }}" class="pull-right" id="remove_ignored_link" >
+            <a href="{{ personne.id }}" class="pull-right remove_ignored_link" >
               <li class="glyphicon glyphicon-remove">  </li>
             </a>
           </td>
@@ -43,7 +43,7 @@ var remove_ignored_from_list_success = function(name,id_remove){
 }
 
 $(document).ready(function(){
-  $('#remove_ignored_link').click(function (event) {
+  $('.remove_ignored_link').click(function (event) {
     event.preventDefault();
     remove_ignored($(this).attr("href"), remove_ignored_from_list_success);
   });

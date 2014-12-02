@@ -202,6 +202,16 @@ class JobSearchForm(forms.Form):
             if self.cleaned_data['date2']<timezone.now()-timezone.timedelta(hours=24):
                 raise forms.ValidationError(_("Incohérence dans les dates."))
 
-
-        
+class GiftForm(forms.Form):
+    user = forms.CharField(label = _("Username"))
+    amount = forms.IntegerField(min_value=1,initial=1,label = _("Montant de temps (plus que 1)"))
+    message = forms.CharField(required=False,widget=forms.Textarea,label = _("Message"))
  
+    def __init__(self, *args, **kwargs):
+        self.ruser = kwargs.pop('ruser')
+        super(GiftForm, self).__init__(*args, **kwargs)
+
+    def clean_amount(self):
+        cleaned_data = super(GiftForm, self).clean()
+        if self.cleaned_data['amount'] > self.ruser.credit:
+            raise forms.ValidationError(_("Vous ne pouvez pas donner plus d'heure que ce que vous avez."))

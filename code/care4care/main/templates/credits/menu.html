@@ -1,12 +1,11 @@
 {% extends "base.html" %}
-{% load bootstrap3 %}{% load i18n %}{% load staticfiles %}
+{% load bootstrap3 %}{% load i18n %}{% load staticfiles %}{% load jobs_extra %}
 
 
 {% block title %}{% trans "Mes crédits" %}{% endblock %}
 
 {% block content %}
 <h3><i class="fa fa-angle-right"></i> {% trans "Mon compte" %}</h3>
-	{% csrf_token %}
 
 	<div class="row mt">
 		 <div class="col-lg-12 col-sm-12 background-gris">
@@ -18,7 +17,53 @@
             </div>
          </div>
     </div>
-</form>
+    <div class="row mt">
+    	<div class="col-lg-12">
+        	<div class="col-lg-12 col-sm-12 content-panel">
+            	<h3> {% trans "Jobs effectués" %}</h3>
+            	{% if jobs %}
+            	{% show_demands request jobs show_branch=False %}
+            	{% endif %}
+            	{% if offer %}
+            	{% show_offers request offer show_branch=False %}
+            	{% endif %}
+            	{% if not jobs and not offer %}
+            	{% trans "Aucun historique" %}
+            	{% endif %}
+        	</div>
+    	</div>
+	</div>
+	<div class="row mt">
+    	<div class="col-lg-12">
+        	<div class="col-lg-12 col-sm-12 content-panel">
+            	<h3> {% trans "Jobs en cours" %}</h3>
+            	{% if jobs_pending %}
+            	{% show_demands request jobs_pending show_branch=False %}
+            	{% endif %}
+            	{% if offer_pending %}
+            	{% show_offers request offer_pending show_branch=False %}
+            	{% endif %}
+            	{% if not jobs_pending and not offer_pending %}
+            	{% trans "Aucun job en cours" %}
+            	{% endif %}
+        	</div>
+    	</div>
+	</div>
+	<div class="row mt">
+    	<div class="col-lg-12">
+        	<div class="col-lg-12 col-sm-12 mb content-panel">
+        		<form action="."  enctype="multipart/form-data" role="form" method="post">
+        		{% csrf_token %}
+            	<h3> {% trans "Cadeaux : J'aimerais offrir une partie de mon temps à :" %}</h3>
+            	{% bootstrap_form form %}
+            	<button type="submit" class="btn btn-info btn-lg btn-block mb">
+	                {% bootstrap_icon "gift" %} &nbsp; {% trans "Offrir" %}
+	        	</button>
+            	</form>
+        	</div>
+    	</div>
+	</div>
+
 {% endblock %}
 
 {% block extra_footer %}
