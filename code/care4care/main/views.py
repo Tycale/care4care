@@ -99,7 +99,7 @@ def user_profile(request, user_id):
 def manage_profile(request):
     """ Return the profile from the current logged user"""
     user_to_display = request.user
-    pending_offers = Offer.objects.filter(donor=user_to_display)
+    pending_demands = Demand.objects.filter(donor=user_to_display)
     return render(request, 'profile/user_profile.html', locals())
 
 """@user_passes_test(lambda u: not u.is_verified)
@@ -524,7 +524,7 @@ def job_search_view(request):
     if request.method == 'POST':
         form = JobSearchForm(request.POST)
         if form.is_valid():
-            
+
 
             if not form.cleaned_data['date1']:
                 date1 = timezone.now()
@@ -573,7 +573,7 @@ def job_search_view(request):
                 print(job_type)
                 demands = Demand.objects.filter(Q(date__gte=date1) &  Q(date__lte=date2) & Q(receive_help_from_who__in = receive_help_from_who) & request_time & request_category & Q(closed=False)).all()
 
-            
+
             return render(request, 'search/job_result.html',locals())
 
     return render(request,'search/job.html', locals())
