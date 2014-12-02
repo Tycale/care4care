@@ -20,76 +20,76 @@ msgstr ""
 
 #: branch/forms.py:30
 msgid "Veuillez choisir un point sur la carte"
-msgstr ""
+msgstr "Select a point on the map"
 
 #: branch/forms.py:45 branch/forms.py:71
 #: branch/templates/templatetags/demands.html:12
 msgid "Categorie"
-msgstr ""
+msgstr "Category"
 
 #: branch/forms.py:50 branch/forms.py:76
 msgid "Veuillez choisir une date dans le futur."
-msgstr ""
+msgstr "Select a future date"
 
 #: branch/forms.py:56
 msgid "Le temps estimé doit être plus grand que 0 minute."
-msgstr ""
+msgstr "Estimated time must be higher than 0 minute"
 
 #: branch/models.py:14
 msgid "créé"
-msgstr ""
+msgstr "Create"
 
 #: branch/models.py:15
 msgid "reçu proposition"
-msgstr ""
+msgstr "Proposition received"
 
 #: branch/models.py:16
 msgid "proposition acceptée"
-msgstr ""
+msgstr "Proposition accepted"
 
 #: branch/models.py:17
 msgid "completé"
-msgstr ""
+msgstr "Completed"
 
 #: branch/models.py:18
 msgid "echoué"
-msgstr ""
+msgstr "Failed"
 
 #: branch/models.py:22
 msgid "Début de matinée (8h-10h)"
-msgstr ""
+msgstr "Early morning (8h-10h)"
 
 #: branch/models.py:23
 msgid "Fin de matinée (10h-12h)"
-msgstr ""
+msgstr "Late morning (10h-12h)"
 
 #: branch/models.py:24
 msgid "Midi (12h-13h)"
-msgstr ""
+msgstr "Noon (12h-13h)"
 
 #: branch/models.py:25
 msgid "Début d'après-midi (13h-16h)"
-msgstr ""
+msgstr "Early afternoon (13h-16h)"
 
 #: branch/models.py:26
 msgid "Fin d'après-midi (16h-19h)"
-msgstr ""
+msgstr "Late afternoon (16h-19h)"
 
 #: branch/models.py:27
 msgid "Repas du soir (19h-20h)"
-msgstr ""
+msgstr "Supper (19h-20h)"
 
 #: branch/models.py:28
 msgid "Début de soirée (20h-22h)"
-msgstr ""
+msgstr "Early evening (20h-22h) "
 
 #: branch/models.py:29
 msgid "Fin de soirée (22h-00h)"
-msgstr ""
+msgstr "Late evening (22h-00h)"
 
 #: branch/models.py:30
 msgid "Nuit (00h-8h)"
-msgstr ""
+msgstr "Night (00h-8h)"
 
 #: branch/models.py:34
 msgid "Nom de la branche"
@@ -127,15 +127,15 @@ msgstr "Longitude"
 
 #: branch/models.py:40
 msgid "Membres de la branche"
-msgstr ""
+msgstr "Branch's members"
 
 #: branch/models.py:61
 msgid "date d'arrivé"
-msgstr ""
+msgstr "Listing date"
 
 #: branch/models.py:71
 msgid "Commentez"
-msgstr ""
+msgstr "Comment"
 
 #: branch/models.py:72 branch/models.py:88
 #: branch/templates/branch/branch_home.html:102
@@ -145,21 +145,21 @@ msgstr ""
 #: branch/templates/templatetags/offers.html:16
 #: main/templates/messages/inbox_base.html:46
 msgid "Date"
-msgstr ""
+msgstr "Date"
 
 #: branch/models.py:81 branch/templates/branch/branch_home.html:18
 #, fuzzy
 #| msgid "France"
 msgid "Branche"
-msgstr "France"
+msgstr "Branch"
 
 #: branch/models.py:82
 msgid "Donneur"
-msgstr ""
+msgstr "Sender"
 
 #: branch/models.py:83
 msgid "Receveur"
-msgstr ""
+msgstr "Receiver"
 
 #: branch/models.py:84 branch/templates/job/details_demand.html:69
 #: branch/templates/job/details_offer.html:24
@@ -170,32 +170,32 @@ msgstr "Sign up"
 
 #: branch/models.py:85
 msgid "Type d'aide"
-msgstr ""
+msgstr "Type of help"
 
 #: branch/models.py:87
 msgid "Qui peut voir et répondre à la demande/offre ?"
-msgstr ""
+msgstr "Who can see and respond to demand/offer"
 
 #: branch/models.py:89 branch/templates/job/details_demand.html:65
 #: branch/templates/job/details_offer.html:22
 msgid "Heures de disponibilité"
-msgstr ""
+msgstr "Busy time"
 
 #: branch/models.py:89
 msgid "Selectionnez les heures qui vous conviennent"
-msgstr ""
+msgstr "Select the hours that suit you"
 
 #: branch/models.py:105 branch/templates/templatetags/demands.html:16
 msgid "Titre"
-msgstr ""
+msgstr "Title"
 
 #: branch/models.py:109
 msgid "Temps estimé (en minutes)"
-msgstr ""
+msgstr "Estimetad time (in minutes)"
 
 #: branch/models.py:110
 msgid "Temps réel (en minutes)"
-msgstr ""
+msgstr "Real time (int minutes)"
 
 #: branch/templates/branch/branch_create.html:5
 #: branch/templates/branch/branch_create.html:16 templates/base.html:307
@@ -204,18 +204,18 @@ msgstr "Create a new branch"
 
 #: branch/templates/branch/branch_create.html:21
 msgid "Complétez les informations suivantes afin de créer votre branche"
-msgstr ""
+msgstr "Please complete the following information to create your branch"
 
 #: branch/templates/branch/branch_create.html:29
 msgid "Informations générale"
-msgstr ""
+msgstr "General information"
 
 #: branch/templates/branch/branch_create.html:40
 #: branch/templates/job/need_help.html:46
 #: main/templates/profile/edit_profile.html:100
 #: main/templates/verified/verified_profile.html:100
 msgid "Entrez votre adresse"
-msgstr ""
+msgstr "Enter your address"
 
 #: branch/templates/branch/branch_create.html:45
 #: branch/templates/branch/branch_join.html:34
@@ -234,7 +234,7 @@ msgstr "Sign up"
 #: main/templates/profile/edit_profile.html:105
 #: main/templates/verified/verified_profile.html:105
 msgid "L'emplacement sur la carte peut être approximatif"
-msgstr ""
+msgstr "The location on the map may be approximate"
 
 #: branch/templates/branch/branch_create.html:57
 #, fuzzy
@@ -277,18 +277,21 @@ msgid ""
 "                            Êtes-vous sûr de vouloir quitter la branche %(branch)s ?\n"
 "                            "
 msgstr ""
+"\n"
+"                            Are you sure you want to leave the branch %(branch)s ?\n"
+"                            "
 
 #: branch/templates/branch/branch_home.html:55
 #: branch/templates/branch/branch_home.html:77
 #: main/templates/main/home.html:19 main/templates/main/home.html.py:47
 msgid "fermer"
-msgstr ""
+msgstr "close"
 
 #: branch/templates/branch/branch_home.html:68
 #, fuzzy
 #| msgid "Nom de la branche"
 msgid "Supprimer la branche ?"
-msgstr "Delete the branch"
+msgstr "Delete the branch ?"
 
 #: branch/templates/branch/branch_home.html:71
 #, python-format
@@ -298,14 +301,18 @@ msgid ""
 "                            Cette action est irréversible. <br />\n"
 "                            "
 msgstr ""
+"\n"
+"                            Are you sure you want to DELETE the branch %(branch)s ? <br />\n"
+"                            This action is irreversible. <br />\n"
+"                            "
 
 #: branch/templates/branch/branch_home.html:79
 msgid "SUPPRIMER cettte branche"
-msgstr ""
+msgstr "DELETE this branch"
 
 #: branch/templates/branch/branch_home.html:93
 msgid "Demande en attente"
-msgstr ""
+msgstr "Pending demand"
 
 #: branch/templates/branch/branch_home.html:100
 #: branch/templates/branch/branch_home.html:145
@@ -332,17 +339,17 @@ msgstr "Offer my help"
 
 #: branch/templates/branch/branch_home.html:137
 msgid "Liste des membres"
-msgstr ""
+msgstr "Member list"
 
 #: branch/templates/branch/branch_home.html:147
 #: main/templates/profile/user_profile.html:109
 #: main/templates/verified/verified_display.html:24
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #: branch/templates/branch/branch_home.html:149
 msgid "Administrer"
-msgstr ""
+msgstr "Administer"
 
 #: branch/templates/branch/branch_home.html:151
 msgid "Ecrire"
@@ -354,15 +361,15 @@ msgstr "Write to all"
 
 #: branch/templates/branch/branch_home.html:166
 msgid "Responsable"
-msgstr ""
+msgstr "Responsable"
 
 #: branch/templates/branch/branch_home.html:170
 msgid "Promouovir responsable"
-msgstr ""
+msgstr "Promote responsable"
 
 #: branch/templates/branch/branch_home.html:173
 msgid "Retirer responsable"
-msgstr ""
+msgstr "Remove responsable"
 
 #: branch/templates/branch/branch_home.html:175
 msgid "Créateur"
@@ -370,11 +377,11 @@ msgstr "Creator"
 
 #: branch/templates/branch/branch_home.html:182
 msgid "demande"
-msgstr ""
+msgstr "demand"
 
 #: branch/templates/branch/branch_home.html:183
 msgid "offre"
-msgstr "Offer"
+msgstr "offer"
 
 #: branch/templates/branch/branch_home.html:184
 #: branch/templates/job/details_demand.html:47
@@ -409,7 +416,7 @@ msgstr "Choosen branch"
 #: branch/templates/branch/branch_join.html:28
 #: main/templates/registration/registration_form.html:72
 msgid "aucune"
-msgstr ""
+msgstr "None"
 
 #: branch/templates/branch/branch_join.html:34
 #: main/templates/registration/registration_form.html:78
@@ -417,6 +424,8 @@ msgid ""
 "Selectionner un emplacement (marqueur rouge) sur la carte afin de rejoindre "
 "une branche."
 msgstr ""
+"Select a location (red marker) on the map to join "
+"a branch."
 
 #: branch/templates/branch/branch_join.html:40
 msgid "Rejoindre"
@@ -441,23 +450,23 @@ msgstr ""
 
 #: branch/templates/job/details_demand.html:26
 msgid "Durée du trajet:"
-msgstr ""
+msgstr "Trip time:"
 
 #: branch/templates/job/details_demand.html:26
 msgid "min"
-msgstr ""
+msgstr "min"
 
 #: branch/templates/job/details_demand.html:29
 msgid "Distance du trajet:"
-msgstr ""
+msgstr "Trip distance:"
 
 #: branch/templates/job/details_demand.html:29
 msgid "km"
-msgstr ""
+msgstr "km"
 
 #: branch/templates/job/details_demand.html:62
 msgid "Demandeur"
-msgstr ""
+msgstr "Receiver"
 
 #: branch/templates/job/details_demand.html:62
 #, fuzzy
@@ -468,62 +477,63 @@ msgstr "Branch's name"
 #: branch/templates/job/details_demand.html:63
 #: branch/templates/job/details_offer.html:20
 msgid "Catégorie"
-msgstr ""
+msgstr "Category"
 
 #: branch/templates/job/details_demand.html:66
 msgid "Durée estimée du service"
-msgstr ""
+msgstr "Estimated time of the service"
 
 #: branch/templates/job/details_demand.html:66
 msgid "minutes"
-msgstr ""
+msgstr "minutes"
 
 #: branch/templates/job/details_demand.html:67
 #: branch/templates/job/details_demand.html:183
 #: branch/templates/job/details_demand.html:189
 msgid "Lieu"
-msgstr ""
+msgstr "Place"
 
 #: branch/templates/job/details_demand.html:79
 msgid "Itinéraire"
-msgstr ""
+msgstr "Itinerary"
 
 #: branch/templates/job/details_demand.html:81
 msgid "En voiture"
-msgstr ""
+msgstr "By car"
 
 #: branch/templates/job/details_demand.html:82
 msgid "A pied"
-msgstr ""
+msgstr "On foot"
 
 #: branch/templates/job/details_demand.html:91
 msgid ""
 "Vous devez indiquer votre adresse personnelle afin d'avoir l'itinéraire"
 msgstr ""
+"You must enter your personal address in order to have an itinerary"
 
 #: branch/templates/job/details_demand.html:92
 msgid "Compléter mon profile"
-msgstr ""
+msgstr "Complete my profil"
 
 #: branch/templates/job/details_demand.html:103
 #: branch/templates/job/details_offer.html:34
 msgid "Commentaires"
-msgstr ""
+msgstr "Comments"
 
 #: branch/templates/job/details_demand.html:115
 #: branch/templates/job/details_offer.html:46
 msgid "a écrit:"
-msgstr ""
+msgstr "wrote:"
 
 #: branch/templates/job/details_demand.html:132
 #: branch/templates/job/details_offer.html:63
 msgid "Commenter"
-msgstr ""
+msgstr "Comment"
 
 #: branch/templates/job/details_demand.html:201
 #: branch/templates/job/details_demand.html:209
 msgid "Vous"
-msgstr ""
+msgstr "You"
 
 #: branch/templates/job/details_offer.html:16
 #, fuzzy
@@ -533,11 +543,11 @@ msgstr "Branch's name"
 
 #: branch/templates/job/need_help.html:5
 msgid "Besoin d'aide"
-msgstr ""
+msgstr "Need help"
 
 #: branch/templates/job/need_help.html:17
 msgid "Demande d'aide de "
-msgstr ""
+msgstr "Help request "
 
 #: branch/templates/job/need_help.html:17
 #, fuzzy
@@ -551,7 +561,7 @@ msgstr "Branch's name"
 #: main/templates/registration/registration_form.html:36
 #: main/templates/verified/verified_profile.html:27
 msgid "Informations générales"
-msgstr ""
+msgstr "General information"
 
 #: branch/templates/job/need_help.html:47
 msgid ""
@@ -559,15 +569,18 @@ msgid ""
 "la rue ou un endroit proche. Vous pourrez préciser ensuite votre adresse "
 "exacte à la personne qui se proposera afin de vous aider dans votre tâche."
 msgstr ""
+"If you don't want to completely reveal your address, leave the street or "
+"somewhere close. You can then specify your exact address to the person who "
+"will offer help."
 
 #: branch/templates/job/need_help.html:65
 #: branch/templates/job/offer_help.html:36
 msgid "Envoyer"
-msgstr ""
+msgstr "Send"
 
 #: branch/templates/job/offer_help.html:5
 msgid "Offrir de l'aide"
-msgstr ""
+msgstr "Offer help"
 
 #: branch/templates/job/offer_help.html:17
 #, fuzzy
@@ -578,12 +591,12 @@ msgstr "Branch's name"
 #: branch/templates/templatetags/demands.html:5
 #: main/templates/templatetags/user_stats.html:9
 msgid "Demandes"
-msgstr ""
+msgstr "Demands"
 
 #: branch/templates/templatetags/demands.html:11
 #: branch/templates/templatetags/offers.html:11 main/models.py:80
 msgid "Membre"
-msgstr ""
+msgstr "Member"
 
 #: branch/templates/templatetags/demands.html:14
 #: branch/templates/templatetags/offers.html:14
@@ -595,43 +608,43 @@ msgstr "France"
 #: branch/templates/templatetags/offers.html:5
 #: main/templates/templatetags/user_stats.html:68
 msgid "Offres"
-msgstr ""
+msgstr "Offers"
 
 #: branch/templates/templatetags/offers.html:12
 msgid "Categorie(s)"
-msgstr ""
+msgstr "Categories"
 
 #: branch/templates/templatetags/offers.html:17
 msgid "Heures"
-msgstr ""
+msgstr "Hours"
 
 #: branch/views.py:32
 msgid "Branche créée"
-msgstr ""
+msgstr "Created branch"
 
 #: branch/views.py:46
 msgid "Vous n'avez rien à faire ici !"
-msgstr ""
+msgstr "You have nothing to do here!"
 
 #: branch/views.py:85
 #, python-brace-format
 msgid "Vous êtes déjà dans la branche {branch}"
-msgstr ""
+msgstr "You are already in the branch {branch}"
 
 #: branch/views.py:89
 #, python-brace-format
 msgid "Vous avez rejoins la branche {branch}"
-msgstr ""
+msgstr "You join the branch {branch}"
 
 #: branch/views.py:104
 #, python-brace-format
 msgid "Vous avez quitté la branche {branch}"
-msgstr ""
+msgstr "You left the branch {branch}"
 
 #: branch/views.py:106
 #, python-brace-format
 msgid "{user} a été retiré de la branche {branch}"
-msgstr ""
+msgstr "{user} was removed from the branch {branch}"
 
 #: branch/views.py:122
 #, fuzzy, python-brace-format
@@ -648,7 +661,7 @@ msgstr "Branch administrators"
 #: branch/views.py:152
 #, python-brace-format
 msgid "Vous avez supprimé la branche {branch}"
-msgstr ""
+msgstr "You delete the branch {branch}"
 
 #: care4care/settings.py:122
 msgid "Français"
@@ -695,59 +708,61 @@ msgid ""
 "Cet utilisateur existe déjà dans notre système. Veuillez utiliser utiliser "
 "le formulaire 'Mot de passe perdu' si vous êtes déjà enregistré."
 msgstr ""
+"This user already exists in our system. Please use 'Forgot password' if you"
+"are already registered"
 
 #: main/forms.py:54
 msgid "Les mots de passe ne sont pas identiques."
-msgstr ""
+msgstr "Passwords don't match"
 
 #: main/forms.py:119 main/forms.py:121 main/forms.py:125
 msgid "Veuillez introduire une adresse valide via les propositions."
-msgstr ""
+msgstr "Please enter a valid address."
 
 #: main/forms.py:123
 msgid "Veuillez introduire une adresse e-mail valide via les propositions."
-msgstr ""
+msgstr "Please enter a valid e-mail address."
 
 #: main/forms.py:127
 msgid "Veuillez introduire au moins un numéro de téléphone (mobile ou fixe)."
-msgstr ""
+msgstr "Please enter at least a telephone number"
 
 #: main/forms.py:129
 msgid "Veuillez introduire une langue."
-msgstr ""
+msgstr "Please enter a language"
 
 #: main/forms.py:160
 #, python-format
 msgid "Votre fichier doit peser moins de %s. Taille actuelle %s"
-msgstr ""
+msgstr "Your file must weigh less thean %s. Current size %s"
 
 #: main/forms.py:164
 msgid "Type de fichier non supporté"
-msgstr ""
+msgstr "File type not accepted"
 
 #: main/models.py:17
 msgid "Internet"
-msgstr ""
+msgstr "The Internet"
 
 #: main/models.py:18
 msgid "Présentation, brochures, flyers, ..."
-msgstr ""
+msgstr "A presentation, brochure, flyer,... "
 
 #: main/models.py:19
 msgid "Par une branche locale"
-msgstr ""
+msgstr "The local branch"
 
 #: main/models.py:20
 msgid "Un autre membre"
-msgstr ""
+msgstr "Another member"
 
 #: main/models.py:21
 msgid "Des amis ou de la famille m'en ont parlés"
-msgstr ""
+msgstr "Friends or family"
 
 #: main/models.py:22 main/models.py:119
 msgid "Autre"
-msgstr ""
+msgstr "Other ..."
 
 #: main/models.py:26
 msgid "Belgique"
@@ -759,35 +774,35 @@ msgstr "France"
 
 #: main/models.py:28
 msgid "Pays-Bas"
-msgstr ""
+msgstr "Netherlands"
 
 #: main/models.py:29
 msgid "Luxembourg"
-msgstr ""
+msgstr "Luxembourg"
 
 #: main/models.py:37
 msgid "Actif"
-msgstr ""
+msgstr "Active"
 
 #: main/models.py:38 main/templates/statistics/statistics.html:49
 msgid "En vacances"
-msgstr ""
+msgstr "On vacation"
 
 #: main/models.py:39
 msgid "Désactivé"
-msgstr ""
+msgstr "Disabled"
 
 #: main/models.py:46
 msgid "Boite à message"
-msgstr ""
+msgstr "Message box"
 
 #: main/models.py:47
 msgid "Mail"
-msgstr ""
+msgstr "Mail"
 
 #: main/models.py:50
 msgid "A contacter en premier"
-msgstr ""
+msgstr "First contact"
 
 #: main/models.py:51
 #, fuzzy
@@ -797,102 +812,102 @@ msgstr "Sign in"
 
 #: main/models.py:52
 msgid "A contacter en dernier"
-msgstr ""
+msgstr "Last contact"
 
 #: main/models.py:63
 msgid "Vélomoteur"
-msgstr ""
+msgstr "Moped"
 
 #: main/models.py:64
 msgid "Moto"
-msgstr ""
+msgstr "Motorcycle"
 
 #: main/models.py:65 main/templates/profile/edit_profile.html:58
 #: main/templates/verified/verified_display.html:32
 #: main/templates/verified/verified_profile.html:58
 msgid "Voiture"
-msgstr ""
+msgstr "Car"
 
 #: main/models.py:66
 msgid "Camion"
-msgstr ""
+msgstr "Truck"
 
 #: main/models.py:67
 msgid "Bus"
-msgstr ""
+msgstr "Bus"
 
 #: main/models.py:68
 msgid "Tracteur"
-msgstr ""
+msgstr "Tractor"
 
 #: main/models.py:81
 msgid "Non-membre"
-msgstr ""
+msgstr "Non-member"
 
 #: main/models.py:85
 msgid "Tous"
-msgstr ""
+msgstr "All"
 
 #: main/models.py:86 main/models.py:90
 msgid "Membre vérifié"
-msgstr ""
+msgstr "Verified member"
 
 #: main/models.py:87
 msgid "Favoris (inclus le réseau personnel)"
-msgstr ""
+msgstr "Favorites"
 
 #: main/models.py:91
 msgid "Non-membre vérifié"
-msgstr ""
+msgstr "Baptiste"
 
 #: main/models.py:109
 msgid "Visite à la maison"
-msgstr ""
+msgstr "Visit home"
 
 #: main/models.py:110
 msgid "Tenir compagnie"
-msgstr ""
+msgstr "Companionship"
 
 #: main/models.py:111
 msgid "Transport par voiture"
-msgstr ""
+msgstr "Transport by car"
 
 #: main/models.py:112
 msgid "Shopping"
-msgstr ""
+msgstr "Shopping"
 
 #: main/models.py:113
 msgid "Garder des maisons"
-msgstr ""
+msgstr "House sitting"
 
 #: main/models.py:114
 msgid "Petits boulots manuels"
-msgstr ""
+msgstr "Manuals jobs"
 
 #: main/models.py:115
 msgid "Jardinage"
-msgstr ""
+msgstr "Gardening"
 
 #: main/models.py:116
 msgid "Garder des animaux"
-msgstr ""
+msgstr "Pet sitting"
 
 #: main/models.py:117
 msgid "Soins personnels"
-msgstr ""
+msgstr "Personal care"
 
 #: main/models.py:118
 msgid "Administratif"
-msgstr ""
+msgstr "Administrative"
 
 #: main/models.py:120
 msgid "Spécial ... :D"
-msgstr ""
+msgstr "Special"
 
 #: main/models.py:123 main/templates/verified/verified_display.html:34
 #: main/templates/verified/verified_display.html:42
 msgid "Oui"
-msgstr ""
+msgstr "Yes"
 
 #: main/models.py:123 main/templates/verified/verified_display.html:36
 #: main/templates/verified/verified_display.html:44
@@ -903,41 +918,41 @@ msgstr "Name"
 
 #: main/models.py:129
 msgid "Disposez-vous d'une voiture ?"
-msgstr ""
+msgstr "Do you have a car?"
 
 #: main/models.py:130
 msgid "Pouvez-vous transporter une chaise roulante dans votre voiture ?"
-msgstr ""
+msgstr "Can you carry a wheelchair in your car?"
 
 #: main/models.py:131
 msgid "Type de permis de conduire"
-msgstr ""
+msgstr "Type of driving license"
 
 #: main/models.py:143
 msgid "Recevoir mes messages par"
-msgstr ""
+msgstr "Receive my messages"
 
 #: main/models.py:145
 msgid "Recevoir des demandes et des offres de"
-msgstr ""
+msgstr "Receive offers and demands"
 
 #: main/models.py:146
 msgid "Quelles sont les tâches que vous souhaitez effectuer ?"
-msgstr ""
+msgstr "What jobs you want to do?"
 
 #: main/models.py:147
 msgid "Quelles sont les tâches dont vous avez besoin ?"
-msgstr ""
+msgstr "What jobs you need?"
 
 #: main/models.py:153
 msgid "Vos hobbies"
-msgstr ""
+msgstr "Your hobby"
 
 #: main/models.py:154 main/templates/profile/edit_profile.html:88
 #: main/templates/verified/verified_display.html:47
 #: main/templates/verified/verified_profile.html:88
 msgid "Informations supplémentaires"
-msgstr ""
+msgstr "Additional information"
 
 #: main/models.py:181 main/templates/profile/emergency_details.html:14
 #: main/templates/profile/user_profile.html:106
@@ -954,10 +969,11 @@ msgid ""
 "Votre numéro de téléphone doit être au format '+999999999'. Jusqu'à 15 "
 "chiffres."
 msgstr ""
+"Your phone number must be in format '+99999999'. Up to 15 digits."
 
 #: main/models.py:186
 msgid "Numéro de téléphone (fixe)"
-msgstr ""
+msgstr "Phone number (home)"
 
 #: main/models.py:187
 #, fuzzy
@@ -971,11 +987,11 @@ msgstr "Spoken languages"
 
 #: main/models.py:206
 msgid "Ordre de priorité"
-msgstr ""
+msgstr "Priority"
 
 #: main/models.py:243 main/models.py:348
 msgid "Adresse email"
-msgstr ""
+msgstr "Email address"
 
 #: main/models.py:247 main/templates/profile/login.html:27
 #: templates/base.html:215
@@ -987,12 +1003,14 @@ msgid ""
 "Entrez un nom d'utilisateur valide.             30 caractères ou moins. Peut"
 " contenir des lettres, nombres et les caractères @/./+/-/_ "
 msgstr ""
+"Enter a valid username. No more than 30 characters. There may be numbers and"
+"characters  @/./+/-/_"
 
 #: main/models.py:261 main/templates/profile/user_profile.html:108
 #: main/templates/registration/registration_form.html:61
 #: main/templates/verified/verified_display.html:23
 msgid "Type de compte"
-msgstr ""
+msgstr "Account type"
 
 #: main/models.py:262
 msgid ""
@@ -1002,6 +1020,8 @@ msgid ""
 "                                         patient. Veuillez choisir celui qui"
 " vous correspond"
 msgstr ""
+"A member can help or be helped while a non-member is a professional who "
+"registers to access patient data. Please choose the one that suits you"
 
 #: main/models.py:266
 #, fuzzy
@@ -1011,11 +1031,11 @@ msgstr "How did you hear about care4care ?"
 
 #: main/models.py:268
 msgid "Crédit restant"
-msgstr ""
+msgstr "Remaining credit"
 
 #: main/models.py:275 main/templates/profile/user_profile.html:121
 msgid "Organization"
-msgstr ""
+msgstr "Organization"
 
 #: main/models.py:276
 #, fuzzy
@@ -1025,35 +1045,35 @@ msgstr "Sign up"
 
 #: main/models.py:315 main/models.py:317
 msgid ", "
-msgstr ""
+msgstr ","
 
 #: main/models.py:327
 msgid "superuser"
-msgstr ""
+msgstr "superuser"
 
 #: main/models.py:335
 msgid "Inconnu"
-msgstr ""
+msgstr "Unknow"
 
 #: main/models.py:349
 msgid "Votre relation par rapport à cette personne"
-msgstr ""
+msgstr "Your relationship with that person"
 
 #: main/models.py:350
 msgid "Commentaire supplémentaire"
-msgstr ""
+msgstr "Additional comments"
 
 #: main/models.py:358
 msgid "Lettre de recommendation n°1"
-msgstr ""
+msgstr "Letter of recommendation n°1"
 
 #: main/models.py:359
 msgid "Lettre de recommendation n°2"
-msgstr ""
+msgstr "Letter de recommendation n°2"
 
 #: main/models.py:360
 msgid "Casier judiciaire"
-msgstr ""
+msgstr "Criminal record"
 
 #: main/templates/main/home.html:5
 #: main/templates/seek_similar_jobs/main.html:5 templates/base.html:283
@@ -1062,45 +1082,51 @@ msgstr "Home"
 
 #: main/templates/main/home.html:24
 msgid "Dans quelle branche souhaitez-vous demander de l'aide ?"
-msgstr ""
+msgstr "Which branch would you like to ask for help?"
 
 #: main/templates/main/home.html:34
 msgid ""
 " Vous devez être connecté afin de pouvoir demander de l'aide. <br />\n"
 "        Pas encore inscrit ? "
 msgstr ""
+"You must be logged in to ask for help? <br />\n"
+"	Not registered?"
 
 #: main/templates/main/home.html:35 main/templates/main/home.html.py:63
 msgid "Inscrivez-vous"
-msgstr ""
+msgstr "Sign up"
 
 #: main/templates/main/home.html:52
 msgid "Dans quelle branche souhaitez-vous offrir votre aide ?"
-msgstr ""
+msgstr "Which branch would you like to offer help?"
 
 #: main/templates/main/home.html:62
 msgid ""
 " Vous devez être connecté afin de pouvoir offrir votre aide. <br />\n"
 "        Pas encore inscrit ? "
 msgstr ""
+"You must be logged in to offer help? <br />\n"
+"	Not registered?"
 
 #: main/templates/messages/archives.html:3
 msgid "Archived Messages"
-msgstr ""
+msgstr "Archived Messages"
 
 #: main/templates/messages/archives.html:7
 msgid ""
 "Messages in this folder will never be removed. You can use this folder for "
 "long term storage."
 msgstr ""
+"Messages in this folder will never be removed. You can use this folder for "
+"long term storage."
 
 #: main/templates/messages/base.html:6
 msgid "Messaging"
-msgstr ""
+msgstr "Messaging"
 
 #: main/templates/messages/base_write.html:22
 msgid "Send"
-msgstr ""
+msgstr "Send"
 
 #: main/templates/messages/base_write.html:26
 #, fuzzy
