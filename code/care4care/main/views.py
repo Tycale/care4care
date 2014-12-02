@@ -586,10 +586,14 @@ def credits_view(request):
     jobs = Demand.objects.filter(closed=True,donor=user).all()
     num_jobs = len(jobs)
     average_time_job = 0
+    km = 0
     for job in jobs :
         average_time_job += job.real_time
+        km += job.km
     if num_jobs != 0:
         average_time_job = average_time_job/num_jobs
+
+
 
 
     return render(request,'credits/menu.html', locals())
