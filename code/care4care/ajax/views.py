@@ -99,9 +99,6 @@ class Statistics:
 
     @staticmethod
     def get_users_registrated_json():
-        if branch_id:
-            users = BranchMembers.objects.filter(branch__id=branch_id).values_list('user', flat=True)
-            print(users)
         response = {}
 
         N_MONTHS = 7
@@ -231,7 +228,7 @@ class Statistics:
         data_list = [0 for i in range(0, len(JobCategory.JOB_CATEGORIES))]
         for d in nb_demands:
             for (i, job_cat) in enumerate(JobCategory.JOB_CATEGORIES):
-                if d['category'] == str(job_cat[0]):
+                if d['category'] == job_cat[0] and d['help_time'] is not None:
                     data_list[i] += d['help_time']
 
         first_dataset['data'] = data_list
@@ -300,7 +297,8 @@ class Statistics:
         # the key is the month number
         for job in jobs_amount:
             key = int(job['month'][5:7])
-            data_list[key - baseIndex] = job['created_count']
+            if job['created_count'] is not None:
+                data_list[key - baseIndex] = job['created_count']
 
         datasets = []
         first_dataset = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
@@ -329,8 +327,6 @@ class Statistics:
         # set the last day of that month
         n_months_ago = Statistics.get_last_day_of_month(n_months_ago)
         user = User.objects.get(pk=user_id)
-        print(n_months_ago)
-        print(this_month)
         jobs_amount = Demand.objects.filter(donor=user, date__gte=n_months_ago, date__lte=this_month).extra({'month': truncate_date}).values('month').annotate(km_amount=Sum('km'))
         data_list = [0 for i in range(0, N_MONTHS)]
         baseIndex = n_months_ago.month
@@ -343,7 +339,6 @@ class Statistics:
             if km_amount is not None:
                 data_list[key - baseIndex] = km_amount
 
-        print(data_list)
         datasets = []
         first_dataset = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
         #first_dataset['label'] = __('Membres')  # Non-necessary field
@@ -359,7 +354,7 @@ class Statistics:
     # Branch statistics
 
     @staticmethod
-    def get_job_categories_json_branch(branch_id):
+    def get_branch_job_categories_json(branch_id):
         response = {}
         response['labels'] = Statistics.get_job_labels()
         datasets = []
@@ -378,7 +373,7 @@ class Statistics:
 
 
     @staticmethod
-    def get_users_registrated_json_branch(branch_id):
+    def get_branch_users_registrated_json(branch_id):
         users_id = BranchMembers.objects.filter(branch__id=branch_id).values_list('user', flat=True)
         users = User.objects.filter(id__in=users_id)
         response = {}
