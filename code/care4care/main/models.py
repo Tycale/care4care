@@ -321,9 +321,9 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
             count2 = credit // minuts2
             if count2 != 0:
                 if count2 > 2:
-                    result += _(', ') + (name2[1] % count2)
+                    result += ', ' + (name2[1] % count2)
                 else:
-                    result += _(', ') + (name2[0] % count2)
+                    result += ', ' + (name2[0] % count2)
             credit -= count2 * minuts2
             i += 1
         return result

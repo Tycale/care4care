@@ -78,12 +78,13 @@ def user_profile(request, user_id):
     """ Get profile from a user"""
     user_to_display = get_object_or_404(User, pk=user_id)
     user = request.user
-    is_my_friend = False
-    is_in_my_network = False
-    if user_to_display in user.favorites.all():
-        is_my_friend = True
-    if user_to_display in user.personal_network.all():
-        is_in_my_network = True
+    if user.is_authenticated():
+        is_my_friend = False
+        is_in_my_network = False
+        if user_to_display in user.favorites.all():
+            is_my_friend = True
+        if user_to_display in user.personal_network.all():
+            is_in_my_network = True
 
     return render(request, 'profile/user_profile.html', locals())
 
