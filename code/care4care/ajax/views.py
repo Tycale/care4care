@@ -178,8 +178,8 @@ class Statistics:
         #first_dataset['label'] = __('Jobs effectués par catégorie')  # Non-necessary field
         #first_dataset['data'] = [40, 30, 60, 70, 25, 47, 39, 69, 34, 23, 31, 69]
         values = []
-        for l in JobCategory.JOB_CATEGORIES:
-            values.append(Demand.objects.filter(category__in=str(l[0])).count())
+        for job in JobCategory.JOB_CATEGORIES:
+            values.append(Demand.objects.filter(category__in=str(job[0])).count())
         first_dataset['data'] = values
 
         datasets.append(first_dataset)
@@ -201,12 +201,14 @@ class Statistics:
         # get user
         user = User.objects.get(pk=user_id);
         # group by django
-        nb_demands = Demand.objects.filter(donor=user).values('category').annotate(number=Count('category'));
+        nb_demands = Demand.objects.filter(donor=user).values('category').annotate(number=Count('category'))
         # construct data list
         data_list = [0 for i in range(0, len(JobCategory.JOB_CATEGORIES))]
+        print('before demands')
         for d in nb_demands:
-            index = int(d["category"])
-            data_list[index-1] = d["number"]
+            for (i, job_cat) in enumerate(JobCategory.JOB_CATEGORIES):
+                if d['category'] == str(job_cat[0]):
+                    data_list[i] += 1
 
         first_dataset['data'] = data_list
         datasets.append(first_dataset)
@@ -223,14 +225,13 @@ class Statistics:
 
         user = User.objects.get(pk=user_id)
         #group by django
-        nb_demands = Demand.objects.filter(donor=user).values('category').annotate(average_rating=Avg('estimated_time'));
+        nb_demands = Demand.objects.filter(donor=user).values('category').annotate(help_time=Avg('estimated_time'));
         #construct data list
-        data_list = []
-        for cat in JobCategory.JOB_CATEGORIES:
-            data_list.append(0)
+        data_list = [0 for i in range(0, len(JobCategory.JOB_CATEGORIES))]
         for d in nb_demands:
-            index = int(d["category"])
-            data_list[index-1] = d["average_rating"]
+            for (i, job_cat) in enumerate(JobCategory.JOB_CATEGORIES):
+                if d['category'] == str(job_cat[0]):
+                    data_list[i] += d['help_time']
 
         first_dataset['data'] = data_list
         datasets.append(first_dataset)
