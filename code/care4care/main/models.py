@@ -101,9 +101,8 @@ class JobCategory:
     GARDENING_JOBS = 7
     PETS_CARE = 8
     PERSONAL_CARE = 9
-    ADMINISTRATION = 10
-    OTHER = 11
-    SPECIAL = 12
+    ADMINISTRATION = 'a'
+    OTHER = 'b'
 
     JOB_CATEGORIES = ((
         (VISIT_AT_HOME, _("Visite à la maison")),
@@ -117,7 +116,6 @@ class JobCategory:
         (PERSONAL_CARE, _("Soins personnels")),
         (ADMINISTRATION, _("Administratif")),
         (OTHER, _("Autre")),
-        (SPECIAL, _("Spécial ... :D")),
         ))
 
 BOOL_CHOICES = ((True, _('Oui')), (False, _('Non')))

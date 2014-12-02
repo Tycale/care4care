@@ -485,7 +485,7 @@ class CreateVolunteerView(CreateView):
         body += '\n' + 'http://' + self.request.META['HTTP_HOST'] + demand.get_absolute_url()
 
         pm_write(volunteer, demand.receiver, subject, body)
-
+        
         return demand.get_absolute_url()
 
 class ForceCreateVolunteerView(CreateVolunteerView):

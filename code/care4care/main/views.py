@@ -43,6 +43,11 @@ def home(request):
         demands = Demand.objects.all()
         offers = Offer.objects.all()
 
+    date_now = timezone.now() + timezone.timedelta(hours=-24)
+
+    demands = demands.filter(date__gte=date_now)
+    offers = offers.filter(date__gte=date_now)
+
     nb_branch = Branch.objects.all().count()
     branches = Branch.objects.all()
     nb_users = User.objects.all().count()
