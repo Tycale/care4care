@@ -329,8 +329,6 @@ class Statistics:
         # set the last day of that month
         n_months_ago = Statistics.get_last_day_of_month(n_months_ago)
         user = User.objects.get(pk=user_id)
-        print(n_months_ago)
-        print(this_month)
         jobs_amount = Demand.objects.filter(donor=user, date__gte=n_months_ago, date__lte=this_month).extra({'month': truncate_date}).values('month').annotate(km_amount=Sum('km'))
         data_list = [0 for i in range(0, N_MONTHS)]
         baseIndex = n_months_ago.month
@@ -343,7 +341,6 @@ class Statistics:
             if km_amount is not None:
                 data_list[key - baseIndex] = km_amount
 
-        print(data_list)
         datasets = []
         first_dataset = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
         #first_dataset['label'] = __('Membres')  # Non-necessary field
@@ -359,7 +356,7 @@ class Statistics:
     # Branch statistics
 
     @staticmethod
-    def get_job_categories_json_branch(branch_id):
+    def get_branch_job_categories_json(branch_id):
         response = {}
         response['labels'] = Statistics.get_job_labels()
         datasets = []
@@ -378,7 +375,7 @@ class Statistics:
 
 
     @staticmethod
-    def get_users_registrated_json_branch(branch_id):
+    def get_branch_users_registrated_json(branch_id):
         users_id = BranchMembers.objects.filter(branch__id=branch_id).values_list('user', flat=True)
         users = User.objects.filter(id__in=users_id)
         response = {}
