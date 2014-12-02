@@ -1,6 +1,6 @@
 from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext as __
-from branch.models import Demand, Job
+from branch.models import Demand, Job, BranchMembers
 from main.models import *
 from django.utils import timezone
 from django.db.models import Count, Avg, Sum
@@ -99,6 +99,9 @@ class Statistics:
 
     @staticmethod
     def get_users_registrated_json():
+        if branch_id:
+            users = BranchMembers.objects.filter(branch__id=branch_id).values_list('user', flat=True)
+            print(users)
         response = {}
 
         N_MONTHS = 7
@@ -349,5 +352,52 @@ class Statistics:
         datasets.append(first_dataset)
 
         response['datasets'] = datasets
+        return json.dumps(response)
+
+
+
+    # Branch statistics
+
+    @staticmethod
+    def get_job_categories_json_branch(branch_id):
+        response = {}
+        response['labels'] = Statistics.get_job_labels()
+        datasets = []
+        first_dataset = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
+        #first_dataset['label'] = __('Jobs effectués par catégorie')  # Non-necessary field
+        #first_dataset['data'] = [40, 30, 60, 70, 25, 47, 39, 69, 34, 23, 31, 69]
+        values = []
+        for job in JobCategory.JOB_CATEGORIES:
+            values.append(Demand.objects.filter(category__in=str(job[0]),branch__id=branch_id).count())
+        first_dataset['data'] = values
+
+        datasets.append(first_dataset)
+
+        response['datasets'] = datasets
+        return json.dumps(response)
+
+
+    @staticmethod
+    def get_users_registrated_json_branch(branch_id):
+        users_id = BranchMembers.objects.filter(branch__id=branch_id).values_list('user', flat=True)
+        users = User.objects.filter(id__in=users_id)
+        response = {}
+
+        N_MONTHS = 7
+
+        response['labels'] = Statistics.get_last_n_months(N_MONTHS)
+        line_data = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
+        #line_data['data'] = [10, 15, 22, 33, 48, 69, 99]
+        values = []
+        now = timezone.now()
+        for i in range(-N_MONTHS+1, 1):
+            i_weeks_ago = now + timezone.timedelta(weeks=4*i)
+            i_months_ago = Statistics.get_last_day_of_month(i_weeks_ago)
+            #print(-i, 'months_ago =>', i_months_ago)   # The Mayas watcher
+            users_im = users.filter(date_joined__lte=i_months_ago).count()
+            values.append(users_im)
+        line_data['data'] = values
+
+        response['datasets'] = [line_data]
         return json.dumps(response)
 

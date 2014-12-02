@@ -20,6 +20,7 @@ from branch.models import Branch, BranchMembers, TIME_CHOICES
 from postman.api import pm_write
 from django.db.models import Q
 from django.views.generic.detail import DetailView
+from django.core import serializers
 
 
 from ajax.views import *
@@ -448,11 +449,23 @@ def get_json_from(method):
 
 PERMISSION_DENIED = "Permission denied. This event will be reported."
 
+
+@login_required
+def get_job_categories_json_branch(request,branch_id):
+    if not request.user.is_superuser:
+        return HttpResponse(PERMISSION_DENIED, status=401)
+    return get_json_from(Statistics.get_job_categories_json_branch(branch_id))
+
+@login_required
+def get_registrated_users_json_branch(request,branch_id):
+    if not request.user.is_superuser:
+        return HttpResponse(PERMISSION_DENIED, status=401)
+    return get_json_from(Statistics.get_users_registrated_json_branch(branch_id))
+
 @login_required
 def get_registrated_users_json(request):
     if not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
-
     return get_json_from(Statistics.get_users_registrated_json())
 
 
