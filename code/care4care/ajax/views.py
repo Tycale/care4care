@@ -84,6 +84,14 @@ class Statistics:
         return MONTHS[n]['days']
 
     @staticmethod
+    def get_last_day_of_month(n, now):
+        n_months_ago = now + timezone.timedelta(weeks=4*n)
+        n_month_num  = n_months_ago.month
+        days_of_month_n = Statistics.get_days_in_month(n_month_num)
+        n_months_ago = n_months_ago.replace(day=days_of_month_n, hour=23, minute=59, second=59, microsecond=0)
+        return n_months_ago
+
+    @staticmethod
     def get_job_labels():
         return [str(l[1]) for l in JobCategory.JOB_CATEGORIES]
 
@@ -101,12 +109,9 @@ class Statistics:
         #line_data['data'] = [10, 15, 22, 33, 48, 69, 99]
         values = []
         now = timezone.now()
-        # Does not correspond to real months, rather every 4 weeks
         for i in range(-N_MONTHS+1, 1):
-            i_months_ago = now + timezone.timedelta(weeks=4*i)
-            i_month_num  = i_months_ago.month
-            days_of_month_i = Statistics.get_days_in_month(i_month_num)
-            i_months_ago = i_months_ago.replace(day=days_of_month_i, hour=23, minute=59, second=59, microsecond=0)
+            i_months_ago = Statistics.get_last_day_of_month(i, now)
+            #print(-i, 'months_ago =>', i_months_ago)   # The Mayas watcher
             users_im = User.objects.filter(date_joined__lte=i_months_ago).count()
             values.append(users_im)
         line_data['data'] = values
