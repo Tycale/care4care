@@ -99,9 +99,6 @@ class Statistics:
 
     @staticmethod
     def get_users_registrated_json():
-        if branch_id:
-            users = BranchMembers.objects.filter(branch__id=branch_id).values_list('user', flat=True)
-            print(users)
         response = {}
 
         N_MONTHS = 7
