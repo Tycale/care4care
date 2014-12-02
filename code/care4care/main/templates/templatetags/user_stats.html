@@ -58,6 +58,21 @@
     </div>
   </div>
 
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="panel panel-default">
+          <div class="panel-body">
+            <h4>
+              <i class="fa fa-angle-right"></i>
+              {% trans "Kilomètres parcourus au cours des 6 derniers mois" %}
+            </h4>
+          <canvas id="user_km_amount" width="475" height="200"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 <script type="application/javascript">
 var get_json_url = function(json_url, user_id) {
@@ -67,11 +82,13 @@ var user_job_stats_url = get_json_url("user_job_categories_json", {{ user_id }})
 var user_job_avg_time_url = get_json_url("user_job_avg_time_json",{{ user_id }});
 var user_jobs_amount_url = get_json_url("user_jobs_amount_json", {{ user_id }});
 var user_time_amount_url = get_json_url("user_time_amount_json", {{ user_id }});
+var user_km_amount_url = get_json_url("user_km_amount_json", {{ user_id }});
 
 $(document).ready(function(){
   create_chart(user_job_stats_url, "user_job_categories", "Radar");
   create_chart(user_job_avg_time_url, "user_job_avg_time", "Radar");
-  create_chart(user_jobs_amount_url, "user_jobs_amount", "Bar")
-  create_chart(user_time_amount_url, "user_time_amount", "Bar")
+  create_chart(user_jobs_amount_url, "user_jobs_amount", "Bar");
+  create_chart(user_time_amount_url, "user_time_amount", "Bar");
+  create_chart(user_km_amount_url, "user_km_amount", "Bar");
 });
 </script>
