@@ -10,18 +10,18 @@ from django.db import connection
 
 
 MONTHS = {
-    1:  {'num': 1, 'name': __("Janvier"),   'days': 31},
-    2:  {'num': 2, 'name': __("Février"),   'days': 28},
-    3:  {'num': 2, 'name': __("Mars"),      'days': 31},
-    4:  {'num': 2, 'name': __("Avril"),     'days': 30},
-    5:  {'num': 2, 'name': __("Mai"),       'days': 31},
-    6:  {'num': 2, 'name': __("Juin"),      'days': 30},
-    7:  {'num': 2, 'name': __("Juillet"),   'days': 31},
-    8:  {'num': 2, 'name': __("Août"),      'days': 31},
-    9:  {'num': 2, 'name': __("Septembre"), 'days': 30},
-    10: {'num': 2, 'name': __("Octobre"),   'days': 31},
-    11: {'num': 2, 'name': __("Novembre"),  'days': 30},
-    12: {'num': 2, 'name': __("Décembre"),  'days': 31}
+    1:  {'name': __("Janvier"),   'days': 31},
+    2:  {'name': __("Février"),   'days': 28},
+    3:  {'name': __("Mars"),      'days': 31},
+    4:  {'name': __("Avril"),     'days': 30},
+    5:  {'name': __("Mai"),       'days': 31},
+    6:  {'name': __("Juin"),      'days': 30},
+    7:  {'name': __("Juillet"),   'days': 31},
+    8:  {'name': __("Août"),      'days': 31},
+    9:  {'name': __("Septembre"), 'days': 30},
+    10: {'name': __("Octobre"),   'days': 31},
+    11: {'name': __("Novembre"),  'days': 30},
+    12: {'name': __("Décembre"),  'days': 31}
 }
 
 
@@ -84,6 +84,13 @@ class Statistics:
         return MONTHS[n]['days']
 
     @staticmethod
+    def get_last_day_of_month(month_date):
+        n = month_date.month
+        days_of_month_n = Statistics.get_days_in_month(n)
+        n_months_ago = month_date.replace(day=days_of_month_n, hour=23, minute=59, second=59, microsecond=0)
+        return n_months_ago
+
+    @staticmethod
     def get_job_labels():
         return [str(l[1]) for l in JobCategory.JOB_CATEGORIES]
 
@@ -101,12 +108,10 @@ class Statistics:
         #line_data['data'] = [10, 15, 22, 33, 48, 69, 99]
         values = []
         now = timezone.now()
-        # Does not correspond to real months, rather every 4 weeks
         for i in range(-N_MONTHS+1, 1):
-            i_months_ago = now + timezone.timedelta(weeks=4*i)
-            i_month_num  = i_months_ago.month
-            days_of_month_i = Statistics.get_days_in_month(i_month_num)
-            i_months_ago = i_months_ago.replace(day=days_of_month_i, hour=23, minute=59, second=59, microsecond=0)
+            i_weeks_ago = now + timezone.timedelta(weeks=4*i)
+            i_months_ago = Statistics.get_last_day_of_month(i_weeks_ago)
+            #print(-i, 'months_ago =>', i_months_ago)   # The Mayas watcher
             users_im = User.objects.filter(date_joined__lte=i_months_ago).count()
             values.append(users_im)
         line_data['data'] = values
