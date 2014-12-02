@@ -325,6 +325,10 @@
                       </ul>
                     {% endif %}
 
+                    <ul class="sub">
+                    <li><span><a href="{% url 'credits' %}"> {% trans "Mes crédits" %}</a></span></li>
+                    </ul>
+
                     {% if request.user.is_superuser %}
                     <ul class="sub">
                     <li><span><a href="/admin/">  {% trans "Administration" %}</a></span></li>

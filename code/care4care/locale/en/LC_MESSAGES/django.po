@@ -1922,6 +1922,7 @@ msgid "Users statistics"
 msgstr "Users statistics"
 
 #: main/templates/templatetags/favorites.html:32
+<<<<<<< HEAD
 #, fuzzy
 #| msgid "Aucune offre"
 msgid "Aucun favori"
@@ -1932,6 +1933,14 @@ msgstr "No offer"
 #| msgid "Utilisateurs ignorés"
 msgid "Aucun utilisateur ignoré"
 msgstr "Ignored users"
+=======
+msgid "Aucun favori"
+msgstr "No favorite"
+
+#: main/templates/templatetags/ignored_list.html:32
+msgid "Aucun utilisateur ignoré"
+msgstr "No ignored users"
+>>>>>>> 438ab3b1123abab79f87b0b1720caeddba94023b
 
 #: main/templates/templatetags/personal_network.html:6
 msgid "Mon réseau"
@@ -1939,6 +1948,7 @@ msgstr "My network"
 
 #: main/templates/templatetags/personal_network.html:32
 msgid "Aucun utilisateur dans votre réseau"
+<<<<<<< HEAD
 msgstr ""
 
 #: main/templates/templatetags/user_stats.html:26
@@ -1946,6 +1956,13 @@ msgstr ""
 #| msgid "Temps moyen par job"
 msgid "Temps moyen par job (en minutes)"
 msgstr "Average time per job"
+=======
+msgstr "No users on your network"
+
+#: main/templates/templatetags/user_stats.html:26
+msgid "Temps moyen par job (en minutes)"
+msgstr "Average time per job (in minutes)"
+>>>>>>> 438ab3b1123abab79f87b0b1720caeddba94023b
 
 #: main/templates/templatetags/user_stats.html:41
 msgid "Jobs effectués les 6 derniers mois"
@@ -1953,7 +1970,11 @@ msgstr "Jobs made the last 6 months"
 
 #: main/templates/templatetags/user_stats.html:53
 msgid "Temps consacré à l'entraide les 6 derniers mois (en minutes)"
+<<<<<<< HEAD
 msgstr ""
+=======
+msgstr "Time devoted to help the last 6 months (in minutes)"
+>>>>>>> 438ab3b1123abab79f87b0b1720caeddba94023b
 
 #: main/templates/verified/verified_display.html:5
 #: main/templates/verified/verified_display.html:9
@@ -1961,8 +1982,11 @@ msgid "Demande de vérification"
 msgstr "Verification request"
 
 #: main/templates/verified/verified_display.html:24
+<<<<<<< HEAD
 #, fuzzy
 #| msgid "Status"
+=======
+>>>>>>> 438ab3b1123abab79f87b0b1720caeddba94023b
 msgid "Statut"
 msgstr "Status"
 
@@ -2011,8 +2035,11 @@ msgid "Fixer un rendez vous"
 msgstr "Fix an appointment"
 
 #: main/templates/verified/verified_display.html:59
+<<<<<<< HEAD
 #, fuzzy
 #| msgid "Accorder le status de membre vérifié"
+=======
+>>>>>>> 438ab3b1123abab79f87b0b1720caeddba94023b
 msgid "Accorder le statut de membre vérifié"
 msgstr "Grant the status 'verified member'"
 
