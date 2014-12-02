@@ -9,17 +9,18 @@ from django.contrib.sites.models import Site
 from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
 from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm, VerifiedProfileForm, JobSearchForm
-from main.models import User, VerifiedInformation, EmergencyContact
+from main.models import User, VerifiedInformation, EmergencyContact, JobCategory, JobType, MemberType
 from branch.models import Demand, Offer
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from django.views.generic.edit import CreateView
-from branch.models import Branch, BranchMembers
+from branch.models import Branch, BranchMembers, TIME_CHOICES
 from postman.api import pm_write
 from django.db.models import Q
 from django.views.generic.detail import DetailView
+
 
 from ajax.views import *
 import sys
@@ -506,10 +507,61 @@ def search_view(request):
 @login_required
 def job_search_view(request):
     form = JobSearchForm()
+    if request.method == 'POST':
+        form = JobSearchForm(request.POST)
+        if form.is_valid():
+            
+
+            if not form.cleaned_data['date1']:
+                date1 = datetime.datetime.now()
+            else:
+                date1 = form.cleaned_data['date1']
+
+            if not form.cleaned_data['date2']:
+                date2 = datetime.datetime.max
+            else:
+                date2 = form.cleaned_data['date2']
+
+            if not form.cleaned_data['category']:
+                category = [str(l[0]) for l in JobCategory.JOB_CATEGORIES]
+                print(category)
+            else:
+                category = form.cleaned_data['category']
+
+            if not form.cleaned_data['job_type']:
+                job_type = [str(l[0]) for l in JobType.JOB_TYPES]
+            else:
+                job_type = form.cleaned_data['job_type']
+
+            if not form.cleaned_data['receive_help_from_who']:
+                receive_help_from_who = [str(l[0]) for l in MemberType.MEMBER_TYPES_GROUP]
+            else:
+                receive_help_from_who = form.cleaned_data['receive_help_from_who']
+
+            if not form.cleaned_data['time']:
+                time = [str(l[0]) for l in TIME_CHOICES]
+            else:
+                time = form.cleaned_data['time']
+
+            request_time = Q(time__contains=time[0])
+            for l in time[1:] :
+                request_time |= Q(time__contains=l)
+
+            request_category = Q(category__contains=category[0])
+            for l in category[1:] :
+                request_category |= Q(category__contains=l)
+
+            if str(JobType.OFFRE) in job_type:
+                print("test")
+                offers = Offer.objects.filter(Q(date__gte=date1) &  Q(date__lte=date2) & Q(receive_help_from_who__in = receive_help_from_who) & request_time & request_category & Q(closed=False)).all()
+
+            if str(JobType.DEMAND) in job_type:
+                print(job_type)
+                demands = Demand.objects.filter(Q(date__gte=date1) &  Q(date__lte=date2) & Q(receive_help_from_who__in = receive_help_from_who) & request_time & request_category & Q(closed=False)).all()
+
+            
+            return render(request, 'search/job_result.html',locals())
+
     return render(request,'search/job.html', locals())
 
-def job_result_view(request):
-    user = request.user
-    demands = Demand.objects.all()
-    offers = Offer.objects.all()
-    return render(request, 'search/job_result.html',locals())
+    

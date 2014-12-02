@@ -1,5 +1,6 @@
 from django import forms
 from django.utils.translation import ugettext as _
+from django.utils import timezone
 from main.models import User, VerifiedInformation, EmergencyContact, JobType, MemberType
 from branch.models import Job, Branch, JobCategory, TIME_CHOICES
 from multiselectfield import MultiSelectField
@@ -184,13 +185,23 @@ class EmergencyContactCreateForm(forms.ModelForm):
 class JobSearchForm(forms.Form):
     job_type =  forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=JobType.JOB_TYPES, label = _("Type de job"))
     category = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=JobCategory.JOB_CATEGORIES, label = _("Catégorie du job"))
-    date1 = forms.DateTimeField(label = _("A partir du"),widget=DateTimePicker(options={"pickTime": False,}))
-    date2 = forms.DateTimeField(label = _("jusqu'au"),widget=DateTimePicker(options={"pickTime": False,}))
+    date1 = forms.DateTimeField(required=False, label = _("A partir du"),widget=DateTimePicker(options={"pickTime": False,}))
+    date2 = forms.DateTimeField(required=False, label = _("jusqu'au"),widget=DateTimePicker(options={"pickTime": False,}))
     receive_help_from_who = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=MemberType.MEMBER_TYPES_GROUP, label = _("Catégorie du job"))
     time = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=TIME_CHOICES, label = _("A quelle heure ?"))
 
     def clean(self):
         cleaned_data = super(JobSearchForm, self).clean()
-        if 'date2' < 'date1' or self.cleaned_data['date2'] < self.cleaned_data['date1']:
-            raise forms.ValidationError(_("Incohérence dans les dates."))
+
+        if self.cleaned_data['date1']:
+            if self.cleaned_data['date1']<timezone.now()-timezone.timedelta(hours=24):
+                raise forms.ValidationError(_("Incohérence dans les dates."))
+            if self.cleaned_data['date2'] and self.cleaned_data['date2'] < self.cleaned_data['date1']:
+                raise forms.ValidationError(_("Incohérence dans les dates."))
+        elif self.cleaned_data['date2']:
+            if self.cleaned_data['date2']<timezone.now()-timezone.timedelta(hours=24):
+                raise forms.ValidationError(_("Incohérence dans les dates."))
+
+
+        
  

@@ -13,9 +13,12 @@
            
             <h1> {% trans "Résultats de la recherche" %}
             </h1>
-            
+            {% if demands %}
             {% show_demands request demands show_branch=False %}
+            {% endif %}
+            {% if offers %}
             {% show_offers request offers show_branch=False %} 
+            {% endif %}
 
         </div>
 
