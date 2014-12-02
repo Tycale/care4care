@@ -1,5 +1,12 @@
 .inlineProfile .checkbox{
   display: inline-block;
   margin: 5px;
-  
+}
+
+.red_icon{
+  color: #A62A2A;
+}
+
+.red_icon:hover{
+  color: #CD2626;
 }
