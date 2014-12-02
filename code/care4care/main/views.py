@@ -31,7 +31,8 @@ import datetime
 from django.utils import timezone
 from django.views.generic.edit import UpdateView
 from django.contrib.messages.views import SuccessMessageMixin
-from main.utils import can_manage, is_branch_admin, refuse, can_manage_branch_specific, is_in_branch
+from main.utils import can_manage, is_branch_admin, refuse, can_manage_branch_specific, is_in_branch, \
+                        discriminate_demands, discriminate_offers
 
 def home(request):
     user = request.user
@@ -48,6 +49,10 @@ def home(request):
 
     demands = demands.up_to_date()
     offers = offers.up_to_date()
+
+    if user.is_authenticated:
+        demands = discriminate_demands(request, demands)
+        offers = discriminate_offers(request, offers)
 
     nb_branch = Branch.objects.all().count()
     branches = Branch.objects.all()

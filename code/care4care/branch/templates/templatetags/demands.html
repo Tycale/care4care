@@ -1,12 +1,11 @@
 {% load i18n thumbnail humanize %}
-
 <div class="col-md-6">
 <div class="panel panel-default">
   <div class="panel-heading">
     {% trans "Demandes" %}
   </div>
   <div class="panel-body">
-      <table id="demands" data-toggle="table" data-height="250" class="striped table rowlink">
+      <table id="demands" data-toggle="table" data-height="260" class="rowlink table striped table-hover">
         <thead >
           <tr>
             <th>{% trans "Membre" %}</th>
@@ -19,7 +18,7 @@
             <th>{% trans "Heure" %}</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody data-link="row" data-target="a.mainlink">
         {% for demand in demands %}
         <tr>
           <td><a data-toggle="tooltip" data-placement="right" title="{{demand.receiver.get_full_name}}" href="{{ demand.receiver.get_absolute_url }}"><img class="img-circle" src="{% thumbnail demand.receiver.photo 50x50 crop %}" alt="{{demand.receiver.get_full_name}}" /></a></td>
