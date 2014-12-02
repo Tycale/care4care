@@ -267,6 +267,8 @@ def volunteer_accept(request, volunteer_id):
 
         demand.closed = True
         demand.km = demandProposition.km
+        if not demand.km:
+            demand.km = 0
         demand.donor = demandProposition.user
         demand.save()
 

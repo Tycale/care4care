@@ -584,10 +584,10 @@ def job_search_view(request):
 def credits_view(request):
     user = request.user
     #TODO : Rajouter le champ finish = true dans job et offer et finish = false dans les autres.
-    jobs = Demand.objects.filter(closed=True,donor=user).all()
-    offer = Demand.objects.filter(closed=True,receiver=user).all()
-    jobs_pending = Demand.objects.filter(closed=True,donor=user).all()
-    offer_pending = Demand.objects.filter(closed=True,receiver=user).all()
+    jobs = Demand.objects.filter(closed=True,donor=user).all() # tâches que j'ai faîtes
+    offer = Demand.objects.filter(closed=True,receiver=user).all() # tâches que j'ai reçue
+    jobs_pending = Demand.objects.filter(closed=True,donor=user).all() # tâches que je vais faire
+    offer_pending = Demand.objects.filter(closed=True,receiver=user).all() # tâches que je vais recevoir
     num_jobs = len(jobs)
     average_time_job = 0
     km = 0
