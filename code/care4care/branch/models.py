@@ -113,6 +113,8 @@ class Job(models.Model):
             return ''
         return ', '.join([str(SHORT_TIME[l[0]-1]) for l in TIME_CHOICES if (str(l[0]) in self.time)])
 
+
+
     class Meta:
         abstract = True
 
@@ -126,7 +128,8 @@ class Demand(Job):
     comments = GenericRelation(Comment)
     volunteers = models.ManyToManyField(User, null=True, blank=True, through='DemandProposition', related_name="volunteers", verbose_name=_("Propositions"))
     closed = models.BooleanField(verbose_name=_("Vontaire assigné"), default=False)
-
+    km = models.IntegerField(verbose_name=_("Distance depuis domicile"), blank=True, null=True)
+    
     @models.permalink
     def get_absolute_url(self):
         return ('see_demand', (), {'branch_id': self.branch.id, 'slug': self.branch.slug, 'demand_id': self.id})
