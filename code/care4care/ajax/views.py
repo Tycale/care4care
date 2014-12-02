@@ -10,18 +10,18 @@ from django.db import connection
 
 
 MONTHS = {
-    1:  {'num': 1,  'name': __("Janvier"),   'days': 31},
-    2:  {'num': 2,  'name': __("Février"),   'days': 28},
-    3:  {'num': 3,  'name': __("Mars"),      'days': 31},
-    4:  {'num': 4,  'name': __("Avril"),     'days': 30},
-    5:  {'num': 5,  'name': __("Mai"),       'days': 31},
-    6:  {'num': 6,  'name': __("Juin"),      'days': 30},
-    7:  {'num': 7,  'name': __("Juillet"),   'days': 31},
-    8:  {'num': 8,  'name': __("Août"),      'days': 31},
-    9:  {'num': 9,  'name': __("Septembre"), 'days': 30},
-    10: {'num': 10, 'name': __("Octobre"),   'days': 31},
-    11: {'num': 11, 'name': __("Novembre"),  'days': 30},
-    12: {'num': 12, 'name': __("Décembre"),  'days': 31}
+    1:  {'name': __("Janvier"),   'days': 31},
+    2:  {'name': __("Février"),   'days': 28},
+    3:  {'name': __("Mars"),      'days': 31},
+    4:  {'name': __("Avril"),     'days': 30},
+    5:  {'name': __("Mai"),       'days': 31},
+    6:  {'name': __("Juin"),      'days': 30},
+    7:  {'name': __("Juillet"),   'days': 31},
+    8:  {'name': __("Août"),      'days': 31},
+    9:  {'name': __("Septembre"), 'days': 30},
+    10: {'name': __("Octobre"),   'days': 31},
+    11: {'name': __("Novembre"),  'days': 30},
+    12: {'name': __("Décembre"),  'days': 31}
 }
 
 
@@ -86,8 +86,7 @@ class Statistics:
     @staticmethod
     def get_last_day_of_month(month_date):
         n = month_date.month
-        n_month_num  = MONTHS[n]['num']
-        days_of_month_n = Statistics.get_days_in_month(n_month_num)
+        days_of_month_n = Statistics.get_days_in_month(n)
         n_months_ago = month_date.replace(day=days_of_month_n, hour=23, minute=59, second=59, microsecond=0)
         return n_months_ago
 
