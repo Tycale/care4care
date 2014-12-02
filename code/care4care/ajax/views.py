@@ -10,18 +10,18 @@ from django.db import connection
 
 
 MONTHS = {
-    1: __("Janvier"),
-    2: __("Février"),
-    3: __("Mars"),
-    4: __("Avril"),
-    5: __("Mai"),
-    6: __("Juin"),
-    7: __("Juillet"),
-    8: __("Août"),
-    9: __("Septembre"),
-    10: __("Octobre"),
-    11: __("Novembre"),
-    12: __("Décembre")
+    1:  {'num': 1, 'name': __("Janvier"),   'days': 31},
+    2:  {'num': 2, 'name': __("Février"),   'days': 28},
+    3:  {'num': 2, 'name': __("Mars"),      'days': 31},
+    4:  {'num': 2, 'name': __("Avril"),     'days': 30},
+    5:  {'num': 2, 'name': __("Mai"),       'days': 31},
+    6:  {'num': 2, 'name': __("Juin"),      'days': 30},
+    7:  {'num': 2, 'name': __("Juillet"),   'days': 31},
+    8:  {'num': 2, 'name': __("Août"),      'days': 31},
+    9:  {'num': 2, 'name': __("Septembre"), 'days': 30},
+    10: {'num': 2, 'name': __("Octobre"),   'days': 31},
+    11: {'num': 2, 'name': __("Novembre"),  'days': 30},
+    12: {'num': 2, 'name': __("Décembre"),  'days': 31}
 }
 
 
@@ -77,7 +77,11 @@ class Statistics:
     @staticmethod
     def get_last_n_months(n):
         last_m = [datetime.date.today() + datetime.timedelta(weeks=4*(-i)) for i in range(0, n)]
-        return [MONTHS[d.month] for d in reversed(last_m)]
+        return [MONTHS[d.month]['name'] for d in reversed(last_m)]
+
+    @staticmethod
+    def get_days_in_month(n):
+        return MONTHS[n]['days']
 
     @staticmethod
     def get_job_labels():
@@ -98,8 +102,11 @@ class Statistics:
         values = []
         now = timezone.now()
         # Does not correspond to real months, rather every 4 weeks
-        for i in range(-N_MONTHS+2, 2):
+        for i in range(-N_MONTHS+1, 1):
             i_months_ago = now + timezone.timedelta(weeks=4*i)
+            i_month_num  = i_months_ago.month
+            days_of_month_i = Statistics.get_days_in_month(i_month_num)
+            i_months_ago = i_months_ago.replace(day=days_of_month_i, hour=23, minute=59, second=59, microsecond=0)
             users_im = User.objects.filter(date_joined__lte=i_months_ago).count()
             values.append(users_im)
         line_data['data'] = values
