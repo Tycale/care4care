@@ -182,7 +182,7 @@ class Statistics:
         #first_dataset['data'] = [40, 30, 60, 70, 25, 47, 39, 69, 34, 23, 31, 69]
         values = []
         for job in JobCategory.JOB_CATEGORIES:
-            values.append(Demand.objects.filter(category__in=str(job[0])).count())
+            values.append(Demand.objects.filter(category__in=job[0]).exclude(donor=None).count())
         first_dataset['data'] = values
 
         datasets.append(first_dataset)
@@ -201,7 +201,7 @@ class Statistics:
         first_dataset = Statistics.generate_line_colors(Color.GREEN_RGB)
         #first_dataset['label'] = __('Membres')  # Non-necessary field
         # get user
-        user = User.objects.get(pk=user_id);
+        user = User.objects.get(pk=user_id)
         # group by django
         nb_demands = Demand.objects.filter(donor=user).values('category').annotate(number=Count('category'))
         # construct data list
@@ -312,7 +312,52 @@ class Statistics:
         response['datasets'] = datasets
         return json.dumps(response)
 
+
+    @staticmethod
+    def get_user_km_amount_json(user_id):
+        response = {}
+
+        N_MONTHS = 6
+
+        response['labels'] = Statistics.get_last_n_months(N_MONTHS)
+
+        truncate_date = connection.ops.date_trunc_sql('month', 'date')
+        now = timezone.now()
+        this_month = Statistics.get_last_day_of_month(now)
+        # get date minus 6 months (in number of weeks actually)
+        n_months_ago = this_month - timezone.timedelta(weeks=4*N_MONTHS)
+        # set the last day of that month
+        n_months_ago = Statistics.get_last_day_of_month(n_months_ago)
+        user = User.objects.get(pk=user_id)
+        print(n_months_ago)
+        print(this_month)
+        jobs_amount = Demand.objects.filter(donor=user, date__gte=n_months_ago, date__lte=this_month).extra({'month': truncate_date}).values('month').annotate(km_amount=Sum('km'))
+        data_list = [0 for i in range(0, N_MONTHS)]
+        baseIndex = n_months_ago.month
+        # the base index is the first month and is equal to the index 0 in the data_list
+        # the key is the month number
+        for job in jobs_amount:
+            print('job', job)
+            key = int(job['month'][5:7])
+            km_amount = job['km_amount']
+            if km_amount is not None:
+                data_list[key - baseIndex] = km_amount
+
+        print(data_list)
+        datasets = []
+        first_dataset = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
+        #first_dataset['label'] = __('Membres')  # Non-necessary field
+        #first_dataset['data'] = [10, 20, 30, 42, 25, 28]
+        first_dataset['data'] = data_list
+        datasets.append(first_dataset)
+
+        response['datasets'] = datasets
+        return json.dumps(response)
+
+
+
     # Branch statistics
+
     @staticmethod
     def get_job_categories_json_branch(branch_id):
         response = {}
@@ -330,6 +375,7 @@ class Statistics:
 
         response['datasets'] = datasets
         return json.dumps(response)
+
 
     @staticmethod
     def get_users_registrated_json_branch(branch_id):
@@ -354,3 +400,4 @@ class Statistics:
 
         response['datasets'] = [line_data]
         return json.dumps(response)
+

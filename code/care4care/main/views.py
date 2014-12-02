@@ -524,6 +524,14 @@ def get_user_time_amount_json(request, user_id):
     return get_json_from(Statistics.get_user_time_amount_json(user_id))
 
 
+@login_required
+def get_user_km_amount_json(request, user_id):
+    if request.user.id != int(user_id) and not request.user.is_superuser:
+        return HttpResponse(PERMISSION_DENIED, status=401)
+
+    return get_json_from(Statistics.get_user_km_amount_json(user_id))
+
+
 ### Search ###
 @login_required
 def search_view(request):
@@ -603,7 +611,7 @@ def credits_view(request):
     offer_pending = Demand.objects.filter(closed=True,receiver=user).all() # tâches que je vais recevoir
     num_jobs = len(jobs)
     average_time_job = 0
-    km = 0
+    km = 0      # TODO: This variable is not used
     for job in jobs :
         average_time_job += job.real_time
         km += job.km

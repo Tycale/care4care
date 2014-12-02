@@ -92,15 +92,15 @@ class MemberType:
     VERBOSE_M = _("Membre")
 
 class JobCategory:
-    VISIT_AT_HOME = 1
-    ACCOMPANY_SOMEONE = 2
-    TRANSPORT_BY_CAR = 3
-    SHOPPING = 4
-    HOUSEHOULD = 5
-    HANDYMAN_JOBS = 6
-    GARDENING_JOBS = 7
-    PETS_CARE = 8
-    PERSONAL_CARE = 9
+    VISIT_AT_HOME = '1'
+    ACCOMPANY_SOMEONE = '2'
+    TRANSPORT_BY_CAR = '3'
+    SHOPPING = '4'
+    HOUSEHOULD = '5'
+    HANDYMAN_JOBS = '6'
+    GARDENING_JOBS = '7'
+    PETS_CARE = '8'
+    PERSONAL_CARE = '9'
     ADMINISTRATION = 'a'
     OTHER = 'b'
 
