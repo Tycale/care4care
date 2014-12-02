@@ -88,8 +88,8 @@ class MemberType:
         )
 
     VERBOSE_VM = _("Membre vérifié")
-    VERBOSE_VNM = _("Non-membre vérifié")
-
+    VERBOSE_NM = _("Non-membre")
+    VERBOSE_M = _("Membre")
 
 class JobCategory:
     VISIT_AT_HOME = 1
@@ -267,7 +267,7 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
     status = models.IntegerField(choices=STATUS,
                                     default=ACTIVE)
 
-    user_type = models.IntegerField(_("Type de compte"), choices=MemberType.MEMBER_TYPES,
+    user_type = models.IntegerField(_("Type de compte"), choices=MemberType.MEMBER_TYPES[:-1],
                                     default=MemberType.MEMBER, help_text=_('Un member pourra aider ou être aidé alors qu\'un \
                                         non-membre est un professionnel qui s\'inscrira pour avoir accès aux données d\'un \
                                         patient. Veuillez choisir celui qui vous correspond'))
@@ -334,13 +334,14 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
     def get_account_type(self):
         if self.is_superuser:
             return _('superuser')
-        if not self.is_verified:
-            return MemberType.MEMBER_TYPES[self.user_type-1][1]
-        else:
-            if self.user_type == MemberType.MEMBER:
-                return MemberType.VERBOSE_VM
-            if self.user_type == MemberType.NON_MEMBER:
-                return MemberType.VERBOSE_VNM
+    
+        if self.user_type == MemberType.MEMBER:
+            return MemberType.VERBOSE_M
+        if self.user_type == MemberType.NON_MEMBER:
+            return MemberType.VERBOSE_NM
+        if self.user_type == MemberType.VERIFIED_MEMBER:
+            return MemberType.VERBOSE_VM
+        
         return _('Inconnu')
 
     def __str__(self):

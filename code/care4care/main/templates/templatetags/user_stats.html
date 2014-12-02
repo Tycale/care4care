@@ -23,7 +23,7 @@
         <div class="panel-body">
           <h4>
             <i class="fa fa-angle-right"></i>
-            {% trans "Temps moyen par job" %}
+            {% trans "Temps moyen par job (en minutes)" %}
           </h4>
           <canvas id="user_job_avg_time" width="475" height="200"></canvas>
         </div>
@@ -50,9 +50,9 @@
           <div class="panel-body">
             <h4>
               <i class="fa fa-angle-right"></i>
-              {% trans "Kilomètres parcourus les 6 derniers mois" %}
+              {% trans "Temps consacré à l'entraide les 6 derniers mois (en minutes)" %}
             </h4>
-          <canvas id="user_km" width="475" height="200"></canvas>
+          <canvas id="user_time_amount" width="475" height="200"></canvas>
         </div>
       </div>
     </div>
@@ -65,13 +65,13 @@ var get_json_url = function(json_url, user_id) {
 }
 var user_job_stats_url = get_json_url("user_job_categories_json", {{ user_id }});
 var user_job_avg_time_url = get_json_url("user_job_avg_time_json",{{ user_id }});
-var user_km_url = get_json_url("user_km_json", {{ user_id }})
-var user_jobs_amount_url = get_json_url("user_jobs_amount_json", {{ user_id }})
+var user_jobs_amount_url = get_json_url("user_jobs_amount_json", {{ user_id }});
+var user_time_amount_url = get_json_url("user_time_amount_json", {{ user_id }});
 
 $(document).ready(function(){
   create_chart(user_job_stats_url, "user_job_categories", "Radar");
   create_chart(user_job_avg_time_url, "user_job_avg_time", "Radar");
-  create_chart(user_km_url, "user_km", "Bar")
   create_chart(user_jobs_amount_url, "user_jobs_amount", "Bar")
+  create_chart(user_time_amount_url, "user_time_amount", "Bar")
 });
 </script>
