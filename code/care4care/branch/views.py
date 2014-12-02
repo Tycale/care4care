@@ -71,6 +71,11 @@ def branch_home(request, branch_id, slug):
     demands = Demand.objects.filter(receiver__in=user_ids, branch=branch)
     offers = Offer.objects.filter(donor__in=user_ids, branch=branch)
 
+    date_now = timezone.now() + timezone.timedelta(hours=-24)
+
+    demands = demands.filter(date__gte=date_now)
+    offers = offers.filter(date__gte=date_now)
+
     return render(request,'branch/branch_home.html', locals())
 
 @login_required
@@ -485,7 +490,7 @@ class CreateVolunteerView(CreateView):
         body += '\n' + 'http://' + self.request.META['HTTP_HOST'] + demand.get_absolute_url()
 
         pm_write(volunteer, demand.receiver, subject, body)
-        
+
         return demand.get_absolute_url()
 
 class ForceCreateVolunteerView(CreateVolunteerView):
