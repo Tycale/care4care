@@ -474,7 +474,7 @@ def get_job_categories_json(request):
 
 @login_required
 def get_user_job_categories_json(request, user_id):
-    if request.user.id != int(user_id) and not request.user.is_superuser:
+    if request.user.id != user_id and not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
 
     return get_json_from(Statistics.get_user_job_categories_json(user_id))
@@ -482,7 +482,7 @@ def get_user_job_categories_json(request, user_id):
 
 @login_required
 def get_user_job_avg_time_json(request, user_id):
-    if request.user.id != int(user_id) and not request.user.is_superuser:
+    if request.user.id != user_id and not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
 
     return get_json_from(Statistics.get_user_job_avg_time_json(user_id))
