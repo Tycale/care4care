@@ -1357,7 +1357,7 @@ msgstr ""
 #: main/templates/main/home.html:17 templates/base.html:11
 #: templates/base.html.py:61
 msgid "Pens(i)ons Voisins"
-msgstr ""
+msgstr "Het buurtpensioen"
 
 #: main/templates/main/home.html:18
 msgid "Réseau d'entraide"
