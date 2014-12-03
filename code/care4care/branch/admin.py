@@ -3,15 +3,15 @@ from django.contrib import admin
 from branch.models import Demand, Offer, Comment, Branch, DemandProposition
 
 class OfferAdmin(admin.ModelAdmin):
-    list_display = ('category', 'get_user', 'branch', 'date',)
+    list_display = ('get_verbose_category', 'get_user', 'branch', 'date',)
     search_fields = ('get_user','branch','category','title')
     def get_user(self, obj):
-        return obj.offer.username
+        return obj.donor.username
     get_user.short_description = 'User'
     get_user.admin_order_field = 'user__username'
 
 class DemandAdmin(admin.ModelAdmin):
-    list_display = ('title','category', 'get_user', 'branch', 'date',)
+    list_display = ('title','get_verbose_category', 'get_user', 'branch', 'date',)
     search_fields = ('get_user','branch','category','title')
     def get_user(self, obj):
         return obj.receiver.username

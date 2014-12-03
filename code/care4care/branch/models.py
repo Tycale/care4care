@@ -95,10 +95,14 @@ class JobManager(QuerySet):
         date_now = timezone.now() + timezone.timedelta(hours=-24)
         return self.filter(date__gte=date_now)
 
+    def down_to_date(self):
+        date_now = timezone.now()
+        return self.filter(date__lte=date_now)
+
 class Job(models.Model):
     branch = models.ForeignKey(Branch, verbose_name=_("Branche"), related_name="%(class)s_branch")
-    donor = models.ForeignKey(User, verbose_name=_("Donneur"), related_name="%(class)s_donor", null=True)
-    receiver =  models.ForeignKey(User, verbose_name=_("Receveur"), related_name="%(class)s_receiver", null=True)
+    donor = models.ForeignKey(User, verbose_name=_("Donneur"), related_name="%(class)s_donor", null=True, blank=True)
+    receiver =  models.ForeignKey(User, verbose_name=_("Receveur"), related_name="%(class)s_receiver", null=True, blank=True)
     description = models.TextField(verbose_name=_("Description"), blank=True, null=True)
     category = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Type d'aide"))
     receive_help_from_who = models.IntegerField(choices=MemberType.MEMBER_TYPES_GROUP, default=MemberType.ALL,
@@ -137,6 +141,7 @@ class Demand(Job):
     volunteers = models.ManyToManyField(User, null=True, blank=True, through='DemandProposition', related_name="volunteers", verbose_name=_("Propositions"))
     closed = models.BooleanField(verbose_name=_("Vontaire assigné"), default=False)
     km = models.IntegerField(verbose_name=_("Distance depuis domicile"), blank=True, null=True)
+    success = models.NullBooleanField(verbose_name=_("Tâche finie avec succès"), null=True, blank=True, default=None)
 
     @models.permalink
     def get_absolute_url(self):
@@ -165,7 +170,7 @@ class DemandProposition(models.Model):
     user = models.ForeignKey(User, related_name='uservol')
     demand = models.ForeignKey(Demand, related_name='propositions')
     comment = models.TextField(verbose_name=_("Commentaire (facultatif)"), blank=True, null=True)
-    created = models.DateTimeField(verbose_name=_("date d'arrivé"), auto_now=True)
+    created = models.DateTimeField(verbose_name=_("Date de création"), auto_now=True)
     accepted = models.BooleanField(verbose_name=_("Proposition acceptée"), default=False)
     km = models.IntegerField(verbose_name=_("Distance depuis domicile"), blank=True, null=True)
     time = MultiSelectField(choices=TIME_CHOICES, verbose_name=_("Heure(s) choisie(s)"), blank=False, help_text=_('Selectionnez les heures qui vous conviennent'))
@@ -178,3 +183,15 @@ class DemandProposition(models.Model):
     class Meta:
         ordering = ['-created']
 
+
+class SuccessDemand(models.Model):
+    demand = models.ForeignKey(Demand, related_name='success_demand')
+    comment = models.TextField(verbose_name=_('Commentaire'))
+    time = models.IntegerField(verbose_name=_("Temps passé (en minutes)"), blank=True, null=True)
+    ask_to = models.ForeignKey(User, related_name='success_pending')
+    asked_by = models.ForeignKey(User, related_name='approval_pending')
+    branch = models.ForeignKey(Branch, related_name='success_branch_pending')
+    created = models.DateTimeField(verbose_name=_("Date de création"), auto_now=True)
+
+    class Meta:
+        ordering = ['-created']

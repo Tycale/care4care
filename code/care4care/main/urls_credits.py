@@ -3,7 +3,7 @@ from django.conf.urls import patterns, url
 from main.views import credits_view
 
 urlpatterns = patterns('',
-                       url(r'^credits/menu/$',
+                       url(r'^credit/$',
                            credits_view,
-                           name='credits'),
+                           name='credit_page'),
                        )

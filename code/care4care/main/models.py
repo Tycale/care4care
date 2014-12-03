@@ -84,7 +84,7 @@ class MemberType:
     MEMBER_TYPES_GROUP = (
         (ALL, _("Tous")),
         (VERIFIED_MEMBER, _("Membre vérifié")),
-        (FAVORITE, _("Favoris (inclus le réseau personnel)")),
+        (FAVORITE, _("Mes membres favoris")),
         )
 
     VERBOSE_VM = _("Membre vérifié")
@@ -180,6 +180,7 @@ class VerifiedUser(models.Model):
 
     def get_verbose_receive(self):
         return ', '.join([str(l[1]) for l in MemberType.MEMBER_TYPES_GROUP if (l[0] == self.receive_help_from_who)])
+
 class CommonInfo(models.Model):
     """
     Common informations class
@@ -265,7 +266,7 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
     status = models.IntegerField(choices=STATUS,
                                     default=ACTIVE)
 
-    user_type = models.IntegerField(_("Type de compte"), choices=MemberType.MEMBER_TYPES[:-1],
+    user_type = models.IntegerField(_("Type de compte"), choices=MemberType.MEMBER_TYPES,
                                     default=MemberType.MEMBER, help_text=_('Un member pourra aider ou être aidé alors qu\'un \
                                         non-membre est un professionnel qui s\'inscrira pour avoir accès aux données d\'un \
                                         patient. Veuillez choisir celui qui vous correspond'))

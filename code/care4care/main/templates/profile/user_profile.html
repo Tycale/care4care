@@ -1,13 +1,14 @@
 {% extends "base.html" %}
 {% load bootstrap3 %}{% load i18n %}{% load staticfiles %}{% load thumbnail %}{% load jobs_extra %} {% load profile %}
 
-{% block title %}{% trans "Gestion du profil" %}{% endblock %}
-
-
-{% block extra_head %}
+{% block extra_head %}{{ block.super }}
+<script src="{% static "js/jquery-ui-1.9.2.custom.min.js" %}"></script>
+<link type="text/css" media="all" rel="stylesheet" href="{% static "css/jquery-ui-1.9.2.custom.css" %}" />
 <script src="{% static "js/user-profile-api.js" %}"></script>
 <script src="{% static "js/rowlink.js" %}"></script>
 {% endblock %}
+
+{% block title %}{% trans "Gestion du profil" %}{% endblock %}
 
 {% block content %}
 <div class="mt ">
@@ -183,7 +184,34 @@
   <div id="favoris" class="tab-pane fade ">
     <div class="row mt">
       {% if request.user.id == user_to_display.id %}
-      <div class="col-lg-6 col-sm-6">
+      <div class="col-lg-12 col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            {% trans "Ajouter un nouveau membre à mes favoris" %}
+            <div class="pull-right">
+            </div>
+          </div>
+          <div class="panel-body">
+          {% blocktrans %}
+          Ajouter des membres en favoris vous permet de restreindre vos demandes et offres à ces personnes. 
+          {% endblocktrans %}
+
+          <div class="row mt">
+            <form method="post" action="#favoris">
+            <div class="col-lg-9">
+              {% csrf_token %}
+              {% bootstrap_form form_favorite %}
+            </div>
+            <div class="col-lg-3">
+              <input type="submit" name="favorite" value="{% trans "Ajouter à mes favoris" %}" class="btn btn-success btn-block btn-fav" />
+            </div>
+            </form>
+          </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12 col-sm-12">
         {% show_favorites request user_to_display.favorites.all %}
       </div>
     </div>
@@ -191,7 +219,34 @@
 
   <div id="network" class="tab-pane fade">
     <div class="row mt">
-      <div class="col-lg-6 col-sm-6">
+      <div class="col-lg-12 col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            {% trans "Ajouter un nouveau membre à mon réseau personnel" %}
+            <div class="pull-right">
+            </div>
+          </div>
+          <div class="panel-body">
+          {% blocktrans %}
+          Ajouter des membres à votre réseau personnel leur donne accès à plus d'informations sur votre profile. 
+          {% endblocktrans %}
+
+          <div class="row mt">
+            <form method="post" action="#network">
+            <div class="col-lg-9">
+              {% csrf_token %}
+              {% bootstrap_form form_network %}
+            </div>
+            <div class="col-lg-3">
+              <input type="submit" name="network" value="{% trans "Ajouter à mon réseau" %}" class="btn btn-success btn-block btn-fav" />
+            </div>
+            </form>
+          </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12 col-sm-12">
         {% show_personal_network request user_to_display.personal_network.all %}
       </div>
     </div>
@@ -199,7 +254,34 @@
 
   <div id="ignored" class="tab-pane fade">
     <div class="row mt">
-      <div class="col-lg-6 col-sm-6">
+          <div class="col-lg-12 col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            {% trans "Ignorer un utilisateur" %}
+            <div class="pull-right">
+            </div>
+          </div>
+          <div class="panel-body">
+          {% blocktrans %}
+          Ignorer un utilisateur l'empêche de voir vos offres et demandes. 
+          {% endblocktrans %}
+
+          <div class="row mt">
+            <form method="post" action="#ignored">
+            <div class="col-lg-9">
+              {% csrf_token %}
+              {% bootstrap_form form_ignored %}
+            </div>
+            <div class="col-lg-3">
+              <input type="submit" name="ignored" value="{% trans "Ajouter aux ignorés" %}" class="btn btn-success btn-block btn-fav" />
+            </div>
+            </form>
+          </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12 col-sm-12">
         {% show_ignore_list request user_to_display.ignore_list.all %}
       </div>
     </div>
@@ -219,7 +301,14 @@
   {% endif %}
 </div>
 </div>
+{% endblock %}
 
+
+{% block extra_footer%}
+{{ block.super }}
+{{ form_favorite.media }}
+{{ form_network.media }}
+{{ form_ignored.media }}
 <script type="application/javascript">
   var remove_favorite_success = function(name){
     $("#add_favorite_link").attr("href","#False");
@@ -228,9 +317,9 @@
     if (name){
       $.gritter.add({
         // (string | mandatory) the heading of the notification
-        title: 'Notification',
+        title: '{% trans "Notification" %}',
         // (string | mandatory) the text inside the notification
-        text: 'Utilisateur '+ name + ' a été supprimé de vos favoris',
+        text: '{% trans "Utilisateur" %} '+ name + ' {% trans "supprimé" %}',
         // (string | optional) the image to display on the left
         //image: 'assets/img/ui-sam.jpg',
         // (bool | optional) if you want it to fade out on its own or just sit there
@@ -250,9 +339,9 @@
     if (name){
       $.gritter.add({
         // (string | mandatory) the heading of the notification
-        title: 'Notification',
+        title: '{% trans "Notification" %}',
         // (string | mandatory) the text inside the notification
-        text: 'Utilisateur '+ name + ' a été ajouté à vos favoris',
+        text: '{% trans "Utilisateur" %} '+ name + ' {% trans "ajouté" %}',
         // (string | optional) the image to display on the left
         //image: 'assets/img/ui-sam.jpg',
         // (bool | optional) if you want it to fade out on its own or just sit there
@@ -268,9 +357,9 @@
   var add_favorite_fail = function(){
     $.gritter.add({
       // (string | mandatory) the heading of the notification
-      title: 'Notification',
+      title: '{% trans "Notification" %}',
       // (string | mandatory) the text inside the notification
-      text: "Impossible d'ajouter l'utilisateur "+ name + " à vos favoris car il est ignoré",
+      text: "{% trans "Impossible d'ajouter l'utilisateur:" %}"  + name + ". {% trans "Vous avez ignoré ce dernier." %}",
       // (string | optional) the image to display on the left
       //image: 'assets/img/ui-sam.jpg',
       // (bool | optional) if you want it to fade out on its own or just sit there
@@ -288,9 +377,9 @@
     if (name){
       $.gritter.add({
         // (string | mandatory) the heading of the notification
-        title: 'Notification',
+        title: '{% trans "Notification" %}',
         // (string | mandatory) the text inside the notification
-        text: 'Utilisateur '+ name + ' a été supprimé de votre réseau',
+        text: '{% trans "Utilisateur" %} '+ name + ' {% trans "supprimé" %}',
         // (string | optional) the image to display on the left
         //image: 'assets/img/ui-sam.jpg',
         // (bool | optional) if you want it to fade out on its own or just sit there
@@ -309,9 +398,9 @@
     if (name){
       $.gritter.add({
         // (string | mandatory) the heading of the notification
-        title: 'Notification',
+        title: '{% trans "Notification" %}',
         // (string | mandatory) the text inside the notification
-        text: 'Utilisateur '+ name + ' a été ajouté à votre réseau',
+        text: '{% trans "Utilisateur" %} '+ name + ' {% trans "ajouté" %}',
         // (string | optional) the image to display on the left
         //image: 'assets/img/ui-sam.jpg',
         // (bool | optional) if you want it to fade out on its own or just sit there
@@ -327,9 +416,9 @@
   var add_network_fail = function(){
     $.gritter.add({
       // (string | mandatory) the heading of the notification
-      title: 'Notification',
+      title: '{% trans "Notification" %}',
       // (string | mandatory) the text inside the notification
-      text: "Impossible d'ajouter l'utilisateur "+ name + " à votre réseau car il est ignoré",
+      text: "{% trans "Impossible d'ajouter l'utilisateur:" %}"  + name + ". {% trans "Vous avez ignoré ce dernier." %}",
       // (string | optional) the image to display on the left
       //image: 'assets/img/ui-sam.jpg',
       // (bool | optional) if you want it to fade out on its own or just sit there
@@ -351,7 +440,7 @@
         // (string | mandatory) the heading of the notification
         title: 'Notification',
         // (string | mandatory) the text inside the notification
-        text: 'Utilisateur '+ name + ' a été bloqué',
+        text: '{% trans "Utilisateur" %} '+ name + ' {% trans "bloqué" %}',
         // (string | optional) the image to display on the left
         //image: 'assets/img/ui-sam.jpg',
         // (bool | optional) if you want it to fade out on its own or just sit there
