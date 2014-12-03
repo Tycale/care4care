@@ -38,13 +38,14 @@ SHORT_TIME = (
     )
 
 class Branch(models.Model):
-    name = models.CharField(verbose_name=_("Nom de la branche"), max_length=255, help_text=_("Nom de la localité"))
+    name = models.CharField(verbose_name=_("Nom de la branche"), max_length=255)
     slug = models.SlugField()
     creator = models.ForeignKey(User, verbose_name=_("Créateur de la branche"))
     location = models.CharField(_('Adresse'), max_length=256, null=True, blank=True)
     latitude = models.CharField(_('Latitude'), max_length=20, null=True, blank=True)
     longitude = models.CharField(_('Longitude'), max_length=20, null=True, blank=True)
     members = models.ManyToManyField(User, null=True, blank=True, through='BranchMembers', related_name="members", verbose_name=_("Membres de la branche"))
+    banned = models.ManyToManyField(User, null=True, blank=True, related_name="banned_users", verbose_name=_("Membres bannis"))
 
     def save(self, *args, **kwargs):
         if not self.id:
