@@ -103,13 +103,39 @@
             </div>
 
             <ul class="list-group">
+
               <li class="list-group-item text-right"><span class="pull-left"><strong>{% trans "Date d'inscription" %}</strong></span> &nbsp; {{user_to_display.date_joined}}</li>
               <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Nom" %}</strong></span> &nbsp; {{user_to_display.get_full_name}} </li>
               <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Email" %}</strong></span> &nbsp; {{user_to_display.email}}</li>
               <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Type de compte" %}</strong></span> &nbsp; {{user_to_display.get_account_type}}</li>
+              {% if user_to_display.get_verbose_languages %}
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Langues" %}</strong></span> &nbsp; {{user_to_display.get_verbose_languages}} </li>
+              {% endif %}
+
+              {% if in_other_network or can_manage_user %}
               <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Status" %}</strong></span> &nbsp; {{user_to_display.get_verbose_status}}</li>
+              {% if user_to_display.phone_number %}
               <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Telephone Fixe" %}</strong></span> &nbsp; {{user_to_display.phone_number}} </li>
+              {% endif %}
+              {% if user_to_display.mobile_number %}
               <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Telephone Mobile" %}</strong></span> &nbsp; {{user_to_display.mobile_number}} </li>
+              {% endif %}
+              {% if user_to_display.get_verbose_receive %}
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Recevoir aide et demande" %}</strong></span> &nbsp; {{user_to_display.get_verbose_receive}} </li>
+              {% endif %}
+              {% if user_to_display.get_verbose_car %}
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Voiture" %}</strong></span> &nbsp; {{user_to_display.get_verbose_car}} </li>
+              {% endif %}
+              {% if user_to_display.get_verbose_license %}
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Type de permis" %}</strong></span> &nbsp; {{user_to_display.get_verbose_license}} </li>
+              {% endif %}
+              {% if user_to_display.get_verbose_can_wheelchair %}
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Possibilité de chaise roulante" %}</strong></span> &nbsp; {{user_to_display.get_verbose_can_wheelchair}} </li>
+              {% endif %}
+              {% if user_to_display.hobbies %}
+              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Hobbies" %}</strong></span> &nbsp; {{user_to_display.hobbies}} </li>
+              {% endif %}
+              {% endif %}
             </ul>
 
           </div>

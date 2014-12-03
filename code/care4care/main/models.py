@@ -181,6 +181,18 @@ class VerifiedUser(models.Model):
     def get_verbose_receive(self):
         return ', '.join([str(l[1]) for l in MemberType.MEMBER_TYPES_GROUP if (l[0] == self.receive_help_from_who)])
 
+    def get_verbose_car(self):
+        if self.have_car:
+            return _("Oui")
+        else:
+            return _("Non")
+
+    def get_verbose_can_wheelchair(self):
+        if self.can_wheelchair:
+            return _("Oui")
+        else:
+            return _("Non")
+
 class CommonInfo(models.Model):
     """
     Common informations class
@@ -333,14 +345,14 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
     def get_account_type(self):
         if self.is_superuser:
             return _('superuser')
-    
+
         if self.user_type == MemberType.MEMBER:
             return MemberType.VERBOSE_M
         if self.user_type == MemberType.NON_MEMBER:
             return MemberType.VERBOSE_NM
         if self.user_type == MemberType.VERIFIED_MEMBER:
             return MemberType.VERBOSE_VM
-        
+
         return _('Inconnu')
 
     def __str__(self):
@@ -374,4 +386,3 @@ class VerifiedInformation(models.Model):
 
     class Meta:
         ordering = ['date']
-
