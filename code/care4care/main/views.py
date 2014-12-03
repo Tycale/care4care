@@ -103,6 +103,8 @@ def user_profile(request, user_id):
             in_other_ignore_list = True
         if can_manage(user_to_display,user):
             can_manage_user = True
+    else:
+        can_manage_user = True
 
     if in_other_ignore_list:
         messages.add_message(request, messages.INFO, _('Vous êtes pas autoriser à consulter ce profil'))
