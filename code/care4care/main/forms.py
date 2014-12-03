@@ -1,10 +1,11 @@
 from django import forms
 from django.utils.translation import ugettext as _
+from django.utils import timezone
 from main.models import User, VerifiedInformation, EmergencyContact, JobType, MemberType
 from branch.models import Job, Branch, JobCategory, TIME_CHOICES
 from multiselectfield import MultiSelectField
 from bootstrap3_datetime.widgets import DateTimePicker
-
+from ajax_select.fields import AutoCompleteWidget
 from django.forms.extras import SelectDateWidget
 import datetime
 
@@ -23,6 +24,7 @@ class CareRegistrationForm(forms.ModelForm):
                                                                      datetime.date.today().year)),
                                  initial=datetime.date.today())
     id = forms.IntegerField(widget=forms.HiddenInput)
+    user_type = forms.ChoiceField(label=_("Type de compte"), choices = MemberType.MEMBER_TYPES[:-1])
 
     class Meta:
         model = User
@@ -67,7 +69,7 @@ class CareRegistrationForm(forms.ModelForm):
 class ProfileManagementForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['email', 'phone_number','mobile_number', 'status', 'languages', 'location', 'mail_preferences', 'asked_job', 'offered_job', \
+        fields = ['email', 'phone_number','mobile_number', 'status', 'languages', 'location', 'asked_job', 'offered_job', \
             'latitude', 'longitude', 'facebook', 'additional_info', 'have_car', \
             'can_wheelchair', 'drive_license', 'hobbies', 'photo', 'receive_help_from_who']
         widgets = {
@@ -184,13 +186,41 @@ class EmergencyContactCreateForm(forms.ModelForm):
 class JobSearchForm(forms.Form):
     job_type =  forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=JobType.JOB_TYPES, label = _("Type de job"))
     category = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=JobCategory.JOB_CATEGORIES, label = _("Catégorie du job"))
-    date1 = forms.DateTimeField(label = _("A partir du"),widget=DateTimePicker(options={"pickTime": False,}))
-    date2 = forms.DateTimeField(label = _("jusqu'au"),widget=DateTimePicker(options={"pickTime": False,}))
-    receive_help_from_who = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=MemberType.MEMBER_TYPES_GROUP, label = _("Catégorie du job"))
+    date1 = forms.DateTimeField(required=False, label = _("A partir du"),widget=DateTimePicker(options={"pickTime": False,}))
+    date2 = forms.DateTimeField(required=False, label = _("jusqu'au"),widget=DateTimePicker(options={"pickTime": False,}))
+    receive_help_from_who = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=MemberType.MEMBER_TYPES_GROUP, label = _("Qui peut fournir son aide ?"))
     time = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=TIME_CHOICES, label = _("A quelle heure ?"))
 
     def clean(self):
         cleaned_data = super(JobSearchForm, self).clean()
-        if 'date2' < 'date1' or self.cleaned_data['date2'] < self.cleaned_data['date1']:
-            raise forms.ValidationError(_("Incohérence dans les dates."))
- 
+
+        if self.cleaned_data['date1']:
+            if self.cleaned_data['date1']<timezone.now()-timezone.timedelta(hours=24):
+                raise forms.ValidationError(_("Incohérence dans les dates."))
+            if self.cleaned_data['date2'] and self.cleaned_data['date2'] < self.cleaned_data['date1']:
+                raise forms.ValidationError(_("Incohérence dans les dates."))
+        elif self.cleaned_data['date2']:
+            if self.cleaned_data['date2']<timezone.now()-timezone.timedelta(hours=24):
+                raise forms.ValidationError(_("Incohérence dans les dates."))
+
+class GiftForm(forms.Form):
+    user = forms.CharField(label = _("Username"), widget=AutoCompleteWidget('user'))
+    amount = forms.IntegerField(label = _("Montant du temps (plus que 1)"), min_value=1, initial=60)
+    message = forms.CharField(required=False, widget=forms.Textarea, label = _("Message"))
+    
+    def __init__(self, *args, **kwargs):
+        self.ruser = kwargs.pop('ruser')
+        super(GiftForm, self).__init__(*args, **kwargs)
+
+    def clean_amount(self):
+        cleaned_data = super(GiftForm, self).clean()
+        if self.cleaned_data['amount'] > self.ruser.credit:
+            raise forms.ValidationError(_("Vous ne pouvez pas donner plus d'heure que ce que vous avez."))
+        return cleaned_data['amount']
+
+
+class AddUser(forms.Form):
+    user = forms.CharField(label=_("Username"), widget=AutoCompleteWidget('user'))
+    
+
+

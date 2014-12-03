@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load bootstrap3 %}{% load i18n %}{% load jobs_extra %}{% load staticfiles %}
 
-
 {% block title %}{% trans "Accueil" %}{% endblock %}
 
 {% block extra_head %}
@@ -15,8 +14,8 @@
             </div>
             <div style="display:none;">
             <div id="title-home">
-                <h2>Care4Care</h2>
-                <h4>{% trans "Réseau d'entre-aide citoyenne" %}</h4>
+                <h2>{% trans "Pens(i)ons Voisins" %}</h2>
+                <h4>{% trans "Réseau d'entraide" %}</h4>
                 <h5><i class="fa fa-globe"></i>
                   {{nb_branch}} {% trans "branches" %}
                 </h5>
@@ -27,7 +26,6 @@
             </div>
     </div>
 </div>
-
 
 <div class="row mt">
   <div class="col-md-6 col-sm-12 text-center"> <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#needHelpModal">{% trans "J'ai besoin d'aide" %}</button> </div>
@@ -91,8 +89,8 @@
 </div>
 
 <div class="row mt">
-  {% show_demands request demands show_branch=False %}
-  {% show_offers request offers show_branch=False %}
+  {% show_demands request demands show_branch=True %}
+  {% show_offers request offers show_branch=True %}
 </div>
 
 {% endblock %}

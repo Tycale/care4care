@@ -26,6 +26,12 @@
                     <div class="showback">
                         <h4 class="mb"><i class="fa fa-angle-right"></i> {% trans "Informations générales" %}</h4>
                         {% bootstrap_field form.email %}
+                        {% if request.user.id == object.id %}
+                        <td>{% trans "Mot de passe" %}</td>
+                        <br>
+                        <td><a href="{% url 'auth_password_change' %}">{% bootstrap_icon 'lock' %}{% trans " Changer le mot de passe" %}</a></td>
+                        <p>
+                        {% endif %}
                         {% bootstrap_field form.photo %}
                         {% bootstrap_field form.status %}
                         {% bootstrap_field form.phone_number %}
@@ -43,7 +49,7 @@
                         <div class="inlineProfile">
                             {% bootstrap_field form.offered_job %}
                         </div>
-                        {% bootstrap_field form.mail_preferences %}
+                        
                         {% bootstrap_field form.receive_help_from_who %}
 
 

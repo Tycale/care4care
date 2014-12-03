@@ -5,13 +5,13 @@
       {% trans "Offres" %}
     </div>
     <div class="panel-body">
-      <table class="table table-striped table-hover rowlink">
+      <table id="demands" data-toggle="table" data-height="260" class="rowlink table striped table-hover">
         <thead>
           <tr>
             <th>{% trans "Membre" %}</th>
             <th>{% trans "Categorie(s)" %}</th>
             {% if show_branch %}
-            <th>{% trans "Branch" %}</th>
+            <th data-sortable="true" data-field="branch">{% trans "Branche" %}</th>
             {% endif %}
             <th>{% trans "Date" %}</th>
             <th>{% trans "Heures" %}</th>
@@ -35,3 +35,12 @@
     </div>
   </div>
 </div>
+<script type="application/javascript">
+$(function () {
+    $('#demands').bootstrapTable(); // init via javascript
+
+    $(window).resize(function () {
+        $('#demands').bootstrapTable('resetView');
+    });
+});
+</script>

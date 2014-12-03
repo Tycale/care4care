@@ -4,4 +4,4 @@
 
 {% trans "Si cette demande a été faîtes à votre insu, merci d'ignorer ce mail." %}
 
-{% trans "Sinon, suivez le lien suivant afin de reinitialiser votre mot de passe : " %}http://localhost:8000{% url 'password_reset_confirm' uidb64=uid token=token %}
+{% trans "Sinon, suivez le lien suivant afin de reinitialiser votre mot de passe : " %}http://{{request.META.HTTP_HOST}}{% url 'password_reset_confirm' uidb64=uid token=token %}

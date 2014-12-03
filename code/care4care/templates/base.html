@@ -8,7 +8,7 @@
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>Care4Care - {% block title %}{% endblock%}</title>
+    <title>{% trans "Pens(i)ons Voisins" %} - {% block title %}{% endblock%}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
@@ -23,9 +23,18 @@
     <link href="{% static "css/style.css" %}" rel="stylesheet">
     <link href="{% static "css/style-responsive.css" %}" rel="stylesheet">
     <link href="{% static "css/profile.css" %}" rel="stylesheet">
+    <link href="{% static "css/pagination.css" %}" rel="stylesheet">
+    <link href="{% static "css/bootstrap-table.css" %}" rel="stylesheet">
 
     <script src="{% static "js/jquery-1.8.3.min.js" %}"></script>
     <script src="{% static "js/chart-master/Chart.js" %}"></script>
+    <script src="{% static "js/bootstrap-table.js" %}"></script>
+    {% get_current_language as LANGUAGE_CODE %}
+    {% if LANGUAGE_CODE == 'fr' %}
+    <script src="{% static "js/bootstrap-table-fr-fr.js" %}"></script>
+    {% elif LANGUAGE_CODE == 'nl' %}
+    <script src="{% static "js/bootstrap-table-nl-nl.js" %}"></script>
+    {% endif %}
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -49,7 +58,7 @@
                   <div class="fa fa-bars tooltips" data-placement="right" data-original-title="{% trans "Activer/désactiver le menu de navigation" %}"></div>
               </div>
             <!--logo start-->
-            <a href="{% url 'home' %}" class="logo"><b>CARE 4 CARE</b></a>
+            <a href="{% url 'home' %}" class="logo"><b>{% trans "Pens(i)ons Voisins" %}</b></a>
             <!--logo end-->
             <div class="nav notify-row" id="top_menu">
                 <!--  notification start -->
@@ -226,7 +235,7 @@
                 </li>
                 <li>
                   <div class="lang-box">
-                  {% get_current_language as LANGUAGE_CODE %}
+                  
                   {% get_language_info for LANGUAGE_CODE as lang %}
                   <form action="{% url 'set_language' %}" method="post" id="lang_form">
                     {% csrf_token %}
@@ -275,7 +284,7 @@
                   <hr class="menu-sep"/>
                   {% endif %}
 
-                  
+
 
                   <li>
                       <a href="{% url "home" %}">
@@ -311,7 +320,8 @@
                   <li class="sub-menu">
                     <a href="javascript:;" >
                       <i class="fa fa-user"></i>
-                      <span>{% trans "Mon profil" %}</span>
+
+                      <span>{% trans "Mon Profil" %}</span>
                     </a>
 
                     <ul class="sub">
@@ -323,6 +333,10 @@
                       <li><span><a href="{% url 'verified_profile' user_id=request.user.id %}"> {% bootstrap_icon 'star' %} &nbsp; {% trans "Devenir vérifié" %}</a></span></li>
                       </ul>
                     {% endif %}
+
+                    <ul class="sub">
+                    <li><span><a href="{% url 'credit_page' %}"> {% trans "Mes crédits" %}</a></span></li>
+                    </ul>
 
                     {% if request.user.is_superuser %}
                     <ul class="sub">
@@ -379,7 +393,7 @@
                           <span>{% trans "Aide" %}</span>
                       </a>
                   </li>
-                  
+
                   {% if request.user.is_superuser %}
                   <li class="sub-menu">
                       <a  href="{% url 'stats' %}">

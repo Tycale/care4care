@@ -10,9 +10,11 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4>
-                      <a class="float-right" href="{{ object.donor.get_absolute_url }}">
-                        <img class="img-circle" src="{% thumbnail object.donor.photo 60x60 crop %}" />
-                      {{object.donor.get_full_name}}</a> {% trans "offre son aide dans la branche " %}<a href="{{object.branch.get_absolute_url}}"> {{object.branch}}</a>
+                    <a class="float-right" href="{{ object.donor.get_absolute_url }}">
+                      <img class="img-circle" src="{% thumbnail object.donor.photo 60x60 crop %}" />
+                      {{object.donor.get_full_name}}
+                    </a> {% trans "offre son aide dans la branche " %}
+                    <a href="{{object.branch.get_absolute_url}}">{{object.branch}}</a>
                 </h4>
             </div>
             <ul class="list-group">
@@ -23,8 +25,7 @@
               <li class="list-group-item"><strong> {% trans "Description" %}</strong><br/> &nbsp; {{object.description}}</li>
               {% endif %}
             </ul>
-
-          </div>
+        </div>
     </div>
     {% if can_manage %}
     <div class="col-md-12 col-sm-12 mb">
@@ -56,7 +57,7 @@
                       <img src="{% thumbnail comment.user.photo 50x50 crop %}" />
                     </div>
                     <div class="commentText">
-                        <p class="text-info">{{comment.user.get_full_name}} {% trans "a écrit:" %}</p>
+                        <p class="text-info"><a href="{{ comment.user.get_absolute_url }}">{{comment.user.get_full_name}}</a> {% trans "a écrit:" %}</p>
                         <p>{{comment.comment}}</p>
                         <span class="date sub-text">{{ comment.date|naturaltime}}</span>
                     </div>

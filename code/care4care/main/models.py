@@ -77,32 +77,32 @@ class MemberType:
 
     MEMBER_TYPES = (
         (MEMBER, _("Membre")),
-        (NON_MEMBER, _("Non-membre"))
+        (NON_MEMBER, _("Non-membre")),
+        (VERIFIED_MEMBER, _("Membre vérifié"))
         )
 
     MEMBER_TYPES_GROUP = (
         (ALL, _("Tous")),
         (VERIFIED_MEMBER, _("Membre vérifié")),
-        (FAVORITE, _("Favoris (inclus le réseau personnel)")),
+        (FAVORITE, _("Mes membres favoris")),
         )
 
     VERBOSE_VM = _("Membre vérifié")
-    VERBOSE_VNM = _("Non-membre vérifié")
-
+    VERBOSE_NM = _("Non-membre")
+    VERBOSE_M = _("Membre")
 
 class JobCategory:
-    VISIT_AT_HOME = 1
-    ACCOMPANY_SOMEONE = 2
-    TRANSPORT_BY_CAR = 3
-    SHOPPING = 4
-    HOUSEHOULD = 5
-    HANDYMAN_JOBS = 6
-    GARDENING_JOBS = 7
-    PETS_CARE = 8
-    PERSONAL_CARE = 9
-    ADMINISTRATION = 10
-    OTHER = 11
-    SPECIAL = 12
+    VISIT_AT_HOME = '1'
+    ACCOMPANY_SOMEONE = '2'
+    TRANSPORT_BY_CAR = '3'
+    SHOPPING = '4'
+    HOUSEHOULD = '5'
+    HANDYMAN_JOBS = '6'
+    GARDENING_JOBS = '7'
+    PETS_CARE = '8'
+    PERSONAL_CARE = '9'
+    ADMINISTRATION = 'a'
+    OTHER = 'b'
 
     JOB_CATEGORIES = ((
         (VISIT_AT_HOME, _("Visite à la maison")),
@@ -116,7 +116,6 @@ class JobCategory:
         (PERSONAL_CARE, _("Soins personnels")),
         (ADMINISTRATION, _("Administratif")),
         (OTHER, _("Autre")),
-        (SPECIAL, _("Spécial ... :D")),
         ))
 
 BOOL_CHOICES = ((True, _('Oui')), (False, _('Non')))
@@ -181,6 +180,19 @@ class VerifiedUser(models.Model):
 
     def get_verbose_receive(self):
         return ', '.join([str(l[1]) for l in MemberType.MEMBER_TYPES_GROUP if (l[0] == self.receive_help_from_who)])
+
+    def get_verbose_car(self):
+        if self.have_car:
+            return _("Oui")
+        else:
+            return _("Non")
+
+    def get_verbose_can_wheelchair(self):
+        if self.can_wheelchair:
+            return _("Oui")
+        else:
+            return _("Non")
+
 class CommonInfo(models.Model):
     """
     Common informations class
@@ -320,9 +332,9 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
             count2 = credit // minuts2
             if count2 != 0:
                 if count2 > 2:
-                    result += _(', ') + (name2[1] % count2)
+                    result += ', ' + (name2[1] % count2)
                 else:
-                    result += _(', ') + (name2[0] % count2)
+                    result += ', ' + (name2[0] % count2)
             credit -= count2 * minuts2
             i += 1
         return result
@@ -333,13 +345,14 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
     def get_account_type(self):
         if self.is_superuser:
             return _('superuser')
-        if not self.is_verified:
-            return MemberType.MEMBER_TYPES[self.user_type-1][1]
-        else:
-            if self.user_type == MemberType.MEMBER:
-                return MemberType.VERBOSE_VM
-            if self.user_type == MemberType.NON_MEMBER:
-                return MemberType.VERBOSE_VNM
+
+        if self.user_type == MemberType.MEMBER:
+            return MemberType.VERBOSE_M
+        if self.user_type == MemberType.NON_MEMBER:
+            return MemberType.VERBOSE_NM
+        if self.user_type == MemberType.VERIFIED_MEMBER:
+            return MemberType.VERBOSE_VM
+
         return _('Inconnu')
 
     def __str__(self):
@@ -373,4 +386,3 @@ class VerifiedInformation(models.Model):
 
     class Meta:
         ordering = ['date']
-
