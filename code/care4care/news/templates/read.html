@@ -12,7 +12,7 @@
 		<div class="panel-heading">
 			<h4><a href="{{ a.get_absolute_url }}" class="panel-title">{{ a.titre | safe }}</a>
 			{% if request.user.is_superuser %}
-				<a class="btn btn-default btn-xs btn-danger pull-right btn-modify" href="{{ a.get_absolute_modify_url }}"><span class="fui-gear"></span>{% trans "Modifier"}</a>
+				<a class="btn btn-default btn-xs btn-danger pull-right btn-modify" href="{{ a.get_absolute_modify_url }}"><span class="fui-gear"></span>{% trans "Modifier" %}</a>
 			{% endif %}
 			</h4>
 		</div>
