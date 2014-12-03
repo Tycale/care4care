@@ -19,13 +19,12 @@
   <li><a data-toggle="tab" href="#favoris">{% trans 'Favoris' %}</a></li>
   <li><a data-toggle="tab" href="#network" />{% trans 'Mon Réseau' %}</a></li>
   <li><a data-toggle="tab" href="#ignored" />{% trans 'Utilisateurs ignorés' %}</a></li>
-  <li><a data-toggle="tab" href="#jobs" />{% trans 'Aides en attente' %}</a></li>
   <li><a data-toggle="tab" href="#stats" />{% trans 'Statistiques' %}</a></li>
   {% endif %}
 </ul>
 
 <div class="tab-content">
-  
+
   {% if request.user.id != user_to_display.id %}
   <div class="modal fade bs-ignore-modal-sm" id="ignore_user_modal">
     <div class="modal-dialog">
@@ -193,7 +192,7 @@
           </div>
           <div class="panel-body">
           {% blocktrans %}
-          Ajouter des membres en favoris vous permet de restreindre vos demandes et offres à ces personnes. 
+          Ajouter des membres en favoris vous permet de restreindre vos demandes et offres à ces personnes.
           {% endblocktrans %}
 
           <div class="row mt">
@@ -228,7 +227,7 @@
           </div>
           <div class="panel-body">
           {% blocktrans %}
-          Ajouter des membres à votre réseau personnel leur donne accès à plus d'informations sur votre profile. 
+          Ajouter des membres à votre réseau personnel leur donne accès à plus d'informations sur votre profile.
           {% endblocktrans %}
 
           <div class="row mt">
@@ -263,7 +262,7 @@
           </div>
           <div class="panel-body">
           {% blocktrans %}
-          Ignorer un utilisateur l'empêche de voir vos offres et demandes. 
+          Ignorer un utilisateur l'empêche de voir vos offres et demandes.
           {% endblocktrans %}
 
           <div class="row mt">
@@ -284,12 +283,6 @@
       <div class="col-lg-12 col-sm-12">
         {% show_ignore_list request user_to_display.ignore_list.all %}
       </div>
-    </div>
-  </div>
-
-  <div id="jobs" class="tab-pane fade">
-    <div class="row mt">
-      {% show_demands request pending_demands show_branch=True %}
     </div>
   </div>
 
