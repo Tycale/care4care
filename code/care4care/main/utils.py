@@ -70,7 +70,7 @@ def discriminate_demands(request, demands):
                 exclude_demand_ids.append(demand.id)
 
     while request.user.id in exclude_demand_ids:
-        exclude_demand_ids.remove()
+        exclude_demand_ids.remove(request.user.id)
 
     demands = demands.exclude(id__in=exclude_demand_ids)
     return demands
@@ -89,7 +89,7 @@ def discriminate_offers(request, offers):
             exclude_offer_ids.append(offer.id)
         if request.user in offer.donor.ignore_list.all():
             exclude_offer_ids.append(offer.id)
-        
+
         if offer.receive_help_from_who == MemberType.ALL:
             continue
         elif offer.receive_help_from_who == MemberType.VERIFIED_MEMBER:
@@ -100,7 +100,7 @@ def discriminate_offers(request, offers):
                 exclude_offer_ids.append(offer.id)
 
     while request.user.id in exclude_offer_ids:
-        exclude_offer_ids.remove()
+        exclude_offer_ids.remove(request.user.id)
 
     offers = offers.exclude(id__in=exclude_offer_ids)
     return offers

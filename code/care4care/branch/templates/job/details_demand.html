@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load staticfiles thumbnail i18n bootstrap3 humanize %}
 
-{% block title %}{% trans "object.title" %}{% endblock %}
+{% block title %}{{object.title }}{% endblock %}
 
 
 {% block extra_head %}
@@ -258,7 +258,7 @@
                     </div>
                 </li>
                 {% endfor %}
-            </ul>      
+            </ul>
             
             <form action="." class="style-form" role="form" method="post">
                 <div class="row vertical-align">

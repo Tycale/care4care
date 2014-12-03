@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-03 14:29+0000\n"
+"POT-Creation-Date: 2014-12-03 17:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -115,29 +115,26 @@ msgstr ""
 msgid "Nom de la branche"
 msgstr ""
 
-#: branch/models.py:41
-msgid "Nom de la localité"
-msgstr ""
-
 #: branch/models.py:43
 msgid "Créateur de la branche"
 msgstr ""
 
-#: branch/models.py:44 branch/models.py:135
+#: branch/models.py:44 branch/models.py:136
 #: branch/templates/branch/branch_create.html:37
-#: branch/templates/job/need_help.html:45 main/models.py:190
-#: main/templates/profile/edit_profile.html:103
+#: branch/templates/job/need_help.html:45 main/models.py:196
+#: main/templates/profile/edit_profile.html:100
 #: main/templates/profile/emergency_details.html:16
+#: main/templates/profile/user_profile.html:210
 #: main/templates/verified/verified_display.html:21
-#: main/templates/verified/verified_profile.html:97
+#: main/templates/verified/verified_profile.html:94
 msgid "Adresse"
 msgstr ""
 
-#: branch/models.py:45 branch/models.py:136 main/models.py:191
+#: branch/models.py:45 branch/models.py:137 main/models.py:197
 msgid "Latitude"
 msgstr ""
 
-#: branch/models.py:46 branch/models.py:137 main/models.py:192
+#: branch/models.py:46 branch/models.py:138 main/models.py:198
 msgid "Longitude"
 msgstr ""
 
@@ -145,15 +142,19 @@ msgstr ""
 msgid "Membres de la branche"
 msgstr ""
 
-#: branch/models.py:68
+#: branch/models.py:48
+msgid "Membres bannis"
+msgstr ""
+
+#: branch/models.py:69
 msgid "date d'arrivé"
 msgstr ""
 
-#: branch/models.py:84
+#: branch/models.py:85
 msgid "Commentez"
 msgstr ""
 
-#: branch/models.py:85 branch/models.py:110
+#: branch/models.py:86 branch/models.py:111
 #: branch/templates/branch/branch_home.html:103
 #: branch/templates/job/details_demand.html:166
 #: branch/templates/job/details_offer.html:22
@@ -163,91 +164,91 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: branch/models.py:103 branch/templates/branch/branch_home.html:18
+#: branch/models.py:104 branch/templates/branch/branch_home.html:18
 #: branch/templates/templatetags/demands.html:14
 #: branch/templates/templatetags/offers.html:14
 msgid "Branche"
 msgstr ""
 
-#: branch/models.py:104
+#: branch/models.py:105
 msgid "Donneur"
 msgstr ""
 
-#: branch/models.py:105
+#: branch/models.py:106
 msgid "Receveur"
 msgstr ""
 
-#: branch/models.py:106 branch/templates/job/details_demand.html:171
+#: branch/models.py:107 branch/templates/job/details_demand.html:171
 #: branch/templates/job/details_offer.html:25
 msgid "Description"
 msgstr ""
 
-#: branch/models.py:107
+#: branch/models.py:108
 msgid "Type d'aide"
 msgstr ""
 
-#: branch/models.py:109
+#: branch/models.py:110
 msgid "Qui peut voir et répondre à la demande/offre ?"
 msgstr ""
 
-#: branch/models.py:111 branch/templates/job/details_demand.html:167
+#: branch/models.py:112 branch/templates/job/details_demand.html:167
 #: branch/templates/job/details_offer.html:23
 msgid "Heures de disponibilité"
 msgstr ""
 
-#: branch/models.py:111 branch/models.py:176
+#: branch/models.py:112 branch/models.py:177
 msgid "Selectionnez les heures qui vous conviennent"
 msgstr ""
 
-#: branch/models.py:134 branch/templates/templatetags/demands.html:16
+#: branch/models.py:135 branch/templates/templatetags/demands.html:16
 msgid "Titre"
 msgstr ""
 
-#: branch/models.py:138
+#: branch/models.py:139
 msgid "Temps estimé (en minutes)"
 msgstr ""
 
-#: branch/models.py:139
+#: branch/models.py:140
 msgid "Temps réel (en minutes)"
 msgstr ""
 
-#: branch/models.py:141
+#: branch/models.py:142
 msgid "Propositions"
 msgstr ""
 
-#: branch/models.py:142
+#: branch/models.py:143
 msgid "Vontaire assigné"
 msgstr ""
 
-#: branch/models.py:143 branch/models.py:175
+#: branch/models.py:144 branch/models.py:176
 msgid "Distance depuis domicile"
 msgstr ""
 
-#: branch/models.py:144
+#: branch/models.py:145
 msgid "Tâche finie avec succès"
 msgstr ""
 
-#: branch/models.py:172
+#: branch/models.py:173
 msgid "Commentaire (facultatif)"
 msgstr ""
 
-#: branch/models.py:173 branch/models.py:194
+#: branch/models.py:174 branch/models.py:195
 msgid "Date de création"
 msgstr ""
 
-#: branch/models.py:174
+#: branch/models.py:175
 msgid "Proposition acceptée"
 msgstr ""
 
-#: branch/models.py:176
+#: branch/models.py:177
 msgid "Heure(s) choisie(s)"
 msgstr ""
 
-#: branch/models.py:189 branch/templates/job/details_demand.html:94
+#: branch/models.py:190 branch/templates/job/details_demand.html:94
 msgid "Commentaire"
 msgstr ""
 
-#: branch/models.py:190
+#: branch/models.py:191
 msgid "Temps passé (en minutes)"
 msgstr ""
 
@@ -266,8 +267,8 @@ msgstr ""
 
 #: branch/templates/branch/branch_create.html:40
 #: branch/templates/job/need_help.html:48
-#: main/templates/profile/edit_profile.html:106
-#: main/templates/verified/verified_profile.html:100
+#: main/templates/profile/edit_profile.html:103
+#: main/templates/verified/verified_profile.html:97
 msgid "Entrez votre adresse"
 msgstr ""
 
@@ -275,16 +276,16 @@ msgstr ""
 #: branch/templates/branch/branch_join.html:34
 #: branch/templates/job/need_help.html:49
 #: branch/templates/job/need_help.html:54
-#: main/templates/profile/edit_profile.html:111
+#: main/templates/profile/edit_profile.html:108
 #: main/templates/registration/registration_form.html:78
-#: main/templates/verified/verified_profile.html:105
+#: main/templates/verified/verified_profile.html:102
 msgid "Information:"
 msgstr ""
 
 #: branch/templates/branch/branch_create.html:45
 #: branch/templates/job/need_help.html:54
-#: main/templates/profile/edit_profile.html:111
-#: main/templates/verified/verified_profile.html:105
+#: main/templates/profile/edit_profile.html:108
+#: main/templates/verified/verified_profile.html:102
 msgid "L'emplacement sur la carte peut être approximatif"
 msgstr ""
 
@@ -358,20 +359,22 @@ msgid "Demande de vérification en attente"
 msgstr ""
 
 #: branch/templates/branch/branch_home.html:101
-#: branch/templates/branch/branch_home.html:146
+#: branch/templates/branch/branch_home.html:154
+#: branch/templates/branch/branch_home.html:223
 #: branch/templates/job/details_demand.html:93
 #: main/templates/profile/login.html:28
-#: main/templates/profile/user_profile.html:315
-#: main/templates/profile/user_profile.html:337
-#: main/templates/profile/user_profile.html:375
-#: main/templates/profile/user_profile.html:396
-#: main/templates/profile/user_profile.html:436
+#: main/templates/profile/user_profile.html:357
+#: main/templates/profile/user_profile.html:379
+#: main/templates/profile/user_profile.html:417
+#: main/templates/profile/user_profile.html:438
+#: main/templates/profile/user_profile.html:478
 #: main/templates/search/search.html:24 templates/base.html:215
 msgid "Utilisateur"
 msgstr ""
 
 #: branch/templates/branch/branch_home.html:102
-#: branch/templates/branch/branch_home.html:147
+#: branch/templates/branch/branch_home.html:155
+#: branch/templates/branch/branch_home.html:224
 #: main/templates/search/search.html:25
 msgid "Nom complet"
 msgstr ""
@@ -388,70 +391,89 @@ msgstr ""
 msgid "Offrir mon aide"
 msgstr ""
 
-#: branch/templates/branch/branch_home.html:138
+#: branch/templates/branch/branch_home.html:136
+#: main/templates/profile/user_profile.html:24
+#: main/templates/statistics/branch_statistics.html:4
+#: main/templates/statistics/statistics.html:4 templates/base.html:402
+msgid "Statistiques"
+msgstr ""
+
+#: branch/templates/branch/branch_home.html:146
 msgid "Liste des membres"
 msgstr ""
 
-#: branch/templates/branch/branch_home.html:148
-#: main/templates/profile/user_profile.html:110
+#: branch/templates/branch/branch_home.html:156
+#: main/templates/profile/user_profile.html:118
 msgid "Status"
 msgstr ""
 
-#: branch/templates/branch/branch_home.html:150
+#: branch/templates/branch/branch_home.html:158
+#: branch/templates/branch/branch_home.html:226
 msgid "Administrer"
 msgstr ""
 
-#: branch/templates/branch/branch_home.html:152
+#: branch/templates/branch/branch_home.html:160
+#: branch/templates/branch/branch_home.html:228
 #: main/templates/search/search.html:27
 msgid "Ecrire"
 msgstr ""
 
-#: branch/templates/branch/branch_home.html:155
+#: branch/templates/branch/branch_home.html:163
 msgid "Ecrire à tous"
 msgstr ""
 
-#: branch/templates/branch/branch_home.html:167
+#: branch/templates/branch/branch_home.html:175
 msgid "Responsable"
 msgstr ""
 
-#: branch/templates/branch/branch_home.html:171
+#: branch/templates/branch/branch_home.html:179
 msgid "Promouovir responsable"
 msgstr ""
 
-#: branch/templates/branch/branch_home.html:174
+#: branch/templates/branch/branch_home.html:182
 msgid "Retirer responsable"
 msgstr ""
 
-#: branch/templates/branch/branch_home.html:176
+#: branch/templates/branch/branch_home.html:184
 msgid "Créateur"
 msgstr ""
 
-#: branch/templates/branch/branch_home.html:183
+#: branch/templates/branch/branch_home.html:191
 msgid "demande"
 msgstr ""
 
-#: branch/templates/branch/branch_home.html:184
+#: branch/templates/branch/branch_home.html:192
 msgid "offre"
 msgstr ""
 
-#: branch/templates/branch/branch_home.html:185
+#: branch/templates/branch/branch_home.html:193
 #: branch/templates/job/details_demand.html:49
 #: branch/templates/job/details_offer.html:34
-#: main/templates/profile/edit_profile.html:125
+#: main/templates/profile/edit_profile.html:122
 #: main/templates/profile/modify_emergency.html:25
-#: main/templates/profile/user_profile.html:99
-#: main/templates/profile/user_profile.html:161
-#: main/templates/profile/user_profile.html:170
+#: main/templates/profile/user_profile.html:101
+#: main/templates/profile/user_profile.html:189
+#: main/templates/profile/user_profile.html:198 news/templates/news.html:21
+#: news/templates/read.html:15
 msgid "Modifier"
 msgstr ""
 
-#: branch/templates/branch/branch_home.html:187
-msgid "Quitter"
+#: branch/templates/branch/branch_home.html:195
+msgid "Bannir"
 msgstr ""
 
-#: branch/templates/branch/branch_home.html:191
+#: branch/templates/branch/branch_home.html:199
+#: branch/templates/branch/branch_home.html:243
 #: main/templates/search/search.html:36
 msgid "écrire"
+msgstr ""
+
+#: branch/templates/branch/branch_home.html:215
+msgid "Liste des membres bannis"
+msgstr ""
+
+#: branch/templates/branch/branch_home.html:239
+msgid "Annuler le bannissement"
 msgstr ""
 
 #: branch/templates/branch/branch_join.html:5
@@ -484,18 +506,13 @@ msgstr ""
 #: branch/templates/job/need_help.html:70
 #: branch/templates/job/offer_help.html:39
 #: branch/templates/job/volunteer_demand.html:33
-#: main/templates/profile/edit_profile.html:128
+#: main/templates/profile/edit_profile.html:125
 #: main/templates/profile/emergency_contact.html:28
 #: main/templates/profile/modify_emergency.html:28
-#: main/templates/profile/user_profile.html:40
+#: main/templates/profile/user_profile.html:42
 #: main/templates/verified/verified_documents.html:27
-#: main/templates/verified/verified_profile.html:122
+#: main/templates/verified/verified_profile.html:119
 msgid "Annuler"
-msgstr ""
-
-#: branch/templates/job/details_demand.html:4
-#: branch/templates/job/details_offer.html:4
-msgid "object.title"
 msgstr ""
 
 #: branch/templates/job/details_demand.html:26
@@ -593,7 +610,7 @@ msgstr ""
 msgid "Durée estimée du service"
 msgstr ""
 
-#: branch/templates/job/details_demand.html:168 main/views.py:676
+#: branch/templates/job/details_demand.html:168 main/views.py:711
 msgid "minutes"
 msgstr ""
 
@@ -655,6 +672,10 @@ msgstr ""
 msgid "Vous"
 msgstr ""
 
+#: branch/templates/job/details_offer.html:4
+msgid "object.title"
+msgstr ""
+
 #: branch/templates/job/details_offer.html:16
 msgid "offre son aide dans la branche "
 msgstr ""
@@ -687,7 +708,7 @@ msgid ""
 msgstr ""
 
 #: branch/templates/job/need_help.html:67
-#: branch/templates/job/offer_help.html:36
+#: branch/templates/job/offer_help.html:36 news/templates/add.html:31
 msgid "Envoyer"
 msgstr ""
 
@@ -747,142 +768,178 @@ msgstr ""
 
 #: branch/views.py:96
 #, python-brace-format
+msgid ""
+"Vous avez été banni de la branche {branch} et ne pouvez pas la rejoindre"
+msgstr ""
+
+#: branch/views.py:99
+#, python-brace-format
 msgid "Vous êtes déjà dans la branche {branch}"
 msgstr ""
 
-#: branch/views.py:100
+#: branch/views.py:103
 #, python-brace-format
 msgid "Vous avez rejoins la branche {branch}"
 msgstr ""
 
-#: branch/views.py:115
+#: branch/views.py:117
 #, python-brace-format
 msgid "Vous avez quitté la branche {branch}"
 msgstr ""
 
-#: branch/views.py:117
-#, python-brace-format
-msgid "{user} a été retiré de la branche {branch}"
+#: branch/views.py:135
+#, python-format
+msgid "Bannissement de la branche %s"
 msgstr ""
 
-#: branch/views.py:135
+#: branch/views.py:136
+#, python-format
+msgid ""
+"Vous avez été banni de la branche %s. Vous ne pouvez à présent plus "
+"rejoindre cette branche. Pour plus d'informations, contactez un "
+"adminstrateur ou l'officier en charge de la branche en question"
+msgstr ""
+
+#: branch/views.py:138
+#, python-brace-format
+msgid "{user} a été banni de la branche {branch}"
+msgstr ""
+
+#: branch/views.py:155
+#, python-format
+msgid "Annulation du bannissement de la branche %s"
+msgstr ""
+
+#: branch/views.py:156
+#, python-format
+msgid ""
+"Nous avons annulé le bannissement de la branche %s vous concernant. Vous "
+"pouvez à présent rejoindre cette branche si vous le souhaitez."
+msgstr ""
+
+#: branch/views.py:158
+#, python-brace-format
+msgid "le bannissement de {user} dans la branche {branch} a été annulé"
+msgstr ""
+
+#: branch/views.py:176
 #, python-brace-format
 msgid "{user} a été promu administrateur de la branche {branch}"
 msgstr ""
 
-#: branch/views.py:153
+#: branch/views.py:194
 #, python-brace-format
 msgid "{user} n'est plus administrateur de la branche {branch}"
 msgstr ""
 
-#: branch/views.py:168
+#: branch/views.py:209
 #, python-brace-format
 msgid "Vous avez supprimé la branche {branch}"
 msgstr ""
 
-#: branch/views.py:181
+#: branch/views.py:222
 #, python-brace-format
 msgid "Vous avez supprimé la demande {demand}"
 msgstr ""
 
-#: branch/views.py:192
+#: branch/views.py:233
 #, python-brace-format
 msgid "Vous avez supprimé l'offre {offer}"
 msgstr ""
 
-#: branch/views.py:203
+#: branch/views.py:244
 msgid "Vous avez refusé cette aide"
 msgstr ""
 
-#: branch/views.py:216
+#: branch/views.py:257
 msgid "Je vous ai choisi pour '"
 msgstr ""
 
-#: branch/views.py:217
+#: branch/views.py:258
 msgid " Je vous ai choisi pour effectuer le job '"
 msgstr ""
 
-#: branch/views.py:218
+#: branch/views.py:259
 msgid "Lieu : "
 msgstr ""
 
-#: branch/views.py:219
+#: branch/views.py:260
 msgid "Date : "
 msgstr ""
 
-#: branch/views.py:220
+#: branch/views.py:261
 msgid "Heure(s) désirée(s) : "
 msgstr ""
 
-#: branch/views.py:221
+#: branch/views.py:262
 msgid "Description : "
 msgstr ""
 
-#: branch/views.py:222
+#: branch/views.py:263
 msgid "N'hésitez pas à me contacter pour de plus amples informations"
 msgstr ""
 
-#: branch/views.py:223
+#: branch/views.py:264
 msgid "À bientôt,"
 msgstr ""
 
-#: branch/views.py:238
+#: branch/views.py:279
 msgid "Vous avez accepté cette aide !"
 msgstr ""
 
-#: branch/views.py:404 branch/views.py:405
+#: branch/views.py:445 branch/views.py:446
 msgid "a commenté votre offre"
 msgstr ""
 
-#: branch/views.py:406 branch/views.py:450 branch/views.py:491
+#: branch/views.py:447 branch/views.py:491 branch/views.py:532
 msgid "Commentaire : "
 msgstr ""
 
-#: branch/views.py:407
+#: branch/views.py:448
 msgid "Vous pouvez lui répondre en vous rendant sur votre offre :"
 msgstr ""
 
-#: branch/views.py:448 branch/views.py:449
+#: branch/views.py:489 branch/views.py:490
 msgid "a commenté votre demande '"
 msgstr ""
 
-#: branch/views.py:451
+#: branch/views.py:492
 msgid "Vous pouvez lui répondre en vous rendant sur votre demande:"
 msgstr ""
 
-#: branch/views.py:489 branch/views.py:490
+#: branch/views.py:530 branch/views.py:531
 msgid "vous offre son aide pour '"
 msgstr ""
 
-#: branch/views.py:492
+#: branch/views.py:533
 msgid "Km de chez vous : "
 msgstr ""
 
-#: branch/views.py:493
+#: branch/views.py:534
 msgid "Heure(s) choisies(s) : "
 msgstr ""
 
-#: branch/views.py:494
+#: branch/views.py:535
 msgid ""
 "Vous pouvez accepter son offre d'aide en vous rendant sur votre demande "
 "d'aide:"
 msgstr ""
 
-#: care4care/settings.py:122
+#: care4care/settings.py:123
 msgid "Français"
 msgstr ""
 
-#: care4care/settings.py:123
+#: care4care/settings.py:124
 msgid "Anglais"
 msgstr ""
 
-#: care4care/settings.py:124
+#: care4care/settings.py:125
 msgid "Néerlandais"
 msgstr ""
 
-#: main/forms.py:15 main/models.py:188
+#: main/forms.py:15 main/models.py:194
 #: main/templates/profile/emergency_details.html:15
-#: main/templates/profile/user_profile.html:158
+#: main/templates/profile/user_profile.html:186
 msgid "Prénom"
 msgstr ""
 
@@ -900,12 +957,12 @@ msgstr ""
 msgid "Mot de passe (à nouveau)"
 msgstr ""
 
-#: main/forms.py:22 main/models.py:275
+#: main/forms.py:22 main/models.py:281
 msgid "Date de naissance"
 msgstr ""
 
-#: main/forms.py:27 main/models.py:269
-#: main/templates/profile/user_profile.html:109
+#: main/forms.py:27 main/models.py:275
+#: main/templates/profile/user_profile.html:112
 #: main/templates/registration/registration_form.html:61
 #: main/templates/search/search.html:26
 #: main/templates/verified/verified_display.html:23
@@ -1035,7 +1092,8 @@ msgstr ""
 msgid "Actif"
 msgstr ""
 
-#: main/models.py:37 main/templates/statistics/statistics.html:81
+#: main/models.py:37 main/templates/statistics/branch_statistics.html:81
+#: main/templates/statistics/statistics.html:81
 msgid "En vacances"
 msgstr ""
 
@@ -1071,9 +1129,10 @@ msgstr ""
 msgid "Moto"
 msgstr ""
 
-#: main/models.py:64 main/templates/profile/edit_profile.html:64
-#: main/templates/verified/verified_display.html:32
-#: main/templates/verified/verified_profile.html:58
+#: main/models.py:64 main/templates/profile/edit_profile.html:61
+#: main/templates/profile/user_profile.html:129
+#: main/templates/verified/verified_display.html:31
+#: main/templates/verified/verified_profile.html:55
 msgid "Voiture"
 msgstr ""
 
@@ -1145,13 +1204,15 @@ msgstr ""
 msgid "Administratif"
 msgstr ""
 
-#: main/models.py:121 main/templates/verified/verified_display.html:34
-#: main/templates/verified/verified_display.html:42
+#: main/models.py:121 main/models.py:180 main/models.py:186
+#: main/templates/verified/verified_display.html:33
+#: main/templates/verified/verified_display.html:41
 msgid "Oui"
 msgstr ""
 
-#: main/models.py:121 main/templates/verified/verified_display.html:36
-#: main/templates/verified/verified_display.html:44
+#: main/models.py:121 main/models.py:182 main/models.py:188
+#: main/templates/verified/verified_display.html:35
+#: main/templates/verified/verified_display.html:43
 msgid "Non"
 msgstr ""
 
@@ -1187,23 +1248,19 @@ msgstr ""
 msgid "Quelles sont les tâches que vous souhaitez effectuer ?"
 msgstr ""
 
-#: main/models.py:154
-msgid "Quelles sont les tâches dont vous avez besoin ?"
-msgstr ""
-
-#: main/models.py:160
+#: main/models.py:159
 msgid "Vos hobbies"
 msgstr ""
 
-#: main/models.py:161 main/templates/profile/edit_profile.html:94
-#: main/templates/verified/verified_display.html:47
-#: main/templates/verified/verified_profile.html:88
+#: main/models.py:160 main/templates/profile/edit_profile.html:91
+#: main/templates/verified/verified_display.html:46
+#: main/templates/verified/verified_profile.html:85
 msgid "Informations supplémentaires"
 msgstr ""
 
-#: main/models.py:189 main/templates/profile/emergency_details.html:14
-#: main/templates/profile/user_profile.html:107
-#: main/templates/profile/user_profile.html:159
+#: main/models.py:195 main/templates/profile/emergency_details.html:14
+#: main/templates/profile/user_profile.html:110
+#: main/templates/profile/user_profile.html:187
 #: main/templates/templatetags/favorites.html:12
 #: main/templates/templatetags/ignored_list.html:13
 #: main/templates/templatetags/personal_network.html:12
@@ -1211,44 +1268,44 @@ msgstr ""
 msgid "Nom"
 msgstr ""
 
-#: main/models.py:193
+#: main/models.py:199
 msgid ""
 "Votre numéro de téléphone doit être au format '+999999999'. Jusqu'à 15 "
 "chiffres."
 msgstr ""
 
-#: main/models.py:194
+#: main/models.py:200
 msgid "Numéro de téléphone (fixe)"
 msgstr ""
 
-#: main/models.py:195
+#: main/models.py:201
 msgid "Numéro de téléphone (mobile)"
 msgstr ""
 
-#: main/models.py:196
+#: main/models.py:202
 msgid "Langues parlées"
 msgstr ""
 
-#: main/models.py:214
+#: main/models.py:220
 msgid "Ordre de priorité"
 msgstr ""
 
-#: main/models.py:251 main/models.py:357
+#: main/models.py:257 main/models.py:363
 msgid "Adresse email"
 msgstr ""
 
-#: main/models.py:255 main/templates/profile/login.html:27
+#: main/models.py:261 main/templates/profile/login.html:27
 #: templates/base.html:214
 msgid "Nom d'utilisateur"
 msgstr ""
 
-#: main/models.py:257
+#: main/models.py:263
 msgid ""
 "Entrez un nom d'utilisateur valide.             30 caractères ou moins. Peut "
 "contenir des lettres, nombres et les caractères @/./+/-/_ "
 msgstr ""
 
-#: main/models.py:270
+#: main/models.py:276
 msgid ""
 "Un member pourra aider ou être aidé alors "
 "qu'un                                         non-membre est un "
@@ -1257,51 +1314,51 @@ msgid ""
 "qui vous correspond"
 msgstr ""
 
-#: main/models.py:274
+#: main/models.py:280
 msgid "Comment avez-vous entendu parler de Care4Care ?"
 msgstr ""
 
-#: main/models.py:276
+#: main/models.py:282
 msgid "Crédit restant"
 msgstr ""
 
-#: main/models.py:283 main/templates/profile/user_profile.html:121
+#: main/models.py:289 main/templates/profile/user_profile.html:149
 msgid "Organization"
 msgstr ""
 
-#: main/models.py:284
+#: main/models.py:290
 msgid "Fonction"
 msgstr ""
 
-#: main/models.py:335
+#: main/models.py:341
 msgid "superuser"
 msgstr ""
 
-#: main/models.py:344
+#: main/models.py:350
 msgid "Inconnu"
 msgstr ""
 
-#: main/models.py:358
+#: main/models.py:364
 msgid "Votre relation par rapport à cette personne"
 msgstr ""
 
-#: main/models.py:359
+#: main/models.py:365
 msgid "Commentaire supplémentaire"
 msgstr ""
 
-#: main/models.py:367
+#: main/models.py:373
 msgid "Lettre de recommendation n°1"
 msgstr ""
 
-#: main/models.py:368
+#: main/models.py:374
 msgid "Lettre de recommendation n°2"
 msgstr ""
 
-#: main/models.py:369
+#: main/models.py:375
 msgid "Casier judiciaire"
 msgstr ""
 
-#: main/templates/credit/credit_page.html:9 templates/base.html:338
+#: main/templates/credit/credit_page.html:9 templates/base.html:339
 msgid "Mes crédits"
 msgstr ""
 
@@ -1483,7 +1540,7 @@ msgid "Reply"
 msgstr ""
 
 #: main/templates/messages/sent.html:3 templates/base.html:153
-#: templates/base.html.py:369
+#: templates/base.html.py:370
 msgid "Sent Messages"
 msgstr ""
 
@@ -1518,7 +1575,7 @@ msgid "Back"
 msgstr ""
 
 #: main/templates/messages/write.html:3 templates/base.html:154
-#: templates/base.html.py:372
+#: templates/base.html.py:373
 msgid "Write"
 msgstr ""
 
@@ -1537,15 +1594,17 @@ msgstr ""
 msgid "Préférences"
 msgstr ""
 
-#: main/templates/profile/edit_profile.html:75
+#: main/templates/profile/edit_profile.html:72
+#: main/templates/profile/user_profile.html:114
 #: main/templates/verified/verified_display.html:22
-#: main/templates/verified/verified_profile.html:69
+#: main/templates/verified/verified_profile.html:66
 msgid "Langues"
 msgstr ""
 
-#: main/templates/profile/edit_profile.html:85
-#: main/templates/verified/verified_display.html:46
-#: main/templates/verified/verified_profile.html:79
+#: main/templates/profile/edit_profile.html:82
+#: main/templates/profile/user_profile.html:138
+#: main/templates/verified/verified_display.html:45
+#: main/templates/verified/verified_profile.html:76
 msgid "Hobbies"
 msgstr ""
 
@@ -1556,7 +1615,7 @@ msgid "Ajouter un contact d'urgence"
 msgstr ""
 
 #: main/templates/profile/emergency_contact.html:25
-#: main/templates/profile/user_profile.html:149
+#: main/templates/profile/user_profile.html:177
 msgid "Ajouter"
 msgstr ""
 
@@ -1565,7 +1624,7 @@ msgid "Langue"
 msgstr ""
 
 #: main/templates/profile/emergency_details.html:18
-#: main/templates/profile/user_profile.html:111
+#: main/templates/profile/user_profile.html:120
 #: main/templates/verified/verified_display.html:25
 msgid "Telephone Fixe"
 msgstr ""
@@ -1633,111 +1692,118 @@ msgstr ""
 msgid "Rechercher"
 msgstr ""
 
-#: main/templates/profile/user_profile.html:11
+#: main/templates/profile/user_profile.html:13
 msgid "Gestion du profil"
 msgstr ""
 
-#: main/templates/profile/user_profile.html:17
+#: main/templates/profile/user_profile.html:19
 msgid "Profil"
 msgstr ""
 
-#: main/templates/profile/user_profile.html:19
-#: main/templates/profile/user_profile.html:77
-#: main/templates/profile/user_profile.html:81
+#: main/templates/profile/user_profile.html:21
+#: main/templates/profile/user_profile.html:79
+#: main/templates/profile/user_profile.html:83
 #: main/templates/templatetags/favorites.html:4
 msgid "Favoris"
 msgstr ""
 
-#: main/templates/profile/user_profile.html:20
+#: main/templates/profile/user_profile.html:22
 msgid "Mon Réseau"
 msgstr ""
 
-#: main/templates/profile/user_profile.html:21
+#: main/templates/profile/user_profile.html:23
 #: main/templates/templatetags/ignored_list.html:5
 msgid "Utilisateurs ignorés"
 msgstr ""
 
-#: main/templates/profile/user_profile.html:22
-#: main/templates/statistics/statistics.html:4 templates/base.html:401
-msgid "Statistiques"
-msgstr ""
-
-#: main/templates/profile/user_profile.html:37
+#: main/templates/profile/user_profile.html:39
 msgid ""
 "Êtes vous sur de vouloir Ignorer cette personne ? elle sera supprimée de vos "
 "favoris et de votre réseau et vous ne recevrez plus d&#39;aide de celle-ci."
 msgstr ""
 
-#: main/templates/profile/user_profile.html:41
+#: main/templates/profile/user_profile.html:43
 msgid "Confirmer"
 msgstr ""
 
-#: main/templates/profile/user_profile.html:66
+#: main/templates/profile/user_profile.html:68
 msgid "Ignorer cette personne"
 msgstr ""
 
-#: main/templates/profile/user_profile.html:76
+#: main/templates/profile/user_profile.html:78
 msgid "Retirer cette personne de vos favoris."
 msgstr ""
 
-#: main/templates/profile/user_profile.html:80
+#: main/templates/profile/user_profile.html:82
 msgid "Ajouter cette personne à vos favoris."
 msgstr ""
 
-#: main/templates/profile/user_profile.html:88
-#: main/templates/profile/user_profile.html:389
+#: main/templates/profile/user_profile.html:90
+#: main/templates/profile/user_profile.html:431
 msgid "Retirer de mon réseau"
 msgstr ""
 
-#: main/templates/profile/user_profile.html:90
-#: main/templates/profile/user_profile.html:240
-#: main/templates/profile/user_profile.html:368
+#: main/templates/profile/user_profile.html:92
+#: main/templates/profile/user_profile.html:282
+#: main/templates/profile/user_profile.html:410
 msgid "Ajouter à mon réseau"
 msgstr ""
 
-#: main/templates/profile/user_profile.html:106
+#: main/templates/profile/user_profile.html:109
 #: main/templates/verified/verified_display.html:19
 msgid "Date d'inscription"
 msgstr ""
 
-#: main/templates/profile/user_profile.html:108
+#: main/templates/profile/user_profile.html:111
 #: main/templates/verified/verified_display.html:20
 msgid "Email"
 msgstr ""
 
-#: main/templates/profile/user_profile.html:112
+#: main/templates/profile/user_profile.html:123
 msgid "Telephone Mobile"
 msgstr ""
 
-#: main/templates/profile/user_profile.html:118
-msgid "Données professionnelles"
-msgstr ""
-
-#: main/templates/profile/user_profile.html:122
-msgid "Profession"
-msgstr ""
-
-#: main/templates/profile/user_profile.html:127
-msgid "Site web"
+#: main/templates/profile/user_profile.html:126
+msgid "Recevoir aide et demande"
 msgstr ""
 
 #: main/templates/profile/user_profile.html:132
-msgid "Réseaux sociaux"
+msgid "Type de permis"
+msgstr ""
+
+#: main/templates/profile/user_profile.html:135
+msgid "Possibilité de chaise roulante"
 msgstr ""
 
 #: main/templates/profile/user_profile.html:146
-msgid "Contacts d'urgence"
+msgid "Données professionnelles"
+msgstr ""
+
+#: main/templates/profile/user_profile.html:150
+msgid "Profession"
+msgstr ""
+
+#: main/templates/profile/user_profile.html:155
+msgid "Site web"
 msgstr ""
 
 #: main/templates/profile/user_profile.html:160
+msgid "Réseaux sociaux"
+msgstr ""
+
+#: main/templates/profile/user_profile.html:174
+msgid "Contacts d'urgence"
+msgstr ""
+
+#: main/templates/profile/user_profile.html:188
 msgid "Priorité"
 msgstr ""
 
-#: main/templates/profile/user_profile.html:189
+#: main/templates/profile/user_profile.html:231
 msgid "Ajouter un nouveau membre à mes favoris"
 msgstr ""
 
-#: main/templates/profile/user_profile.html:194
+#: main/templates/profile/user_profile.html:236
 msgid ""
 "\n"
 "          Ajouter des membres en favoris vous permet de restreindre vos "
@@ -1745,15 +1811,15 @@ msgid ""
 "          "
 msgstr ""
 
-#: main/templates/profile/user_profile.html:205
+#: main/templates/profile/user_profile.html:247
 msgid "Ajouter à mes favoris"
 msgstr ""
 
-#: main/templates/profile/user_profile.html:224
+#: main/templates/profile/user_profile.html:266
 msgid "Ajouter un nouveau membre à mon réseau personnel"
 msgstr ""
 
-#: main/templates/profile/user_profile.html:229
+#: main/templates/profile/user_profile.html:271
 msgid ""
 "\n"
 "          Ajouter des membres à votre réseau personnel leur donne accès à "
@@ -1761,51 +1827,51 @@ msgid ""
 "          "
 msgstr ""
 
-#: main/templates/profile/user_profile.html:259
+#: main/templates/profile/user_profile.html:301
 msgid "Ignorer un utilisateur"
 msgstr ""
 
-#: main/templates/profile/user_profile.html:264
+#: main/templates/profile/user_profile.html:306
 msgid ""
 "\n"
 "          Ignorer un utilisateur l'empêche de voir vos offres et demandes.\n"
 "          "
 msgstr ""
 
-#: main/templates/profile/user_profile.html:275
+#: main/templates/profile/user_profile.html:317
 msgid "Ajouter aux ignorés"
 msgstr ""
 
-#: main/templates/profile/user_profile.html:313
-#: main/templates/profile/user_profile.html:335
-#: main/templates/profile/user_profile.html:353
-#: main/templates/profile/user_profile.html:373
-#: main/templates/profile/user_profile.html:394
-#: main/templates/profile/user_profile.html:412
+#: main/templates/profile/user_profile.html:355
+#: main/templates/profile/user_profile.html:377
+#: main/templates/profile/user_profile.html:395
+#: main/templates/profile/user_profile.html:415
+#: main/templates/profile/user_profile.html:436
+#: main/templates/profile/user_profile.html:454
 msgid "Notification"
 msgstr ""
 
-#: main/templates/profile/user_profile.html:315
-#: main/templates/profile/user_profile.html:375
+#: main/templates/profile/user_profile.html:357
+#: main/templates/profile/user_profile.html:417
 msgid "supprimé"
 msgstr ""
 
-#: main/templates/profile/user_profile.html:337
-#: main/templates/profile/user_profile.html:396
+#: main/templates/profile/user_profile.html:379
+#: main/templates/profile/user_profile.html:438
 msgid "ajouté"
 msgstr ""
 
-#: main/templates/profile/user_profile.html:355
-#: main/templates/profile/user_profile.html:414
+#: main/templates/profile/user_profile.html:397
+#: main/templates/profile/user_profile.html:456
 msgid "Impossible d'ajouter l'utilisateur:"
 msgstr ""
 
-#: main/templates/profile/user_profile.html:355
-#: main/templates/profile/user_profile.html:414
+#: main/templates/profile/user_profile.html:397
+#: main/templates/profile/user_profile.html:456
 msgid "Vous avez ignoré ce dernier."
 msgstr ""
 
-#: main/templates/profile/user_profile.html:436
+#: main/templates/profile/user_profile.html:478
 msgid "bloqué"
 msgstr ""
 
@@ -1959,12 +2025,12 @@ msgid "M'inscrire"
 msgstr ""
 
 #: main/templates/search/job.html:5 main/templates/search/job.html.py:8
-#: templates/base.html:355
+#: templates/base.html:356
 msgid "Rechercher un job"
 msgstr ""
 
 #: main/templates/search/job.html:36
-#: main/templates/verified/verified_profile.html:119
+#: main/templates/verified/verified_profile.html:116
 msgid "Continuer"
 msgstr ""
 
@@ -1987,50 +2053,65 @@ msgstr ""
 msgid "Chercher des demandes intéressantes"
 msgstr ""
 
-#: main/templates/statistics/statistics.html:15
-msgid "Statistiques globales"
+#: main/templates/statistics/branch_statistics.html:15
+msgid "Statistiques de la branche"
 msgstr ""
 
+#: main/templates/statistics/branch_statistics.html:25
 #: main/templates/statistics/statistics.html:25
 msgid "Nombre de comptes créés"
 msgstr ""
 
+#: main/templates/statistics/branch_statistics.html:38
 #: main/templates/statistics/statistics.html:38
 msgid "Types de comptes"
 msgstr ""
 
+#: main/templates/statistics/branch_statistics.html:42
+#: main/templates/statistics/branch_statistics.html:75
 #: main/templates/statistics/statistics.html:42
 #: main/templates/statistics/statistics.html:75
 msgid "Légende"
 msgstr ""
 
+#: main/templates/statistics/branch_statistics.html:45
 #: main/templates/statistics/statistics.html:45
 msgid "Membres"
 msgstr ""
 
+#: main/templates/statistics/branch_statistics.html:48
 #: main/templates/statistics/statistics.html:48
 msgid "Membres vérifiés"
 msgstr ""
 
+#: main/templates/statistics/branch_statistics.html:51
 #: main/templates/statistics/statistics.html:51
 msgid "Non-membres"
 msgstr ""
 
+#: main/templates/statistics/branch_statistics.html:71
 #: main/templates/statistics/statistics.html:71
 msgid "Statut des utilisateurs"
 msgstr ""
 
+#: main/templates/statistics/branch_statistics.html:78
 #: main/templates/statistics/statistics.html:78
 msgid "Actifs"
 msgstr ""
 
+#: main/templates/statistics/branch_statistics.html:84
 #: main/templates/statistics/statistics.html:84
 msgid "Désactivés"
 msgstr ""
 
+#: main/templates/statistics/branch_statistics.html:100
 #: main/templates/statistics/statistics.html:100
 #: main/templates/templatetags/user_stats.html:14
 msgid "Types de jobs effectués"
+msgstr ""
+
+#: main/templates/statistics/statistics.html:15
+msgid "Statistiques globales"
 msgstr ""
 
 #: main/templates/statistics/users_statistics.html:4
@@ -2087,46 +2168,42 @@ msgid "Tâches offertes"
 msgstr ""
 
 #: main/templates/verified/verified_display.html:29
-msgid "Tâches demandées"
-msgstr ""
-
-#: main/templates/verified/verified_display.html:30
 msgid "Recevoir messages par"
 msgstr ""
 
-#: main/templates/verified/verified_display.html:31
+#: main/templates/verified/verified_display.html:30
 msgid "Recevoir les offres et les demandes par"
 msgstr ""
 
-#: main/templates/verified/verified_display.html:39
+#: main/templates/verified/verified_display.html:38
 msgid "Permis"
 msgstr ""
 
-#: main/templates/verified/verified_display.html:40
+#: main/templates/verified/verified_display.html:39
 msgid "Peut transporter une personne en chaise roulante"
 msgstr ""
 
-#: main/templates/verified/verified_display.html:48
+#: main/templates/verified/verified_display.html:47
 msgid "Lettre de recommandation n°1"
 msgstr ""
 
-#: main/templates/verified/verified_display.html:49
+#: main/templates/verified/verified_display.html:48
 msgid "Lettre de recommandation n°2"
 msgstr ""
 
-#: main/templates/verified/verified_display.html:50
+#: main/templates/verified/verified_display.html:49
 msgid "Casier judiciare"
 msgstr ""
 
-#: main/templates/verified/verified_display.html:56
+#: main/templates/verified/verified_display.html:55
 msgid "Fixer un rendez vous"
 msgstr ""
 
-#: main/templates/verified/verified_display.html:59
+#: main/templates/verified/verified_display.html:58
 msgid "Accorder le statut de membre vérifié"
 msgstr ""
 
-#: main/templates/verified/verified_display.html:62
+#: main/templates/verified/verified_display.html:61
 msgid "Refuser la demande"
 msgstr ""
 
@@ -2190,53 +2267,126 @@ msgstr ""
 msgid "Impossible de se connecter."
 msgstr ""
 
-#: main/views.py:171 main/views.py:322
+#: main/views.py:112
+msgid "Vous êtes pas autoriser à consulter ce profil"
+msgstr ""
+
+#: main/views.py:189 main/views.py:340
 msgid "Profil modifié avec succès !"
 msgstr ""
 
-#: main/views.py:208
+#: main/views.py:226
 msgid "Modification sauvegardée"
 msgstr ""
 
-#: main/views.py:232 main/views.py:248
+#: main/views.py:250 main/views.py:266
 msgid "Accord du status de membre vérifié"
 msgstr ""
 
-#: main/views.py:233
+#: main/views.py:251
 msgid "Le status de membre vérifié vous a été accordé ! Félicitations."
 msgstr ""
 
-#: main/views.py:235
+#: main/views.py:253
 msgid "Droit accordé"
 msgstr ""
 
-#: main/views.py:249
+#: main/views.py:267
 msgid ""
 "Le status de membre vérifié vous a été refusé. Pour plus d'informations, "
 "contactez l'officier responsable de votre branche."
 msgstr ""
 
-#: main/views.py:251
+#: main/views.py:269
 msgid "Droit refusé et demande supprimée"
 msgstr ""
 
-#: main/views.py:676
+#: main/views.py:711
 msgid "Cadeau de : "
+msgstr ""
+
+#: news/models.py:10
+msgid "Titre de l'article"
+msgstr ""
+
+#: news/models.py:12
+msgid "Corps de l'article"
+msgstr ""
+
+#: news/models.py:14
+msgid "Date de publication désirée"
+msgstr ""
+
+#: news/models.py:15
+msgid "Date de fin de publication (laisser vide si aucune expiration voulue)"
+msgstr ""
+
+#: news/templates/add.html:5 news/templates/news.html:5
+#: templates/base.html:387
+msgid "News"
+msgstr ""
+
+#: news/templates/add.html:15
+msgid "Modifier une news"
+msgstr ""
+
+#: news/templates/add.html:17
+msgid "Ajouter une news"
+msgstr ""
+
+#: news/templates/news.html:12
+msgid "Créer une news"
+msgstr ""
+
+#: news/templates/news.html:29
+msgid "Lire la suite"
+msgstr ""
+
+#: news/templates/news.html:30
+msgid "&Eacute;crit le"
+msgstr ""
+
+#: news/templates/news.html:30 news/templates/read.html:23
+msgid "par"
+msgstr ""
+
+#: news/templates/read.html:23
+msgid "&Eacute;crit le "
+msgstr ""
+
+#: news/views.py:28
+msgid "Votre news a été créee."
+msgstr ""
+
+#: news/views.py:31
+msgid "Un problème s'est déroulé lors de la création de la news."
+msgstr ""
+
+#: news/views.py:53
+msgid "Vous n'avez pas pas le droit de modifier cette news."
+msgstr ""
+
+#: news/views.py:64
+msgid "Votre news a été modifiée."
+msgstr ""
+
+#: news/views.py:68
+msgid "Un problème s'est déroulé lors de la modification de la news."
 msgstr ""
 
 #: templates/base.html:58
 msgid "Activer/désactiver le menu de navigation"
 msgstr ""
 
-#: templates/base.html:152 templates/base.html.py:366
+#: templates/base.html:152 templates/base.html.py:367
 msgid "Inbox"
 msgstr ""
 
-#: templates/base.html:155 templates/base.html.py:375
+#: templates/base.html:155 templates/base.html.py:376
 msgid "Archives"
 msgstr ""
 
-#: templates/base.html:156 templates/base.html.py:378
+#: templates/base.html:156 templates/base.html.py:379
 msgid "Trash"
 msgstr ""
 
@@ -2248,19 +2398,19 @@ msgstr ""
 msgid "Se connecter"
 msgstr ""
 
-#: templates/base.html:192 templates/base.html.py:324 templates/base.html:328
+#: templates/base.html:192 templates/base.html.py:325 templates/base.html:329
 msgid "Mon Profil"
 msgstr ""
 
-#: templates/base.html:195 templates/base.html.py:333
+#: templates/base.html:195 templates/base.html.py:334
 msgid "Devenir vérifié"
 msgstr ""
 
-#: templates/base.html:200 templates/base.html.py:343
+#: templates/base.html:200 templates/base.html.py:344
 msgid "Administration"
 msgstr ""
 
-#: templates/base.html:203 templates/base.html.py:347
+#: templates/base.html:203 templates/base.html.py:348
 msgid "Se déconnecter"
 msgstr ""
 
@@ -2280,14 +2430,10 @@ msgstr ""
 msgid "En tant que superuser, vous voyez toutes les branches"
 msgstr ""
 
-#: templates/base.html:363
+#: templates/base.html:364
 msgid "Messages"
 msgstr ""
 
-#: templates/base.html:386
-msgid "News"
-msgstr ""
-
-#: templates/base.html:393
+#: templates/base.html:394
 msgid "Aide"
 msgstr ""

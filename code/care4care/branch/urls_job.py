@@ -37,4 +37,26 @@ urlpatterns = patterns('',
                        url(r'^volunteer/forced/demand/(?P<demand_id>\d+)/$',
                             ForceCreateVolunteerView.as_view(),
                             name='force_volunteer_demand'),
+
+                       # Stats
+                       url(r'^statistics/(?P<user_id>\d+)/$',
+                       'main.views.branch_statistics',
+                       name='stats_branch'),
+
+                       url(r'^branch_stats_reg_users_json/(?P<user_id>\d+)/$',
+                       'main.views.get_branch_reg_users_json_view',
+                       name='stats_branch_reg_users_json'),
+
+                       url(r'^branch_stats_account_types_json/(?P<user_id>\d+)/$',
+                       'main.views.get_branch_account_types_json_view',
+                       name='stats_branch_account_types_json'),
+
+                       url(r'^branch_stats_user_status_json/(?P<user_id>\d+)/$',
+                       'main.views.get_branch_user_status_json_view',
+                       name='stats_branch_user_status_json'),
+
+                       url(r'^branch_stats_job_categories_json/(?P<user_id>\d+)/$',
+                       'main.views.get_branch_job_categories_json_view',
+                       name='stats_branch_job_categories_json'),
                        )
+

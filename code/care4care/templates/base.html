@@ -320,6 +320,7 @@
                   <li class="sub-menu">
                     <a href="javascript:;" >
                       <i class="fa fa-user"></i>
+
                       <span>{% trans "Mon Profil" %}</span>
                     </a>
 
@@ -380,7 +381,7 @@
                   {% endif %}
 
                   <li class="sub-menu">
-                      <a href="javascript:;" >
+                      <a href="{% url "news_home" %}" >
                           <i class="fa fa-cogs"></i>
                           <span>{% trans "News" %}</span>
                       </a>

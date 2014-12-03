@@ -6,11 +6,11 @@ from django.contrib import messages
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.detail import DetailView
 
-from branch.models import Branch, BranchMembers, Demand, Offer, Comment, DemandProposition
+from branch.models import Branch, BranchMembers, Demand, Offer, Comment, DemandProposition, SuccessDemand
 from main.models import User, VerifiedInformation, JobCategory, MemberType
 
 from branch.forms import CreateBranchForm, ChooseBranchForm, OfferHelpForm, NeedHelpForm, \
-            CommentForm, UpdateNeedHelpForm, VolunteerForm, ForceVolunteerForm
+            CommentForm, UpdateNeedHelpForm, VolunteerForm, ForceVolunteerForm, SuccessDemandForm
 from django.utils import timezone
 from django.core.urlresolvers import reverse
 from django.utils import formats
@@ -92,7 +92,10 @@ def branch_join(request):
         if form.is_valid():
             br_id = form.cleaned_data['id']
             branch = Branch.objects.get(pk=br_id)
-            if BranchMembers.objects.filter(branch=branch, user=user).count() > 0:
+            if user in branch.banned.all():
+                messages.add_message(request, messages.INFO, _('Vous avez été banni de la branche {branch} et ne pouvez pas la rejoindre').format(branch=branch))
+
+            elif BranchMembers.objects.filter(branch=branch, user=user).count() > 0:
                 messages.add_message(request, messages.INFO, _('Vous êtes déjà dans la branche {branch}').format(branch=branch))
             else:
                 obj = BranchMembers(branch=branch, user=user, is_admin=False, joined=timezone.now())
@@ -111,16 +114,54 @@ def branch_leave(request, branch_id, user_id):
         try:
             to_remove = BranchMembers.objects.get(branch=branch_id, user=user_id)
             to_remove.delete()
-            if user != request.user:
-                messages.add_message(request, messages.INFO, _('Vous avez quitté la branche {branch}').format(branch=branch))
-            else:
-                messages.add_message(request, messages.INFO, _('{user} a été retiré de la branche {branch}').format(branch=branch, user=user))
+            messages.add_message(request, messages.INFO, _('Vous avez quitté la branche {branch}').format(branch=branch))
         except:
             pass
     else :
         return refuse(request)
     
     return redirect('home')
+
+@login_required
+def branch_ban(request, branch_id, user_id):
+    branch = get_object_or_404(Branch, pk=branch_id)
+    user = get_object_or_404(User, pk=user_id)
+
+    if can_manage(user, request.user) and user.id != branch.creator :
+        try:
+            to_remove = BranchMembers.objects.get(branch=branch_id, user=user_id)
+            to_remove.delete()
+            branch.banned.add(to_remove.user)
+            subject = _('Bannissement de la branche %s' % branch.name)
+            body = _('Vous avez été banni de la branche %s. Vous ne pouvez à présent plus rejoindre cette branche. Pour plus d\'informations, contactez un adminstrateur ou l\'officier en charge de la branche en question' % branch.name)
+            pm_write(request.user, user, subject, body)
+            messages.add_message(request, messages.INFO, _('{user} a été banni de la branche {branch}').format(branch=branch, user=user))
+        except:
+            pass
+    else :
+        return refuse(request)
+    
+    return redirect(branch.get_absolute_url())
+
+@login_required
+def branch_unban(request, branch_id, user_id):
+    branch = get_object_or_404(Branch, pk=branch_id)
+    user = get_object_or_404(User, pk=user_id)
+
+    if can_manage(user, request.user) and user.id != branch.creator :
+        try:
+            to_unban = User.objects.get(id=user_id)
+            branch.banned.remove(to_unban)
+            subject = _('Annulation du bannissement de la branche %s' % branch.name)
+            body = _('Nous avons annulé le bannissement de la branche %s vous concernant. Vous pouvez à présent rejoindre cette branche si vous le souhaitez.' % branch.name)
+            pm_write(request.user, user, subject, body)
+            messages.add_message(request, messages.INFO, _('le bannissement de {user} dans la branche {branch} a été annulé').format(branch=branch, user=user))
+        except:
+            pass
+    else :
+        return refuse(request)
+    
+    return redirect(branch.get_absolute_url())
 
 @login_required
 def branch_promote(request, branch_id, user_id):
@@ -517,5 +558,41 @@ class ForceCreateVolunteerView(CreateVolunteerView):
         demand = Demand.objects.get(pk=self.kwargs['demand_id'])
         form.instance.demand = demand
         return super(CreateVolunteerView, self).form_valid(form) #correct
+
+class CreateSuccessDemand(CreateView):
+    form_class = SuccessDemandForm
+    template_name = 'job/success_demand.html'
+    model = SuccessDemand
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(CreateSuccessDemand, self).dispatch(*args, **kwargs)
+
+    def form_valid(self, form):
+        demand = Demand.objects.get(pk=self.kwargs['demand_id'])
+        form.instance.demand = demand
+        form.instance.asked_by = demand.donor
+        form.instance.ask_to = demand.receiver
+        demand.success_fill = True
+        demand.save()
+        return super(CreateSuccessDemand, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateSuccessDemand, self).get_context_data(**kwargs)
+        context['demand'] = Demand.objects.get(pk=self.kwargs['demand_id'])
+        return context
+
+    def get_success_url(self):
+        messages.add_message(self.request, messages.INFO, _('Demande envoyée'))
+        return reverse('home')
+
+
+
+
+
+
+
+
+
 
 

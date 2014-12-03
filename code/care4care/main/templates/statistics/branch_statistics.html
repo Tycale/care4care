@@ -7,12 +7,11 @@
 <div id="stats">
 	{% load staticfiles %}
 	<script src="{% static "js/statistics.js" %}"></script>
-	<script src="{% static "js/global_stats.js" %}"></script>
 	<link rel="stylesheet" type="text/css" href="{% static "css/statistics.css" %}" />
 
 	<h2>
 		<i class="fa fa-angle-right"></i>
-		{% trans "Statistiques globales" %}
+		{% trans "Statistiques de la branche" %} {{ branch.name }}
 	</h2>
 
 
@@ -24,7 +23,7 @@
 			  			<i class="fa fa-angle-right"></i>
 			  			{% trans "Nombre de comptes créés" %}
 			  		</h4>
-					<canvas id="global_registration" width="475" height="200"></canvas>
+					<canvas id="branch_registrated_users" width="475" height="200"></canvas>
 				</div>
 			</div>
 		</div>
@@ -106,4 +105,17 @@
 	</div>
 
 </div>
+<script type="application/javascript">
+var branch_reg_user_url = "{% url 'stats_branch_reg_users_json' branch_id=branch.id slug=branch.slug user_id=request.user.id %}";
+var branch_account_types_url = "{% url 'stats_branch_account_types_json' branch_id=branch.id slug=branch.slug user_id=request.user.id %}";
+var branch_user_status_url = "{% url 'stats_branch_user_status_json' branch_id=branch.id slug=branch.slug user_id=request.user.id %}";
+var branch_job_categories_url = "{% url 'stats_branch_job_categories_json' branch_id=branch.id slug=branch.slug user_id=request.user.id %}";
+
+$(document).ready(function(){
+	create_chart(branch_reg_user_url, "branch_registrated_users", "Line");
+	create_chart(branch_account_types_url, "account_types", "Doughnut");
+	create_chart(branch_user_status_url, "users_status_canvas", "Doughnut");
+	create_chart(branch_job_categories_url, "job_categories", "Radar");
+});
+</script>
 {% endblock %}

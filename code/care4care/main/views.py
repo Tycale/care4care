@@ -25,7 +25,7 @@ from django.views.generic.detail import DetailView
 from django.core import serializers
 
 
-from ajax.views import *
+from main.ajax.views import *
 import sys
 from os.path import abspath, dirname
 import datetime
@@ -118,8 +118,26 @@ def user_profile(request, user_id):
     """ Get profile from a user"""
     user_to_display = get_object_or_404(User, pk=user_id)
     user = request.user
+    in_other_network = False
+    in_other_ignore_list = False
+    can_manage_user = False
 
     if user.is_authenticated():
+
+        if request.user.id != user_to_display.id:
+            if request.user in user_to_display.personal_network.all():
+                in_other_network = True
+            if request.user in user_to_display.ignore_list.all():
+                in_other_ignore_list = True
+            if can_manage(user_to_display,user):
+                can_manage_user = True
+        else:
+            can_manage_user = True
+
+        if in_other_ignore_list:
+            messages.add_message(request, messages.INFO, _('Vous êtes pas autoriser à consulter ce profil'))
+            return redirect('home')
+
         pending_demands = Demand.objects.filter(donor=user_to_display)
         is_my_friend = False
         is_in_my_network = False
@@ -503,104 +521,161 @@ def similar_offers(request):
 
 def statistics(request):
     # Account status color
-    ACTIVE_COLOR_HEX = Statistics.ACTIVE_COLOR_HEX
-    ON_HOLIDAY_COLOR_HEX = Statistics.ON_HOLIDAY_COLOR_HEX
-    UNSUBSCRIBED_COLOR_HEX = Statistics.UNSUBSCRIBED_COLOR_HEX
+    ACTIVE_COLOR = ACTIVE_COLOR_HEX
+    ON_HOLIDAY_COLOR = ON_HOLIDAY_COLOR_HEX
+    UNSUBSCRIBED_COLOR = UNSUBSCRIBED_COLOR_HEX
 
     # Account types colors
-    MEMBER_COLOR_HEX = Statistics.MEMBER_COLOR_HEX
-    VERIFIED_MEMBER_COLOR_HEX = Statistics.VERIFIED_MEMBER_COLOR_HEX
-    NON_MEMBER_COLOR_HEX = Statistics.NON_MEMBER_COLOR_HEX
+    MEMBER_COLOR = MEMBER_COLOR_HEX
+    VERIFIED_MEMBER_COLOR = VERIFIED_MEMBER_COLOR_HEX
+    NON_MEMBER_COLOR = NON_MEMBER_COLOR_HEX
 
     return render(request, 'statistics/statistics.html', locals())
 
 # Return json-type HttpResponse from method() result
-def get_json_from(method):
-    return HttpResponse(method, content_type="application/json")
+def get_json_from(text):
+    return HttpResponse(text, content_type="application/json")
 
 PERMISSION_DENIED = "Permission denied. This event will be reported."
 
 
+# Global statistics
+
 @login_required
-def get_job_categories_json_branch(request,branch_id):
+def get_job_categories_json_branch_view(request, branch_id):
     if not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
-    return get_json_from(Statistics.get_job_categories_json_branch(branch_id))
+    return get_json_from(get_job_categories_json_branch(branch_id))
 
 @login_required
-def get_registrated_users_json_branch(request,branch_id):
+def get_registrated_users_json_branch_view(request, branch_id):
     if not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
-    return get_json_from(Statistics.get_users_registrated_json_branch(branch_id))
+    return get_json_from(get_users_registrated_json_branch(branch_id))
 
 @login_required
-def get_registrated_users_json(request):
+def get_registrated_users_json_view(request):
     if not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
-    return get_json_from(Statistics.get_users_registrated_json())
-
+    return get_json_from(get_users_registrated_json())
 
 @login_required
-def get_account_types_json(request):
+def get_account_types_json_view(request):
     if not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
-    return get_json_from(Statistics.get_account_types_json())
+    return get_json_from(get_account_types_json())
+
+
+# Branch statistics
+@login_required
+def branch_statistics(request, branch_id, slug, user_id):
+    # Account status color
+    ACTIVE_COLOR = ACTIVE_COLOR_HEX
+    ON_HOLIDAY_COLOR = ON_HOLIDAY_COLOR_HEX
+    UNSUBSCRIBED_COLOR = UNSUBSCRIBED_COLOR_HEX
+
+    # Account types colors
+    MEMBER_COLOR = MEMBER_COLOR_HEX
+    VERIFIED_MEMBER_COLOR = VERIFIED_MEMBER_COLOR_HEX
+    NON_MEMBER_COLOR = NON_MEMBER_COLOR_HEX
+
+    branch = get_object_or_404(Branch, pk=branch_id)
+
+    return render(request, 'statistics/branch_statistics.html', locals())
 
 
 @login_required
-def get_users_status_json(request):
+def get_branch_reg_users_json_view(request, branch_id, slug, user_id):
+    print('get_branch_reg_users_json_view')
+    branch = get_object_or_404(Branch, pk=branch_id)
+    if not is_branch_admin(request.user, branch) or not request.user.is_superuser:
+        return HttpResponse(PERMISSION_DENIED, status=401)
+    return get_json_from(get_branch_users_registrated_json(branch_id))
+
+
+@login_required
+def get_branch_account_types_json_view(request, branch_id, slug, user_id):
+    print('get_branch_account_types_json_view')
+    branch = get_object_or_404(Branch, pk=branch_id)
+    if not is_branch_admin(request.user, branch) or not request.user.is_superuser:
+        return HttpResponse(PERMISSION_DENIED, status=401)
+    return get_json_from(get_branch_account_types_json(branch_id))
+
+
+@login_required
+def get_branch_user_status_json_view(request, branch_id, slug, user_id):
+    print('get_branch_user_status_json_view')
+    branch = get_object_or_404(Branch, pk=branch_id)
+    if not is_branch_admin(request.user, branch) or not request.user.is_superuser:
+        return HttpResponse(PERMISSION_DENIED, status=401)
+    return get_json_from(get_branch_user_status_json(branch_id))
+
+
+@login_required
+def get_branch_job_categories_json_view(request, branch_id, slug, user_id):
+    print('get_branch_job_categories_json_view')
+    branch = get_object_or_404(Branch, pk=branch_id)
+    if not is_branch_admin(request.user, branch) or not request.user.is_superuser:
+        return HttpResponse(PERMISSION_DENIED, status=401)
+    return get_json_from(get_branch_job_categories_json(branch_id))
+
+
+# Users statistics
+
+@login_required
+def get_users_status_json_view(request):
     if not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
 
-    return get_json_from(Statistics.get_users_status_json())
+    return get_json_from(get_users_status_json())
 
 
 @login_required
-def get_job_categories_json(request):
+def get_job_categories_json_view(request):
     if not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
 
-    return get_json_from(Statistics.get_job_categories_json())
+    return get_json_from(get_job_categories_json())
 
 
 @login_required
-def get_user_job_categories_json(request, user_id):
+def get_user_job_categories_json_view(request, user_id):
     if request.user.id != user_id and not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
 
-    return get_json_from(Statistics.get_user_job_categories_json(user_id))
+    return get_json_from(get_user_job_categories_json(user_id))
 
 
 @login_required
-def get_user_job_avg_time_json(request, user_id):
+def get_user_job_avg_time_json_view(request, user_id):
     if request.user.id != user_id and not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
 
-    return get_json_from(Statistics.get_user_job_avg_time_json(user_id))
+    return get_json_from(get_user_job_avg_time_json(user_id))
 
 
 @login_required
-def get_user_jobs_amount_json(request, user_id):
+def get_user_jobs_amount_json_view(request, user_id):
     if request.user.id != int(user_id) and not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
 
-    return get_json_from(Statistics.get_user_jobs_amount_json(user_id))
+    return get_json_from(get_user_jobs_amount_json(user_id))
 
 
 @login_required
-def get_user_time_amount_json(request, user_id):
+def get_user_time_amount_json_view(request, user_id):
     if request.user.id != int(user_id) and not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
 
-    return get_json_from(Statistics.get_user_time_amount_json(user_id))
+    return get_json_from(get_user_time_amount_json(user_id))
 
 
 @login_required
-def get_user_km_amount_json(request, user_id):
+def get_user_km_amount_json_view(request, user_id):
     if request.user.id != int(user_id) and not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
 
-    return get_json_from(Statistics.get_user_km_amount_json(user_id))
+    return get_json_from(get_user_km_amount_json(user_id))
 
 
 ### Search ###
