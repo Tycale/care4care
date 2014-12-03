@@ -76,9 +76,8 @@ def branch_home(request, branch_id, slug):
     demands = demands.up_to_date()
     offers = offers.up_to_date()
 
-    if not is_branch_admin:
-        demands = discriminate_demands(request, demands)
-        offers = discriminate_offers(request, offers)
+    demands = discriminate_demands(request, demands)
+    offers = discriminate_offers(request, offers)
 
     return render(request,'branch/branch_home.html', locals())
 
