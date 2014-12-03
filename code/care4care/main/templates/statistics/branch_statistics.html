@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}{% load i18n %}
+
+{% block title %}{% trans "Statistiques" %}{% endblock %}
+
+{% block content %}
+<div id="stats">
+	{% load staticfiles %}
+	<script src="{% static "js/statistics.js" %}"></script>
+	<script src="{% static "js/global_stats.js" %}"></script>
+	<link rel="stylesheet" type="text/css" href="{% static "css/statistics.css" %}" />
+
+	<h2>
+		<i class="fa fa-angle-right"></i>
+		{% trans "Statistiques de la branche" %}
+	</h2>
+
+
+	<div class="row">
+		<div class="col-md-6">
+			<div class="panel panel-default">
+			  	<div class="panel-body">
+			  		<h4>
+			  			<i class="fa fa-angle-right"></i>
+			  			{% trans "Nombre de comptes créés" %}
+			  		</h4>
+					<canvas id="global_registration" width="475" height="200"></canvas>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			<div class="panel panel-default">
+			  	<div class="panel-body">
+			  		<h4>
+			  			<div class="stats_title">
+			  				<i class="fa fa-angle-right"></i>
+			  				{% trans "Types de comptes" %}
+			  			</div>
+
+			  			<div class="legend_container">
+			  				{% trans "Légende" %}:
+			  				<ul>
+					            <li style="color: {{ MEMBER_COLOR_HEX }}">
+					            	{% trans "Membres" %}
+					            </li>
+					            <li style="color: {{ VERIFIED_MEMBER_COLOR_HEX }}">
+					            	{% trans "Membres vérifiés" %}
+					            </li>
+					            <li style="color: {{ NON_MEMBER_COLOR_HEX }}">
+					            	{% trans "Non-membres" %}
+					            </li>
+					        </ul>
+						</div>
+			  		</h4>
+
+					<canvas id="account_types" width="475" height="200"></canvas>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="col-md-6">
+			<div class="panel panel-default">
+			  	<div class="panel-body">
+		  			<h4>
+			  			<div class="stats_title">
+			  				<i class="fa fa-angle-right"></i>
+			  				{% trans "Statut des utilisateurs" %}
+			  			</div>
+
+			  			<div id="users_status_legend" class="legend_container">
+			  				{% trans "Légende" %}:
+			  				<ul>
+					            <li style="color: {{ ACTIVE_COLOR_HEX }}">
+					            	{% trans "Actifs" %}
+					            </li>
+					            <li style="color: {{ ON_HOLIDAY_COLOR_HEX }}">
+					            	{% trans "En vacances" %}
+					            </li>
+					            <li style="color: {{ UNSUBSCRIBED_COLOR_HEX }}">
+					            	{% trans "Désactivés" %}
+					            </li>
+					        </ul>
+						</div>
+			  		</h4>
+
+					<canvas id="users_status_canvas" width="475" height="200"></canvas>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			<div class="panel panel-default">
+			  	<div class="panel-body">
+			  		<h4>
+			  			<i class="fa fa-angle-right"></i>
+			  			{% trans "Types de jobs effectués" %}
+			  		</h4>
+					<canvas id="job_categories" width="475" height="200"></canvas>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+{% endblock %}
