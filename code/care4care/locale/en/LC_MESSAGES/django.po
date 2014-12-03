@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-03 15:36+0000\n"
-"PO-Revision-Date: 2014-12-03 15:44+0000\n"
+"POT-Creation-Date: 2014-12-03 15:52+0000\n"
+"PO-Revision-Date: 2014-12-03 15:58+0000\n"
 "Last-Translator: b'vv vv <vv@vv.be>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -450,7 +450,8 @@ msgstr "offer"
 #: main/templates/profile/modify_emergency.html:25
 #: main/templates/profile/user_profile.html:99
 #: main/templates/profile/user_profile.html:187
-#: main/templates/profile/user_profile.html:196
+#: main/templates/profile/user_profile.html:196 news/templates/news.html:21
+#: news/templates/read.html:15
 msgid "Modifier"
 msgstr "Edit"
 
@@ -1747,12 +1748,10 @@ msgid "Telephone Mobile"
 msgstr "Phone number (home)"
 
 #: main/templates/profile/user_profile.html:124
-#| msgid "Recevoir les offres et les demandes par"
 msgid "Recevoir aide et demande"
 msgstr "Receive offer and demand"
 
 #: main/templates/profile/user_profile.html:130
-#| msgid "Types de comptes"
 msgid "Type de permis"
 msgstr "License type"
 
@@ -2294,23 +2293,38 @@ msgstr "Status refused and demand deleted"
 msgid "Cadeau de : "
 msgstr "Gift from :"
 
+#: news/models.py:10
+#| msgid "Offrir de l'aide"
+msgid "Titre de l'article"
+msgstr "Title"
+
+#: news/models.py:12
+msgid "Corps de l'article"
+msgstr "Body"
+
+#: news/models.py:14
+#| msgid "Date de création"
+msgid "Date de publication désirée"
+msgstr "Publication date"
+
+#: news/models.py:15
+msgid "Date de fin de publication (laisser vide si aucune expiration voulue)"
+msgstr "Expiration date (leave empty if no expiration desired)"
+
 #: news/templates/add.html:5 news/templates/news.html:5
 #: templates/base.html:387
 msgid "News"
 msgstr "News"
 
 #: news/templates/add.html:15
-#| msgid "Modifier"
 msgid "Modifier une news"
 msgstr "Edit news"
 
 #: news/templates/add.html:17
-#| msgid "Ajouter aux ignorés"
 msgid "Ajouter une news"
 msgstr "Add news"
 
 #: news/templates/news.html:12
-#| msgid "Créer une branche"
 msgid "Créer une news"
 msgstr "Create news"
 

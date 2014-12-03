@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-03 15:36+0000\n"
+"POT-Creation-Date: 2014-12-03 15:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -441,7 +441,8 @@ msgstr ""
 #: main/templates/profile/modify_emergency.html:25
 #: main/templates/profile/user_profile.html:99
 #: main/templates/profile/user_profile.html:187
-#: main/templates/profile/user_profile.html:196
+#: main/templates/profile/user_profile.html:196 news/templates/news.html:21
+#: news/templates/read.html:15
 msgid "Modifier"
 msgstr ""
 
@@ -2242,6 +2243,22 @@ msgstr ""
 
 #: main/views.py:693
 msgid "Cadeau de : "
+msgstr ""
+
+#: news/models.py:10
+msgid "Titre de l'article"
+msgstr ""
+
+#: news/models.py:12
+msgid "Corps de l'article"
+msgstr ""
+
+#: news/models.py:14
+msgid "Date de publication désirée"
+msgstr ""
+
+#: news/models.py:15
+msgid "Date de fin de publication (laisser vide si aucune expiration voulue)"
 msgstr ""
 
 #: news/templates/add.html:5 news/templates/news.html:5
