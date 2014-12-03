@@ -1,5 +1,7 @@
 from django.conf.urls import patterns, url, include
 
+from branch.views import CreateSuccessDemand
+
 urlpatterns = patterns(
     '',
     url(r'^new/$', 'branch.views.branch_create', name='branch_create'),
@@ -13,5 +15,11 @@ urlpatterns = patterns(
     url(r'^volunteer/(?P<volunteer_id>\d+)/accept/', 'branch.views.volunteer_accept', name='volunteer_accept'),
     url(r'^volunteer/(?P<volunteer_id>\d+)/decline/', 'branch.views.volunteer_decline', name='volunteer_decline'),
 
+    # success form
+    url(r'^volunteer/success/create/(?P<demand_id>\d+)/$',
+         CreateSuccessDemand.as_view(),
+         name='success_demand'),
+
+    
     url(r'^b/(?P<branch_id>\d+)/(?P<slug>[-\w\d]+)/jobs/', include('branch.urls_job')),
 )

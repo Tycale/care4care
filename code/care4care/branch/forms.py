@@ -3,7 +3,7 @@ from django.utils.translation import ugettext as _
 from bootstrap3_datetime.widgets import DateTimePicker
 from multiselectfield import MultiSelectField
 
-from branch.models import Branch, Demand, Offer, Comment, DemandProposition
+from branch.models import Branch, Demand, Offer, Comment, DemandProposition, SuccessDemand
 
 from django.utils import timezone
 from datetime import timedelta
@@ -113,5 +113,11 @@ class ForceVolunteerForm(forms.ModelForm):
     class Meta:
         model = DemandProposition
         fields = ['user', 'comment', 'km', 'time',]
+
+class SuccessDemandForm(forms.ModelForm):
+    class Meta:
+        model = SuccessDemand
+        fields = ['comment', 'time']
+
 
 
