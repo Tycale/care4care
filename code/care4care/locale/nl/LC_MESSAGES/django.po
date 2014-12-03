@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-03 14:29+0000\n"
+"POT-Creation-Date: 2014-12-03 14:59+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -115,15 +115,11 @@ msgstr ""
 msgid "Nom de la branche"
 msgstr ""
 
-#: branch/models.py:41
-msgid "Nom de la localité"
-msgstr ""
-
 #: branch/models.py:43
 msgid "Créateur de la branche"
 msgstr ""
 
-#: branch/models.py:44 branch/models.py:135
+#: branch/models.py:44 branch/models.py:136
 #: branch/templates/branch/branch_create.html:37
 #: branch/templates/job/need_help.html:45 main/models.py:190
 #: main/templates/profile/edit_profile.html:103
@@ -133,11 +129,11 @@ msgstr ""
 msgid "Adresse"
 msgstr ""
 
-#: branch/models.py:45 branch/models.py:136 main/models.py:191
+#: branch/models.py:45 branch/models.py:137 main/models.py:191
 msgid "Latitude"
 msgstr ""
 
-#: branch/models.py:46 branch/models.py:137 main/models.py:192
+#: branch/models.py:46 branch/models.py:138 main/models.py:192
 msgid "Longitude"
 msgstr ""
 
@@ -145,15 +141,19 @@ msgstr ""
 msgid "Membres de la branche"
 msgstr ""
 
-#: branch/models.py:68
+#: branch/models.py:48
+msgid "Membres bannis"
+msgstr ""
+
+#: branch/models.py:69
 msgid "date d'arrivé"
 msgstr ""
 
-#: branch/models.py:84
+#: branch/models.py:85
 msgid "Commentez"
 msgstr ""
 
-#: branch/models.py:85 branch/models.py:110
+#: branch/models.py:86 branch/models.py:111
 #: branch/templates/branch/branch_home.html:103
 #: branch/templates/job/details_demand.html:166
 #: branch/templates/job/details_offer.html:22
@@ -163,91 +163,91 @@ msgstr ""
 msgid "Date"
 msgstr ""
 
-#: branch/models.py:103 branch/templates/branch/branch_home.html:18
+#: branch/models.py:104 branch/templates/branch/branch_home.html:18
 #: branch/templates/templatetags/demands.html:14
 #: branch/templates/templatetags/offers.html:14
 msgid "Branche"
 msgstr ""
 
-#: branch/models.py:104
+#: branch/models.py:105
 msgid "Donneur"
 msgstr ""
 
-#: branch/models.py:105
+#: branch/models.py:106
 msgid "Receveur"
 msgstr ""
 
-#: branch/models.py:106 branch/templates/job/details_demand.html:171
+#: branch/models.py:107 branch/templates/job/details_demand.html:171
 #: branch/templates/job/details_offer.html:25
 msgid "Description"
 msgstr ""
 
-#: branch/models.py:107
+#: branch/models.py:108
 msgid "Type d'aide"
 msgstr ""
 
-#: branch/models.py:109
+#: branch/models.py:110
 msgid "Qui peut voir et répondre à la demande/offre ?"
 msgstr ""
 
-#: branch/models.py:111 branch/templates/job/details_demand.html:167
+#: branch/models.py:112 branch/templates/job/details_demand.html:167
 #: branch/templates/job/details_offer.html:23
 msgid "Heures de disponibilité"
 msgstr ""
 
-#: branch/models.py:111 branch/models.py:176
+#: branch/models.py:112 branch/models.py:177
 msgid "Selectionnez les heures qui vous conviennent"
 msgstr ""
 
-#: branch/models.py:134 branch/templates/templatetags/demands.html:16
+#: branch/models.py:135 branch/templates/templatetags/demands.html:16
 msgid "Titre"
 msgstr ""
 
-#: branch/models.py:138
+#: branch/models.py:139
 msgid "Temps estimé (en minutes)"
 msgstr ""
 
-#: branch/models.py:139
+#: branch/models.py:140
 msgid "Temps réel (en minutes)"
 msgstr ""
 
-#: branch/models.py:141
+#: branch/models.py:142
 msgid "Propositions"
 msgstr ""
 
-#: branch/models.py:142
+#: branch/models.py:143
 msgid "Vontaire assigné"
 msgstr ""
 
-#: branch/models.py:143 branch/models.py:175
+#: branch/models.py:144 branch/models.py:176
 msgid "Distance depuis domicile"
 msgstr ""
 
-#: branch/models.py:144
+#: branch/models.py:145
 msgid "Tâche finie avec succès"
 msgstr ""
 
-#: branch/models.py:172
+#: branch/models.py:173
 msgid "Commentaire (facultatif)"
 msgstr ""
 
-#: branch/models.py:173 branch/models.py:194
+#: branch/models.py:174 branch/models.py:195
 msgid "Date de création"
 msgstr ""
 
-#: branch/models.py:174
+#: branch/models.py:175
 msgid "Proposition acceptée"
 msgstr ""
 
-#: branch/models.py:176
+#: branch/models.py:177
 msgid "Heure(s) choisie(s)"
 msgstr ""
 
-#: branch/models.py:189 branch/templates/job/details_demand.html:94
+#: branch/models.py:190 branch/templates/job/details_demand.html:94
 msgid "Commentaire"
 msgstr ""
 
-#: branch/models.py:190
+#: branch/models.py:191
 msgid "Temps passé (en minutes)"
 msgstr ""
 
