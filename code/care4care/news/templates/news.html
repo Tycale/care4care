@@ -26,8 +26,8 @@
 		<div class="panel-body">
 			<p>{{ a.corps |truncatechars:140}}</p>
 
-			<a href="{{ a.get_absolute_url }}" class="btn btn-inverse btn-sm more pull-right">Lire la suite »</a>
-			<i class="pull-left author">&Eacute;crit le {{a.date_creation | date:"d/m/y"}} par {{ a.auteur.username | safe }}</i>
+			<a href="{{ a.get_absolute_url }}" class="btn btn-inverse btn-sm more pull-right">{% trans "Lire la suite" %} »</a>
+			<i class="pull-left author">{% trans "&Eacute;crit le" %} {{a.date_creation | date:"d/m/y"}} {% trans "par" %} {{ a.auteur.username | safe }}</i>
 		</div>
 	</div>
 	{% endfor %}

@@ -5,6 +5,8 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage
 from datetime import datetime
+from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as __
 
 def read(request, id, slug):
     a = get_object_or_404(News, id=id)
@@ -23,13 +25,13 @@ def add(request):
                 art.save()
 
 
-            messages.success(request, u'Votre news a été créee.')
+            messages.success(request, _("Votre news a été créee."))
             return redirect('news_home')
         else:
-            messages.error(request, u"Un problème s'est déroulé lors de la création de la news.")
+            messages.error(request, _("Un problème s'est déroulé lors de la création de la news."))
     else:
         if not request.user.is_superuser:
-            messages.info(request, u"""Vous devez être super utilisateur pour écrire une news""")
+            messages.info(request, u("Vous devez être super utilisateur pour écrire une news"))
         form = NewsForm(request.user)
     return render(request, 'add.html', locals())
 
@@ -48,7 +50,7 @@ def modify(request, id, slug):
     article = get_object_or_404(News, id=id)
     modify = True
     if  not request.user.is_superuser:
-        messages.error(request, u'Vous n\'avez pas pas le droit de modifier cette news.')
+        messages.error(request, _("Vous n\'avez pas pas le droit de modifier cette news."))
         return redirect('home')
 
     if request.method == "POST":
@@ -59,11 +61,11 @@ def modify(request, id, slug):
             v = form.save(commit=False)
             v.date_creation = datetime.now()
             v.save()
-            messages.success(request, u'Votre news a été modifiée.')
+            messages.success(request, _("Votre news a été modifiée."))
 
             return redirect('news_home')
         else:
-            messages.error(request, u"Un problème s'est déroulé lors de la modification de la news.")
+            messages.error(request, _("Un problème s'est déroulé lors de la modification de la news."))
     else:
         form = NewsForm(request.user, instance=article)
     return render(request, 'add.html', locals())
