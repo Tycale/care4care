@@ -62,6 +62,32 @@ def home(request):
 
     return render(request, 'main/home.html', locals())
 
+def help(request):
+    user = request.user
+
+    if user.is_authenticated():
+        branch_ids = [b.branch.id for b in user.membership.all()]
+        demands = Demand.objects.filter(branch__in=branch_ids).all()
+        offers = Offer.objects.filter(branch__in=branch_ids).all()
+    else :
+        demands = Demand.objects.all()
+        offers = Offer.objects.all()
+
+    date_now = timezone.now() + timezone.timedelta(hours=-24)
+
+    demands = demands.up_to_date()
+    offers = offers.up_to_date()
+
+    if user.is_authenticated():
+        demands = discriminate_demands(request, demands)
+        offers = discriminate_offers(request, offers)
+
+    nb_branch = Branch.objects.all().count()
+    branches = Branch.objects.all()
+    nb_users = User.objects.all().count()
+
+    return render(request, 'main/help.html', locals())
+
 def logout(request):
     _logout(request)
     messages.add_message(request, messages.INFO, _('Vous êtes désormais déconnecté.'))

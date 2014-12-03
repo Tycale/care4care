@@ -15,8 +15,12 @@
 				<div class="badge badge-popular">Welcome</div>
 				<div class="blog-title">{% trans "Pour bien commencer.." %}</div>
 			</div>
-			<div class="blog-text">
-				<p>{% trans "Explication du service" %}</p>
+			<div class="showback">
+				<h3>{% trans "Pour commencer à utiliser le site:" %}</h3>
+				<a href="{% url 'home' %}">{% trans "Cliquez ici" %}</a>
+				<h3>{% trans "Pour avoir de l'aide avant de commencer:" %}</h3>
+				<a href="{% url 'help' %}">{% trans "Cliquez ici" %}</a>
+				
 			</div>
 		</div>
 	</div><!-- col-lg-12-->      	

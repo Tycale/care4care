@@ -5,6 +5,7 @@ urlpatterns = patterns(
     url(r'^$', 'main.views.home', name='home'),
     url(r'^accounts/logout/$', 'main.views.logout', name='logout'),
     url(r'^accounts/login/$', 'main.views.login', name='login'),
+    url(r'^help$', 'main.views.help', name='help'),
 
     url(r'^accounts/', include('main.urls_register')),
     url(r'^accounts/', include('main.urls_profile')),
@@ -15,5 +16,4 @@ urlpatterns = patterns(
     url(r'^messages/', include('main.urls_postman')),
     url(r'^seek_jobs/', include('main.urls_seek_jobs')),
     url(r'^search/', include('main.urls_search')),
-
 )

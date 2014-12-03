@@ -2605,3 +2605,22 @@ textarea {
     margin-top: 22px;
 }
 
+.carousel-page{
+    width:100%;
+    height:400px;
+    background-color:#5f666d;
+    color:white;
+}
+.carousel-indicators li {
+    margin-bottom: -15px;
+    background-color: #669966;
+}
+.carousel-indicators .active {
+    margin-bottom: -15px;
+    background-color: rgba(53, 126, 189, 0.9);
+}
+.carousel-caption{
+    margin-bottom: -15px;
+    color:white;
+}
+
