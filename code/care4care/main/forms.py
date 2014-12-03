@@ -1,5 +1,6 @@
 from django import forms
 from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as __
 from django.utils import timezone
 from main.models import User, VerifiedInformation, EmergencyContact, JobType, MemberType
 from branch.models import Job, Branch, JobCategory, TIME_CHOICES
@@ -12,19 +13,19 @@ import datetime
 from django.template.defaultfilters import filesizeformat
 
 class CareRegistrationForm(forms.ModelForm):
-    first_name = forms.CharField(label=_("Prénom"),)
-    last_name = forms.CharField(label=_("Nom de famille"),)
+    first_name = forms.CharField(label=__("Prénom"),)
+    last_name = forms.CharField(label=__("Nom de famille"),)
     password1 = forms.CharField(widget=forms.PasswordInput,
-                                label=_("Mot de passe"))
+                                label=__("Mot de passe"))
     password2 = forms.CharField(widget=forms.PasswordInput,
-                                label=_("Mot de passe (à nouveau)"))
+                                label=__("Mot de passe (à nouveau)"))
 
-    birth_date = forms.DateField(label=_("Date de naissance"),
+    birth_date = forms.DateField(label=__("Date de naissance"),
                                  widget=SelectDateWidget(years=range(datetime.date.today().year-100, \
                                                                      datetime.date.today().year)),
                                  initial=datetime.date.today())
     id = forms.IntegerField(widget=forms.HiddenInput)
-    user_type = forms.ChoiceField(label=_("Type de compte"), choices = MemberType.MEMBER_TYPES[:-1])
+    user_type = forms.ChoiceField(label=__("Type de compte"), choices = MemberType.MEMBER_TYPES[:-1])
 
     class Meta:
         model = User
@@ -184,12 +185,12 @@ class EmergencyContactCreateForm(forms.ModelForm):
         exclude = ['user', 'latitude', 'longitude']
 
 class JobSearchForm(forms.Form):
-    job_type =  forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=JobType.JOB_TYPES, label = _("Type de job"))
-    category = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=JobCategory.JOB_CATEGORIES, label = _("Catégorie du job"))
-    date1 = forms.DateTimeField(required=False, label =_("A partir du"),widget=DateTimePicker(options={"pickTime": False,}))
-    date2 = forms.DateTimeField(required=False, label =_("jusqu'au"),widget=DateTimePicker(options={"pickTime": False,}))
-    receive_help_from_who = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=MemberType.MEMBER_TYPES_GROUP, label = _("Qui peut fournir son aide ?"))
-    time = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=TIME_CHOICES, label = _("A quelle heure ?"))
+    job_type =  forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=JobType.JOB_TYPES, label = __("Type de job"))
+    category = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=JobCategory.JOB_CATEGORIES, label = __("Catégorie du job"))
+    date1 = forms.DateTimeField(required=False, label =__("A partir du"),widget=DateTimePicker(options={"pickTime": False,}))
+    date2 = forms.DateTimeField(required=False, label =__("jusqu'au"),widget=DateTimePicker(options={"pickTime": False,}))
+    receive_help_from_who = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=MemberType.MEMBER_TYPES_GROUP, label = __("Qui peut fournir son aide ?"))
+    time = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=TIME_CHOICES, label = __("A quelle heure ?"))
 
     def clean(self):
         cleaned_data = super(JobSearchForm, self).clean()
@@ -204,9 +205,9 @@ class JobSearchForm(forms.Form):
                 raise forms.ValidationError(_("Incohérence dans les dates."))
 
 class GiftForm(forms.Form):
-    user = forms.CharField(label = _("Username"), widget=AutoCompleteWidget('user'))
-    amount = forms.IntegerField(label = _("Montant du temps (plus que 1)"), min_value=1, initial=60)
-    message = forms.CharField(required=False, widget=forms.Textarea, label = _("Message"))
+    user = forms.CharField(label = __("Username"), widget=AutoCompleteWidget('user'))
+    amount = forms.IntegerField(label = __("Montant du temps (plus que 1)"), min_value=1, initial=60)
+    message = forms.CharField(required=False, widget=forms.Textarea, label = __("Message"))
 
     def __init__(self, *args, **kwargs):
         self.ruser = kwargs.pop('ruser')
