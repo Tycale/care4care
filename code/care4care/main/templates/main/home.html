@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load bootstrap3 %}{% load i18n %}{% load jobs_extra %}{% load staticfiles %}
+{% load bootstrap3 %}{% load i18n %}{% load jobs_extra %}{% load staticfiles thumbnail %}
 
 {% block title %}{% trans "Accueil" %}{% endblock %}
 
@@ -26,6 +26,57 @@
             </div>
     </div>
 </div>
+
+{% if request.user.uservol.down_to_date.no_success.all %}
+<div class="row mt">
+    <div class="col-md-12">
+        <div class="content-panel">
+        <h4>{% trans "Jobs en attente de validation" %}</h4>
+        {% blocktrans %}
+        <p class="text-center">Ci-dessous la liste des jobs que vous devez confirmer</p>
+        {% endblocktrans %}
+        <table class="table table-striped table-advance table-hover rowlink">
+            <thead>
+                <tr>
+                    <th>{% trans "Photo" %}</th>
+                    <th>{% trans "Personne aidée" %}</th>
+                    <th>{% trans "Demande" %}</th>
+                    <th style="width: 190px">{% trans "Actions" %}</th>
+                </tr>
+            </thead>
+            <tbody data-link='row' data-target="a.mainlink">
+                {% for uv in request.user.uservol.down_to_date.no_success.all %}
+                <tr>
+                    <td>
+                    <a href="{{uv.demand.receiver.get_absolute_url}}">
+                    <img class="img-circle" src="{% thumbnail uv.demand.receiver.photo 40x40 crop %}" />
+                    </a>
+                    </td>
+                    <td>
+                        <a href="{{ uv.demand.receiver.get_absolute_url }}">
+                        {{ uv.demand.receiver.get_full_name }}
+                        </a>
+                    </td>
+                    <td><a href="{{ uv.demand.get_absolute_url }}">{{uv.demand.title}}</a></td>
+                    <td class="rowlink-skip">
+                        <a class="btn btn-primary btn-sm mainlink" href="{% url 'success_demand' uv.demand.id %}">
+                            {% bootstrap_icon "ok" %} {% trans "Gérer" %}
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                <td colspan="5" class="text-center text-info">
+                    {% trans "Aucun volontaire actuellement" %}
+                </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+{% endif %}
 
 <div class="row mt">
   <div class="col-md-6 col-sm-12 text-center"> <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#needHelpModal">{% trans "J'ai besoin d'aide" %}</button> </div>
