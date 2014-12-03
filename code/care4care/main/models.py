@@ -151,7 +151,6 @@ class VerifiedUser(models.Model):
     receive_help_from_who = models.IntegerField(choices=MemberType.MEMBER_TYPES_GROUP, default=MemberType.ALL,
                                         verbose_name=_("Recevoir des demandes et des offres de"))
     offered_job = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Quelles sont les tâches que vous souhaitez effectuer ?"), blank=True)
-    asked_job = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Quelles sont les tâches dont vous avez besoin ?"), blank=True)
 
     # TODO : Schedule time
 
@@ -169,11 +168,6 @@ class VerifiedUser(models.Model):
         if not self.offered_job:
             return ''
         return ', '.join([str(l[1]) for l in JobCategory.JOB_CATEGORIES if (str(l[0]) in self.offered_job)])
-
-    def get_verbose_asked_job(self):
-        if not self.asked_job:
-            return ''
-        return ', '.join([str(l[1]) for l in JobCategory.JOB_CATEGORIES if (str(l[0]) in self.asked_job)])
 
     def get_verbose_mail(self):
         return str(INFORMED_BY[self.mail_preferences][1])
