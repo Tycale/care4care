@@ -622,16 +622,20 @@ def credits_view(request):
         km += job.km
     if num_jobs != 0:
         average_time_job = average_time_job/num_jobs
-
     form = GiftForm(ruser=user)
     if request.POST:
         form = GiftForm(request.POST, ruser=user)
         if form.is_valid():
-            user = User.objects.filter(username=form.cleaned_data['user'])
-            if not user :
-                return render(request,'credits/menu.html', locals())
-
+            friend = User.objects.get(username=form.cleaned_data['user'])
+            if not friend :
+                return render(request,'credit/credit_page.html.html', locals())
+            friend.credit += form.cleaned_data['amount']
+            user.credit -= form.cleaned_data['amount']
+            user.save()
+            friend.save()
+            title = _("Cadeau de : ")+str(form.cleaned_data['amount'])+_("minutes")
+            pm_write(user, friend, title, form.cleaned_data['message'])
             return redirect('home')
 
 
-    return render(request,'credits/menu.html', locals())
+    return render(request,'credit/credit_page.html', locals())

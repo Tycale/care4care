@@ -204,8 +204,8 @@ class JobSearchForm(forms.Form):
 
 class GiftForm(forms.Form):
     user = forms.CharField(label = _("Username"), widget=AutoCompleteWidget('user'))
-    amount = forms.IntegerField(min_value=1,initial=1,label = _("Montant de temps (plus que 1)"))
-    message = forms.CharField(required=False,widget=forms.Textarea,label = _("Message"))
+    amount = forms.IntegerField(label = _("Montant du temps (plus que 1)"), min_value=1, initial=60)
+    message = forms.CharField(required=False, widget=forms.Textarea, label = _("Message"))
     
     def __init__(self, *args, **kwargs):
         self.ruser = kwargs.pop('ruser')
@@ -215,5 +215,5 @@ class GiftForm(forms.Form):
         cleaned_data = super(GiftForm, self).clean()
         if self.cleaned_data['amount'] > self.ruser.credit:
             raise forms.ValidationError(_("Vous ne pouvez pas donner plus d'heure que ce que vous avez."))
-
+        return cleaned_data['amount']
 
