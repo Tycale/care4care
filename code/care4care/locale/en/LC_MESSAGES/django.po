@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-03 13:50+0000\n"
-"PO-Revision-Date: 2014-12-03 14:08+0000\n"
+"POT-Creation-Date: 2014-12-03 14:29+0000\n"
+"PO-Revision-Date: 2014-12-03 14:31+0000\n"
 "Last-Translator: b'vv vv <vv@vv.be>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -232,7 +232,6 @@ msgid "Commentaire (facultatif)"
 msgstr "Additional comments"
 
 #: branch/models.py:173 branch/models.py:194
-#| msgid "Date d'inscription"
 msgid "Date de création"
 msgstr "Creation date"
 
@@ -249,7 +248,6 @@ msgid "Commentaire"
 msgstr "Comments"
 
 #: branch/models.py:190
-#| msgid "Temps estimé (en minutes)"
 msgid "Temps passé (en minutes)"
 msgstr "Time spent (in minutes)"
 
@@ -365,7 +363,6 @@ msgid "SUPPRIMER cettte branche"
 msgstr "DELETE this branch"
 
 #: branch/templates/branch/branch_home.html:94
-#| msgid "Demande de vérification"
 msgid "Demande de vérification en attente"
 msgstr "Pending request"
 
@@ -973,7 +970,7 @@ msgstr "File type not accepted"
 msgid "Type de job"
 msgstr "Job type"
 
-#: main/forms.py:188 main/forms.py:191
+#: main/forms.py:188
 msgid "Catégorie du job"
 msgstr "Job category"
 
@@ -984,6 +981,10 @@ msgstr "From"
 #: main/forms.py:190
 msgid "jusqu'au"
 msgstr "to"
+
+#: main/forms.py:191
+msgid "Qui peut fournir son aide ?"
+msgstr "Who can provide help?"
 
 #: main/forms.py:192
 msgid "A quelle heure ?"
@@ -1120,7 +1121,6 @@ msgid "Tous"
 msgstr "All"
 
 #: main/models.py:87
-#| msgid "Membres vérifiés"
 msgid "Mes membres favoris"
 msgstr "My favorite members"
 
@@ -1329,7 +1329,6 @@ msgid "Mes crédits"
 msgstr "My credits"
 
 #: main/templates/credit/credit_page.html:12
-#| msgid "Nom complet"
 msgid "Mon compte"
 msgstr "My account"
 
@@ -1338,12 +1337,10 @@ msgid "Mon crédit : "
 msgstr "My credits :"
 
 #: main/templates/credit/credit_page.html:18
-#| msgid "Types de jobs effectués"
 msgid "Jobs effectués : "
 msgstr "Jobs done :"
 
 #: main/templates/credit/credit_page.html:19
-#| msgid "Temps moyen par job (en minutes)"
 msgid "Temps moyen par travail : "
 msgstr "Averige time per job :"
 
@@ -1352,12 +1349,10 @@ msgid "J'ai parcouru : "
 msgstr "I browsed : "
 
 #: main/templates/credit/credit_page.html:27
-#| msgid "Types de jobs effectués"
 msgid "Jobs effectués"
 msgstr "Jobs done"
 
 #: main/templates/credit/credit_page.html:35
-#| msgid "Aucun favori"
 msgid "Aucun historique"
 msgstr "No historical"
 
@@ -1366,7 +1361,6 @@ msgid "Jobs en cours"
 msgstr "Jobs in progress"
 
 #: main/templates/credit/credit_page.html:51
-#| msgid "Aucune offre"
 msgid "Aucun job en cours"
 msgstr "No jobs in progress"
 
@@ -1375,7 +1369,6 @@ msgid "Cadeaux : J'aimerais offrir une partie de mon temps à :"
 msgstr "Gifts : I want to give some of my time :"
 
 #: main/templates/credit/credit_page.html:64
-#| msgid "Offre"
 msgid "Offrir"
 msgstr "Offer"
 
@@ -1383,6 +1376,11 @@ msgstr "Offer"
 #: main/templates/seek_similar_jobs/main.html:5 templates/base.html:293
 msgid "Accueil"
 msgstr "Home"
+
+#: main/templates/main/home.html:17 templates/base.html:11
+#: templates/base.html.py:61
+msgid "Pens(i)ons Voisins"
+msgstr "Care4Care"
 
 #: main/templates/main/home.html:18
 msgid "Réseau d'entraide"
@@ -1562,7 +1560,6 @@ msgid "Modifier mon profil"
 msgstr "Edit my profile"
 
 #: main/templates/profile/edit_profile.html:32
-#| msgid "Changer mon mot de passe"
 msgid " Changer le mot de passe"
 msgstr "Edit password"
 
@@ -1709,7 +1706,6 @@ msgid "Confirmer"
 msgstr "Confirm"
 
 #: main/templates/profile/user_profile.html:66
-#| msgid "Retirer cette personne de vos favoris."
 msgid "Ignorer cette personne"
 msgstr "Ignore"
 
@@ -1718,7 +1714,6 @@ msgid "Retirer cette personne de vos favoris."
 msgstr "Remove this person from your favorites"
 
 #: main/templates/profile/user_profile.html:80
-#| msgid "Ajouter cette personne de vos favoris."
 msgid "Ajouter cette personne à vos favoris."
 msgstr "Add to favorite"
 
@@ -1772,7 +1767,6 @@ msgid "Priorité"
 msgstr "Priority"
 
 #: main/templates/profile/user_profile.html:189
-#| msgid "Ajouter cette personne de vos favoris."
 msgid "Ajouter un nouveau membre à mes favoris"
 msgstr "Add a new member to favorite"
 
@@ -1786,12 +1780,10 @@ msgstr ""
 "Add favorite members allows you to restrict your demands and offers to these people."
 
 #: main/templates/profile/user_profile.html:205
-#| msgid "Ajouter à mon réseau"
 msgid "Ajouter à mes favoris"
 msgstr "Add to favorite"
 
 #: main/templates/profile/user_profile.html:224
-#| msgid "Ajouter à mon réseau"
 msgid "Ajouter un nouveau membre à mon réseau personnel"
 msgstr "Add a new member to my personal network"
 
@@ -1805,7 +1797,6 @@ msgstr ""
 "Add members to your personal network gives them access to more information on your profile."
 
 #: main/templates/profile/user_profile.html:259
-#| msgid "Nom d'utilisateur"
 msgid "Ignorer un utilisateur"
 msgstr "Ignore"
 
@@ -1819,7 +1810,6 @@ msgstr ""
 "An ignored user cant see your offers and demands."
 
 #: main/templates/profile/user_profile.html:275
-#| msgid "Ajouter à mon réseau"
 msgid "Ajouter aux ignorés"
 msgstr "Add to ignored member"
 
@@ -1829,13 +1819,11 @@ msgstr "Add to ignored member"
 #: main/templates/profile/user_profile.html:373
 #: main/templates/profile/user_profile.html:394
 #: main/templates/profile/user_profile.html:412
-#| msgid "Fonction"
 msgid "Notification"
 msgstr "Notification"
 
 #: main/templates/profile/user_profile.html:315
 #: main/templates/profile/user_profile.html:375
-#| msgid "Supprimer"
 msgid "supprimé"
 msgstr "deleted"
 
@@ -1851,7 +1839,6 @@ msgstr "Unable to add user:"
 
 #: main/templates/profile/user_profile.html:355
 #: main/templates/profile/user_profile.html:414
-#| msgid "Vous avez refusé cette aide"
 msgid "Vous avez ignoré ce dernier."
 msgstr "You ignored it."
 
@@ -2122,7 +2109,6 @@ msgid "Temps consacré à l'entraide les 6 derniers mois (en minutes)"
 msgstr "Time devoted to help the last 6 months (in minutes)"
 
 #: main/templates/templatetags/user_stats.html:68
-#| msgid "Kilomètres parcourus les 6 derniers mois"
 msgid "Kilomètres parcourus au cours des 6 derniers mois"
 msgstr "Km covered in the last 6 months"
 
@@ -2286,10 +2272,6 @@ msgstr "Status refused and demand deleted"
 msgid "Cadeau de : "
 msgstr "Gift from :"
 
-#: templates/base.html:11
-msgid "Care4Care"
-msgstr "Care4Care"
-
 #: templates/base.html:58
 msgid "Activer/désactiver le menu de navigation"
 msgstr "Enable / disable navigation menu"
@@ -2357,6 +2339,9 @@ msgstr "News"
 #: templates/base.html:393
 msgid "Aide"
 msgstr "Help"
+
+#~ msgid "Care4Care"
+#~ msgstr "Care4Care"
 
 #~ msgid "Demande en attente"
 #~ msgstr "Pending demand"
