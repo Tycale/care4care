@@ -151,7 +151,6 @@ class VerifiedUser(models.Model):
     receive_help_from_who = models.IntegerField(choices=MemberType.MEMBER_TYPES_GROUP, default=MemberType.ALL,
                                         verbose_name=_("Recevoir des demandes et des offres de"))
     offered_job = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Quelles sont les tâches que vous souhaitez effectuer ?"), blank=True)
-    asked_job = MultiSelectField(choices=JobCategory.JOB_CATEGORIES, verbose_name=_("Quelles sont les tâches dont vous avez besoin ?"), blank=True)
 
     # TODO : Schedule time
 
@@ -170,16 +169,23 @@ class VerifiedUser(models.Model):
             return ''
         return ', '.join([str(l[1]) for l in JobCategory.JOB_CATEGORIES if (str(l[0]) in self.offered_job)])
 
-    def get_verbose_asked_job(self):
-        if not self.asked_job:
-            return ''
-        return ', '.join([str(l[1]) for l in JobCategory.JOB_CATEGORIES if (str(l[0]) in self.asked_job)])
-
     def get_verbose_mail(self):
         return str(INFORMED_BY[self.mail_preferences][1])
 
     def get_verbose_receive(self):
         return ', '.join([str(l[1]) for l in MemberType.MEMBER_TYPES_GROUP if (l[0] == self.receive_help_from_who)])
+
+    def get_verbose_car(self):
+        if self.have_car:
+            return _("Oui")
+        else:
+            return _("Non")
+
+    def get_verbose_can_wheelchair(self):
+        if self.can_wheelchair:
+            return _("Oui")
+        else:
+            return _("Non")
 
 class CommonInfo(models.Model):
     """
@@ -333,14 +339,14 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
     def get_account_type(self):
         if self.is_superuser:
             return _('superuser')
-    
+
         if self.user_type == MemberType.MEMBER:
             return MemberType.VERBOSE_M
         if self.user_type == MemberType.NON_MEMBER:
             return MemberType.VERBOSE_NM
         if self.user_type == MemberType.VERIFIED_MEMBER:
             return MemberType.VERBOSE_VM
-        
+
         return _('Inconnu')
 
     def __str__(self):
@@ -374,4 +380,3 @@ class VerifiedInformation(models.Model):
 
     class Meta:
         ordering = ['date']
-

@@ -69,7 +69,7 @@ class CareRegistrationForm(forms.ModelForm):
 class ProfileManagementForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['email', 'phone_number','mobile_number', 'status', 'languages', 'location', 'asked_job', 'offered_job', \
+        fields = ['email', 'phone_number','mobile_number', 'status', 'languages', 'location', 'offered_job', \
             'latitude', 'longitude', 'facebook', 'additional_info', 'have_car', \
             'can_wheelchair', 'drive_license', 'hobbies', 'photo', 'receive_help_from_who']
         widgets = {
@@ -97,7 +97,7 @@ class ProfileManagementForm(forms.ModelForm):
 class VerifiedProfileForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['email', 'phone_number', 'mobile_number', 'status', 'languages', 'location', 'mail_preferences', 'asked_job', 'offered_job', \
+        fields = ['email', 'phone_number', 'mobile_number', 'status', 'languages', 'location', 'mail_preferences', 'offered_job', \
             'latitude', 'longitude', 'facebook', 'additional_info', 'have_car', \
             'can_wheelchair', 'drive_license', 'hobbies', 'photo', 'receive_help_from_who']
         widgets = {
@@ -207,7 +207,7 @@ class GiftForm(forms.Form):
     user = forms.CharField(label = _("Username"), widget=AutoCompleteWidget('user'))
     amount = forms.IntegerField(label = _("Montant du temps (plus que 1)"), min_value=1, initial=60)
     message = forms.CharField(required=False, widget=forms.Textarea, label = _("Message"))
-    
+
     def __init__(self, *args, **kwargs):
         self.ruser = kwargs.pop('ruser')
         super(GiftForm, self).__init__(*args, **kwargs)
@@ -221,6 +221,3 @@ class GiftForm(forms.Form):
 
 class AddUser(forms.Form):
     user = forms.CharField(label=_("Username"), widget=AutoCompleteWidget('user'))
-    
-
-

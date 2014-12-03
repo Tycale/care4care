@@ -26,13 +26,12 @@
               <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "GSM" %}</strong></span> &nbsp; {{user_to_display.mobile_number}} </li>
               <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Lien vers le profil Facebook" %}</strong></span> &nbsp; <a href="{{user_to_display.facebook}}"> <i class="fa fa-facebook"></i> Facebook </a> </li>
               <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Tâches offertes" %}</strong></span> &nbsp; {{user_to_display.get_verbose_offered_job}} </li>
-              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Tâches demandées" %}</strong></span> &nbsp; {{user_to_display.get_verbose_asked_job}} </li>
               <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Recevoir messages par" %}</strong></span> &nbsp; {{user_to_display.get_verbose_mail}} </li>
               <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Recevoir les offres et les demandes par" %}</strong></span> &nbsp; {{user_to_display.get_verbose_receive}} </li>
               <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Voiture" %}</strong></span> &nbsp;
                 {% if user_to_display.have_car %}
                   {% trans "Oui" %}
-                {% else %} 
+                {% else %}
                   {% trans "Non" %}
                 {% endif %}
               </li>
@@ -40,7 +39,7 @@
               <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Peut transporter une personne en chaise roulante" %}</strong></span> &nbsp;
                {% if user_to_display.can_wheelchair %}
                   {% trans "Oui" %}
-                {% else %} 
+                {% else %}
                   {% trans "Non" %}
                 {% endif %}              </li>
               <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Hobbies" %}</strong></span> &nbsp; <textarea readonly style="width:100% " rows = "4">{{user_to_display.hobbies}} </textarea> </li>
