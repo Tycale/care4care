@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load bootstrap3 %}{% load i18n %}{% load staticfiles %}{% load jobs_extra %}
+{% load bootstrap3 %}{% load i18n %}{% load staticfiles %}{% load jobs_extra %}{% load thumbnail %}
 
 
 {% block title %}{{ branch }}{% endblock %}
@@ -161,7 +161,7 @@
                 <tbody data-link="row" data-target="a.mainlink">
                 	{% for member in mall %}          	
                 	<tr>
-                	    <td><a href="{{ member.user.get_absolute_url }}" class="mainlink">{{member.user}}</a></td>
+                	    <td><img class="img-circle" src="{% thumbnail member.user.photo 20x20 crop %}" /><a href="{{ member.user.get_absolute_url }}" class="mainlink">{{member.user}}</a></td>
                 	    <td>{{ member.user.get_full_name }}</td>
                         {% if not is_branch_admin %}
                 	    <td>{% if member.is_admin %}{% trans "Responsable" %}{% else %}{{ member.user.get_account_type }}{% endif %}</td>
