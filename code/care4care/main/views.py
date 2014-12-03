@@ -92,6 +92,23 @@ def user_profile(request, user_id):
     """ Get profile from a user"""
     user_to_display = get_object_or_404(User, pk=user_id)
     user = request.user
+    in_other_network = False
+    in_other_ignore_list = False
+    can_manage_user = False
+
+    if request.user.id != user_to_display.id:
+        if request.user in user_to_display.personal_network.all():
+            in_other_network = True
+        if request.user in user_to_display.ignore_list.all():
+            in_other_ignore_list = True
+        if can_manage(user_to_display,user):
+            can_manage_user = True
+    else:
+        can_manage_user = True
+
+    if in_other_ignore_list:
+        messages.add_message(request, messages.INFO, _('Vous êtes pas autoriser à consulter ce profil'))
+        return redirect('home')
 
     if user.is_authenticated():
         pending_demands = Demand.objects.filter(donor=user_to_display)

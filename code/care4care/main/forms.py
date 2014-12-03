@@ -188,7 +188,7 @@ class JobSearchForm(forms.Form):
     category = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=JobCategory.JOB_CATEGORIES, label = _("Catégorie du job"))
     date1 = forms.DateTimeField(required=False, label = _("A partir du"),widget=DateTimePicker(options={"pickTime": False,}))
     date2 = forms.DateTimeField(required=False, label = _("jusqu'au"),widget=DateTimePicker(options={"pickTime": False,}))
-    receive_help_from_who = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=MemberType.MEMBER_TYPES_GROUP, label = _("Catégorie du job"))
+    receive_help_from_who = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=MemberType.MEMBER_TYPES_GROUP, label = _("Qui peut fournir son aide ?"))
     time = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=TIME_CHOICES, label = _("A quelle heure ?"))
 
     def clean(self):

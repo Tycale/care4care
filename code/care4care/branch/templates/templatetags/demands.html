@@ -20,7 +20,7 @@
         </thead>
         <tbody data-link="row" data-target="a.mainlink">
         {% for demand in demands %}
-        <tr>
+        <tr class="{% if demand.closed %}success{% endif %}">
           <td><a data-toggle="tooltip" data-placement="right" title="{{demand.receiver.get_full_name}}" href="{{ demand.receiver.get_absolute_url }}"><img class="img-circle" src="{% thumbnail demand.receiver.photo 50x50 crop %}" alt="{{demand.receiver.get_full_name}}" /></a></td>
           <td>{{ demand.get_verbose_category }}</td>
           {% if show_branch %}
