@@ -495,14 +495,14 @@ def similar_offers(request):
 
 def statistics(request):
     # Account status color
-    global ACTIVE_COLOR_HEX
-    global ON_HOLIDAY_COLOR_HEX
-    global UNSUBSCRIBED_COLOR_HEX 
+    ACTIVE_COLOR = ACTIVE_COLOR_HEX
+    ON_HOLIDAY_COLOR = ON_HOLIDAY_COLOR_HEX
+    UNSUBSCRIBED_COLOR = UNSUBSCRIBED_COLOR_HEX
 
     # Account types colors
-    global MEMBER_COLOR_HEX 
-    global VERIFIED_MEMBER_COLOR_HEX 
-    global NON_MEMBER_COLOR_HEX 
+    MEMBER_COLOR = MEMBER_COLOR_HEX
+    VERIFIED_MEMBER_COLOR = VERIFIED_MEMBER_COLOR_HEX
+    NON_MEMBER_COLOR = NON_MEMBER_COLOR_HEX
 
     return render(request, 'statistics/statistics.html', locals())
 
@@ -543,15 +543,55 @@ def get_account_types_json_view(request):
 # Branch statistics
 @login_required
 def branch_statistics(request, branch_id, slug, user_id):
+    # Account status color
+    ACTIVE_COLOR = ACTIVE_COLOR_HEX
+    ON_HOLIDAY_COLOR = ON_HOLIDAY_COLOR_HEX
+    UNSUBSCRIBED_COLOR = UNSUBSCRIBED_COLOR_HEX
+
+    # Account types colors
+    MEMBER_COLOR = MEMBER_COLOR_HEX
+    VERIFIED_MEMBER_COLOR = VERIFIED_MEMBER_COLOR_HEX
+    NON_MEMBER_COLOR = NON_MEMBER_COLOR_HEX
+
+    branch = get_object_or_404(Branch, pk=branch_id)
+
     return render(request, 'statistics/branch_statistics.html', locals())
 
 
 @login_required
 def get_branch_reg_users_json_view(request, branch_id, slug, user_id):
+    print('get_branch_reg_users_json_view')
     branch = get_object_or_404(Branch, pk=branch_id)
     if not is_branch_admin(request.user, branch) or not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
-    return get_json_from(get_branch_reg_users_json(branch_id))
+    return get_json_from(get_branch_users_registrated_json(branch_id))
+
+
+@login_required
+def get_branch_account_types_json_view(request, branch_id, slug, user_id):
+    print('get_branch_account_types_json_view')
+    branch = get_object_or_404(Branch, pk=branch_id)
+    if not is_branch_admin(request.user, branch) or not request.user.is_superuser:
+        return HttpResponse(PERMISSION_DENIED, status=401)
+    return get_json_from(get_branch_account_types_json(branch_id))
+
+
+@login_required
+def get_branch_user_status_json_view(request, branch_id, slug, user_id):
+    print('get_branch_user_status_json_view')
+    branch = get_object_or_404(Branch, pk=branch_id)
+    if not is_branch_admin(request.user, branch) or not request.user.is_superuser:
+        return HttpResponse(PERMISSION_DENIED, status=401)
+    return get_json_from(get_branch_user_status_json(branch_id))
+
+
+@login_required
+def get_branch_job_categories_json_view(request, branch_id, slug, user_id):
+    print('get_branch_job_categories_json_view')
+    branch = get_object_or_404(Branch, pk=branch_id)
+    if not is_branch_admin(request.user, branch) or not request.user.is_superuser:
+        return HttpResponse(PERMISSION_DENIED, status=401)
+    return get_json_from(get_branch_job_categories_json(branch_id))
 
 
 # Users statistics

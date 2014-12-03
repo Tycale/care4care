@@ -131,14 +131,6 @@
 
 
 <div class="row mt">
-  <div class="col-md-6 col-sm-12 text-center"><a class="btn btn-primary btn-lg" href="{% url "stats_branch_reg_users_json"  branch_id=branch.id slug=branch.slug user_id=request.user.id %}">
-    <i class=" fa fa-bar-chart-o"></i>
-    {% trans "Statistiques" %}
-  </a></div>
-</div>
-
-
-<div class="row mt">
     <div class="col-lg-12">
 
     	<div class="content-panel">
@@ -250,6 +242,17 @@
         </div>
     </div>
 {% endif %}
+
+
+{% if is_branch_admin or request.user.is_superuser %}
+<div class="row mt">
+  <div class="col-md-6 col-sm-12 text-center"><a class="btn btn-primary btn-lg" href="{% url "stats_branch"  branch_id=branch.id slug=branch.slug user_id=request.user.id %}">
+    <i class=" fa fa-bar-chart-o"></i>
+    {% trans "Statistiques" %}
+  </a></div>
+</div>
+{% endif %}
+
 
 {% endblock %}
 
