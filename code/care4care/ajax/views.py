@@ -25,6 +25,17 @@ MONTHS = {
 }
 
 
+def next_month(n):
+    n = n % len(MONTHS)
+    return n+1
+
+def month_list(i, n):
+    result = []
+    while i != n:
+        result.append(i)
+        i = next_month(i)
+    return result
+
 
 class Color:
     """
@@ -247,21 +258,24 @@ class Statistics:
         response['labels'] = Statistics.get_last_n_months(N_MONTHS)
 
         truncate_date = connection.ops.date_trunc_sql('month', 'date')
-        now = datetime.datetime.now()
+        now = timezone.now()
         this_month = Statistics.get_last_day_of_month(now)
         # get date minus 6 months (in number of weeks actually)
         i_months_ago = this_month - timezone.timedelta(weeks=4*N_MONTHS)
         # set the last day of that month
         i_months_ago = Statistics.get_last_day_of_month(i_months_ago)
         user = User.objects.get(pk=user_id)
-        jobs_amount = Demand.objects.filter(donor=user, date__gte=i_months_ago, date__lte=now).extra({'month': truncate_date}).values('month').annotate(created_count=Count('id'))
-        data_list = [0 for i in range(0, N_MONTHS)]
-        baseIndex = i_months_ago.month
-        # the base index is the first month and is equal to the index 0 in the data_list
-        # the key is the month number
+        jobs_amount = Demand.objects.filter(donor=user, date__gte=i_months_ago, date__lte=this_month)
+        # data_list contains the number of the months
+        data_list = month_list(i_months_ago.month, next_month(this_month.month))
+        data_dict = dict.fromkeys(data_list, 0)
+
         for job in jobs_amount:
-            key = int(job['month'][5:7])
-            data_list[key - baseIndex] = job['created_count']
+            data_dict[job.date.month] += 1
+
+        # Copy data from dictionary
+        for (i, month_num) in enumerate(data_list):
+            data_list[i] = data_dict[month_num]
 
         datasets = []
         first_dataset = Statistics.generate_line_colors(Color.LIGHT_BLUE_RGB)
