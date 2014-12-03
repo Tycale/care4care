@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-03 16:39+0000\n"
-"PO-Revision-Date: 2014-12-03 16:45+0000\n"
+"POT-Creation-Date: 2014-12-03 17:17+0000\n"
+"PO-Revision-Date: 2014-12-03 17:17+0000\n"
 "Last-Translator: b'vv vv <vv@vv.be>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -368,8 +368,8 @@ msgid "Demande de vérification en attente"
 msgstr "Pending request"
 
 #: branch/templates/branch/branch_home.html:101
-#: branch/templates/branch/branch_home.html:146
-#: branch/templates/branch/branch_home.html:215
+#: branch/templates/branch/branch_home.html:154
+#: branch/templates/branch/branch_home.html:223
 #: branch/templates/job/details_demand.html:93
 #: main/templates/profile/login.html:28
 #: main/templates/profile/user_profile.html:357
@@ -382,8 +382,8 @@ msgid "Utilisateur"
 msgstr "User"
 
 #: branch/templates/branch/branch_home.html:102
-#: branch/templates/branch/branch_home.html:147
-#: branch/templates/branch/branch_home.html:216
+#: branch/templates/branch/branch_home.html:155
+#: branch/templates/branch/branch_home.html:224
 #: main/templates/search/search.html:25
 msgid "Nom complet"
 msgstr "Complete name"
@@ -400,55 +400,62 @@ msgstr "I need help"
 msgid "Offrir mon aide"
 msgstr "Offer my help"
 
-#: branch/templates/branch/branch_home.html:138
+#: branch/templates/branch/branch_home.html:136
+#: main/templates/profile/user_profile.html:24
+#: main/templates/statistics/branch_statistics.html:4
+#: main/templates/statistics/statistics.html:4 templates/base.html:402
+msgid "Statistiques"
+msgstr "Statistics"
+
+#: branch/templates/branch/branch_home.html:146
 msgid "Liste des membres"
 msgstr "Member list"
 
-#: branch/templates/branch/branch_home.html:148
+#: branch/templates/branch/branch_home.html:156
 #: main/templates/profile/user_profile.html:118
 msgid "Status"
 msgstr "Status"
 
-#: branch/templates/branch/branch_home.html:150
-#: branch/templates/branch/branch_home.html:218
+#: branch/templates/branch/branch_home.html:158
+#: branch/templates/branch/branch_home.html:226
 msgid "Administrer"
 msgstr "Manage"
 
-#: branch/templates/branch/branch_home.html:152
-#: branch/templates/branch/branch_home.html:220
+#: branch/templates/branch/branch_home.html:160
+#: branch/templates/branch/branch_home.html:228
 #: main/templates/search/search.html:27
 msgid "Ecrire"
 msgstr "Write"
 
-#: branch/templates/branch/branch_home.html:155
+#: branch/templates/branch/branch_home.html:163
 msgid "Ecrire à tous"
 msgstr "Write to all"
 
-#: branch/templates/branch/branch_home.html:167
+#: branch/templates/branch/branch_home.html:175
 msgid "Responsable"
 msgstr "Responsable"
 
-#: branch/templates/branch/branch_home.html:171
+#: branch/templates/branch/branch_home.html:179
 msgid "Promouovir responsable"
 msgstr "Promote to officer"
 
-#: branch/templates/branch/branch_home.html:174
+#: branch/templates/branch/branch_home.html:182
 msgid "Retirer responsable"
 msgstr "Cancel promotion"
 
-#: branch/templates/branch/branch_home.html:176
+#: branch/templates/branch/branch_home.html:184
 msgid "Créateur"
 msgstr "Creator"
 
-#: branch/templates/branch/branch_home.html:183
+#: branch/templates/branch/branch_home.html:191
 msgid "demande"
 msgstr "demand"
 
-#: branch/templates/branch/branch_home.html:184
+#: branch/templates/branch/branch_home.html:192
 msgid "offre"
 msgstr "offer"
 
-#: branch/templates/branch/branch_home.html:185
+#: branch/templates/branch/branch_home.html:193
 #: branch/templates/job/details_demand.html:49
 #: branch/templates/job/details_offer.html:34
 #: main/templates/profile/edit_profile.html:122
@@ -460,22 +467,21 @@ msgstr "offer"
 msgid "Modifier"
 msgstr "Edit"
 
-#: branch/templates/branch/branch_home.html:187
+#: branch/templates/branch/branch_home.html:195
 msgid "Bannir"
 msgstr "Ban"
 
-#: branch/templates/branch/branch_home.html:191
-#: branch/templates/branch/branch_home.html:235
+#: branch/templates/branch/branch_home.html:199
+#: branch/templates/branch/branch_home.html:243
 #: main/templates/search/search.html:36
 msgid "écrire"
 msgstr "write"
 
-#: branch/templates/branch/branch_home.html:207
-#| msgid "Liste des membres"
+#: branch/templates/branch/branch_home.html:215
 msgid "Liste des membres bannis"
 msgstr "Banned members list"
 
-#: branch/templates/branch/branch_home.html:231
+#: branch/templates/branch/branch_home.html:239
 msgid "Annuler le bannissement"
 msgstr "Cancel the ban"
 
@@ -617,7 +623,7 @@ msgstr "Category"
 msgid "Durée estimée du service"
 msgstr "Estimated time of the service"
 
-#: branch/templates/job/details_demand.html:168 main/views.py:693
+#: branch/templates/job/details_demand.html:168 main/views.py:711
 msgid "minutes"
 msgstr "minutes"
 
@@ -800,7 +806,6 @@ msgstr "You left the branch {branch}"
 
 #: branch/views.py:135
 #, python-format
-#| msgid "Membres de la branche"
 msgid "Bannissement de la branche %s"
 msgstr "Ban from the branch %s"
 
@@ -816,7 +821,6 @@ msgstr ""
 
 #: branch/views.py:138
 #, python-brace-format
-#| msgid "{user} a été retiré de la branche {branch}"
 msgid "{user} a été banni de la branche {branch}"
 msgstr "{user} was banned from the branch {branch}"
 
@@ -1110,7 +1114,8 @@ msgstr "Luxembourg"
 msgid "Actif"
 msgstr "Active"
 
-#: main/models.py:37 main/templates/statistics/statistics.html:81
+#: main/models.py:37 main/templates/statistics/branch_statistics.html:81
+#: main/templates/statistics/statistics.html:81
 msgid "En vacances"
 msgstr "On vacation"
 
@@ -1745,11 +1750,6 @@ msgstr "My network"
 msgid "Utilisateurs ignorés"
 msgstr "Ignored users"
 
-#: main/templates/profile/user_profile.html:24
-#: main/templates/statistics/statistics.html:4 templates/base.html:402
-msgid "Statistiques"
-msgstr "Statistics"
-
 #: main/templates/profile/user_profile.html:39
 msgid ""
 "Êtes vous sur de vouloir Ignorer cette personne ? elle sera supprimée de vos"
@@ -2099,51 +2099,67 @@ msgstr "Find interesting offers"
 msgid "Chercher des demandes intéressantes"
 msgstr "Find interesting demands"
 
-#: main/templates/statistics/statistics.html:15
-msgid "Statistiques globales"
-msgstr "Global statistics"
+#: main/templates/statistics/branch_statistics.html:15
+#| msgid "Statistiques globales"
+msgid "Statistiques de la branche"
+msgstr "Branch's statistics"
 
+#: main/templates/statistics/branch_statistics.html:25
 #: main/templates/statistics/statistics.html:25
 msgid "Nombre de comptes créés"
 msgstr "Number of accounts"
 
+#: main/templates/statistics/branch_statistics.html:38
 #: main/templates/statistics/statistics.html:38
 msgid "Types de comptes"
 msgstr "Account types"
 
+#: main/templates/statistics/branch_statistics.html:42
+#: main/templates/statistics/branch_statistics.html:75
 #: main/templates/statistics/statistics.html:42
 #: main/templates/statistics/statistics.html:75
 msgid "Légende"
 msgstr "Caption"
 
+#: main/templates/statistics/branch_statistics.html:45
 #: main/templates/statistics/statistics.html:45
 msgid "Membres"
 msgstr "Members"
 
+#: main/templates/statistics/branch_statistics.html:48
 #: main/templates/statistics/statistics.html:48
 msgid "Membres vérifiés"
 msgstr "Verified members"
 
+#: main/templates/statistics/branch_statistics.html:51
 #: main/templates/statistics/statistics.html:51
 msgid "Non-membres"
 msgstr "Non-members"
 
+#: main/templates/statistics/branch_statistics.html:71
 #: main/templates/statistics/statistics.html:71
 msgid "Statut des utilisateurs"
 msgstr "Status of users"
 
+#: main/templates/statistics/branch_statistics.html:78
 #: main/templates/statistics/statistics.html:78
 msgid "Actifs"
 msgstr "Actived"
 
+#: main/templates/statistics/branch_statistics.html:84
 #: main/templates/statistics/statistics.html:84
 msgid "Désactivés"
 msgstr "Disabled"
 
+#: main/templates/statistics/branch_statistics.html:100
 #: main/templates/statistics/statistics.html:100
 #: main/templates/templatetags/user_stats.html:14
 msgid "Types de jobs effectués"
 msgstr "Job types"
+
+#: main/templates/statistics/statistics.html:15
+msgid "Statistiques globales"
+msgstr "Global statistics"
 
 #: main/templates/statistics/users_statistics.html:4
 msgid "Users statistics"
@@ -2301,31 +2317,31 @@ msgstr ""
 msgid "Impossible de se connecter."
 msgstr "Unable to connect."
 
-#: main/views.py:110
+#: main/views.py:112
 msgid "Vous êtes pas autoriser à consulter ce profil"
 msgstr "You can't consult this profile"
 
-#: main/views.py:188 main/views.py:339
+#: main/views.py:189 main/views.py:340
 msgid "Profil modifié avec succès !"
 msgstr "Successful profile modification"
 
-#: main/views.py:225
+#: main/views.py:226
 msgid "Modification sauvegardée"
 msgstr "Change saved"
 
-#: main/views.py:249 main/views.py:265
+#: main/views.py:250 main/views.py:266
 msgid "Accord du status de membre vérifié"
 msgstr "Agreement status verified member"
 
-#: main/views.py:250
+#: main/views.py:251
 msgid "Le status de membre vérifié vous a été accordé ! Félicitations."
 msgstr "'Verified member' status awarded to you! Congratulations."
 
-#: main/views.py:252
+#: main/views.py:253
 msgid "Droit accordé"
 msgstr "Status granted"
 
-#: main/views.py:266
+#: main/views.py:267
 msgid ""
 "Le status de membre vérifié vous a été refusé. Pour plus d'informations, "
 "contactez l'officier responsable de votre branche."
@@ -2333,11 +2349,11 @@ msgstr ""
 "The status verified member was denied. For more information, contact your "
 "branch officer."
 
-#: main/views.py:268
+#: main/views.py:269
 msgid "Droit refusé et demande supprimée"
 msgstr "Status refused and demand deleted"
 
-#: main/views.py:693
+#: main/views.py:711
 msgid "Cadeau de : "
 msgstr "Gift from :"
 
