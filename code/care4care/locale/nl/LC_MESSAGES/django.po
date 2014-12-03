@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-03 13:50+0000\n"
+"POT-Creation-Date: 2014-12-03 14:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -951,7 +951,7 @@ msgstr ""
 msgid "Type de job"
 msgstr ""
 
-#: main/forms.py:188 main/forms.py:191
+#: main/forms.py:188
 msgid "Catégorie du job"
 msgstr ""
 
@@ -961,6 +961,10 @@ msgstr ""
 
 #: main/forms.py:190
 msgid "jusqu'au"
+msgstr ""
+
+#: main/forms.py:191
+msgid "Qui peut fournir son aide ?"
 msgstr ""
 
 #: main/forms.py:192
@@ -1349,6 +1353,11 @@ msgstr ""
 #: main/templates/seek_similar_jobs/main.html:5 templates/base.html:293
 msgid "Accueil"
 msgstr ""
+
+#: main/templates/main/home.html:17 templates/base.html:11
+#: templates/base.html.py:61
+msgid "Pens(i)ons Voisins"
+msgstr "Het buurtpensioen"
 
 #: main/templates/main/home.html:18
 msgid "Réseau d'entraide"
@@ -2213,10 +2222,6 @@ msgstr ""
 
 #: main/views.py:676
 msgid "Cadeau de : "
-msgstr ""
-
-#: templates/base.html:11
-msgid "Care4Care"
 msgstr ""
 
 #: templates/base.html:58
