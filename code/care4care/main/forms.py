@@ -24,6 +24,7 @@ class CareRegistrationForm(forms.ModelForm):
                                                                      datetime.date.today().year)),
                                  initial=datetime.date.today())
     id = forms.IntegerField(widget=forms.HiddenInput)
+    user_type = forms.ChoiceField(label=_("Type de compte"), choices = MemberType.MEMBER_TYPES[:-1])
 
     class Meta:
         model = User
@@ -216,4 +217,10 @@ class GiftForm(forms.Form):
         if self.cleaned_data['amount'] > self.ruser.credit:
             raise forms.ValidationError(_("Vous ne pouvez pas donner plus d'heure que ce que vous avez."))
         return cleaned_data['amount']
+
+
+class AddUser(forms.Form):
+    user = forms.CharField(label=_("Username"), widget=AutoCompleteWidget('user'))
+    
+
 

@@ -121,7 +121,11 @@
                     </td>
                 </tr>
                 {% empty %}
-                <h5>{% trans "Aucun volontaire actuellement" %}</h5>
+                <tr>
+                <td colspan="5" class="text-center text-info">
+                    {% trans "Aucun volontaire actuellement" %}
+                </td>
+                </tr>
                 {% endfor %}
             </tbody>
         </table>
@@ -248,7 +252,7 @@
                       <img src="{% thumbnail comment.user.photo 50x50 crop %}" />
                     </div>
                     <div class="commentText">
-                        <p class="text-info">{{comment.user.get_full_name}} {% trans "a écrit:" %}</p>
+                        <p class="text-info"><a href="{{ comment.user.get_absolute_url }}">{{comment.user.get_full_name}}</a> {% trans "a écrit:" %}</p>
                         <p>{{comment.comment}}</p>
                         <span class="date sub-text">{{ comment.date|naturaltime}}</span>
                     </div>

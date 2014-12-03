@@ -1,4 +1,5 @@
 from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as __
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import logout as _logout
@@ -8,7 +9,8 @@ from django.contrib.sites.models import RequestSite
 from django.contrib.sites.models import Site
 from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
-from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm, VerifiedProfileForm, JobSearchForm, GiftForm
+from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm, \
+            VerifiedProfileForm, JobSearchForm, GiftForm, AddUser
 from main.models import User, VerifiedInformation, EmergencyContact, JobCategory, JobType, MemberType
 from branch.models import Demand, Offer
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -50,7 +52,7 @@ def home(request):
     demands = demands.up_to_date()
     offers = offers.up_to_date()
 
-    if user.is_authenticated:
+    if user.is_authenticated():
         demands = discriminate_demands(request, demands)
         offers = discriminate_offers(request, offers)
 
@@ -90,7 +92,9 @@ def user_profile(request, user_id):
     """ Get profile from a user"""
     user_to_display = get_object_or_404(User, pk=user_id)
     user = request.user
+
     if user.is_authenticated():
+        pending_demands = Demand.objects.filter(donor=user_to_display)
         is_my_friend = False
         is_in_my_network = False
         if user_to_display in user.favorites.all():
@@ -98,15 +102,51 @@ def user_profile(request, user_id):
         if user_to_display in user.personal_network.all():
             is_in_my_network = True
 
+        form_favorite = AddUser()
+        form_network = AddUser()
+        form_ignored = AddUser()
+
+        if request.POST:
+            if 'favorite' in request.POST:
+                form_favorite = AddUser(request.POST)
+                if form_favorite.is_valid():
+                    try:
+                        added_user = User.objects.get(username=form_favorite.cleaned_data['user'])
+                        user_to_display.favorites.add(added_user)
+                        messages.add_message(request, messages.INFO, __('Utilisateur {user} ajouté').format(user=added_user))
+                    except:
+                        pass
+                    form_favorite = AddUser()
+
+            if 'network' in request.POST:
+                form_network = AddUser(request.POST)
+                if form_network.is_valid():
+                    try:
+                        added_user = User.objects.get(username=form_network.cleaned_data['user'])
+                        user_to_display.personal_network.add(added_user)
+                        messages.add_message(request, messages.INFO, __('Utilisateur {user} ajouté').format(user=added_user))
+                    except:
+                        pass
+                    form_network = AddUser()
+
+            if 'ignored' in request.POST:
+                form_ignored = AddUser(request.POST)
+                if form_ignored.is_valid():
+                    try:
+                        added_user = User.objects.get(username=form_ignored.cleaned_data['user'])
+                        user_to_display.ignore_list.add(added_user)
+                        messages.add_message(request, messages.INFO, __('Utilisateur {user} ajouté').format(user=added_user))
+                    except:
+                        pass
+                    form_ignored = AddUser()
+
     return render(request, 'profile/user_profile.html', locals())
 
 
 @login_required
 def manage_profile(request):
     """ Return the profile from the current logged user"""
-    user_to_display = request.user
-    pending_demands = Demand.objects.filter(donor=user_to_display)
-    return render(request, 'profile/user_profile.html', locals())
+    return user_profile(request, request.user.id)
 
 """@user_passes_test(lambda u: not u.is_verified)
 @login_required

@@ -29,6 +29,12 @@
     <script src="{% static "js/jquery-1.8.3.min.js" %}"></script>
     <script src="{% static "js/chart-master/Chart.js" %}"></script>
     <script src="{% static "js/bootstrap-table.js" %}"></script>
+    {% get_current_language as LANGUAGE_CODE %}
+    {% if LANGUAGE_CODE == 'fr' %}
+    <script src="{% static "js/bootstrap-table-fr-fr.js" %}"></script>
+    {% elif LANGUAGE_CODE == 'nl' %}
+    <script src="{% static "js/bootstrap-table-nl-nl.js" %}"></script>
+    {% endif %}
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -229,7 +235,7 @@
                 </li>
                 <li>
                   <div class="lang-box">
-                  {% get_current_language as LANGUAGE_CODE %}
+                  
                   {% get_language_info for LANGUAGE_CODE as lang %}
                   <form action="{% url 'set_language' %}" method="post" id="lang_form">
                     {% csrf_token %}
