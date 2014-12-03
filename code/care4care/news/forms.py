@@ -10,10 +10,14 @@ class NewsForm(forms.ModelForm):
 
     def __init__(self, user, *args, **kwargs):
         super(NewsForm, self).__init__(*args, **kwargs)
-        
+
     class Meta:
         model = News
         exclude = ('date_creation','date_fin', 'visible', 'auteur', 'slug')
-        widgets =  {'date_debut' : DateTimePicker(options={"pickTime": True,}),}
-
-
+        dateTimeOptions = {
+        'format': 'DD/MM/YYYY HH:mm',
+        'autoclose': True,
+        'showMeridian' : True,
+        "pickTime": True
+        }
+        widgets =  {'date_debut' : DateTimePicker(options=dateTimeOptions),}
