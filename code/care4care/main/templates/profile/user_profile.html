@@ -6,6 +6,8 @@
 <link type="text/css" media="all" rel="stylesheet" href="{% static "css/jquery-ui-1.9.2.custom.css" %}" />
 <script src="{% static "js/user-profile-api.js" %}"></script>
 <script src="{% static "js/rowlink.js" %}"></script>
+<script src="http://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places,geometry"></script>
+<script src="{% static "js/geoPosition.js" %}"></script>
 {% endblock %}
 
 {% block title %}{% trans "Gestion du profil" %}{% endblock %}
@@ -200,7 +202,21 @@
             </table>
           </div>
         </div>
+
+        {% if user_to_display.latitude !=  None and  user_to_display.longitude != None %}
+        {% if in_other_network or can_manage_user %}
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            {% trans 'Adresse' %}
+          </div>
+          <div class="panel-body">
+            {{user_to_display.location}}
+            <div id="map" style="min-width: 500px; min-height: 300px; width: 100%; height: 100%;"></div>
+          </div>
+        </div>
+        {% endif %}
       </div>
+      {% endif %}
       {% endif %}
 
       </div>
@@ -510,5 +526,54 @@
     });
 
   });
+
+  {% if user_to_display.latitude !=  None and  user_to_display.longitude != None %}
+  $(document).ready(function () {
+
+      var locations = [
+      ['{{user_to_display.location}}', {{user_to_display.latitude}}, {{user_to_display.longitude}}, {{user_to_display.id}}, 0],
+      ];
+
+    (function() {
+      // map options
+      var options = {
+        zoom: 14,
+        center: new google.maps.LatLng({{user_to_display.latitude}},  {{user_to_display.longitude}}),
+        streetViewControl: false,
+        mapTypeControl: false,
+        scrollwheel: false,
+      };
+
+      // init map
+      var map = new google.maps.Map(document.getElementById('map'), options);
+
+      // set multiple marker
+      for (var i = 0; i < locations.length; ++i) {
+        var pos = new google.maps.LatLng(locations[i][1], locations[i][2]);
+        var marker = new google.maps.Marker({
+          position: pos,
+          map: map,
+          title: locations[i][0]
+        });
+        // process multiple info windows
+        (function(marker, i) {
+          // add click event
+          google.maps.event.addListener(marker, 'click', function() {
+            $('#id_id').val(locations[i][3]);
+            infowindow = new google.maps.InfoWindow({
+              content: ''+locations[i][0]
+            });
+            infowindow.open(map, marker);
+          });
+        })(marker, i);
+      }
+
+      $('.fa-bars').click(function () {
+        google.maps.event.trigger(map, 'resize');
+      });
+
+    })();
+  });
+   {% endif %}
 </script>
 {% endblock %}
