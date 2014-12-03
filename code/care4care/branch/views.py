@@ -6,11 +6,11 @@ from django.contrib import messages
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.detail import DetailView
 
-from branch.models import Branch, BranchMembers, Demand, Offer, Comment, DemandProposition
+from branch.models import Branch, BranchMembers, Demand, Offer, Comment, DemandProposition, SuccessDemand
 from main.models import User, VerifiedInformation, JobCategory, MemberType
 
 from branch.forms import CreateBranchForm, ChooseBranchForm, OfferHelpForm, NeedHelpForm, \
-            CommentForm, UpdateNeedHelpForm, VolunteerForm, ForceVolunteerForm
+            CommentForm, UpdateNeedHelpForm, VolunteerForm, ForceVolunteerForm, SuccessDemandForm
 from django.utils import timezone
 from django.core.urlresolvers import reverse
 from django.utils import formats
@@ -558,5 +558,41 @@ class ForceCreateVolunteerView(CreateVolunteerView):
         demand = Demand.objects.get(pk=self.kwargs['demand_id'])
         form.instance.demand = demand
         return super(CreateVolunteerView, self).form_valid(form) #correct
+
+class CreateSuccessDemand(CreateView):
+    form_class = SuccessDemandForm
+    template_name = 'job/success_demand.html'
+    model = SuccessDemand
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(CreateSuccessDemand, self).dispatch(*args, **kwargs)
+
+    def form_valid(self, form):
+        demand = Demand.objects.get(pk=self.kwargs['demand_id'])
+        form.instance.demand = demand
+        form.instance.asked_by = demand.donor
+        form.instance.ask_to = demand.receiver
+        demand.success_fill = True
+        demand.save()
+        return super(CreateSuccessDemand, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(CreateSuccessDemand, self).get_context_data(**kwargs)
+        context['demand'] = Demand.objects.get(pk=self.kwargs['demand_id'])
+        return context
+
+    def get_success_url(self):
+        messages.add_message(self.request, messages.INFO, _('Demande envoyée'))
+        return reverse('home')
+
+
+
+
+
+
+
+
+
 
 

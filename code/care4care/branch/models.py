@@ -97,8 +97,12 @@ class JobManager(QuerySet):
         return self.filter(date__gte=date_now)
 
     def down_to_date(self):
-        date_now = timezone.now()
+        date_now = timezone.now() + timezone.timedelta(hours=24)
         return self.filter(date__lte=date_now)
+
+    def no_successs(self):
+        return self.filter(success_fill=False)
+
 
 class Job(models.Model):
     branch = models.ForeignKey(Branch, verbose_name=_("Branche"), related_name="%(class)s_branch")
@@ -141,6 +145,7 @@ class Demand(Job):
     comments = GenericRelation(Comment)
     volunteers = models.ManyToManyField(User, null=True, blank=True, through='DemandProposition', related_name="volunteers", verbose_name=_("Propositions"))
     closed = models.BooleanField(verbose_name=_("Vontaire assigné"), default=False)
+    success_fill = models.BooleanField(verbose_name=_("Demande de confirmation envoyée"), default=False)
     km = models.IntegerField(verbose_name=_("Distance depuis domicile"), blank=True, null=True)
     success = models.NullBooleanField(verbose_name=_("Tâche finie avec succès"), null=True, blank=True, default=None)
 
@@ -186,13 +191,14 @@ class DemandProposition(models.Model):
 
 
 class SuccessDemand(models.Model):
-    demand = models.ForeignKey(Demand, related_name='success_demand')
-    comment = models.TextField(verbose_name=_('Commentaire'))
+    demand = models.ForeignKey(Demand, related_name='success_demand', blank=True, null=True)
+    comment = models.TextField(verbose_name=_('Commentaire'), blank=True, null=True)
     time = models.IntegerField(verbose_name=_("Temps passé (en minutes)"), blank=True, null=True)
-    ask_to = models.ForeignKey(User, related_name='success_pending')
-    asked_by = models.ForeignKey(User, related_name='approval_pending')
-    branch = models.ForeignKey(Branch, related_name='success_branch_pending')
+    ask_to = models.ForeignKey(User, related_name='success_pending', blank=True, null=True)
+    asked_by = models.ForeignKey(User, related_name='approval_pending', blank=True, null=True)
+    branch = models.ForeignKey(Branch, related_name='success_branch_pending', blank=True, null=True)
     created = models.DateTimeField(verbose_name=_("Date de création"), auto_now=True)
 
     class Meta:
         ordering = ['-created']
+
