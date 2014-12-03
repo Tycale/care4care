@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'pagination',
     'main',
     'branch',
+    'news',
     'bootstrap3',
     'registration',
     'multiselectfield',
