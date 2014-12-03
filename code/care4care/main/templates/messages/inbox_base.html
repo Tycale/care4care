@@ -3,6 +3,7 @@
 {% load i18n postman_tags staticfiles %}
 {% load bootstrap3 %}
 {% load pagination_tags %}
+{% load thumbnail %}
 
 
 {% comment %}
@@ -57,8 +58,8 @@ in the INSTALLED_APPS setting.
                                             </a>
                                             {% endblock %}
                                             {% if message.is_replied %}</em>{% endif %}{% if message.is_new %}</strong>{% endif %}</td>
-                                {% block pm_sender_cell %}   <td>{{ message.obfuscated_sender|or_me:user }}{% if message.count %} ({{ message.count }}){% endif %}</td>{% endblock %}
-                                {% block pm_recipient_cell %}   <td>{{ message.obfuscated_recipient|or_me:user }}{% if message.count %} ({{ message.count }}){% endif %}</td>{% endblock %}
+                                {% block pm_sender_cell %}  <td><img class="img-circle" src="{% thumbnail message.sender.photo 20x20 crop %}" />{{ message.obfuscated_sender|or_me:user }}{% if message.count %} ({{ message.count }}){% endif %}</td>{% endblock %}
+                                {% block pm_recipient_cell %}   <td><img class="img-circle" src="{% thumbnail message.recipient.photo 20x20 crop %}" />{{ message.obfuscated_recipient|or_me:user }}{% if message.count %} ({{ message.count }}){% endif %}</td>{% endblock %}
 
                                 <td>{{ message.sent_at|compact_date:_("g:i A,M j,n/j/y") }}</td>
                             </tr>{% endfor %}
