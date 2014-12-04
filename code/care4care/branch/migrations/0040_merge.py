@@ -7,7 +7,8 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('branch', '0038_auto_20141204_1054'),
+        ('branch', '0039_merge'),
+        ('branch', '0036_auto_20141204_1041'),
     ]
 
     operations = [
