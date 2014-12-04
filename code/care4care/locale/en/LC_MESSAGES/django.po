@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-04 10:00+0000\n"
+"POT-Creation-Date: 2014-12-04 10:09+0000\n"
 "PO-Revision-Date: 2014-12-04 09:58+0000\n"
 "Last-Translator: b'vv vv <vv@vv.be>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -378,11 +378,11 @@ msgstr "Pending request"
 #: branch/templates/branch/branch_home.html:232
 #: branch/templates/job/details_demand.html:93
 #: main/templates/profile/login.html:28
-#: main/templates/profile/user_profile.html:358
-#: main/templates/profile/user_profile.html:380
-#: main/templates/profile/user_profile.html:418
-#: main/templates/profile/user_profile.html:439
-#: main/templates/profile/user_profile.html:479
+#: main/templates/profile/user_profile.html:357
+#: main/templates/profile/user_profile.html:379
+#: main/templates/profile/user_profile.html:417
+#: main/templates/profile/user_profile.html:438
+#: main/templates/profile/user_profile.html:478
 #: main/templates/search/search.html:24 templates/base.html:215
 msgid "Utilisateur"
 msgstr "User"
@@ -1839,13 +1839,13 @@ msgid "Ajouter cette personne à vos favoris."
 msgstr "Add to favorite"
 
 #: main/templates/profile/user_profile.html:90
-#: main/templates/profile/user_profile.html:432
+#: main/templates/profile/user_profile.html:431
 msgid "Retirer de mon réseau"
 msgstr "Remove from my network"
 
 #: main/templates/profile/user_profile.html:92
-#: main/templates/profile/user_profile.html:283
-#: main/templates/profile/user_profile.html:411
+#: main/templates/profile/user_profile.html:282
+#: main/templates/profile/user_profile.html:410
 msgid "Ajouter à mon réseau"
 msgstr "Add to my network"
 
@@ -1899,11 +1899,11 @@ msgstr "Emergency contacts"
 msgid "Priorité"
 msgstr "Priority"
 
-#: main/templates/profile/user_profile.html:232
+#: main/templates/profile/user_profile.html:231
 msgid "Ajouter un nouveau membre à mes favoris"
 msgstr "Add a new member to favorite"
 
-#: main/templates/profile/user_profile.html:237
+#: main/templates/profile/user_profile.html:236
 msgid ""
 "\n"
 "                        Ajouter des membres en favoris vous permet de "
@@ -1914,15 +1914,15 @@ msgstr ""
 "Add favorite members allows you to restrict your demands and offers to these "
 "people."
 
-#: main/templates/profile/user_profile.html:248
+#: main/templates/profile/user_profile.html:247
 msgid "Ajouter à mes favoris"
 msgstr "Add to favorite"
 
-#: main/templates/profile/user_profile.html:267
+#: main/templates/profile/user_profile.html:266
 msgid "Ajouter un nouveau membre à mon réseau personnel"
 msgstr "Add a new member to my personal network"
 
-#: main/templates/profile/user_profile.html:272
+#: main/templates/profile/user_profile.html:271
 msgid ""
 "\n"
 "                        Ajouter des membres à votre réseau personnel leur "
@@ -1933,11 +1933,11 @@ msgstr ""
 "Add members to your personnal network gives them access to more information "
 "on your profile."
 
-#: main/templates/profile/user_profile.html:302
+#: main/templates/profile/user_profile.html:301
 msgid "Ignorer un utilisateur"
 msgstr "Ignore"
 
-#: main/templates/profile/user_profile.html:307
+#: main/templates/profile/user_profile.html:306
 msgid ""
 "\n"
 "                        Ignorer un utilisateur l'empêche de voir vos offres "
@@ -1947,40 +1947,40 @@ msgstr ""
 "\n"
 "An ignored user can't see your demands and offers"
 
-#: main/templates/profile/user_profile.html:318
+#: main/templates/profile/user_profile.html:317
 msgid "Ajouter aux ignorés"
 msgstr "Add to ignored member"
 
-#: main/templates/profile/user_profile.html:356
-#: main/templates/profile/user_profile.html:378
-#: main/templates/profile/user_profile.html:396
-#: main/templates/profile/user_profile.html:416
-#: main/templates/profile/user_profile.html:437
-#: main/templates/profile/user_profile.html:455
+#: main/templates/profile/user_profile.html:355
+#: main/templates/profile/user_profile.html:377
+#: main/templates/profile/user_profile.html:395
+#: main/templates/profile/user_profile.html:415
+#: main/templates/profile/user_profile.html:436
+#: main/templates/profile/user_profile.html:454
 msgid "Notification"
 msgstr "Notification"
 
-#: main/templates/profile/user_profile.html:358
-#: main/templates/profile/user_profile.html:418
+#: main/templates/profile/user_profile.html:357
+#: main/templates/profile/user_profile.html:417
 msgid "supprimé"
 msgstr "deleted"
 
-#: main/templates/profile/user_profile.html:380
-#: main/templates/profile/user_profile.html:439
+#: main/templates/profile/user_profile.html:379
+#: main/templates/profile/user_profile.html:438
 msgid "ajouté"
 msgstr "added"
 
-#: main/templates/profile/user_profile.html:398
-#: main/templates/profile/user_profile.html:457
+#: main/templates/profile/user_profile.html:397
+#: main/templates/profile/user_profile.html:456
 msgid "Impossible d'ajouter l'utilisateur:"
 msgstr "Unable to add user:"
 
-#: main/templates/profile/user_profile.html:398
-#: main/templates/profile/user_profile.html:457
+#: main/templates/profile/user_profile.html:397
+#: main/templates/profile/user_profile.html:456
 msgid "Vous avez ignoré ce dernier."
 msgstr "You ignored it."
 
-#: main/templates/profile/user_profile.html:479
+#: main/templates/profile/user_profile.html:478
 msgid "bloqué"
 msgstr "blocked"
 
