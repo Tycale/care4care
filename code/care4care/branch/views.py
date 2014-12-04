@@ -628,12 +628,15 @@ def manage_success(request, success_demand_id):
 
                     demand.real_time =  success.time
                     demand.success = True
-                    demand.save()
+                    
 
                     demand.donor.credit += success.time
                     demand.donor.save()
                     demand.receiver.credit -= success.time
                     demand.receiver.save()
+
+                    success.delete()
+                    demand.save()
 
 
                     # TODO : pm_write
