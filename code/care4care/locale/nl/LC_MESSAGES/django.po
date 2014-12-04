@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-04 13:26+0000\n"
+"POT-Creation-Date: 2014-12-04 13:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1097,6 +1097,11 @@ msgstr ""
 msgid "Les mots de passe ne sont pas identiques."
 msgstr ""
 
+#: main/forms.py:67 main/forms.py:70
+msgid ""
+"Veuillez choisir une branche en choisissant un marqueur rouge sur la carte"
+msgstr ""
+
 #: main/forms.py:125 main/forms.py:127 main/forms.py:131
 msgid "Veuillez introduire une adresse valide via les propositions."
 msgstr ""
@@ -1123,8 +1128,44 @@ msgstr ""
 msgid "Type de fichier non supporté"
 msgstr ""
 
+#: main/forms.py:192
+msgid "Type de job"
+msgstr ""
+
+#: main/forms.py:193
+msgid "Catégorie du job"
+msgstr ""
+
+#: main/forms.py:194
+msgid "A partir du"
+msgstr ""
+
+#: main/forms.py:195
+msgid "jusqu'au"
+msgstr ""
+
+#: main/forms.py:196
+msgid "Qui peut fournir son aide ?"
+msgstr ""
+
+#: main/forms.py:197
+msgid "A quelle heure ?"
+msgstr ""
+
 #: main/forms.py:204 main/forms.py:206 main/forms.py:209
 msgid "Incohérence dans les dates."
+msgstr ""
+
+#: main/forms.py:212
+msgid "Username"
+msgstr ""
+
+#: main/forms.py:213
+msgid "Montant du temps (plus que 1)"
+msgstr ""
+
+#: main/forms.py:214 main/templates/messages/view.html:20
+msgid "Message"
 msgstr ""
 
 #: main/forms.py:223
@@ -1846,10 +1887,6 @@ msgstr ""
 
 #: main/templates/messages/view.html:20
 msgid "Conversation"
-msgstr ""
-
-#: main/templates/messages/view.html:20
-msgid "Message"
 msgstr ""
 
 #: main/templates/messages/view.html:31
