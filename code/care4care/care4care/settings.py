@@ -208,7 +208,6 @@ SOCIALACCOUNT_ADAPTER = 'care4care.adapter.MyAccountAdapter'
 
 ACCOUNT_EMAIL_VERIFICATION = "none"
 
-
 SOCIALACCOUNT_PROVIDERS = \
     { 'google':
         { 'SCOPE': ['profile', 'email'],

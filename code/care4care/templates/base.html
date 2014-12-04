@@ -227,8 +227,9 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                           <input class="btn btn-theme03 btn-block" type="button" id="sign-in-google" value="{% trans "se connecter via Google"%}">
-                           <input class="btn btn-theme03 btn-block" type="button" id="sign-in-twitter" value="{% trans "se connecter via Twitter"%}">
+                           <a class="btn btn-theme03 btn-block sign-in-social" type="button" id="sign-in-google" href="{% url "google_login" %}">{% trans "se connecter via Google"%}</a>
+                           <a class="btn btn-theme03 btn-block sign-in-social" type="button" id="sign-in-facebook" href="{% url "facebook_login" %}">{% trans "se connecter via Facebook"%}</a>
+                           <a class="btn btn-theme03 btn-block sign-in-social" type="button" id="sign-in-twitter" href="{% url "twitter_login" %}">{% trans "se connecter via Twitter"%}</a>
                         </li>
                      </ul>
                   {% endif %}

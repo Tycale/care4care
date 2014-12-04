@@ -2632,3 +2632,13 @@ textarea {
 .btn-zoom{
     margin-top: 15px;
 }
+
+a.sign-in-social{
+    color: #fff !important;
+}
+
+a.sign-in-social:hover{
+    color: #fff !important;
+    background-color: #37bc9b !important;
+    border-color: #37bc9b !important;
+}
