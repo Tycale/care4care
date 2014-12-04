@@ -10,18 +10,18 @@ from django.db import connection
 
 
 MONTHS = {
-    1:  {'name': __("Janvier"),     'days': 31},
-    2:  {'name': __("Février"),     'days': 28},
-    3:  {'name': __("Mars"),        'days': 31},
-    4:  {'name': __("Avril"),       'days': 30},
-    5:  {'name': __("Mai"),         'days': 31},
-    6:  {'name': __("Juin"),        'days': 30},
-    7:  {'name': __("Juillet"),     'days': 31},
-    8:  {'name': __("Août"),        'days': 31},
-    9:  {'name': __("Septembre"),   'days': 30},
-    10: {'name': __("Octobre"),     'days': 31},
-    11: {'name': __("Novembre"),    'days': 30},
-    12: {'name': __("Décembre"),    'days': 31}
+    1:  {'name': _("Janvier"),     'days': 31},
+    2:  {'name': _("Février"),     'days': 28},
+    3:  {'name': _("Mars"),        'days': 31},
+    4:  {'name': _("Avril"),       'days': 30},
+    5:  {'name': _("Mai"),         'days': 31},
+    6:  {'name': _("Juin"),        'days': 30},
+    7:  {'name': _("Juillet"),     'days': 31},
+    8:  {'name': _("Août"),        'days': 31},
+    9:  {'name': _("Septembre"),   'days': 30},
+    10: {'name': _("Octobre"),     'days': 31},
+    11: {'name': _("Novembre"),    'days': 30},
+    12: {'name': _("Décembre"),    'days': 31}
 }
 
 
@@ -55,7 +55,7 @@ def get_last_n_months(n):
 
     nex_month = next_month(this_month)
     while i != nex_month:
-        last_m.append(MONTHS[i]['name'])
+        last_m.append(str(MONTHS[i]['name']))
         i = next_month(i)
     return last_m
 

@@ -573,6 +573,7 @@ class CreateSuccessDemand(CreateView):
         form.instance.demand = demand
         form.instance.asked_by = demand.donor
         form.instance.ask_to = demand.receiver
+        form.instance.branch = demand.branch
         demand.success_fill = True
         demand.save()
         return super(CreateSuccessDemand, self).form_valid(form)
@@ -585,18 +586,28 @@ class CreateSuccessDemand(CreateView):
     def get_success_url(self):
         messages.add_message(self.request, messages.INFO, _('Demande envoyée'))
 
-        # TODO : pm_write
-        # personne à qui écrire : self.object.ask_to
-        # de la part de : self.object.asked_by
-        # Le message :
-        # Machin a dit qu'il avait bien accompli le job : self.object.demand.title
-        # Il déclare avoir passé self.object.time
-        # Si cela est correct, veuillez confirmer.
-
+        subject = _("Confirmation de job accompli")
+        body = _("L'utilisateur {user} affirme avoir accompli le job suivant : {job}.\nIl déclare avoir pris {time} minutes pour accomplir ce job.\nSi ces informations vous semble correctes, vous pouvez confirmer que ce job a été accompli avec succès.").format(user=self.object.asked_by, job=self.object.demand.title, time=self.object.time)
+        pm_write(self.object.asked_by, self.object.ask_to, subject, body)
         return reverse('home')
 
 
+def unsuccess_job(request, demand_id):
+    demand = get_object_or_404(Demand, pk=demand_id)
 
+    if can_manage_branch_specific(demand.donor, request.user, demand.branch):
+       demand.success_fill=True
+       demand.success=False
+       demand.save()
+
+       subject = _("Absence lors d'un job")
+       body = _("L'utilisateur {user} n'était apparemment pas présent pour accomplir le job {job}.\nS'il s'agit d'une erreur et que {user} était bien présent, veuillez contacter un administrateur pour régler le problème.\nSi vous désirez ne plus demander d'aide à l'utilisateur {user}, vous pouvez l'ignorer en vous rendant sur son profil.").format(user=demand.donor, job=demand.title)
+       pm_write(demand.donor, demand.receiver, subject, body)
+
+       messages.add_message(request, messages.INFO, _('Vous avez indiqué la tâche {demand} comme non-completée').format(demand=demand))
+       return redirect('home')
+    else:
+        return refuse(request)
 
 
 
