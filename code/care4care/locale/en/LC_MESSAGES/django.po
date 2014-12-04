@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-04 14:37+0000\n"
-"PO-Revision-Date: 2014-12-04 14:38+0000\n"
+"POT-Creation-Date: 2014-12-04 14:41+0000\n"
+"PO-Revision-Date: 2014-12-04 14:42+0000\n"
 "Last-Translator: b'vv vv <vv@vv.be>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -494,12 +494,18 @@ msgstr "Remove the user from the branch?"
 
 #: branch/templates/branch/branch_home.html:215
 #, python-format
+#| msgid ""
+#| "                         Êtes-vous sûr de vouloir SUPPRIMER la branche ranch)s ? <br />\n"
+#| "                         Cette action est irréversible. <br />\n"
+#| "                         "
 msgid ""
 "\n"
-" Êtes-vous sûr de vouloir SUPPRIMER %(name)s de la branche %(branch)s ? <br />\n"
+"                                            Êtes-vous sûr de vouloir SUPPRIMER %(name)s de la branche %(branch)s ? <br />\n"
+"                                            "
 msgstr ""
 "\n"
 "Are you sure you want to DELETE %(name)s from the branch %(branch)s ? <br />\n"
+"                            "
 
 #: branch/templates/branch/branch_home.html:222
 msgid "supprimer de la branche"
@@ -515,12 +521,17 @@ msgstr "Ban the user from the branch?"
 
 #: branch/templates/branch/branch_home.html:239
 #, python-format
+#| msgid ""
+#| "                         Êtes-vous sûr de vouloir quitter la branche ranch)s ?\n"
+#| "                         "
 msgid ""
 "\n"
-"Êtes-vous sûr de vouloir BANNIR %(name)s de la branche %(branch)s ? <br />\n"
+"                                            Êtes-vous sûr de vouloir BANNIR %(name)s de la branche %(branch)s ? <br />\n"
+"                                            "
 msgstr ""
 "\n"
 "Are you sure you want to BAN %(name)s from the branch %(branch)s ? <br />\n"
+"                            "
 
 #: branch/templates/branch/branch_home.html:246
 msgid "Bannir de la branche"
@@ -2879,6 +2890,20 @@ msgstr "As superuser, you can see all the branches"
 #: templates/base.html:367
 msgid "Messages"
 msgstr "Messages"
+
+#~ msgid ""
+#~ "\n"
+#~ " Êtes-vous sûr de vouloir SUPPRIMER %(name)s de la branche %(branch)s ? <br />\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Are you sure you want to DELETE %(name)s from the branch %(branch)s ? <br />\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "Êtes-vous sûr de vouloir BANNIR %(name)s de la branche %(branch)s ? <br />\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Are you sure you want to BAN %(name)s from the branch %(branch)s ? <br />\n"
 
 #~ msgid "Type de job"
 #~ msgstr "Job type"
