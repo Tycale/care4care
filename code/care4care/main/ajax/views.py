@@ -10,18 +10,18 @@ from django.db import connection
 
 
 MONTHS = {
-    1:  {'name': __("Janvier"),   'days': 31},
-    2:  {'name': __("Février"),   'days': 28},
-    3:  {'name': __("Mars"),      'days': 31},
-    4:  {'name': __("Avril"),     'days': 30},
-    5:  {'name': __("Mai"),       'days': 31},
-    6:  {'name': __("Juin"),      'days': 30},
-    7:  {'name': __("Juillet"),   'days': 31},
-    8:  {'name': __("Août"),      'days': 31},
-    9:  {'name': __("Septembre"), 'days': 30},
-    10: {'name': __("Octobre"),   'days': 31},
-    11: {'name': __("Novembre"),  'days': 30},
-    12: {'name': __("Décembre"),  'days': 31}
+    1:  {'name': __("January"),   'days': 31},
+    2:  {'name': __("February"),   'days': 28},
+    3:  {'name': __("March"),      'days': 31},
+    4:  {'name': __("April"),     'days': 30},
+    5:  {'name': __("May"),       'days': 31},
+    6:  {'name': __("June"),      'days': 30},
+    7:  {'name': __("July"),   'days': 31},
+    8:  {'name': __("August"),      'days': 31},
+    9:  {'name': __("September"), 'days': 30},
+    10: {'name': __("October"),   'days': 31},
+    11: {'name': __("November"),  'days': 30},
+    12: {'name': __("December"),  'days': 31}
 }
 
 

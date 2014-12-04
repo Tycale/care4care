@@ -4,8 +4,7 @@ from main.views import statistics, \
                         get_job_categories_json_view, get_users_status_json_view, \
                         get_user_job_categories_json_view, get_user_job_avg_time_json_view, \
                         get_user_jobs_amount_json_view, get_user_time_amount_json_view, \
-                        get_user_km_amount_json_view, \
-                        get_registrated_users_json_branch_view, get_job_categories_json_branch_view
+                        get_user_km_amount_json_view
 
 
 urlpatterns = patterns(
