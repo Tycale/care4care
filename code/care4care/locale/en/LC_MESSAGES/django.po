@@ -2,20 +2,20 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-04 13:48+0000\n"
-"PO-Revision-Date: 2014-12-04 13:44+0000\n"
+"POT-Creation-Date: 2014-12-04 14:41+0000\n"
+"PO-Revision-Date: 2014-12-04 14:42+0000\n"
 "Last-Translator: b'vv vv <vv@vv.be>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "X-Translated-Using: django-rosetta 0.7.4\n"
 
 #: branch/forms.py:31
@@ -129,7 +129,7 @@ msgstr "Branch administrators"
 #: branch/templates/job/need_help.html:45 main/models.py:196
 #: main/templates/profile/edit_profile.html:100
 #: main/templates/profile/emergency_details.html:16
-#: main/templates/profile/user_profile.html:210
+#: main/templates/profile/user_profile.html:216
 #: main/templates/verified/verified_display.html:21
 #: main/templates/verified/verified_profile.html:94
 msgid "Adresse"
@@ -332,8 +332,7 @@ msgstr "Leave the branch?"
 #, python-format
 msgid ""
 "\n"
-"                            Êtes-vous sûr de vouloir quitter la branche "
-"%(branch)s ?\n"
+"                            Êtes-vous sûr de vouloir quitter la branche %(branch)s ?\n"
 "                            "
 msgstr ""
 "\n"
@@ -342,6 +341,8 @@ msgstr ""
 
 #: branch/templates/branch/branch_home.html:56
 #: branch/templates/branch/branch_home.html:78
+#: branch/templates/branch/branch_home.html:220
+#: branch/templates/branch/branch_home.html:244
 #: branch/templates/job/details_demand.html:63
 #: branch/templates/job/details_demand.html:73
 #: main/templates/main/home.html:133 main/templates/main/home.html.py:164
@@ -356,8 +357,7 @@ msgstr "Delete the branch ?"
 #, python-format
 msgid ""
 "\n"
-"                            Êtes-vous sûr de vouloir SUPPRIMER la branche "
-"%(branch)s ? <br />\n"
+"                            Êtes-vous sûr de vouloir SUPPRIMER la branche %(branch)s ? <br />\n"
 "                            Cette action est irréversible. <br />\n"
 "                            "
 msgstr ""
@@ -376,21 +376,21 @@ msgstr "Pending request"
 
 #: branch/templates/branch/branch_home.html:101
 #: branch/templates/branch/branch_home.html:163
-#: branch/templates/branch/branch_home.html:232
+#: branch/templates/branch/branch_home.html:280
 #: branch/templates/job/details_demand.html:93
 #: main/templates/profile/login.html:28
-#: main/templates/profile/user_profile.html:357
-#: main/templates/profile/user_profile.html:379
-#: main/templates/profile/user_profile.html:417
-#: main/templates/profile/user_profile.html:438
-#: main/templates/profile/user_profile.html:478
+#: main/templates/profile/user_profile.html:363
+#: main/templates/profile/user_profile.html:385
+#: main/templates/profile/user_profile.html:423
+#: main/templates/profile/user_profile.html:444
+#: main/templates/profile/user_profile.html:484
 #: main/templates/search/search.html:24 templates/base.html:215
 msgid "Utilisateur"
 msgstr "User"
 
 #: branch/templates/branch/branch_home.html:102
 #: branch/templates/branch/branch_home.html:164
-#: branch/templates/branch/branch_home.html:233
+#: branch/templates/branch/branch_home.html:281
 #: main/templates/search/search.html:25
 msgid "Nom complet"
 msgstr "Complete name"
@@ -434,12 +434,12 @@ msgid "Status"
 msgstr "Status"
 
 #: branch/templates/branch/branch_home.html:167
-#: branch/templates/branch/branch_home.html:235
+#: branch/templates/branch/branch_home.html:283
 msgid "Administrer"
 msgstr "Manage"
 
 #: branch/templates/branch/branch_home.html:169
-#: branch/templates/branch/branch_home.html:237
+#: branch/templates/branch/branch_home.html:285
 #: main/templates/search/search.html:27
 msgid "Ecrire"
 msgstr "Write"
@@ -485,20 +485,69 @@ msgid "Modifier"
 msgstr "Edit"
 
 #: branch/templates/branch/branch_home.html:204
+msgid "Enlever"
+msgstr "Remove"
+
+#: branch/templates/branch/branch_home.html:212
+msgid "Supprimer l'utilisateur de la branche ?"
+msgstr "Remove the user from the branch?"
+
+#: branch/templates/branch/branch_home.html:215
+#, python-format
+#| msgid ""
+#| "                         Êtes-vous sûr de vouloir SUPPRIMER la branche ranch)s ? <br />\n"
+#| "                         Cette action est irréversible. <br />\n"
+#| "                         "
+msgid ""
+"\n"
+"                                            Êtes-vous sûr de vouloir SUPPRIMER %(name)s de la branche %(branch)s ? <br />\n"
+"                                            "
+msgstr ""
+"\n"
+"Are you sure you want to DELETE %(name)s from the branch %(branch)s ? <br />\n"
+"                            "
+
+#: branch/templates/branch/branch_home.html:222
+msgid "supprimer de la branche"
+msgstr "delete the branch"
+
+#: branch/templates/branch/branch_home.html:228
 msgid "Bannir"
 msgstr "Ban"
 
-#: branch/templates/branch/branch_home.html:208
-#: branch/templates/branch/branch_home.html:252
+#: branch/templates/branch/branch_home.html:236
+msgid "Bannir l'utilisateur de la branche ?"
+msgstr "Ban the user from the branch?"
+
+#: branch/templates/branch/branch_home.html:239
+#, python-format
+#| msgid ""
+#| "                         Êtes-vous sûr de vouloir quitter la branche ranch)s ?\n"
+#| "                         "
+msgid ""
+"\n"
+"                                            Êtes-vous sûr de vouloir BANNIR %(name)s de la branche %(branch)s ? <br />\n"
+"                                            "
+msgstr ""
+"\n"
+"Are you sure you want to BAN %(name)s from the branch %(branch)s ? <br />\n"
+"                            "
+
+#: branch/templates/branch/branch_home.html:246
+msgid "Bannir de la branche"
+msgstr "Ban from the branch"
+
+#: branch/templates/branch/branch_home.html:255
+#: branch/templates/branch/branch_home.html:300
 #: main/templates/search/search.html:36
 msgid "écrire"
 msgstr "write"
 
-#: branch/templates/branch/branch_home.html:224
+#: branch/templates/branch/branch_home.html:272
 msgid "Liste des membres bannis"
 msgstr "Banned members list"
 
-#: branch/templates/branch/branch_home.html:248
+#: branch/templates/branch/branch_home.html:296
 msgid "Annuler le bannissement"
 msgstr "Cancel the ban"
 
@@ -572,8 +621,7 @@ msgstr "Delete"
 #, python-format
 msgid ""
 "\n"
-"          Êtes-vous sûr de vouloir SUPPRIMER votre demande "
-"%(object.title)s ? <br />\n"
+"          Êtes-vous sûr de vouloir SUPPRIMER votre demande %(object.title)s ? <br />\n"
 "          Cette action est irréversible. <br />\n"
 "          "
 msgstr ""
@@ -593,8 +641,7 @@ msgstr "Volunteer"
 #: branch/templates/job/details_demand.html:86
 msgid ""
 "\n"
-"        <p class=\"text-center\">Ci-dessous la liste des personnes prêtes à "
-"vous aider</p>\n"
+"        <p class=\"text-center\">Ci-dessous la liste des personnes prêtes à vous aider</p>\n"
 "        "
 msgstr ""
 "\n"
@@ -676,7 +723,8 @@ msgid "A pied"
 msgstr "On foot"
 
 #: branch/templates/job/details_demand.html:211
-msgid "Vous devez indiquer votre adresse personnelle afin d'avoir l'itinéraire"
+msgid ""
+"Vous devez indiquer votre adresse personnelle afin d'avoir l'itinéraire"
 msgstr "You must enter your personal address in order to have an itinerary"
 
 #: branch/templates/job/details_demand.html:212
@@ -729,37 +777,30 @@ msgstr "Help"
 #, python-format
 msgid ""
 "\n"
-"                    <h3 class=\"mb\"> Confirmer que %(donor)s a bien "
-"effectué votre tâche \"%(title)s\"</h3>\n"
+"                    <h3 class=\"mb\"> Confirmer que %(donor)s a bien effectué votre tâche \"%(title)s\"</h3>\n"
 "                    "
 msgstr ""
 "\n"
-"<h3 class=\"mb\"> Confirme that %(donor)s has made your job \"%(title)s\"</"
-"h3>"
+"<h3 class=\"mb\"> Confirme that %(donor)s has made your job \"%(title)s\"</h3>"
 
 #: branch/templates/job/manage_success.html:25
 #, python-format
 msgid ""
 "\n"
 "                    <p>\n"
-"                      %(donor)s déclare vous avoir aidé pendant %(time)s "
-"minutes pour votre demande \"%(title)s\".\n"
+"                      %(donor)s déclare vous avoir aidé pendant %(time)s minutes pour votre demande \"%(title)s\".\n"
 "                      <br />\n"
-"                      Si ces informations sont correctes, vous serez débité "
-"de %(time)s minutes de crédit-temps.\n"
+"                      Si ces informations sont correctes, vous serez débité de %(time)s minutes de crédit-temps.\n"
 "                      <br />\n"
-"                      Vous pouvez laisser un petit message en commentaire si "
-"vous le souhaitez.\n"
+"                      Vous pouvez laisser un petit message en commentaire si vous le souhaitez.\n"
 "                    </p>\n"
 "                    "
 msgstr ""
 "\n"
 "<p>\n"
-"%(donor)s declares he has help you for %(time)s minutes for your demand "
-"\"%(title)s\".\n"
+"%(donor)s declares he has help you for %(time)s minutes for your demand \"%(title)s\".\n"
 "<br />\n"
-"If this informations is correct, you will be debited from %(time)s minutes "
-"of time-credit.\n"
+"If this informations is correct, you will be debited from %(time)s minutes of time-credit.\n"
 "<br />\n"
 "You can write a short message in the comments if you wish.\n"
 "</p>"
@@ -828,7 +869,7 @@ msgstr "I have not completed this job"
 
 #: branch/templates/job/volunteer_demand.html:10
 msgid "Proposer son aide pour"
-msgstr "Help for"
+msgstr "Help for "
 
 #: branch/templates/job/volunteer_demand.html:30
 msgid "Proposer son aide"
@@ -1039,13 +1080,11 @@ msgstr "Confirmation job done"
 msgid ""
 "L'utilisateur {user} affirme avoir accompli le job suivant : {job}.\n"
 "Il déclare avoir pris {time} minutes pour accomplir ce job.\n"
-"Si ces informations vous semble correctes, vous pouvez confirmer que ce job "
-"a été accompli avec succès."
+"Si ces informations vous semble correctes, vous pouvez confirmer que ce job a été accompli avec succès."
 msgstr ""
 "The user {user} claims to have accomplished the following job: {job}.\n"
 "He says it took {time} minutes to complete this job.\n"
-"If you think that this information is correct, you can confirm that this job "
-"was completed successfully."
+"If you think that this information is correct, you can confirm that this job was completed successfully."
 
 #: branch/views.py:604
 msgid "Absence lors d'un job"
@@ -1054,23 +1093,60 @@ msgstr "Absence during a job"
 #: branch/views.py:605
 #, python-brace-format
 msgid ""
-"L'utilisateur {user} n'était apparemment pas présent pour accomplir le job "
-"{job}.\n"
-"S'il s'agit d'une erreur et que {user} était bien présent, veuillez "
-"contacter un administrateur pour régler le problème.\n"
-"Si vous désirez ne plus demander d'aide à l'utilisateur {user}, vous pouvez "
-"l'ignorer en vous rendant sur son profil."
+"L'utilisateur {user} n'était apparemment pas présent pour accomplir le job {job}.\n"
+"S'il s'agit d'une erreur et que {user} était bien présent, veuillez contacter un administrateur pour régler le problème.\n"
+"Si vous désirez ne plus demander d'aide à l'utilisateur {user}, vous pouvez l'ignorer en vous rendant sur son profil."
 msgstr ""
 "The user {user} apparently was not there to do the job {job}.\n"
-"If it is a mistake and {user} was present, please contact an administrator "
-"to fix the problem.\n"
-"If you no longer wish to ask for help to the user {user}, you can ignore him "
-"by visiting his profile."
+"If it is a mistake and {user} was present, please contact an administrator to fix the problem.\n"
+"If you no longer wish to ask for help to the user {user}, you can ignore him by visiting his profile."
 
 #: branch/views.py:608
 #, python-brace-format
 msgid "Vous avez indiqué la tâche {demand} comme non-completée"
 msgstr "You indicated the task {demand} as a non-completed"
+
+#: branch/views.py:638
+msgid "Job confirmé"
+msgstr "Job confirmed"
+
+#: branch/views.py:639
+#, python-brace-format
+msgid ""
+"L'utilisateur {user} a confirmé que vous aviez accompli le job {job} avec "
+"succès ! Votre compte a donc été crédité de {time} minutes.\n"
+msgstr ""
+"The user {user} confirmed that you had done the job {job} successfully! Your"
+" account has been credited with {time} minutes.\n"
+
+#: branch/views.py:641
+#, python-brace-format
+msgid "L'utilisateur {user} a laissé le commentaire suivant : {comment}"
+msgstr "The {user} user left the comment {comment}"
+
+#: branch/views.py:652
+msgid "Job refusé"
+msgstr "Job refused"
+
+#: branch/views.py:653
+#, python-brace-format
+msgid ""
+"L'utilisateur {user} a déclaré que vous n'aviez pas passé {time} minutes "
+"pour accomplir le job {job}. Votre compte n'a donc pas été crédité.\n"
+msgstr ""
+"The user {user} said that you had not spent {time} minutes to complete the "
+"job {job}. Your account has therefore not been credited.\n"
+
+#: branch/views.py:655
+#, python-brace-format
+msgid ""
+"L'utilisateur {user} a laissé un commentaire, expliquant pourquoi il n'a pas désiré créditer votre compte : {comment}\n"
+" Vous pouvez recréer une demande de confirmation avec un nouveau montant de crédit correspondant plus à la perception du demandeur d'aide.\n"
+"Si vous ne parvenez pas à trouver un terrain d'entente avec l'utilisateur {user}, vous pouvez contacter un administrateur pour régler le problème."
+msgstr ""
+"The user {user} left a comment explaining why he did not want credit your account {comment}\n"
+"We can recreate a confirmation demand with a new credit amount.\n"
+"If you dont find a good agreement, you can contact a administrator to fix the problem."
 
 #: care4care/settings.py:126
 msgid "Français"
@@ -1175,45 +1251,9 @@ msgstr "Your file must weigh less thean {maxsize}. Current size {currentsize}"
 msgid "Type de fichier non supporté"
 msgstr "File type not accepted"
 
-#: main/forms.py:192
-msgid "Type de job"
-msgstr "Job type"
-
-#: main/forms.py:193
-msgid "Catégorie du job"
-msgstr "Job category"
-
-#: main/forms.py:194
-msgid "A partir du"
-msgstr "From"
-
-#: main/forms.py:195
-msgid "jusqu'au"
-msgstr "to"
-
-#: main/forms.py:196
-msgid "Qui peut fournir son aide ?"
-msgstr "Who can provide help?"
-
-#: main/forms.py:197
-msgid "A quelle heure ?"
-msgstr "At what time?"
-
 #: main/forms.py:204 main/forms.py:206 main/forms.py:209
 msgid "Incohérence dans les dates."
 msgstr "Inconsistency in the dates."
-
-#: main/forms.py:212
-msgid "Username"
-msgstr "Username"
-
-#: main/forms.py:213
-msgid "Montant du temps (plus que 1)"
-msgstr "How many (> 1)"
-
-#: main/forms.py:214 main/templates/messages/view.html:20
-msgid "Message"
-msgstr "Message"
 
 #: main/forms.py:223
 msgid "Vous ne pouvez pas donner plus d'heure que ce que vous avez."
@@ -1477,8 +1517,8 @@ msgstr "Username"
 
 #: main/models.py:263
 msgid ""
-"Entrez un nom d'utilisateur valide.             30 caractères ou moins. Peut "
-"contenir des lettres, nombres et les caractères @/./+/-/_ "
+"Entrez un nom d'utilisateur valide.             30 caractères ou moins. Peut"
+" contenir des lettres, nombres et les caractères @/./+/-/_ "
 msgstr ""
 "Enter a valid username. No more than 30 characters. There may be numbers "
 "andcharacters  @/./+/-/_"
@@ -1492,11 +1532,11 @@ msgstr "Account type"
 
 #: main/models.py:276
 msgid ""
-"Un member pourra aider ou être aidé alors "
-"qu'un                                         non-membre est un "
-"professionnel qui s'inscrira pour avoir accès aux données "
-"d'un                                         patient. Veuillez choisir celui "
-"qui vous correspond"
+"Un member pourra aider ou être aidé alors qu'un"
+"                                         non-membre est un professionnel qui"
+" s'inscrira pour avoir accès aux données d'un"
+"                                         patient. Veuillez choisir celui qui"
+" vous correspond"
 msgstr ""
 "A member can help or be helped while a non-member is a professional who "
 "registers to access patient data. Please choose the one that suits you"
@@ -1621,7 +1661,8 @@ msgid ""
 "Dans les différentes captures d'écran, le clic gauche de la souris est "
 "représenté par un point rouge"
 msgstr ""
-"In the various screenshots, the left mouse button is represented by a red dot"
+"In the various screenshots, the left mouse button is represented by a red "
+"dot"
 
 #: main/templates/main/help.html:18
 msgid "Afficher le menu"
@@ -1697,8 +1738,8 @@ msgstr "What are the differences"
 
 #: main/templates/main/help.html:205
 msgid ""
-"Vous pourrez faire une demande s'adressant seulement aux personnes présentes "
-"dans"
+"Vous pourrez faire une demande s'adressant seulement aux personnes présentes"
+" dans"
 msgstr "You can do demands adressed only to people in"
 
 #: main/templates/main/help.html:206
@@ -1762,8 +1803,7 @@ msgstr "Jobs awaiting validation"
 #: main/templates/main/home.html:35
 msgid ""
 "\n"
-"        <p class=\"text-center\">Ci-dessous la liste des jobs que vous devez "
-"confirmer</p>\n"
+"        <p class=\"text-center\">Ci-dessous la liste des jobs que vous devez confirmer</p>\n"
 "        "
 msgstr ""
 "\n"
@@ -1788,8 +1828,7 @@ msgstr "Jobs awaiting confirmation"
 #: main/templates/main/home.html:80
 msgid ""
 "\n"
-"        <p class=\"text-center\">Ci-dessous la liste des jobs à confirmer</"
-"p>\n"
+"        <p class=\"text-center\">Ci-dessous la liste des jobs à confirmer</p>\n"
 "        "
 msgstr ""
 "\n"
@@ -1955,6 +1994,10 @@ msgstr ""
 msgid "Conversation"
 msgstr "Conversation"
 
+#: main/templates/messages/view.html:20
+msgid "Message"
+msgstr "Message"
+
 #: main/templates/messages/view.html:31
 msgid "Rejected"
 msgstr "Rejected"
@@ -2106,8 +2149,8 @@ msgstr "Ignored users"
 
 #: main/templates/profile/user_profile.html:39
 msgid ""
-"Êtes vous sur de vouloir Ignorer cette personne ? elle sera supprimée de vos "
-"favoris et de votre réseau et vous ne recevrez plus d&#39;aide de celle-ci."
+"Êtes vous sur de vouloir Ignorer cette personne ? elle sera supprimée de vos"
+" favoris et de votre réseau et vous ne recevrez plus d&#39;aide de celle-ci."
 msgstr ""
 "Are you sure you want ignore this person? it will be removed from your "
 "favorites and your network and you will receive no more help from it."
@@ -2125,13 +2168,13 @@ msgid "Ajouter cette personne à vos favoris."
 msgstr "Add to favorite"
 
 #: main/templates/profile/user_profile.html:90
-#: main/templates/profile/user_profile.html:431
+#: main/templates/profile/user_profile.html:437
 msgid "Retirer de mon réseau"
 msgstr "Remove from my network"
 
 #: main/templates/profile/user_profile.html:92
-#: main/templates/profile/user_profile.html:282
-#: main/templates/profile/user_profile.html:410
+#: main/templates/profile/user_profile.html:288
+#: main/templates/profile/user_profile.html:416
 msgid "Ajouter à mon réseau"
 msgstr "Add to my network"
 
@@ -2185,88 +2228,87 @@ msgstr "Emergency contacts"
 msgid "Priorité"
 msgstr "Priority"
 
-#: main/templates/profile/user_profile.html:231
+#: main/templates/profile/user_profile.html:203
+msgid "Aucun contact d'urgence"
+msgstr "No emergency contact"
+
+#: main/templates/profile/user_profile.html:237
 msgid "Ajouter un nouveau membre à mes favoris"
 msgstr "Add a new member to favorite"
 
-#: main/templates/profile/user_profile.html:236
+#: main/templates/profile/user_profile.html:242
 msgid ""
 "\n"
-"                        Ajouter des membres en favoris vous permet de "
-"restreindre vos demandes et offres à ces personnes.\n"
+"                        Ajouter des membres en favoris vous permet de restreindre vos demandes et offres à ces personnes.\n"
 "                        "
 msgstr ""
 "\n"
-"Add favorite members allows you to restrict your demands and offers to these "
-"people."
+"Add favorite members allows you to restrict your demands and offers to these people."
 
-#: main/templates/profile/user_profile.html:247
+#: main/templates/profile/user_profile.html:253
 msgid "Ajouter à mes favoris"
 msgstr "Add to favorite"
 
-#: main/templates/profile/user_profile.html:266
+#: main/templates/profile/user_profile.html:272
 msgid "Ajouter un nouveau membre à mon réseau personnel"
 msgstr "Add a new member to my personal network"
 
-#: main/templates/profile/user_profile.html:271
+#: main/templates/profile/user_profile.html:277
 msgid ""
 "\n"
-"                        Ajouter des membres à votre réseau personnel leur "
-"donne accès à plus d'informations sur votre profil.\n"
+"                        Ajouter des membres à votre réseau personnel leur donne accès à plus d'informations sur votre profil.\n"
 "                        "
 msgstr ""
 "\n"
-"Add members to your personnal network gives them access to more information "
-"on your profile."
+"Add members to your personnal network gives them access to more information on your profile."
 
-#: main/templates/profile/user_profile.html:301
+#: main/templates/profile/user_profile.html:307
 msgid "Ignorer un utilisateur"
 msgstr "Ignore"
 
-#: main/templates/profile/user_profile.html:306
+#: main/templates/profile/user_profile.html:312
 msgid ""
 "\n"
-"                        Ignorer un utilisateur l'empêche de voir vos offres "
-"et demandes.\n"
+"                        Ignorer un utilisateur l'empêche de voir vos offres et demandes.\n"
 "                        "
 msgstr ""
 "\n"
 "An ignored user can't see your demands and offers"
 
-#: main/templates/profile/user_profile.html:317
+#: main/templates/profile/user_profile.html:323
 msgid "Ajouter aux ignorés"
 msgstr "Add to ignored member"
 
-#: main/templates/profile/user_profile.html:355
-#: main/templates/profile/user_profile.html:377
-#: main/templates/profile/user_profile.html:395
-#: main/templates/profile/user_profile.html:415
-#: main/templates/profile/user_profile.html:436
-#: main/templates/profile/user_profile.html:454
+#: main/templates/profile/user_profile.html:361
+#: main/templates/profile/user_profile.html:383
+#: main/templates/profile/user_profile.html:401
+#: main/templates/profile/user_profile.html:421
+#: main/templates/profile/user_profile.html:442
+#: main/templates/profile/user_profile.html:460
 msgid "Notification"
 msgstr "Notification"
 
-#: main/templates/profile/user_profile.html:357
-#: main/templates/profile/user_profile.html:417
+#: main/templates/profile/user_profile.html:363
+#: main/templates/profile/user_profile.html:423
 msgid "supprimé"
 msgstr "deleted"
 
-#: main/templates/profile/user_profile.html:379
-#: main/templates/profile/user_profile.html:438
+#: main/templates/profile/user_profile.html:385
+#: main/templates/profile/user_profile.html:444
 msgid "ajouté"
 msgstr "added"
 
-#: main/templates/profile/user_profile.html:397
-#: main/templates/profile/user_profile.html:456
+#: main/templates/profile/user_profile.html:403
+#: main/templates/profile/user_profile.html:462
 msgid "Impossible d'ajouter l'utilisateur:"
 msgstr "Unable to add user:"
 
-#: main/templates/profile/user_profile.html:397
-#: main/templates/profile/user_profile.html:456
+#: main/templates/profile/user_profile.html:403
+#: main/templates/profile/user_profile.html:462
 msgid "Vous avez ignoré ce dernier."
 msgstr "You ignored it."
 
-#: main/templates/profile/user_profile.html:478
+#: main/templates/profile/user_profile.html:484
 msgid "bloqué"
 msgstr "blocked"
 
@@ -2354,7 +2396,8 @@ msgstr "Hello, "
 msgid ""
 "Quelqu'un a demandé à reinitialiser votre mot de passe sur Care4Care via "
 "votre addresse email."
-msgstr "Someone asked reset your password on Care4Care via your email address."
+msgstr ""
+"Someone asked reset your password on Care4Care via your email address."
 
 #: main/templates/registration/pass_reset_email.html:5
 msgid "Si cette demande a été faîtes à votre insu, merci d'ignorer ce mail."
@@ -2646,7 +2689,8 @@ msgstr "You are an administrator, you can see all the demands."
 
 #: main/utils.py:53
 msgid ""
-"Vous êtes administrateur de la branche, vous pouvez voir toutes les demandes."
+"Vous êtes administrateur de la branche, vous pouvez voir toutes les "
+"demandes."
 msgstr "You are an branch officer, you can see all the demands."
 
 #: main/utils.py:80
@@ -2846,6 +2890,44 @@ msgstr "As superuser, you can see all the branches"
 #: templates/base.html:367
 msgid "Messages"
 msgstr "Messages"
+
+#~ msgid ""
+#~ "\n"
+#~ " Êtes-vous sûr de vouloir SUPPRIMER %(name)s de la branche %(branch)s ? <br />\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Are you sure you want to DELETE %(name)s from the branch %(branch)s ? <br />\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "Êtes-vous sûr de vouloir BANNIR %(name)s de la branche %(branch)s ? <br />\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Are you sure you want to BAN %(name)s from the branch %(branch)s ? <br />\n"
+
+#~ msgid "Type de job"
+#~ msgstr "Job type"
+
+#~ msgid "Catégorie du job"
+#~ msgstr "Job category"
+
+#~ msgid "A partir du"
+#~ msgstr "From"
+
+#~ msgid "jusqu'au"
+#~ msgstr "to"
+
+#~ msgid "Qui peut fournir son aide ?"
+#~ msgstr "Who can provide help?"
+
+#~ msgid "A quelle heure ?"
+#~ msgstr "At what time?"
+
+#~ msgid "Username"
+#~ msgstr "Username"
+
+#~ msgid "Montant du temps (plus que 1)"
+#~ msgstr "How many (> 1)"
 
 #~ msgid "Nom d'utilisateur test"
 #~ msgstr "Username"

@@ -197,6 +197,12 @@
                                         <td>{{ personne.get_verbose_order }}</td>
                                         <td><a href="{% url 'update_emergency_contact' user_to_display.id personne.id %}">{% bootstrap_icon 'edit' %} &nbsp; {% trans "Modifier" %}</a></td>
                                     </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="4">
+                                            <p class="text-info text-center">{% trans "Aucun contact d'urgence" %}</p>
+                                        </td>
+                                    </tr>
                                     {% endfor %}
                                 </tbody>
                             </table>
