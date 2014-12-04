@@ -8,11 +8,66 @@
 {% block content %}
 <h3><i class="fa fa-angle-right"></i> {% trans "Aide" %} </h3>
 <p>{% trans "Nous allons ensemble découvrir les différentes fonctionnalités du site" %} <b>{% trans "Pens(i)ons Voisins" %}</b>.</p>
-<p> {%trans "Dans les différentes captures d'écran, le clic gauche de la souris est représenté par un point rouge" %}. </p>
+<p> {%trans "Dans les différentes captures d'écran, le clic gauche de la souris est représenté par un point rouge" %}. </p><br>
 
+<h4>{% trans "Table des matières" %}:</h4>
+<p style="margin-left:40px ;">
+   <a href="#inscr1">{% trans "Inscription" %}</a><br />
+   <a href="#menu">{% trans "Afficher le menu" %}</a> <br />
+   <a href="#log_out">{% trans "Se déconnecter" %}</a><br />
+   <a href="#profil">{% trans "Mon Profil" %}</a><br />
+   <a href="#ask_help">{% trans "Demander de l'aide" %} {% trans "et" %} {% trans "Offrir mon aide" %}</a><br />
+   <a href="#fav">{% trans "Favoris" %} {% trans "et" %} {% trans "Mon Réseau" %}</a><br />
+   <a href="#mess">{% trans "Messages" %}</a><br />
+</p>
 
+<div id = "inscr1" class="row mt">
+    <div class="col-lg-12 col-sm-12 background-gris">
+        <div class="showback">
+            <h3>{% trans "Inscription" %}:</h3>
+            <div id="inscr" class="carousel slide carousel-sync carousel-sync" data-ride="carousel" data-interval="false">
+              <!-- Bulles -->
+              <ol class="carousel-indicators">
+                <li data-target="#inscr" data-slide-to="0" class="active"></li>
+                <li data-target="#inscr" data-slide-to="1"></li>
+                <li data-target="#inscr" data-slide-to="2"></li>
+              </ol>
+              <!-- Slides -->
+              <div class="carousel-inner">
+                <!-- Page 1 -->
+                <div class="item active">
+                  <div class="carousel-page"><img src="{% static "photos/inscr1.png" %}" class="img-responsive" 
+                  style="margin:0px auto;max-height:100%;" />
+                  </div>
+                  <div class="carousel-caption">{% trans "Etape" %} 1</div>
+                </div>
+                <!-- Page 2 -->
+                <div class="item">
+                  <div class="carousel-page"><img src="{% static "photos/inscr2.png" %}" class="img-responsive img-rounded"
+              style="margin:0px auto;max-height:100%;" /></div>
+                  <div class="carousel-caption">{% trans "Etape" %} 2 : {% trans "Remplir les champs" %} </div>
+                </div>
+                <!-- Page 3 -->
+                <div class="item">
+                  <div class="carousel-page"><img src="{% static "photos/inscr3.png" %}" class="img-responsive img-rounded"
+              style="margin:0px auto;max-height:100%;" /></div>
+                  <div class="carousel-caption">{% trans "Etape" %} 3 : {% trans "Envoyer la demande" %}</div>
+                </div>
+              </div>
+              <!-- Contrôles -->
+              <a class="left carousel-control" href="#inscr" data-slide="prev">
+              <span class="glyphicon glyphicon-chevron-left"></span>
+              </a>
+              <a class="right carousel-control" href="#inscr" data-slide="next">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              </a>
+            </div>
+            <br /><a href="#">{% trans "Haut de page" %}</a>
+        </div>
+    </div>
+</div>
 
-<div class="row mt">
+<div id="menu" class="row mt">
     <div class="col-lg-12 col-sm-12 background-gris">
         <div class="showback">
             <h3>{% trans "Afficher le menu" %}:</h3>
@@ -46,9 +101,83 @@
               <span class="glyphicon glyphicon-chevron-right"></span>
               </a>
             </div>
+            <br /><a href="#">{% trans "Haut de page" %}</a>
         </div>
     </div>
 </div>
+
+<div id="log_out" class="row mt">
+    <div class="col-lg-12 col-sm-12 background-gris">
+        <div class="showback">
+            <h3>{% trans "Se déconnecter" %}(1):</h3>
+            <div id="logout" class="carousel slide carousel-sync carousel-sync" data-ride="carousel" data-interval="false">
+              <!-- Bulles -->
+              <ol class="carousel-indicators">
+                <li data-target="#logout" data-slide-to="0" class="active"></li>
+                <li data-target="#logout" data-slide-to="1"></li>
+              </ol>
+              <!-- Slides -->
+              <div class="carousel-inner">
+                <!-- Page 1 -->
+                <div class="item active">
+                  <div class="carousel-page"><img src="{% static "photos/out1.png" %}" class="img-responsive" 
+                  style="margin:0px auto;max-height:100%;" />
+                  </div>
+                  <div class="carousel-caption">{% trans "Etape" %} 1</div>
+                </div>
+                <!-- Page 2 -->
+                <div class="item">
+                  <div class="carousel-page"><img src="{% static "photos/out2.png" %}" class="img-responsive img-rounded"
+              style="margin:0px auto;max-height:100%;" /></div>
+                  <div class="carousel-caption">{% trans "Etape" %} 2 </div>
+                </div>
+              </div>
+              <!-- Contrôles -->
+              <a class="left carousel-control" href="#logout" data-slide="prev">
+              <span class="glyphicon glyphicon-chevron-left"></span>
+              </a>
+              <a class="right carousel-control" href="#logout" data-slide="next">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              </a>
+            </div>
+
+            <h3>{% trans "Se déconnecter" %}(2):</h3>
+            <div id="logout1" class="carousel slide carousel-sync carousel-sync" data-ride="carousel" data-interval="false">
+              <!-- Bulles -->
+              <ol class="carousel-indicators">
+                <li data-target="#logout1" data-slide-to="0" class="active"></li>
+                <li data-target="#logout1" data-slide-to="1"></li>
+              </ol>
+              <!-- Slides -->
+              <div class="carousel-inner">
+                <!-- Page 1 -->
+                <div class="item active">
+                  <div class="carousel-page"><img src="{% static "photos/out4.png" %}" class="img-responsive" 
+                  style="margin:0px auto;max-height:100%;" />
+                  </div>
+                  <div class="carousel-caption">{% trans "Etape" %} 1</div>
+                </div>
+                <!-- Page 2 -->
+                <div class="item">
+                  <div class="carousel-page"><img src="{% static "photos/out3.png" %}" class="img-responsive img-rounded"
+              style="margin:0px auto;max-height:100%;" /></div>
+                  <div class="carousel-caption">{% trans "Etape" %} 2 </div>
+                </div>
+              </div>
+              <!-- Contrôles -->
+              <a class="left carousel-control" href="#logout1" data-slide="prev">
+              <span class="glyphicon glyphicon-chevron-left"></span>
+              </a>
+              <a class="right carousel-control" href="#logout1" data-slide="next">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              </a>
+            </div>
+            <br /><a href="#">{% trans "Haut de page" %}</a>
+        </div>
+    </div>
+</div>
+
+
 
 <div id="profil" class="row mt">
     <div class="col-lg-12 col-sm-12 background-gris">
@@ -130,12 +259,12 @@
               <span class="glyphicon glyphicon-chevron-right"></span>
               </a>
             </div>
-             
+            <br /><a href="#">{% trans "Haut de page" %}</a>
         </div>
     </div>
 </div>
 
-<div class="row mt">
+<div id="ask_help" class="row mt">
     <div class="col-lg-12 col-sm-12 background-gris">
         <div class="showback">
             <h3>{% trans "Demander de l'aide" %}:</h3>
@@ -190,6 +319,9 @@
               <span class="glyphicon glyphicon-chevron-right"></span>
               </a>
             </div>
+            <h3>{% trans "Offrir mon aide" %}:</h3>
+            <p>{% trans "Suivez les mêmes étapes que pour" %} {% trans "Demander de l'aide" %} {% trans "mais cliquez sur" %} <b>{% trans "Offrir mon aide" %}</b> {% trans "au lieu de" %} <b>{% trans "J'ai besoin d'aide" %}</b>.</p>
+            <br /><a href="#">{% trans "Haut de page" %}</a>
         </div>
     </div>
 </div>
@@ -197,7 +329,7 @@
 
 
 
-<div class="row mt">
+<div id="fav" class="row mt">
     <div class="col-lg-12 col-sm-12 background-gris">
         <div class="showback">
             <h3>{% trans "Favoris" %} {% trans "et" %} {% trans "Mon Réseau" %}:</h3>
@@ -255,6 +387,62 @@
 
             <h4>{% trans "Comment ajouter des personnes dans" %} {% trans "Mon Réseau" %}?</h4>
             <p>{% trans "Suivez les mêmes étapes que pour les favoris mais commencez par cliquer sur" %} <b>{% trans "Mon Réseau" %}</b> {% trans "au lieu de" %} <b>{% trans "Favoris" %}</b>.</p>
+            <br /><a href="#">{% trans "Haut de page" %}</a>
+        </div>
+    </div>
+</div>
+
+<div id = "mess" class="row mt">
+    <div class="col-lg-12 col-sm-12 background-gris">
+        <div class="showback">
+            <h3>{% trans "Messages" %}:</h3>
+            <p> {% trans "Cliquer sur la petite boîte aux lettres à côté de" %} <b>{% trans "Pens(i)ons Voisins" %}</b> {% trans "ou cliquer sur"%} <b>{% trans "Messages" %}</b> {% trans "dans le menu" %}, {% trans "puis choisir, par exemple" %}, <b>{% trans "Inbox" %} </b>, {% trans "vous mènera vers la même page" %}. </p>
+            <h4>{% trans "Lire un message reçu" %}:</h4>
+            <div id="mess1" class="carousel slide carousel-sync carousel-sync" data-ride="carousel" data-interval="false">
+              <!-- Bulles -->
+              <ol class="carousel-indicators">
+                <li data-target="#mess1" data-slide-to="0" class="active"></li>
+                <li data-target="#mess1" data-slide-to="1"></li>
+                <li data-target="#mess1" data-slide-to="2"></li>
+                <li data-target="#mess1" data-slide-to="3"></li>
+              </ol>
+              <!-- Slides -->
+              <div class="carousel-inner">
+                <!-- Page 1 -->
+                <div class="item active">
+                  <div class="carousel-page"><img src="{% static "photos/mess1.png" %}" class="img-responsive" 
+                  style="margin:0px auto;max-height:100%;" />
+                  </div>
+                  <div class="carousel-caption">{% trans "Etape" %} 1</div>
+                </div>
+                <!-- Page 2 -->
+                <div class="item">
+                  <div class="carousel-page"><img src="{% static "photos/mess2.png" %}" class="img-responsive img-rounded"
+              style="margin:0px auto;max-height:100%;" /></div>
+                  <div class="carousel-caption">{% trans "Etape" %} 2 :</div>
+                </div>
+                <!-- Page 3 -->
+                <div class="item">
+                  <div class="carousel-page"><img src="{% static "photos/mess3.png" %}" class="img-responsive img-rounded"
+              style="margin:0px auto;max-height:100%;" /></div>
+                  <div class="carousel-caption">{% trans "Etape" %} 3 </div>
+                </div>
+              <!-- Page 4 -->
+                <div class="item">
+                  <div class="carousel-page"><img src="{% static "photos/mess4.png" %}" class="img-responsive img-rounded"
+              style="margin:0px auto;max-height:100%;" /></div>
+                  <div class="carousel-caption">{% trans "Etape" %} 4</div>
+                </div>
+              </div>
+              <!-- Contrôles -->
+              <a class="left carousel-control" href="#mess1" data-slide="prev">
+              <span class="glyphicon glyphicon-chevron-left"></span>
+              </a>
+              <a class="right carousel-control" href="#mess1" data-slide="next">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              </a>
+            </div>
+            <br /><a href="#">{% trans "Haut de page" %}</a>
         </div>
     </div>
 </div>

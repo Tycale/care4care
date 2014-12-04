@@ -330,7 +330,6 @@ class CreateDemandView(CreateView):
         find_offers = discriminate_offers(self.request, find_offers)
         
         for offer in find_offers:
-
             subject = _("Une correspondance a été trouvée !")
             body1 = _("Nous avons trouvé une demande correspondant à une de vos offre d'aide !\nCette demande d'aide a été faite par l'utilisateur {user} ({username}) et a pour titre {title}.\n"
                 "Vous pouvez consulter cette demande et vous proposer comme volontaire en suivant ce lien :\n{link}\n"
