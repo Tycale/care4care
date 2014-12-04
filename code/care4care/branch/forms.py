@@ -87,7 +87,7 @@ class OfferHelpForm(forms.ModelForm):
 
     def clean_date(self):
         date = self.cleaned_data.get('date')
-        if date < timezone.now():
+        if date < timezone.now() + timezone.timedelta(hours=-24):
             raise forms.ValidationError(_("Veuillez choisir une date dans le futur."))
         return date
 

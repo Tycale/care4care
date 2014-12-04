@@ -11,7 +11,7 @@ from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
 from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm, \
             VerifiedProfileForm, JobSearchForm, GiftForm, AddUser
-from main.models import User, VerifiedInformation, EmergencyContact, JobCategory, JobType, MemberType
+from main.models import User, VerifiedInformation, EmergencyContact, JobCategory, JobType, MemberType, GIVINGTO
 from branch.models import Demand, Offer
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
@@ -703,7 +703,7 @@ def job_search_view(request):
 
             if not form.cleaned_data['category']:
                 category = [str(l[0]) for l in JobCategory.JOB_CATEGORIES]
-                #print(category)
+                
             else:
                 category = form.cleaned_data['category']
 
@@ -711,6 +711,11 @@ def job_search_view(request):
                 job_type = [str(l[0]) for l in JobType.JOB_TYPES]
             else:
                 job_type = form.cleaned_data['job_type']
+
+            if not form.cleaned_data['dist']:
+                dist = sys.maxsize
+            else:
+                dist = form.cleaned_data['dist']
 
             if not form.cleaned_data['receive_help_from_who']:
                 receive_help_from_who = [str(l[0]) for l in MemberType.MEMBER_TYPES_GROUP]
@@ -731,13 +736,12 @@ def job_search_view(request):
                 request_category |= Q(category__contains=l)
 
             if str(JobType.OFFRE) in job_type:
-                #print("test")
                 offers = Offer.objects.filter(Q(date__gte=date1) &  Q(date__lte=date2) & Q(receive_help_from_who__in = receive_help_from_who) & request_time & request_category).all()
 
             if str(JobType.DEMAND) in job_type:
-                #print(job_type)
                 demands = Demand.objects.filter(Q(date__gte=date1) &  Q(date__lte=date2) & Q(receive_help_from_who__in = receive_help_from_who) & request_time & request_category & Q(closed=False)).all()
 
+                demands = Demand.objects.filter(Q(date__gte=date1) &  Q(date__lte=date2) & Q(receive_help_from_who__in = receive_help_from_who) & request_time & request_category & Q(closed=False)).all()
 
             return render(request, 'search/job_result.html',locals())
 
@@ -755,7 +759,7 @@ def credits_view(request):
     offer_pending = Demand.objects.filter(closed=True,receiver=user).all() # tâches que je vais recevoir
     num_jobs = len(jobs)
     average_time_job = 0
-    km = 0      # TODO: This variable is not used
+    km = 0      # TODO: This variable is not used (On l'affiche dans la template)
     for job in jobs :
         average_time_job += job.real_time
         km += job.km
@@ -765,7 +769,10 @@ def credits_view(request):
     if request.POST:
         form = GiftForm(request.POST, ruser=user)
         if form.is_valid():
-            friend = User.objects.get(username=form.cleaned_data['user'])
+            if form.cleaned_data['check'] == 1:
+                friend = User.objects.get(username=form.cleaned_data['user'])
+            else :
+                friend = get_object_or_404(User, pk=1)
             if not friend :
                 return render(request,'credit/credit_page.html.html', locals())
             friend.credit += form.cleaned_data['amount']
