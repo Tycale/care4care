@@ -621,13 +621,18 @@ def manage_success(request, success_demand_id):
             form = CommentConfirmForm(request.POST)
             if form.is_valid():
                 if 'accept' in request.POST:
+                    if success.time > 100000:
+                        success.time = 100000
+                    if success.time < 0:
+                        success.time = 0
+
                     demand.real_time =  success.time
                     demand.success = True
                     demand.save()
 
                     demand.donor.credit += success.time
                     demand.donor.save()
-                    demand.receiver.credit += success.time
+                    demand.receiver.credit -= success.time
                     demand.receiver.save()
 
 
