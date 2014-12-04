@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-04 10:45+0000\n"
+"POT-Creation-Date: 2014-12-04 11:04+0000\n"
 "PO-Revision-Date: 2014-12-04 10:45+0000\n"
 "Last-Translator: b'vv vv <vv@vv.be>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -196,7 +196,7 @@ msgstr "Who can see and respond to demand/offer"
 msgid "Heures de disponibilité"
 msgstr "Busy time"
 
-#: branch/models.py:116 branch/models.py:182
+#: branch/models.py:116 branch/models.py:193
 msgid "Selectionnez les heures qui vous conviennent"
 msgstr "Select the hours that suit you"
 
@@ -224,7 +224,7 @@ msgstr "Assigned volunteer"
 msgid "Demande de confirmation envoyée"
 msgstr "Confirmation request sent"
 
-#: branch/models.py:149 branch/models.py:181
+#: branch/models.py:149 branch/models.py:192
 msgid "Distance depuis domicile"
 msgstr "Trip distance"
 
@@ -232,27 +232,27 @@ msgstr "Trip distance"
 msgid "Tâche finie avec succès"
 msgstr "Succeded"
 
-#: branch/models.py:178
+#: branch/models.py:189
 msgid "Commentaire (facultatif)"
 msgstr "Additional comments"
 
-#: branch/models.py:179 branch/models.py:200
+#: branch/models.py:190 branch/models.py:213
 msgid "Date de création"
 msgstr "Creation date"
 
-#: branch/models.py:180
+#: branch/models.py:191
 msgid "Proposition acceptée"
 msgstr "Proposition accepted"
 
-#: branch/models.py:182
+#: branch/models.py:193
 msgid "Heure(s) choisie(s)"
 msgstr "Hour chosen"
 
-#: branch/models.py:195 branch/templates/job/details_demand.html:94
+#: branch/models.py:208 branch/templates/job/details_demand.html:94
 msgid "Commentaire"
 msgstr "Comments"
 
-#: branch/models.py:196
+#: branch/models.py:209
 msgid "Temps passé (en minutes)"
 msgstr "Time spent (in minutes)"
 
@@ -343,7 +343,7 @@ msgstr ""
 #: branch/templates/branch/branch_home.html:78
 #: branch/templates/job/details_demand.html:63
 #: branch/templates/job/details_demand.html:73
-#: main/templates/main/home.html:91 main/templates/main/home.html.py:122
+#: main/templates/main/home.html:85 main/templates/main/home.html.py:116
 msgid "fermer"
 msgstr "close"
 
@@ -395,14 +395,14 @@ msgid "Nom complet"
 msgstr "Complete name"
 
 #: branch/templates/branch/branch_home.html:123
-#: main/templates/main/home.html:82 main/templates/main/home.html.py:92
+#: main/templates/main/home.html:76 main/templates/main/home.html.py:86
 msgid "J'ai besoin d'aide"
 msgstr "I need help"
 
 #: branch/templates/branch/branch_home.html:124
 #: branch/templates/job/details_demand.html:43
 #: branch/templates/job/details_demand.html:177
-#: main/templates/main/home.html:83 main/templates/main/home.html.py:123
+#: main/templates/main/home.html:77 main/templates/main/home.html.py:117
 msgid "Offrir mon aide"
 msgstr "Offer my help"
 
@@ -503,7 +503,7 @@ msgstr "Cancel the ban"
 
 #: branch/templates/branch/branch_join.html:5
 #: branch/templates/branch/branch_join.html:13
-#: main/templates/main/home.html:103 main/templates/main/home.html.py:134
+#: main/templates/main/home.html:97 main/templates/main/home.html.py:128
 #: templates/base.html:314
 msgid "Rejoindre une branche"
 msgstr "Join a branch"
@@ -622,7 +622,6 @@ msgid "Refuser"
 msgstr "Reject"
 
 #: branch/templates/job/details_demand.html:126
-#: main/templates/main/home.html:70
 msgid "Aucun volontaire actuellement"
 msgstr "No volunteers at this time"
 
@@ -1506,17 +1505,17 @@ msgstr "Demand"
 msgid "Gérer"
 msgstr "Manage"
 
-#: main/templates/main/home.html:96
+#: main/templates/main/home.html:90
 msgid "Dans quelle branche souhaitez-vous demander de l'aide ?"
 msgstr "Which branch would you like to ask for help in ?"
 
-#: main/templates/main/home.html:102
+#: main/templates/main/home.html:96
 msgid "Vous devez rejoindre une branche avant de pouvoir demander de l'aide."
 msgstr ""
 "You must be logged in to ask for help? <br />\n"
 "\tNot registered? "
 
-#: main/templates/main/home.html:109
+#: main/templates/main/home.html:103
 msgid ""
 " Vous devez être connecté afin de pouvoir demander de l'aide. <br />\n"
 "        Pas encore inscrit ? "
@@ -1524,19 +1523,19 @@ msgstr ""
 "You must be logged in to ask for help? <br />\n"
 "\tNot registered? "
 
-#: main/templates/main/home.html:110 main/templates/main/home.html.py:141
+#: main/templates/main/home.html:104 main/templates/main/home.html.py:135
 msgid "Inscrivez-vous"
 msgstr "Sign up"
 
-#: main/templates/main/home.html:127
+#: main/templates/main/home.html:121
 msgid "Dans quelle branche souhaitez-vous offrir votre aide ?"
 msgstr "Which branch would you like to offer help in?"
 
-#: main/templates/main/home.html:133
+#: main/templates/main/home.html:127
 msgid "Vous devez rejoindre une branche avant de pouvoir offrir de l'aide."
 msgstr "You must join a branch to offer help."
 
-#: main/templates/main/home.html:140
+#: main/templates/main/home.html:134
 msgid ""
 " Vous devez être connecté afin de pouvoir offrir votre aide. <br />\n"
 "        Pas encore inscrit ? "
