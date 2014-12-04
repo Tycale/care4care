@@ -50,7 +50,7 @@
     </div>
 </div>
 
-<div class="row mt">
+<div id="profil" class="row mt">
     <div class="col-lg-12 col-sm-12 background-gris">
         <div class="showback">
             <h3>{% trans "Afficher" %} {% trans "Mon Profil" %} :</h3>
@@ -201,6 +201,60 @@
     <div class="col-lg-12 col-sm-12 background-gris">
         <div class="showback">
             <h3>{% trans "Favoris" %} {% trans "et" %} {% trans "Mon Réseau" %}:</h3>
+            <h4>{% trans "Quelles sont les différences" %}?</h4>
+            <p>{% trans "Vous pourrez faire une demande s'adressant seulement aux personnes présentes dans" %} <b>{% trans "Favoris" %}</b>.</p>
+            <p>{% trans "Les personnes présentes dans" %} <b>{% trans "Mon Réseau" %}</b> {% trans "pourront voir de plus amples informations sur vous" %}</p><br />
+
+            <h4>{% trans "Comment ajouter des personnes dans" %} {% trans "Favoris" %}?</h4>
+            <p>{% trans "Rendez-vous dans" %}: <b>{% trans "Mon Profil" %}</b>. {% trans "Si vous ne savez pas comment faire" %}, <a href="#profil">{% trans "cliquez ici" %}</a> </p> <br />
+
+            <div id="my_carousel4" class="carousel slide" data-ride="carousel" data-interval="false">
+              <!-- Bulles -->
+              <ol class="carousel-indicators">
+                <li data-target="#my_carousel4" data-slide-to="0" class="active"></li>
+                <li data-target="#my_carousel4" data-slide-to="1"></li>
+                <li data-target="#my_carousel4" data-slide-to="2"></li>
+                <li data-target="#my_carousel4" data-slide-to="3"></li>
+              </ol>
+              <!-- Slides -->
+              <div class="carousel-inner">
+                <!-- Page 1 -->
+                <div class="item active">
+                  <div class="carousel-page"><img src="{% static "photos/fav1.png" %}" class="img-responsive" 
+                  style="margin:0px auto;max-height:100%;" />
+                  </div>
+                  <div class="carousel-caption">{% trans "Etape" %} 1</div>
+                </div>
+                <!-- Page 2 -->
+                <div class="item">
+                  <div class="carousel-page"><img src="{% static "photos/fav2.png" %}" class="img-responsive img-rounded"
+              style="margin:0px auto;max-height:100%;" /></div>
+                  <div class="carousel-caption">{% trans "Etape" %} 2: {% trans "Remplir le champ et choisir l'utilisateur" %} </div>
+                </div>
+                <!-- Page 3 -->
+                <div class="item">
+                  <div class="carousel-page"><img src="{% static "photos/fav3.png" %}" class="img-responsive img-rounded"
+              style="margin:0px auto;max-height:100%;" /></div>
+                  <div class="carousel-caption">{% trans "Etape" %} 3 </div>
+                </div>
+                <!-- Page 4 -->
+                <div class="item">
+                  <div class="carousel-page"><img src="{% static "photos/fav4.png" %}" class="img-responsive img-rounded"
+              style="margin:0px auto;max-height:100%;" /></div>
+                  <div class="carousel-caption">{% trans "Résultat" %}</div>
+                </div>
+              </div>
+              <!-- Contrôles -->
+              <a class="left carousel-control" href="#my_carousel4" data-slide="prev">
+              <span class="glyphicon glyphicon-chevron-left"></span>
+              </a>
+              <a class="right carousel-control" href="#my_carousel4" data-slide="next">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+              </a>
+            </div><br />
+
+            <h4>{% trans "Comment ajouter des personnes dans" %} {% trans "Mon Réseau" %}?</h4>
+            <p>{% trans "Suivez les mêmes étapes que pour les favoris mais commencez par cliquer sur" %} <b>{% trans "Mon Réseau" %}</b> {% trans "au lieu de" %} <b>{% trans "Favoris" %}</b>.</p>
         </div>
     </div>
 </div>
