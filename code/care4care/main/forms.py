@@ -64,10 +64,10 @@ class CareRegistrationForm(forms.ModelForm):
             try:
                 Branch.objects.get(pk=id)
             except Branch.DoesNotExist:
-                raise forms.ValidationError("Veuillez choisir une branche en choisissant un marqueur rouge sur la carte")
+                raise forms.ValidationError(_("Veuillez choisir une branche en choisissant un marqueur rouge sur la carte"))
 
             if id == -1:
-                raise forms.ValidationError("Veuillez choisir une branche en choisissant un marqueur rouge sur la carte")
+                raise forms.ValidationError(_("Veuillez choisir une branche en choisissant un marqueur rouge sur la carte"))
 
         return self.cleaned_data
 

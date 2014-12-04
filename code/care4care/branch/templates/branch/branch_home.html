@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+    {% extends "base.html" %}
 {% load bootstrap3 %}{% load i18n %}{% load staticfiles %}{% load jobs_extra %}{% load thumbnail %}
 
 
@@ -196,12 +196,59 @@
                         </td>
                         {% endif %}
                         {% if is_branch_admin %}
-                	    <td>
+                	    <td class="rowlink-skip">
                             <a class="btn btn-primary btn-xs" href="{% url 'create_demand' branch_id=branch.id slug=branch.slug user_id=member.user.id %}"><i class="fa fa-plus"> {% trans "demande" %}</i></a>
                             <a class="btn btn-primary btn-xs" href="{% url 'create_offer' branch_id=branch.id slug=branch.slug user_id=member.user.id %}"><i class="fa fa-plus"> {% trans "offre" %}</i></a>
                 	        <a class="btn btn-primary btn-xs" href="{% url 'edit_profile' member.user.id %}"><i class="fa fa-pencil"> {% trans "Modifier" %}</i></a>
                             {% if member.user.id != branch.creator.id %}
-                	        <a class="btn btn-danger btn-xs" href="{% url 'branch_ban' branch_id=branch.id user_id=member.user.id %}"><i class="fa fa-ban"> {% trans "Bannir" %}</i></a>
+                            <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#modalLeave{{member.user.id}}"><i class="fa fa-trash-o"> {% trans "Enlever" %}</i></button>
+
+                            <!-- Kick Modal -->
+                            <div class="modal fade" id="modalLeave{{member.user.id}}" tabindex="-1" role="dialog" aria-labelledby="myModelLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h4 class="modal-title" id="myModalLabel">{% trans "Supprimer l'utilisateur de la branche ?" %}</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            {% blocktrans with member.user.get_full_name as name %}
+                                            Êtes-vous sûr de vouloir SUPPRIMER {{name}} de la branche {{branch}} ? <br />
+                                            {% endblocktrans %}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "fermer" %}</button>
+                                            <a href="{% url 'branch_leave' branch_id=branch.id user_id=member.user.id %}"
+                                            class="btn btn-danger">{% trans "supprimer de la branche" %}</a>
+                                        </div>
+                                    </div>  
+                                </div>
+                            </div>
+
+                	        <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#modalBan{{member.user.id}}"><i class="fa fa-ban"> {% trans "Bannir" %}</i></button>
+                            
+                            <!-- Kick Modal -->
+                            <div class="modal fade" id="modalBan{{member.user.id}}" tabindex="-1" role="dialog" aria-labelledby="myModelLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            <h4 class="modal-title" id="myModalLabel">{% trans "Bannir l'utilisateur de la branche ?" %}</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            {% blocktrans with member.user.get_full_name as name %}
+                                            Êtes-vous sûr de vouloir BANNIR {{name}} de la branche {{branch}} ? <br />
+                                            {% endblocktrans %}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">{% trans "fermer" %}</button>
+                                            <a href="{% url 'branch_ban' branch_id=branch.id user_id=member.user.id %}"
+                                            class="btn btn-danger">{% trans "Bannir de la branche" %}</a>
+                                        </div>
+                                    </div>  
+                                </div>
+                            </div>
+
                             {% endif %}
                 	    </td>
                         {% endif %}
@@ -214,6 +261,7 @@
         </div>
     </div>
 </div>
+
 
 {% if is_branch_admin or request.user.is_superuser %}
     <div class="row mt">

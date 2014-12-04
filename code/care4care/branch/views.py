@@ -621,9 +621,14 @@ def manage_success(request, success_demand_id):
             form = CommentConfirmForm(request.POST)
             if form.is_valid():
                 if 'accept' in request.POST:
+                    if success.time > 100000:
+                        success.time = 100000
+                    if success.time < 0:
+                        success.time = 0
+
                     demand.real_time =  success.time
                     demand.success = True
-                    demand.save()
+                    
 
                     demand.donor.credit += success.time
                     demand.donor.save()
@@ -635,6 +640,8 @@ def manage_success(request, success_demand_id):
                     if form.cleaned_data['comment'] != "":
                         body += _("L'utilisateur {user} a laissé le commentaire suivant : {comment}").format(user=demand.receiver,comment=form.cleaned_data['comment'])
                     pm_write(demand.receiver, demand.donor, subject, body)
+                    success.delete()
+                    demand.save()
 
                     return redirect('home')
                 if 'decline' in request.POST:
