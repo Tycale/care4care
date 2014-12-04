@@ -27,10 +27,10 @@
     </div>
 </div>
 
-{% if request.user.uservol.down_to_date.no_success.all %}
+{% if request.user.uservol.no_successs.down_to_date.all %}
 <div class="row mt">
     <div class="col-md-12">
-        <div class="content-panel">
+        <div class="content-panel ph">
         <h4>{% trans "Jobs en attente de validation" %}</h4>
         {% blocktrans %}
         <p class="text-center">Ci-dessous la liste des jobs que vous devez confirmer</p>
@@ -45,7 +45,7 @@
                 </tr>
             </thead>
             <tbody data-link='row' data-target="a.mainlink">
-                {% for uv in request.user.uservol.down_to_date.no_success.all %}
+                {% for uv in request.user.uservol.no_successs.down_to_date.all %}
                 <tr>
                     <td>
                     <a href="{{uv.demand.receiver.get_absolute_url}}">
@@ -63,12 +63,6 @@
                             {% bootstrap_icon "ok" %} {% trans "Gérer" %}
                         </a>
                     </td>
-                </tr>
-                {% empty %}
-                <tr>
-                <td colspan="5" class="text-center text-info">
-                    {% trans "Aucun volontaire actuellement" %}
-                </td>
                 </tr>
                 {% endfor %}
             </tbody>

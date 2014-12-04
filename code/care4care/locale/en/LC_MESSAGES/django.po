@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-04 10:30+0000\n"
-"PO-Revision-Date: 2014-12-04 09:58+0000\n"
+"POT-Creation-Date: 2014-12-04 10:45+0000\n"
+"PO-Revision-Date: 2014-12-04 10:45+0000\n"
 "Last-Translator: b'vv vv <vv@vv.be>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -648,7 +648,7 @@ msgid "Durée estimée du service"
 msgstr "Estimated time of the service"
 
 #: branch/templates/job/details_demand.html:168
-#: main/templates/credit/credit_page.html:20 main/views.py:777
+#: main/templates/credit/credit_page.html:20 main/views.py:771
 msgid "minutes"
 msgstr "minutes"
 
@@ -1036,10 +1036,6 @@ msgstr "Inconsistency in the dates."
 #: main/forms.py:219
 msgid "Vous ne pouvez pas donner plus d'heure que ce que vous avez."
 msgstr "You cannot give more time than you have"
-
-#: main/forms.py:224
-msgid "Username"
-msgstr "Username"
 
 #: main/models.py:16
 msgid "Internet"
@@ -1515,10 +1511,6 @@ msgid "Dans quelle branche souhaitez-vous demander de l'aide ?"
 msgstr "Which branch would you like to ask for help in ?"
 
 #: main/templates/main/home.html:102
-#, fuzzy
-#| msgid ""
-#| " Vous devez être connecté afin de pouvoir demander de l'aide. <br />\n"
-#| "        Pas encore inscrit ? "
 msgid "Vous devez rejoindre une branche avant de pouvoir demander de l'aide."
 msgstr ""
 "You must be logged in to ask for help? <br />\n"
@@ -1542,7 +1534,7 @@ msgstr "Which branch would you like to offer help in?"
 
 #: main/templates/main/home.html:133
 msgid "Vous devez rejoindre une branche avant de pouvoir offrir de l'aide."
-msgstr ""
+msgstr "You must join a branch to offer help."
 
 #: main/templates/main/home.html:140
 msgid ""
@@ -2444,7 +2436,7 @@ msgstr ""
 msgid "Droit refusé et demande supprimée"
 msgstr "Status refused and demand deleted"
 
-#: main/views.py:777
+#: main/views.py:771
 msgid "Cadeau de : "
 msgstr "Gift from :"
 
@@ -2581,8 +2573,9 @@ msgstr "As superuser, you can see all the branches"
 msgid "Messages"
 msgstr "Messages"
 
-#, fuzzy
-#~| msgid "Nom d'utilisateur"
+#~ msgid "Username"
+#~ msgstr "Username"
+
 #~ msgid "Nom d'utilisateur test"
 #~ msgstr "Username"
 
