@@ -235,8 +235,8 @@
                 </li>
                 <li>
                   <div class="btn-group" style="margin-right : 15px;">
-                    <button id="plustext" alt="Increase text size" class="btn btn-theme btn-zoom force-size" onclick="resizeText(1)"><i class="fa fa-search-plus"></i></button>
-                    <button id="minustext" alt="Decrease text size" class="btn btn-theme btn-zoom force-size  " onclick="resizeText(-1)"><i class="fa fa-search-minus"></i></button>
+                    <button id="minustext" alt="Decrease text size" class="btn btn-theme btn-zoom force-size  " onclick="countam();resizeText();"><i class="fa fa-search-minus"></i></button>
+                    <button id="plustext" alt="Increase text size" class="btn btn-theme btn-zoom force-size" onclick="counta();resizeText();"><i class="fa fa-search-plus"></i></button>
                   </div>
                 </li>
                 <li>
@@ -619,6 +619,24 @@
     {% endcomment %}
 
   <script type="text/javascript">
+        function counta(){
+          counter += 1;
+          if(counter > 9){
+            counter = 9;
+          }
+        }
+
+        function countam(){
+          counter -= 1;
+          if(counter < 5){
+            counter = 5;
+          }
+        }
+
+        function resizeText() {
+          document.body.style.fontSize = (counter * 2) + "px";
+          $.cookie('zoom', counter);
+        }
 
         $(document).ready(function () {
         //Handles menu drop down
@@ -643,22 +661,21 @@
             });
         {% endfor %}
 
+        if (document.body.style.fontSize == "") {
+            document.body.style.fontSize = "12px";
+          }
+
+        counter = 6;
+        if($.cookie('zoom')){
+          counter = parseInt($.cookie('zoom'));
+        }
+
+        resizeText();
+
         return false;
         });
+  
   </script>
-
-   <script type="text/javascript">
-      var counter = 0;
-      function resizeText(multiplier) {
-        if (document.body.style.fontSize == "") {
-          document.body.style.fontSize = "1.2em";
-        }
-        if((multiplier == 1 && counter<5) || (multiplier == -1 && counter>0)) {
-          document.body.style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
-          counter += multiplier;
-        }
-      }
-   </script>
 
   {% block extra_footer %}{% endblock %}
 

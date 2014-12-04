@@ -344,7 +344,6 @@ class CreateDemandView(CreateView):
             .format(user=self.offer.donor.get_full_name(), title=self.object.title, username=self.offer.donor)
 
             pm_write(self.offer.donor, self.object.reveiver, subject, body2)
-
         return self.object.get_absolute_url()
 
 class UpdateDemandView(UpdateView):
