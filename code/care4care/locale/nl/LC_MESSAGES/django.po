@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-04 12:49+0000\n"
+"POT-Creation-Date: 2014-12-04 13:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -37,6 +37,11 @@ msgstr ""
 
 #: branch/forms.py:59
 msgid "Le temps estimé doit être plus grand que 0 minute."
+msgstr ""
+
+#: branch/forms.py:123 branch/models.py:208
+#: branch/templates/job/details_demand.html:94
+msgid "Commentaire"
 msgstr ""
 
 #: branch/models.py:17
@@ -248,10 +253,6 @@ msgstr ""
 msgid "Heure(s) choisie(s)"
 msgstr ""
 
-#: branch/models.py:208 branch/templates/job/details_demand.html:94
-msgid "Commentaire"
-msgstr ""
-
 #: branch/models.py:209
 msgid "Temps passé (en minutes)"
 msgstr ""
@@ -336,7 +337,7 @@ msgstr ""
 #: branch/templates/branch/branch_home.html:78
 #: branch/templates/job/details_demand.html:63
 #: branch/templates/job/details_demand.html:73
-#: main/templates/main/home.html:87 main/templates/main/home.html.py:118
+#: main/templates/main/home.html:133 main/templates/main/home.html.py:164
 msgid "fermer"
 msgstr ""
 
@@ -384,14 +385,14 @@ msgid "Nom complet"
 msgstr ""
 
 #: branch/templates/branch/branch_home.html:123
-#: main/templates/main/home.html:77 main/templates/main/home.html.py:88
+#: main/templates/main/home.html:123 main/templates/main/home.html.py:134
 msgid "J'ai besoin d'aide"
 msgstr ""
 
 #: branch/templates/branch/branch_home.html:124
 #: branch/templates/job/details_demand.html:43
 #: branch/templates/job/details_demand.html:177
-#: main/templates/main/home.html:78 main/templates/main/home.html.py:119
+#: main/templates/main/home.html:124 main/templates/main/home.html.py:165
 msgid "Offrir mon aide"
 msgstr ""
 
@@ -492,7 +493,7 @@ msgstr ""
 
 #: branch/templates/branch/branch_join.html:5
 #: branch/templates/branch/branch_join.html:13
-#: main/templates/main/home.html:99 main/templates/main/home.html.py:130
+#: main/templates/main/home.html:145 main/templates/main/home.html.py:176
 #: templates/base.html:315
 msgid "Rejoindre une branche"
 msgstr ""
@@ -583,7 +584,7 @@ msgid ""
 msgstr ""
 
 #: branch/templates/job/details_demand.html:92
-#: main/templates/main/home.html:41
+#: main/templates/main/home.html:41 main/templates/main/home.html.py:86
 msgid "Photo"
 msgstr ""
 
@@ -592,7 +593,7 @@ msgid "Km"
 msgstr ""
 
 #: branch/templates/job/details_demand.html:96
-#: main/templates/main/home.html:44
+#: main/templates/main/home.html:44 main/templates/main/home.html.py:89
 msgid "Actions"
 msgstr ""
 
@@ -601,6 +602,7 @@ msgid "Accepter"
 msgstr ""
 
 #: branch/templates/job/details_demand.html:119
+#: branch/templates/job/manage_success.html:46
 msgid "Refuser"
 msgstr ""
 
@@ -700,6 +702,43 @@ msgstr ""
 msgid "offre son aide dans la branche "
 msgstr ""
 
+#: branch/templates/job/manage_success.html:5
+#: branch/templates/job/success_demand.html:5
+#: branch/templates/job/volunteer_demand.html:5
+msgid "Aider"
+msgstr ""
+
+#: branch/templates/job/manage_success.html:21
+#, python-format
+msgid ""
+"\n"
+"                    <h3 class=\"mb\"> Confirmer que %(donor)s a bien "
+"effectué votre tâche \"%(title)s\"</h3>\n"
+"                    "
+msgstr ""
+
+#: branch/templates/job/manage_success.html:25
+#, python-format
+msgid ""
+"\n"
+"                    <p>\n"
+"                      %(donor)s déclare vous avoir aidé pendant %(time)s "
+"minutes pour votre demande \"%(title)s\".\n"
+"                      <br />\n"
+"                      Si ces informations sont correctes, vous serez débité "
+"de %(time)s minutes de crédit-temps.\n"
+"                      <br />\n"
+"                      Vous pouvez laisser un petit message en commentaire si "
+"vous le souhaitez.\n"
+"                    </p>\n"
+"                    "
+msgstr ""
+
+#: branch/templates/job/manage_success.html:43
+#: main/templates/profile/user_profile.html:43
+msgid "Confirmer"
+msgstr ""
+
 #: branch/templates/job/need_help.html:5
 msgid "Besoin d'aide"
 msgstr ""
@@ -739,11 +778,6 @@ msgstr ""
 
 #: branch/templates/job/offer_help.html:17
 msgid "offre de l'aide dans la branche"
-msgstr ""
-
-#: branch/templates/job/success_demand.html:5
-#: branch/templates/job/volunteer_demand.html:5
-msgid "Aider"
 msgstr ""
 
 #: branch/templates/job/success_demand.html:10
@@ -793,37 +827,37 @@ msgstr ""
 msgid "Heures"
 msgstr ""
 
-#: branch/views.py:36
+#: branch/views.py:37
 msgid "Branche créée"
 msgstr ""
 
-#: branch/views.py:96
+#: branch/views.py:97
 #, python-brace-format
 msgid ""
 "Vous avez été banni de la branche {branch} et ne pouvez pas la rejoindre"
 msgstr ""
 
-#: branch/views.py:99
+#: branch/views.py:100
 #, python-brace-format
 msgid "Vous êtes déjà dans la branche {branch}"
 msgstr ""
 
-#: branch/views.py:103
+#: branch/views.py:104
 #, python-brace-format
 msgid "Vous avez rejoins la branche {branch}"
 msgstr ""
 
-#: branch/views.py:117
+#: branch/views.py:118
 #, python-brace-format
 msgid "Vous avez quitté la branche {branch}"
 msgstr ""
 
-#: branch/views.py:135
+#: branch/views.py:136
 #, python-format
 msgid "Bannissement de la branche %s"
 msgstr ""
 
-#: branch/views.py:136
+#: branch/views.py:137
 #, python-format
 msgid ""
 "Vous avez été banni de la branche %s. Vous ne pouvez à présent plus "
@@ -831,140 +865,140 @@ msgid ""
 "adminstrateur ou l'officier en charge de la branche en question"
 msgstr ""
 
-#: branch/views.py:138
+#: branch/views.py:139
 #, python-brace-format
 msgid "{user} a été banni de la branche {branch}"
 msgstr ""
 
-#: branch/views.py:155
+#: branch/views.py:156
 #, python-format
 msgid "Annulation du bannissement de la branche %s"
 msgstr ""
 
-#: branch/views.py:156
+#: branch/views.py:157
 #, python-format
 msgid ""
 "Nous avons annulé le bannissement de la branche %s vous concernant. Vous "
 "pouvez à présent rejoindre cette branche si vous le souhaitez."
 msgstr ""
 
-#: branch/views.py:158
+#: branch/views.py:159
 #, python-brace-format
 msgid "le bannissement de {user} dans la branche {branch} a été annulé"
 msgstr ""
 
-#: branch/views.py:176
+#: branch/views.py:177
 #, python-brace-format
 msgid "{user} a été promu administrateur de la branche {branch}"
 msgstr ""
 
-#: branch/views.py:194
+#: branch/views.py:195
 #, python-brace-format
 msgid "{user} n'est plus administrateur de la branche {branch}"
 msgstr ""
 
-#: branch/views.py:209
+#: branch/views.py:210
 #, python-brace-format
 msgid "Vous avez supprimé la branche {branch}"
 msgstr ""
 
-#: branch/views.py:222
+#: branch/views.py:223
 #, python-brace-format
 msgid "Vous avez supprimé la demande {demand}"
 msgstr ""
 
-#: branch/views.py:233
+#: branch/views.py:234
 #, python-brace-format
 msgid "Vous avez supprimé l'offre {offer}"
 msgstr ""
 
-#: branch/views.py:244
+#: branch/views.py:245
 msgid "Vous avez refusé cette aide"
 msgstr ""
 
-#: branch/views.py:257
+#: branch/views.py:258
 msgid "Je vous ai choisi pour '"
 msgstr ""
 
-#: branch/views.py:258
+#: branch/views.py:259
 msgid " Je vous ai choisi pour effectuer le job '"
 msgstr ""
 
-#: branch/views.py:259
+#: branch/views.py:260
 msgid "Lieu : "
 msgstr ""
 
-#: branch/views.py:260
+#: branch/views.py:261
 msgid "Date : "
 msgstr ""
 
-#: branch/views.py:261
+#: branch/views.py:262
 msgid "Heure(s) désirée(s) : "
 msgstr ""
 
-#: branch/views.py:262
+#: branch/views.py:263
 msgid "Description : "
 msgstr ""
 
-#: branch/views.py:263
+#: branch/views.py:264
 msgid "N'hésitez pas à me contacter pour de plus amples informations"
 msgstr ""
 
-#: branch/views.py:264
+#: branch/views.py:265
 msgid "À bientôt,"
 msgstr ""
 
-#: branch/views.py:279
+#: branch/views.py:280
 msgid "Vous avez accepté cette aide !"
 msgstr ""
 
-#: branch/views.py:445 branch/views.py:446
+#: branch/views.py:446 branch/views.py:447
 msgid "a commenté votre offre"
 msgstr ""
 
-#: branch/views.py:447 branch/views.py:491 branch/views.py:532
+#: branch/views.py:448 branch/views.py:492 branch/views.py:533
 msgid "Commentaire : "
 msgstr ""
 
-#: branch/views.py:448
+#: branch/views.py:449
 msgid "Vous pouvez lui répondre en vous rendant sur votre offre :"
 msgstr ""
 
-#: branch/views.py:489 branch/views.py:490
+#: branch/views.py:490 branch/views.py:491
 msgid "a commenté votre demande '"
 msgstr ""
 
-#: branch/views.py:492
+#: branch/views.py:493
 msgid "Vous pouvez lui répondre en vous rendant sur votre demande:"
 msgstr ""
 
-#: branch/views.py:530 branch/views.py:531
+#: branch/views.py:531 branch/views.py:532
 msgid "vous offre son aide pour '"
 msgstr ""
 
-#: branch/views.py:533
+#: branch/views.py:534
 msgid "Km de chez vous : "
 msgstr ""
 
-#: branch/views.py:534
+#: branch/views.py:535
 msgid "Heure(s) choisies(s) : "
 msgstr ""
 
-#: branch/views.py:535
+#: branch/views.py:536
 msgid ""
 "Vous pouvez accepter son offre d'aide en vous rendant sur votre demande "
 "d'aide:"
 msgstr ""
 
-#: branch/views.py:587
+#: branch/views.py:588
 msgid "Demande envoyée"
 msgstr ""
 
-#: branch/views.py:589
+#: branch/views.py:590
 msgid "Confirmation de job accompli"
 msgstr ""
 
-#: branch/views.py:590
+#: branch/views.py:591
 #, python-brace-format
 msgid ""
 "L'utilisateur {user} affirme avoir accompli le job suivant : {job}.\n"
@@ -973,11 +1007,11 @@ msgid ""
 "a été accompli avec succès."
 msgstr ""
 
-#: branch/views.py:603
+#: branch/views.py:604
 msgid "Absence lors d'un job"
 msgstr ""
 
-#: branch/views.py:604
+#: branch/views.py:605
 #, python-brace-format
 msgid ""
 "L'utilisateur {user} n'était apparemment pas présent pour accomplir le job "
@@ -988,7 +1022,7 @@ msgid ""
 "l'ignorer en vous rendant sur son profil."
 msgstr ""
 
-#: branch/views.py:607
+#: branch/views.py:608
 #, python-brace-format
 msgid "Vous avez indiqué la tâche {demand} comme non-completée"
 msgstr ""
@@ -1063,6 +1097,11 @@ msgstr ""
 msgid "Les mots de passe ne sont pas identiques."
 msgstr ""
 
+#: main/forms.py:67 main/forms.py:70
+msgid ""
+"Veuillez choisir une branche en choisissant un marqueur rouge sur la carte"
+msgstr ""
+
 #: main/forms.py:125 main/forms.py:127 main/forms.py:131
 msgid "Veuillez introduire une adresse valide via les propositions."
 msgstr ""
@@ -1090,18 +1129,46 @@ msgid "Type de fichier non supporté"
 msgstr ""
 
 #: main/forms.py:192
-msgid "jusqu'au"
+msgid "Type de job"
 msgstr ""
 
-#: main/forms.py:195
+#: main/forms.py:193
+msgid "Catégorie du job"
+msgstr ""
+
+#: main/forms.py:194
 msgid "A partir du"
 msgstr ""
 
-#: main/forms.py:205 main/forms.py:207 main/forms.py:210
+#: main/forms.py:195
+msgid "jusqu'au"
+msgstr ""
+
+#: main/forms.py:196
+msgid "Qui peut fournir son aide ?"
+msgstr ""
+
+#: main/forms.py:197
+msgid "A quelle heure ?"
+msgstr ""
+
+#: main/forms.py:204 main/forms.py:206 main/forms.py:209
 msgid "Incohérence dans les dates."
 msgstr ""
 
-#: main/forms.py:224
+#: main/forms.py:212
+msgid "Username"
+msgstr ""
+
+#: main/forms.py:213
+msgid "Montant du temps (plus que 1)"
+msgstr ""
+
+#: main/forms.py:214 main/templates/messages/view.html:20
+msgid "Message"
+msgstr ""
+
+#: main/forms.py:223
 msgid "Vous ne pouvez pas donner plus d'heure que ce que vous avez."
 msgstr ""
 
@@ -1656,37 +1723,57 @@ msgstr ""
 msgid "Demande"
 msgstr ""
 
-#: main/templates/main/home.html:63
+#: main/templates/main/home.html:63 main/templates/main/home.html.py:108
 msgid "Gérer"
 msgstr ""
 
-#: main/templates/main/home.html:92
+#: main/templates/main/home.html:79
+msgid "Jobs en attente de confirmation"
+msgstr ""
+
+#: main/templates/main/home.html:80
+msgid ""
+"\n"
+"        <p class=\"text-center\">Ci-dessous la liste des jobs à confirmer</"
+"p>\n"
+"        "
+msgstr ""
+
+#: main/templates/main/home.html:87
+msgid "Personne vous ayant aidée"
+msgstr ""
+
+#: main/templates/main/home.html:88
+msgid "Tâche"
+msgstr ""
+
+#: main/templates/main/home.html:138
 msgid "Dans quelle branche souhaitez-vous demander de l'aide ?"
 msgstr ""
 
-#: main/templates/main/home.html:98
+#: main/templates/main/home.html:144
 msgid "Vous devez rejoindre une branche avant de pouvoir demander de l'aide."
 msgstr ""
 
-#: main/templates/main/home.html:105
+#: main/templates/main/home.html:151
 msgid ""
 " Vous devez être connecté afin de pouvoir demander de l'aide. <br />\n"
 "        Pas encore inscrit ? "
 msgstr ""
 
-#: main/templates/main/home.html:106 main/templates/main/home.html.py:137
+#: main/templates/main/home.html:152 main/templates/main/home.html.py:183
 msgid "Inscrivez-vous"
 msgstr ""
 
-#: main/templates/main/home.html:123
+#: main/templates/main/home.html:169
 msgid "Dans quelle branche souhaitez-vous offrir votre aide ?"
 msgstr ""
 
-#: main/templates/main/home.html:129
+#: main/templates/main/home.html:175
 msgid "Vous devez rejoindre une branche avant de pouvoir offrir de l'aide."
 msgstr ""
 
-#: main/templates/main/home.html:136
+#: main/templates/main/home.html:182
 msgid ""
 " Vous devez être connecté afin de pouvoir offrir votre aide. <br />\n"
 "        Pas encore inscrit ? "
@@ -1800,10 +1887,6 @@ msgstr ""
 
 #: main/templates/messages/view.html:20
 msgid "Conversation"
-msgstr ""
-
-#: main/templates/messages/view.html:20
-msgid "Message"
 msgstr ""
 
 #: main/templates/messages/view.html:31
@@ -1959,10 +2042,6 @@ msgstr ""
 msgid ""
 "Êtes vous sur de vouloir Ignorer cette personne ? elle sera supprimée de vos "
 "favoris et de votre réseau et vous ne recevrez plus d&#39;aide de celle-ci."
-msgstr ""
-
-#: main/templates/profile/user_profile.html:43
-msgid "Confirmer"
 msgstr ""
 
 #: main/templates/profile/user_profile.html:68
