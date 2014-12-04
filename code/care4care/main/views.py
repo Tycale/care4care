@@ -692,7 +692,7 @@ def job_search_view(request):
 
 
             if not form.cleaned_data['date1']:
-                date1 = timezone.now()
+                date1 = timezone.now()+timezone.timedelta(hours=-24)
             else:
                 date1 = form.cleaned_data['date1']
 
@@ -736,7 +736,6 @@ def job_search_view(request):
             if str(JobType.DEMAND) in job_type:
                 demands = Demand.objects.filter(Q(date__gte=date1) &  Q(date__lte=date2) & Q(receive_help_from_who__in = receive_help_from_who) & request_time & request_category & Q(closed=False)).all()
 
-                demands = Demand.objects.filter(Q(date__gte=date1) &  Q(date__lte=date2) & Q(receive_help_from_who__in = receive_help_from_who) & request_time & request_category & Q(closed=False)).all()
 
             return render(request, 'search/job_result.html',locals())
 
