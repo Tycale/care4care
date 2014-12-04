@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-04 12:15+0000\n"
+"POT-Creation-Date: 2014-12-04 12:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1089,11 +1089,19 @@ msgstr ""
 msgid "Type de fichier non supporté"
 msgstr ""
 
-#: main/forms.py:204 main/forms.py:206 main/forms.py:209
+#: main/forms.py:192
+msgid "jusqu'au"
+msgstr ""
+
+#: main/forms.py:195
+msgid "A partir du"
+msgstr ""
+
+#: main/forms.py:205 main/forms.py:207 main/forms.py:210
 msgid "Incohérence dans les dates."
 msgstr ""
 
-#: main/forms.py:223
+#: main/forms.py:224
 msgid "Vous ne pouvez pas donner plus d'heure que ce que vous avez."
 msgstr ""
 
