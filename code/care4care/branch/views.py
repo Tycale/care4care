@@ -584,6 +584,15 @@ class CreateSuccessDemand(CreateView):
 
     def get_success_url(self):
         messages.add_message(self.request, messages.INFO, _('Demande envoyée'))
+
+        # TODO : pm_write
+        # personne à qui écrire : self.object.ask_to
+        # de la part de : self.object.asked_by
+        # Le message :
+        # Machin a dit qu'il avait bien accompli le job : self.object.demand.title
+        # Il déclare avoir passé self.object.time
+        # Si cela est correct, veuillez confirmer.
+
         return reverse('home')
 
 
