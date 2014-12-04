@@ -635,16 +635,13 @@ def manage_success(request, success_demand_id):
                     demand.receiver.credit -= success.time
                     demand.receiver.save()
 
+                    subject = _("Job confirmé")
+                    body = _("L'utilisateur {user} a confirmé que vous aviez accompli le job {job} avec succès ! Votre compte a donc été crédité de {time} minutes.\n").format(user=demand.receiver,job=demand.title,time=success.time)
+                    if form.cleaned_data['comment'] != "":
+                        body += _("L'utilisateur {user} a laissé le commentaire suivant : {comment}").format(user=demand.receiver,comment=form.cleaned_data['comment'])
+                    pm_write(demand.receiver, demand.donor, subject, body)
                     success.delete()
                     demand.save()
-
-
-                    # TODO : pm_write
-                    # personne à qui écrire : demand.donor
-                    # de la part de : demand.receiver
-                    # le message : 
-                    # demand.receiver a confirmé votre job. Vous avez été crédité de success.time minutes
-                    # et alors tu mets "commentaire : \n\n " success.comment
 
                     return redirect('home')
                 if 'decline' in request.POST:
@@ -652,14 +649,11 @@ def manage_success(request, success_demand_id):
                     demand.success_fill = False
                     demand.save()
 
-                    # TODO : pm_write
-                    # personne à qui écrire : demand.donor
-                    # de la part de : demand.receiver
-                    # le message :
-                    # demand.receiver a refusé de confirmer votre job. Voici le message qu'il a laissé :
-                    # success.comment
-                    # Vous pouvez resoumettre une demande afin d'être crédité. En cas de conflit, contactez
-                    # un administrateur de votre branche ( demand.branch.name )
+                    subject = _("Job refusé")
+                    body = _("L'utilisateur {user} a déclaré que vous n'aviez pas passé {time} minutes pour accomplir le job {job}. Votre compte n'a donc pas été crédité.\n").format(user=demand.receiver,job=demand.title, time=success.time)
+                    if form.cleaned_data['comment'] != "":
+                        body += _("L'utilisateur {user} a laissé un commentaire, expliquant pourquoi il n'a pas désiré créditer votre compte : {comment}\n Vous pouvez recréer une demande de confirmation avec un nouveau montant de crédit correspondant plus à la perception du demandeur d'aide.\nSi vous ne parvenez pas à trouver un terrain d'entente avec l'utilisateur {user}, vous pouvez contacter un administrateur pour régler le problème.").format(user=demand.receiver,comment=form.cleaned_data['comment'])
+                    pm_write(demand.receiver, demand.donor, subject, body)
                     
                     return redirect('home')
 
@@ -667,9 +661,3 @@ def manage_success(request, success_demand_id):
 
     else :
         return refuse(request)
-
-
-
-
-
-
