@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-04 10:30+0000\n"
+"POT-Creation-Date: 2014-12-04 10:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -631,7 +631,7 @@ msgid "Durée estimée du service"
 msgstr ""
 
 #: branch/templates/job/details_demand.html:168
-#: main/templates/credit/credit_page.html:20 main/views.py:777
+#: main/templates/credit/credit_page.html:20 main/views.py:771
 msgid "minutes"
 msgstr ""
 
@@ -1010,10 +1010,6 @@ msgstr ""
 
 #: main/forms.py:219
 msgid "Vous ne pouvez pas donner plus d'heure que ce que vous avez."
-msgstr ""
-
-#: main/forms.py:224
-msgid "Username"
 msgstr ""
 
 #: main/models.py:16
@@ -2380,7 +2376,7 @@ msgstr ""
 msgid "Droit refusé et demande supprimée"
 msgstr ""
 
-#: main/views.py:777
+#: main/views.py:771
 msgid "Cadeau de : "
 msgstr ""
 
