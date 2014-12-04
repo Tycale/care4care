@@ -2549,11 +2549,11 @@ msgstr "Average time per job (in minutes)"
 
 #: main/templates/templatetags/user_stats.html:41
 msgid "Jobs effectués les 6 derniers mois"
-msgstr "Jobs made the last 6 months"
+msgstr "Jobs made during the last 6 months"
 
 #: main/templates/templatetags/user_stats.html:53
 msgid "Temps consacré à l'entraide les 6 derniers mois (en minutes)"
-msgstr "Time devoted to help the last 6 months (in minutes)"
+msgstr "Time devoted to help during the last 6 months (in minutes)"
 
 #: main/templates/templatetags/user_stats.html:68
 msgid "Kilomètres parcourus au cours des 6 derniers mois"
