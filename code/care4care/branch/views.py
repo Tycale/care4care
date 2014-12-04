@@ -19,6 +19,7 @@ from main.utils import can_manage, is_branch_admin, refuse, can_manage_branch_sp
                         discriminate_demands, discriminate_offers
 from postman.api import pm_write
 from django.core.urlresolvers import resolve
+from django.db.models import Q
 
 @login_required
 @user_passes_test(lambda u: u.is_verified)
@@ -316,6 +317,40 @@ class CreateDemandView(CreateView):
         return super(CreateDemandView, self).form_valid(form)
 
     def get_success_url(self):
+        date = self.object.date
+        find_offers = Offer.objects.filter(date=date)
+        
+        category = self.object.category
+        request_time = Q(time__contains=self.object.time[0])
+        for r in self.object.time[1:]:
+            request_time |= Q(time__contains=r)
+        request_category = Q(category__contains=category[0])
+
+        find_offers = find_offers.filter(request_time & request_category).all()
+        find_offers = discriminate_offers(self.request, find_offers)
+        
+        for offer in find_offers:
+            # pm_write
+            # à envoyer à : self.offer.donor
+            # de la part de : self.object.receiver
+            #
+            # En gros, on a un match, une demande correspond à une offre.
+            # Là, on prévient le mec qui a fait une offre que la demande
+            # self.object.title de self.object.get_full_name() correspond
+            # à sa demande d'offre
+            # 
+            # donne l'url au mec : self.object.get_absolute_url()
+            # lui dire de supprimer son offre s'il ne souhaite plus recevoir
+            # des mails pour cette offre là.
+
+            # pm_write
+            # à envoyer à : self.object.receiver
+            # de la part de : self.offer.donor
+            # Bah, l'inverse. Dire à la meuf qui a fait la demande qu'un
+            # message à été envoyé à self.offer.donor.get_full_name
+            # car il a créé une offre qui correspond à sa demande.
+
+
         return self.object.get_absolute_url()
 
 class UpdateDemandView(UpdateView):
