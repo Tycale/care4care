@@ -17,10 +17,10 @@ class MyAccountAdapter(DefaultSocialAccountAdapter):
                 username = base_username + str(count)
                 count += 1
 
+
         sociallogin.account.user.first_name = data.get('first_name')
         sociallogin.account.user.last_name = data.get('last_name')
         sociallogin.account.user.email = data.get('email')
         sociallogin.account.user.name = data.get('name')
-        sociallogin.account.user.username = username
-        sociallogin.account.user.save()
+        data['username'] = username
         super(MyAccountAdapter,self).populate_user(request, sociallogin, data)
