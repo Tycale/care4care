@@ -10,7 +10,8 @@ from branch.models import Branch, BranchMembers, Demand, Offer, Comment, DemandP
 from main.models import User, VerifiedInformation, JobCategory, MemberType
 
 from branch.forms import CreateBranchForm, ChooseBranchForm, OfferHelpForm, NeedHelpForm, \
-            CommentForm, UpdateNeedHelpForm, VolunteerForm, ForceVolunteerForm, SuccessDemandForm
+            CommentForm, UpdateNeedHelpForm, VolunteerForm, ForceVolunteerForm, SuccessDemandForm, \
+            CommentConfirmForm
 from django.utils import timezone
 from django.core.urlresolvers import reverse
 from django.utils import formats
@@ -609,10 +610,54 @@ def unsuccess_job(request, demand_id):
     else:
         return refuse(request)
 
+def manage_success(request, success_demand_id):
+    success = get_object_or_404(SuccessDemand, pk=success_demand_id)
+    demand = success.demand
 
+    form = CommentConfirmForm()
 
+    if can_manage_branch_specific(success.ask_to, request.user, success.branch):
+        if request.POST:
+            form = CommentConfirmForm(request.POST)
+            if form.is_valid():
+                if 'accept' in request.POST:
+                    if success.time > 100000:
+                        success.time = 100000
+                    if success.time < 0:
+                        success.time = 0
 
+                    demand.real_time =  success.time
+                    demand.success = True
+                    
 
+                    demand.donor.credit += success.time
+                    demand.donor.save()
+                    demand.receiver.credit -= success.time
+                    demand.receiver.save()
 
+                    subject = _("Job confirmé")
+                    body = _("L'utilisateur {user} a confirmé que vous aviez accompli le job {job} avec succès ! Votre compte a donc été crédité de {time} minutes.\n").format(user=demand.receiver,job=demand.title,time=success.time)
+                    if form.cleaned_data['comment'] != "":
+                        body += _("L'utilisateur {user} a laissé le commentaire suivant : {comment}").format(user=demand.receiver,comment=form.cleaned_data['comment'])
+                    pm_write(demand.receiver, demand.donor, subject, body)
+                    success.delete()
+                    demand.save()
 
+                    return redirect('home')
+                if 'decline' in request.POST:
+                    success.delete()
+                    demand.success_fill = False
+                    demand.save()
 
+                    subject = _("Job refusé")
+                    body = _("L'utilisateur {user} a déclaré que vous n'aviez pas passé {time} minutes pour accomplir le job {job}. Votre compte n'a donc pas été crédité.\n").format(user=demand.receiver,job=demand.title, time=success.time)
+                    if form.cleaned_data['comment'] != "":
+                        body += _("L'utilisateur {user} a laissé un commentaire, expliquant pourquoi il n'a pas désiré créditer votre compte : {comment}\n Vous pouvez recréer une demande de confirmation avec un nouveau montant de crédit correspondant plus à la perception du demandeur d'aide.\nSi vous ne parvenez pas à trouver un terrain d'entente avec l'utilisateur {user}, vous pouvez contacter un administrateur pour régler le problème.").format(user=demand.receiver,comment=form.cleaned_data['comment'])
+                    pm_write(demand.receiver, demand.donor, subject, body)
+                    
+                    return redirect('home')
+
+        return render(request,'job/manage_success.html', locals())
+
+    else :
+        return refuse(request)
