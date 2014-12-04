@@ -1,172 +1,202 @@
 {% extends "base.html" %}
-{% load bootstrap3 %}{% load i18n staticfiles %}
+{% load bootstrap3 %}{% load i18n %}{% load jobs_extra %}{% load staticfiles thumbnail %}
 
+{% block title %}{% trans "Accueil" %}{% endblock %}
 
-{% block title %}{% trans "Aide" %}{% endblock %}
-
+{% block extra_head %}
+<script src="http://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places&language={{request.LANGUAGE_CODE}}"></script>
+{% endblock %}
 
 {% block content %}
-<h3><i class="fa fa-angle-right"></i> {% trans "Aide" %} </h3>
-<p>{% trans "Nous allons ensemble découvrir les différentes fonctionnalités du site" %} <b>{% trans "Pens(i)ons Voisins" %}</b>.</p>
-<p> {%trans "Dans les différentes captures d'écran, le clic gauche de la souris est représenté par un point rouge" %}. </p>
-
-
-
 <div class="row mt">
-    <div class="col-lg-12 col-sm-12 background-gris">
-        <div class="showback">
-            <h3>{% trans "Afficher le menu" %}:</h3>
-            <div id="my_carousel" class="carousel slide" data-ride="carousel" data-interval="false">
-              <!-- Bulles -->
-              <ol class="carousel-indicators">
-                <li data-target="#my_carousel" data-slide-to="0" class="active"></li>
-                <li data-target="#my_carousel" data-slide-to="1"></li>
-              </ol>
-              <!-- Slides -->
-              <div class="carousel-inner">
-                <!-- Page 1 -->
-                <div class="item active">
-                  <div class="carousel-page"><img src="{% static "photos/menu1.png" %}" class="img-responsive" 
-                  style="margin:0px auto;max-height:100%;" />
-                  </div>
-                  <div class="carousel-caption">{% trans "Etape" %} 1</div>
-                </div>
-                <!-- Page 2 -->
-                <div class="item">
-                  <div class="carousel-page"><img src="{% static "photos/menu2.png" %}" class="img-responsive img-rounded"
-              style="margin:0px auto;max-height:100%;" /></div>
-                  <div class="carousel-caption">{% trans "Résultat" %} </div>
-                </div>
-              </div>
-              <!-- Contrôles -->
-              <a class="left carousel-control" href="#my_carousel" data-slide="prev">
-              <span class="glyphicon glyphicon-chevron-left"></span>
-              </a>
-              <a class="right carousel-control" href="#my_carousel" data-slide="next">
-              <span class="glyphicon glyphicon-chevron-right"></span>
-              </a>
+    <div class="col-lg-12">
+            <div id="map" style="width: 100%; min-height: 300px;">
             </div>
-        </div>
-    </div>
-</div>
-
-<div class="row mt">
-    <div class="col-lg-12 col-sm-12 background-gris">
-        <div class="showback">
-            <h3>{% trans "Afficher" %} {% trans "Mon Profil" %} :</h3>
-            <div id="my_carousel2" class="carousel slide" data-ride="carousel" data-interval="false">
-              <!-- Bulles -->
-              <ol class="carousel-indicators">
-                <li data-target="#my_carousel2" data-slide-to="0" class="active"></li>
-                <li data-target="#my_carousel2" data-slide-to="1"></li>
-                <li data-target="#my_carousel2" data-slide-to="2"></li>
-              </ol>
-              <!-- Slides -->
-              <div class="carousel-inner">
-                <!-- Page 1 -->
-                <div class="item active">
-                  <div class="carousel-page"><img src="{% static "photos/profil1.png" %}" class="img-responsive" 
-                  style="margin:0px auto;max-height:100%;" />
-                  </div>
-                  <div class="carousel-caption">{% trans "Etape" %} 1</div>
-                </div>
-                <!-- Page 2 -->
-                <div class="item">
-                  <div class="carousel-page"><img src="{% static "photos/profil2.png" %}" class="img-responsive img-rounded"
-              style="margin:0px auto;max-height:100%;" /></div>
-                  <div class="carousel-caption">{% trans "Etape" %} 2 </div>
-                </div>
-                <!-- Page 3 -->
-                <div class="item">
-                  <div class="carousel-page"><img src="{% static "photos/profil3.png" %}" class="img-responsive img-rounded"
-              style="margin:0px auto;max-height:100%;" /></div>
-                  <div class="carousel-caption">{% trans "Résultat" %} </div>
-                </div>
-              </div>
-              <!-- Contrôles -->
-              <a class="left carousel-control" href="#my_carousel2" data-slide="prev">
-              <span class="glyphicon glyphicon-chevron-left"></span>
-              </a>
-              <a class="right carousel-control" href="#my_carousel2" data-slide="next">
-              <span class="glyphicon glyphicon-chevron-right"></span>
-              </a>
+            <div style="display:none;">
+            <div id="title-home">
+                <h2>{% trans "Pens(i)ons Voisins" %}</h2>
+                <h4>{% trans "Réseau d'entraide" %}</h4>
+                <h5><i class="fa fa-globe"></i>
+                  {{nb_branch}} {% trans "branches" %}
+                </h5>
+                <h5><i class="fa fa-user"></i>
+                  {{nb_users}} {% trans "utilisateurs" %}
+                </h5>
             </div>
-
-            <h3>{% trans "Modifier" %} {% trans "Mon Profil" %}:</h3>
-            <img src="{% static "photos/profil1.png" %}" style="margin:0px auto; width:300; height:400px; "/>
-            </img> 
-        </div>
-    </div>
-</div>
-
-<div class="row mt">
-    <div class="col-lg-12 col-sm-12 background-gris">
-        <div class="showback">
-            <h3>{% trans "Demander de l'aide" %}:</h3>
-            <div id="my_carousel1" class="carousel slide" data-ride="carousel" data-interval="false">
-              <!-- Bulles -->
-              <ol class="carousel-indicators">
-                <li data-target="#my_carousel1" data-slide-to="0" class="active"></li>
-                <li data-target="#my_carousel1" data-slide-to="1"></li>
-                <li data-target="#my_carousel1" data-slide-to="2"></li>
-                <li data-target="#my_carousel1" data-slide-to="3"></li>
-                <li data-target="#my_carousel1" data-slide-to="4"></li>
-              </ol>
-              <!-- Slides -->
-              <div class="carousel-inner">
-                <!-- Page 1 -->
-                <div class="item active">
-                  <div class="carousel-page"><img src="{% static "photos/dem1.png" %}" class="img-responsive" 
-                  style="margin:0px auto;max-height:100%;" />
-                  </div>
-                  <div class="carousel-caption">{% trans "Etape" %} 1</div>
-                </div>
-                <!-- Page 2 -->
-                <div class="item">
-                  <div class="carousel-page"><img src="{% static "photos/dem2.png" %}" class="img-responsive img-rounded"
-              style="margin:0px auto;max-height:100%;" /></div>
-                  <div class="carousel-caption">{% trans "Etape" %} 2: {% trans "Choisir une branche" %} </div>
-                </div>
-                <!-- Page 3 -->
-                <div class="item">
-                  <div class="carousel-page"><img src="{% static "photos/dem3.png" %}" class="img-responsive img-rounded"
-              style="margin:0px auto;max-height:100%;" /></div>
-                  <div class="carousel-caption">{% trans "Etape" %} 3 </div>
-                </div>
-                <!-- Page 4 -->
-                <div class="item">
-                  <div class="carousel-page"><img src="{% static "photos/dem4.png" %}" class="img-responsive img-rounded"
-              style="margin:0px auto;max-height:100%;" /></div>
-                  <div class="carousel-caption">{% trans "Etape" %} 4: {% trans "Remplir les champs" %} </div>
-                </div>
-                <!-- Page 5 -->
-                <div class="item">
-                  <div class="carousel-page"><img src="{% static "photos/dem5.png" %}" class="img-responsive img-rounded"
-              style="margin:0px auto;max-height:100%;" /></div>
-                  <div class="carousel-caption">{% trans "Etape" %} 5: {% trans "Envoyer la demande" %} </div>
-                </div>
-              </div>
-              <!-- Contrôles -->
-              <a class="left carousel-control" href="#my_carousel1" data-slide="prev">
-              <span class="glyphicon glyphicon-chevron-left"></span>
-              </a>
-              <a class="right carousel-control" href="#my_carousel1" data-slide="next">
-              <span class="glyphicon glyphicon-chevron-right"></span>
-              </a>
             </div>
-        </div>
     </div>
 </div>
 
-
-
+{% if request.user.uservol.no_successs.down_to_date.all %}
+<div class="row mt">
+    <div class="col-md-12">
+        <div class="content-panel ph">
+        <h4>{% trans "Jobs en attente de validation" %}</h4>
+        {% blocktrans %}
+        <p class="text-center">Ci-dessous la liste des jobs que vous devez confirmer</p>
+        {% endblocktrans %}
+        <table class="table table-striped table-advance table-hover rowlink">
+            <thead>
+                <tr>
+                    <th>{% trans "Photo" %}</th>
+                    <th>{% trans "Personne aidée" %}</th>
+                    <th>{% trans "Demande" %}</th>
+                    <th style="width: 190px">{% trans "Actions" %}</th>
+                </tr>
+            </thead>
+            <tbody data-link='row' data-target="a.mainlink">
+                {% for uv in request.user.uservol.no_successs.down_to_date.all %}
+                <tr>
+                    <td>
+                    <a href="{{uv.demand.receiver.get_absolute_url}}">
+                    <img class="img-circle" src="{% thumbnail uv.demand.receiver.photo 40x40 crop %}" />
+                    </a>
+                    </td>
+                    <td>
+                        <a href="{{ uv.demand.receiver.get_absolute_url }}">
+                        {{ uv.demand.receiver.get_full_name }}
+                        </a>
+                    </td>
+                    <td><a href="{{ uv.demand.get_absolute_url }}">{{uv.demand.title}}</a></td>
+                    <td class="rowlink-skip">
+                        <a class="btn btn-primary btn-sm mainlink" href="{% url 'success_demand' uv.demand.id %}">
+                            {% bootstrap_icon "ok" %} {% trans "Gérer" %}
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+{% endif %}
 
 <div class="row mt">
-    <div class="col-lg-12 col-sm-12 background-gris">
-        <div class="showback">
-            <h3>{% trans "Favoris" %} {% trans "et" %} {% trans "Mon Réseau" %}:</h3>
-        </div>
-    </div>
+  <div class="col-md-6 col-sm-12 text-center"> <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#needHelpModal">{% trans "J'ai besoin d'aide" %}</button> </div>
+  <div class="col-md-6 col-sm-12 text-center"><button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#offerHelpModal">{% trans "Offrir mon aide" %}</button></div>
 </div>
 
+<!-- need help Modal -->
+<div class="modal fade" id="needHelpModal" tabindex="-1" role="dialog" aria-labelledby="needHelpLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{% trans "fermer" %}</span></button>
+        <h4 class="modal-title" id="needHelpLabel">{% trans "J'ai besoin d'aide" %}</h4>
+      </div>
+      <div class="modal-body text-center">
+        {% if request.user.is_authenticated %}
+        <p class="text-info">{% trans "Dans quelle branche souhaitez-vous demander de l'aide ?" %}</p>
+
+        <div class="btn-group-vertical" role="group">
+        {% for mbranch in request.user.membership.all %}
+        <a href="{% url "create_demand" branch_id=mbranch.branch.id slug=mbranch.branch.slug user_id=request.user.id %}" class="btn btn-primary btn-lg btn-block">{{ mbranch.branch }}</a>
+        {% empty %}
+        <p class="text-danger">{% trans "Vous devez rejoindre une branche avant de pouvoir demander de l'aide." %}</p>
+        <a href="{% url "branch_join" %}" class="btn btn-primary btn-lg btn-block">{% trans "Rejoindre une branche" %}</a>
+        {% endfor %}
+        </div>
+
+        {% else %}
+        <div class="alert alert-info" role="alert">
+        {% blocktrans %} Vous devez être connecté afin de pouvoir demander de l'aide. <br />
+        Pas encore inscrit ? {% endblocktrans %}<a href="{% url 'registration_register' %}">{% trans "Inscrivez-vous" %}</a></div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- offer help Modal -->
+<div class="modal fade" id="offerHelpModal" tabindex="-1" role="dialog" aria-labelledby="offerHelpLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">{% trans "fermer" %}</span></button>
+        <h4 class="modal-title" id="offerHelpLabel">{% trans "Offrir mon aide" %}</h4>
+      </div>
+      <div class="modal-body text-center">
+        {% if request.user.is_authenticated %}
+        <p class="text-info">{% trans "Dans quelle branche souhaitez-vous offrir votre aide ?" %}</p>
+
+        <div class="btn-group-vertical" role="group">
+        {% for mbranch in request.user.membership.all %}
+        <a href="{% url "create_offer" branch_id=mbranch.branch.id slug=mbranch.branch.slug user_id=request.user.id %}" class="btn btn-primary btn-lg btn-block">{{ mbranch.branch }}</a>
+        {% empty %}
+        <p class="text-danger">{% trans "Vous devez rejoindre une branche avant de pouvoir offrir de l'aide." %}</p>
+        <a href="{% url "branch_join" %}" class="btn btn-primary btn-lg btn-block">{% trans "Rejoindre une branche" %}</a>
+        {% endfor %}
+        </div>
+
+        {% else %}
+        <div class="alert alert-info" role="alert">
+        {% blocktrans %} Vous devez être connecté afin de pouvoir offrir votre aide. <br />
+        Pas encore inscrit ? {% endblocktrans %}<a href="{% url 'registration_register' %}">{% trans "Inscrivez-vous" %}</a></div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row mt">
+  {% show_demands request demands show_branch=True %}
+  {% show_offers request offers show_branch=True %}
+</div>
+
+{% endblock %}
+
+{% block extra_footer %}
+<script src="{% static 'js/rowlink.js' %}"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+    var locations = [
+        {% for b in branches %}
+        ['{{b.name}}', {{b.latitude}}, {{b.longitude}}, {{b.id}}, 0],
+        {% endfor %}
+    ];
+    var options = {
+        zoom: 13,
+        disableDefaultUI: true,
+        panControl: false,
+        overviewMapControl: false,
+        streetViewControl: false,
+        scaleControl: false,
+        rotateControl: false,
+        draggable: false,
+        zoomControl: false,
+        scrollwheel: false,
+        disableDoubleClickZoom: true,
+        mapTypeId: google.maps.MapTypeId.HYBRID,
+    };
+    var map = new google.maps.Map(document.getElementById('map'), options);
+    var bounds = new google.maps.LatLngBounds();
+
+    var titleBranch = document.getElementById('title-home');
+    map.controls[google.maps.ControlPosition.LEFT_TOP].push(titleBranch);
+
+    var titleBot = document.getElementById('title-bot');
+    map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(titleBot);
+
+    // set multiple marker
+    for (var i = 0; i < locations.length; ++i) {
+        var pos = new google.maps.LatLng(locations[i][1], locations[i][2]);
+        var marker = new google.maps.Marker({
+            position: pos,
+            map: map,
+            title: locations[i][0]
+        });
+        bounds.extend(pos);
+    }
+
+    map.fitBounds(bounds);
+
+    $('.fa-bars').click(function () {
+        google.maps.event.trigger(map, 'resize');
+    });
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    });
+});
+</script>
 {% endblock %}

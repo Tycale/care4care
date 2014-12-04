@@ -221,4 +221,4 @@ class GiftForm(forms.Form):
 
 
 class AddUser(forms.Form):
-    user = forms.CharField(label=_("Username"), widget=AutoCompleteWidget('user'))
+    user = forms.CharField(label=__("Username"), widget=AutoCompleteWidget('user'))
