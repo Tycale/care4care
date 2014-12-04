@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-04 11:04+0000\n"
+"POT-Creation-Date: 2014-12-04 11:12+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -966,6 +966,54 @@ msgstr ""
 
 #: care4care/settings.py:125
 msgid "Néerlandais"
+msgstr ""
+
+#: main/ajax/views.py:13
+msgid "Janvier"
+msgstr ""
+
+#: main/ajax/views.py:14
+msgid "Février"
+msgstr ""
+
+#: main/ajax/views.py:15
+msgid "Mars"
+msgstr ""
+
+#: main/ajax/views.py:16
+msgid "Avril"
+msgstr ""
+
+#: main/ajax/views.py:17
+msgid "Mai"
+msgstr ""
+
+#: main/ajax/views.py:18
+msgid "Juin"
+msgstr ""
+
+#: main/ajax/views.py:19
+msgid "Juillet"
+msgstr ""
+
+#: main/ajax/views.py:20
+msgid "Août"
+msgstr ""
+
+#: main/ajax/views.py:21
+msgid "Septembre"
+msgstr ""
+
+#: main/ajax/views.py:22
+msgid "Octobre"
+msgstr ""
+
+#: main/ajax/views.py:23
+msgid "Novembre"
+msgstr ""
+
+#: main/ajax/views.py:24
+msgid "Décembre"
 msgstr ""
 
 #: main/forms.py:44
