@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-04 10:45+0000\n"
+"POT-Creation-Date: 2014-12-04 11:18+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -196,7 +196,7 @@ msgstr ""
 msgid "Heures de disponibilité"
 msgstr ""
 
-#: branch/models.py:116 branch/models.py:182
+#: branch/models.py:116 branch/models.py:193
 msgid "Selectionnez les heures qui vous conviennent"
 msgstr ""
 
@@ -224,7 +224,7 @@ msgstr ""
 msgid "Demande de confirmation envoyée"
 msgstr ""
 
-#: branch/models.py:149 branch/models.py:181
+#: branch/models.py:149 branch/models.py:192
 msgid "Distance depuis domicile"
 msgstr ""
 
@@ -232,27 +232,27 @@ msgstr ""
 msgid "Tâche finie avec succès"
 msgstr ""
 
-#: branch/models.py:178
+#: branch/models.py:189
 msgid "Commentaire (facultatif)"
 msgstr ""
 
-#: branch/models.py:179 branch/models.py:200
+#: branch/models.py:190 branch/models.py:213
 msgid "Date de création"
 msgstr ""
 
-#: branch/models.py:180
+#: branch/models.py:191
 msgid "Proposition acceptée"
 msgstr ""
 
-#: branch/models.py:182
+#: branch/models.py:193
 msgid "Heure(s) choisie(s)"
 msgstr ""
 
-#: branch/models.py:195 branch/templates/job/details_demand.html:94
+#: branch/models.py:208 branch/templates/job/details_demand.html:94
 msgid "Commentaire"
 msgstr ""
 
-#: branch/models.py:196
+#: branch/models.py:209
 msgid "Temps passé (en minutes)"
 msgstr ""
 
@@ -336,7 +336,7 @@ msgstr ""
 #: branch/templates/branch/branch_home.html:78
 #: branch/templates/job/details_demand.html:63
 #: branch/templates/job/details_demand.html:73
-#: main/templates/main/home.html:91 main/templates/main/home.html.py:122
+#: main/templates/main/home.html:85 main/templates/main/home.html.py:116
 msgid "fermer"
 msgstr ""
 
@@ -384,14 +384,14 @@ msgid "Nom complet"
 msgstr ""
 
 #: branch/templates/branch/branch_home.html:123
-#: main/templates/main/home.html:82 main/templates/main/home.html.py:92
+#: main/templates/main/home.html:76 main/templates/main/home.html.py:86
 msgid "J'ai besoin d'aide"
 msgstr ""
 
 #: branch/templates/branch/branch_home.html:124
 #: branch/templates/job/details_demand.html:43
 #: branch/templates/job/details_demand.html:177
-#: main/templates/main/home.html:83 main/templates/main/home.html.py:123
+#: main/templates/main/home.html:77 main/templates/main/home.html.py:117
 msgid "Offrir mon aide"
 msgstr ""
 
@@ -462,7 +462,7 @@ msgstr ""
 
 #: branch/templates/branch/branch_home.html:202
 #: branch/templates/job/details_demand.html:49
-#: branch/templates/job/details_offer.html:34
+#: branch/templates/job/details_offer.html:34 main/templates/main/help.html:95
 #: main/templates/profile/edit_profile.html:122
 #: main/templates/profile/modify_emergency.html:25
 #: main/templates/profile/user_profile.html:101
@@ -492,7 +492,7 @@ msgstr ""
 
 #: branch/templates/branch/branch_join.html:5
 #: branch/templates/branch/branch_join.html:13
-#: main/templates/main/home.html:103 main/templates/main/home.html.py:134
+#: main/templates/main/home.html:97 main/templates/main/home.html.py:128
 #: templates/base.html:314
 msgid "Rejoindre une branche"
 msgstr ""
@@ -605,7 +605,6 @@ msgid "Refuser"
 msgstr ""
 
 #: branch/templates/job/details_demand.html:126
-#: main/templates/main/home.html:70
 msgid "Aucun volontaire actuellement"
 msgstr ""
 
@@ -631,7 +630,7 @@ msgid "Durée estimée du service"
 msgstr ""
 
 #: branch/templates/job/details_demand.html:168
-#: main/templates/credit/credit_page.html:20 main/views.py:771
+#: main/templates/credit/credit_page.html:20 main/views.py:775
 msgid "minutes"
 msgstr ""
 
@@ -969,6 +968,54 @@ msgstr ""
 msgid "Néerlandais"
 msgstr ""
 
+#: main/ajax/views.py:13
+msgid "Janvier"
+msgstr ""
+
+#: main/ajax/views.py:14
+msgid "Février"
+msgstr ""
+
+#: main/ajax/views.py:15
+msgid "Mars"
+msgstr ""
+
+#: main/ajax/views.py:16
+msgid "Avril"
+msgstr ""
+
+#: main/ajax/views.py:17
+msgid "Mai"
+msgstr ""
+
+#: main/ajax/views.py:18
+msgid "Juin"
+msgstr ""
+
+#: main/ajax/views.py:19
+msgid "Juillet"
+msgstr ""
+
+#: main/ajax/views.py:20
+msgid "Août"
+msgstr ""
+
+#: main/ajax/views.py:21
+msgid "Septembre"
+msgstr ""
+
+#: main/ajax/views.py:22
+msgid "Octobre"
+msgstr ""
+
+#: main/ajax/views.py:23
+msgid "Novembre"
+msgstr ""
+
+#: main/ajax/views.py:24
+msgid "Décembre"
+msgstr ""
+
 #: main/forms.py:44
 msgid ""
 "Cet utilisateur existe déjà dans notre système. Veuillez utiliser utiliser "
@@ -979,36 +1026,36 @@ msgstr ""
 msgid "Les mots de passe ne sont pas identiques."
 msgstr ""
 
-#: main/forms.py:121 main/forms.py:123 main/forms.py:127
+#: main/forms.py:125 main/forms.py:127 main/forms.py:131
 msgid "Veuillez introduire une adresse valide via les propositions."
 msgstr ""
 
-#: main/forms.py:125
+#: main/forms.py:129
 msgid "Veuillez introduire une adresse e-mail valide via les propositions."
 msgstr ""
 
-#: main/forms.py:129
+#: main/forms.py:133
 msgid "Veuillez introduire au moins un numéro de téléphone (mobile ou fixe)."
 msgstr ""
 
-#: main/forms.py:131
+#: main/forms.py:135
 msgid "Veuillez introduire une langue."
 msgstr ""
 
-#: main/forms.py:162
+#: main/forms.py:166
 #, python-format
 msgid "Votre fichier doit peser moins de %s. Taille actuelle %s"
 msgstr ""
 
-#: main/forms.py:166
+#: main/forms.py:170
 msgid "Type de fichier non supporté"
 msgstr ""
 
-#: main/forms.py:200 main/forms.py:202 main/forms.py:205
+#: main/forms.py:204 main/forms.py:206 main/forms.py:209
 msgid "Incohérence dans les dates."
 msgstr ""
 
-#: main/forms.py:219
+#: main/forms.py:223
 msgid "Vous ne pouvez pas donner plus d'heure que ce que vous avez."
 msgstr ""
 
@@ -1397,47 +1444,87 @@ msgid "Aide"
 msgstr ""
 
 #: main/templates/main/help.html:10
-msgid "Le point rouge représente un clic"
+msgid "Nous allons ensemble découvrir les différentes fonctionnalités du site"
 msgstr ""
 
-#: main/templates/main/help.html:17
+#: main/templates/main/help.html:10 main/templates/main/home.html:17
+#: templates/base.html:11 templates/base.html.py:61
+msgid "Pens(i)ons Voisins"
+msgstr "Het buurtpensioen"
+
+#: main/templates/main/help.html:11
+msgid ""
+"Dans les différentes captures d'écran, le clic gauche de la souris est "
+"représenté par un point rouge"
+msgstr ""
+
+#: main/templates/main/help.html:18
 msgid "Afficher le menu"
 msgstr ""
 
-#: main/templates/main/help.html:31 main/templates/main/help.html.py:72
-#: main/templates/main/help.html:84
+#: main/templates/main/help.html:32 main/templates/main/help.html.py:71
+#: main/templates/main/help.html:77 main/templates/main/help.html.py:110
+#: main/templates/main/help.html:116 main/templates/main/help.html.py:122
+#: main/templates/main/help.html:158 main/templates/main/help.html.py:164
+#: main/templates/main/help.html:170 main/templates/main/help.html.py:176
+#: main/templates/main/help.html:182
 msgid "Etape"
 msgstr ""
 
-#: main/templates/main/help.html:37
+#: main/templates/main/help.html:38 main/templates/main/help.html.py:83
 msgid "Résultat"
 msgstr ""
 
-#: main/templates/main/help.html:55
-msgid "Demander de l'aide"
+#: main/templates/main/help.html:56
+msgid "Afficher"
 msgstr ""
 
-#: main/templates/main/help.html:78
-msgid "Choisir une branche"
+#: main/templates/main/help.html:56 main/templates/main/help.html.py:95
+#: templates/base.html:192 templates/base.html.py:325 templates/base.html:329
+msgid "Mon Profil"
 msgstr ""
 
-#: main/templates/main/help.html:90
+#: main/templates/main/help.html:116 main/templates/main/help.html.py:176
 msgid "Remplir les champs"
 msgstr ""
 
-#: main/templates/main/help.html:96
+#: main/templates/main/help.html:122
+msgid "Envoyer les modifications"
+msgstr ""
+
+#: main/templates/main/help.html:141
+msgid "Demander de l'aide"
+msgstr ""
+
+#: main/templates/main/help.html:164
+msgid "Choisir une branche"
+msgstr ""
+
+#: main/templates/main/help.html:182
 msgid "Envoyer la demande"
+msgstr ""
+
+#: main/templates/main/help.html:203
+#: main/templates/profile/user_profile.html:21
+#: main/templates/profile/user_profile.html:79
+#: main/templates/profile/user_profile.html:83
+#: main/templates/templatetags/favorites.html:4
+msgid "Favoris"
+msgstr ""
+
+#: main/templates/main/help.html:203
+msgid "et"
+msgstr ""
+
+#: main/templates/main/help.html:203
+#: main/templates/profile/user_profile.html:22
+msgid "Mon Réseau"
 msgstr ""
 
 #: main/templates/main/home.html:4
 #: main/templates/seek_similar_jobs/main.html:5 templates/base.html:293
 msgid "Accueil"
 msgstr ""
-
-#: main/templates/main/home.html:17 templates/base.html:11
-#: templates/base.html.py:61
-msgid "Pens(i)ons Voisins"
-msgstr "Het buurtpensioen"
 
 #: main/templates/main/home.html:18
 msgid "Réseau d'entraide"
@@ -1475,33 +1562,33 @@ msgstr ""
 msgid "Gérer"
 msgstr ""
 
-#: main/templates/main/home.html:96
+#: main/templates/main/home.html:90
 msgid "Dans quelle branche souhaitez-vous demander de l'aide ?"
 msgstr ""
 
-#: main/templates/main/home.html:102
+#: main/templates/main/home.html:96
 msgid "Vous devez rejoindre une branche avant de pouvoir demander de l'aide."
 msgstr ""
 
-#: main/templates/main/home.html:109
+#: main/templates/main/home.html:103
 msgid ""
 " Vous devez être connecté afin de pouvoir demander de l'aide. <br />\n"
 "        Pas encore inscrit ? "
 msgstr ""
 
-#: main/templates/main/home.html:110 main/templates/main/home.html.py:141
+#: main/templates/main/home.html:104 main/templates/main/home.html.py:135
 msgid "Inscrivez-vous"
 msgstr ""
 
-#: main/templates/main/home.html:127
+#: main/templates/main/home.html:121
 msgid "Dans quelle branche souhaitez-vous offrir votre aide ?"
 msgstr ""
 
-#: main/templates/main/home.html:133
+#: main/templates/main/home.html:127
 msgid "Vous devez rejoindre une branche avant de pouvoir offrir de l'aide."
 msgstr ""
 
-#: main/templates/main/home.html:140
+#: main/templates/main/home.html:134
 msgid ""
 " Vous devez être connecté afin de pouvoir offrir votre aide. <br />\n"
 "        Pas encore inscrit ? "
@@ -1763,17 +1850,6 @@ msgstr ""
 
 #: main/templates/profile/user_profile.html:19
 msgid "Profil"
-msgstr ""
-
-#: main/templates/profile/user_profile.html:21
-#: main/templates/profile/user_profile.html:79
-#: main/templates/profile/user_profile.html:83
-#: main/templates/templatetags/favorites.html:4
-msgid "Favoris"
-msgstr ""
-
-#: main/templates/profile/user_profile.html:22
-msgid "Mon Réseau"
 msgstr ""
 
 #: main/templates/profile/user_profile.html:23
@@ -2376,7 +2452,7 @@ msgstr ""
 msgid "Droit refusé et demande supprimée"
 msgstr ""
 
-#: main/views.py:771
+#: main/views.py:775
 msgid "Cadeau de : "
 msgstr ""
 
@@ -2475,10 +2551,6 @@ msgstr ""
 
 #: templates/base.html:186
 msgid "Se connecter"
-msgstr ""
-
-#: templates/base.html:192 templates/base.html.py:325 templates/base.html:329
-msgid "Mon Profil"
 msgstr ""
 
 #: templates/base.html:195 templates/base.html.py:334
