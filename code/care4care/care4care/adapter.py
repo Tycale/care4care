@@ -1,6 +1,7 @@
 from django.conf import settings
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
-
+from allauth.utils import (get_user_model, serialize_instance,
+deserialize_instance)
 from main.models import User
 
 class MyAccountAdapter(DefaultSocialAccountAdapter):
@@ -22,4 +23,4 @@ class MyAccountAdapter(DefaultSocialAccountAdapter):
         sociallogin.account.user.name = data.get('name')
         sociallogin.account.user.username = username
         sociallogin.account.user.save()
-        return sociallogin.account.user
+        super(MyAccountAdapter,self).populate_user(request, sociallogin, data)
