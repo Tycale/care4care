@@ -10,7 +10,8 @@ from branch.models import Branch, BranchMembers, Demand, Offer, Comment, DemandP
 from main.models import User, VerifiedInformation, JobCategory, MemberType
 
 from branch.forms import CreateBranchForm, ChooseBranchForm, OfferHelpForm, NeedHelpForm, \
-            CommentForm, UpdateNeedHelpForm, VolunteerForm, ForceVolunteerForm, SuccessDemandForm
+            CommentForm, UpdateNeedHelpForm, VolunteerForm, ForceVolunteerForm, SuccessDemandForm, \
+            CommentConfirmForm
 from django.utils import timezone
 from django.core.urlresolvers import reverse
 from django.utils import formats
@@ -18,6 +19,7 @@ from main.utils import can_manage, is_branch_admin, refuse, can_manage_branch_sp
                         discriminate_demands, discriminate_offers
 from postman.api import pm_write
 from django.core.urlresolvers import resolve
+from django.db.models import Q
 
 @login_required
 @user_passes_test(lambda u: u.is_verified)
@@ -315,6 +317,33 @@ class CreateDemandView(CreateView):
         return super(CreateDemandView, self).form_valid(form)
 
     def get_success_url(self):
+        date = self.object.date
+        find_offers = Offer.objects.filter(date=date)
+        
+        category = self.object.category
+        request_time = Q(time__contains=self.object.time[0])
+        for r in self.object.time[1:]:
+            request_time |= Q(time__contains=r)
+        request_category = Q(category__contains=category[0])
+
+        find_offers = find_offers.filter(request_time & request_category).all()
+        find_offers = discriminate_offers(self.request, find_offers)
+        
+        for offer in find_offers:
+            subject = _("Une correspondance a été trouvée !")
+            body1 = _("Nous avons trouvé une demande correspondant à une de vos offre d'aide !\nCette demande d'aide a été faite par l'utilisateur {user} ({username}) et a pour titre {title}.\n"
+                "Vous pouvez consulter cette demande et vous proposer comme volontaire en suivant ce lien :\n{link}\n"
+                "Si vous décidez de vous proposez pour cette demande et que votre offre d'aide n'est donc plus valable,"
+                " vous pouvez annuler votre offre d'aide via la page d'accueil de votre branche ou la page d'accueil du site.")\
+            .format(user=self.object.receiver.get_full_name(), title=self.object.title, link=self.object.get_absolute_url(), username=self.object.receiver)
+
+            pm_write(self.object.receiver, self.offer.donor, subject, body1)
+
+            body2 = _("Nous avons trouvé une offre correspondant à une de vos demande d'aide !\nCette offre d'aide a été faite par l'utilisateur {user} ({username}) et correspond a votre demande {title}.\n"
+                "Un message automatique a été envoyé à {user} ({username}) pour l'informer de cette correspondance et celui-ci devrait se proposer comme volontaire pour votre demande sous peu.")\
+            .format(user=self.offer.donor.get_full_name(), title=self.object.title, username=self.offer.donor)
+
+            pm_write(self.offer.donor, self.object.reveiver, subject, body2)
         return self.object.get_absolute_url()
 
 class UpdateDemandView(UpdateView):
@@ -573,6 +602,7 @@ class CreateSuccessDemand(CreateView):
         form.instance.demand = demand
         form.instance.asked_by = demand.donor
         form.instance.ask_to = demand.receiver
+        form.instance.branch = demand.branch
         demand.success_fill = True
         demand.save()
         return super(CreateSuccessDemand, self).form_valid(form)
@@ -585,23 +615,88 @@ class CreateSuccessDemand(CreateView):
     def get_success_url(self):
         messages.add_message(self.request, messages.INFO, _('Demande envoyée'))
 
-        # TODO : pm_write
-        # personne à qui écrire : self.object.ask_to
-        # de la part de : self.object.asked_by
-        # Le message :
-        # Machin a dit qu'il avait bien accompli le job : self.object.demand.title
-        # Il déclare avoir passé self.object.time
-        # Si cela est correct, veuillez confirmer.
-
+        subject = _("Confirmation de job accompli")
+        body = _("L'utilisateur {user} ({username}) affirme avoir accompli le job suivant : {job}.\nIl déclare avoir pris {time} minutes pour accomplir ce job.\n"
+            "Si ces informations vous semble correctes, vous pouvez confirmer que ce job a été accompli avec succès.")\
+        .format(user=self.object.asked_by.get_full_name(), job=self.object.demand.title, time=self.object.time, username=self.object.asked_by)
+        pm_write(self.object.asked_by, self.object.ask_to, subject, body)
         return reverse('home')
 
 
+def unsuccess_job(request, demand_id):
+    demand = get_object_or_404(Demand, pk=demand_id)
 
+    if can_manage_branch_specific(demand.donor, request.user, demand.branch):
+       demand.success_fill=True
+       demand.success=False
+       demand.save()
 
+       subject = _("Absence lors d'un job")
+       body = _("L'utilisateur {user} ({username}) n'était apparemment pas présent pour accomplir le job {job}.\n"
+        "S'il s'agit d'une erreur et que {user} ({username}) était bien présent, veuillez contacter un administrateur pour régler le problème.\n"
+        "Si vous désirez ne plus demander d'aide à l'utilisateur {user} ({username}), vous pouvez l'ignorer en vous rendant sur son profil.")\
+       .format(user=demand.donor.get_full_name(), job=demand.title, username=demand.donor)
+       pm_write(demand.donor, demand.receiver, subject, body)
 
+       messages.add_message(request, messages.INFO, _('Vous avez indiqué la tâche {demand} comme non-completée').format(demand=demand))
+       return redirect('home')
+    else:
+        return refuse(request)
 
+def manage_success(request, success_demand_id):
+    success = get_object_or_404(SuccessDemand, pk=success_demand_id)
+    demand = success.demand
 
+    form = CommentConfirmForm()
 
+    if can_manage_branch_specific(success.ask_to, request.user, success.branch):
+        if request.POST:
+            form = CommentConfirmForm(request.POST)
+            if form.is_valid():
+                if 'accept' in request.POST:
+                    if success.time > 100000:
+                        success.time = 100000
+                    if success.time < 0:
+                        success.time = 0
 
+                    demand.real_time =  success.time
+                    demand.success = True
+                    
 
+                    demand.donor.credit += success.time
+                    demand.donor.save()
+                    demand.receiver.credit -= success.time
+                    demand.receiver.save()
 
+                    subject = _("Job confirmé")
+                    body = _("L'utilisateur {user} ({username}) a confirmé que vous aviez accompli le job {job} avec succès ! Votre compte a donc été crédité de {time} minutes.\n")\
+                    .format(user=demand.receiver.get_full_name(), job=demand.title, time=success.time, username=demand.receiver)
+                    if form.cleaned_data['comment'] != "":
+                        body += _("L'utilisateur {user} ({username}) a laissé le commentaire suivant : {comment}")\
+                        .format(user=demand.receiver.get_full_name(), comment=form.cleaned_data['comment'], username=demand.receiver)
+                    pm_write(demand.receiver, demand.donor, subject, body)
+                    success.delete()
+                    demand.save()
+
+                    return redirect('home')
+                if 'decline' in request.POST:
+                    success.delete()
+                    demand.success_fill = False
+                    demand.save()
+
+                    subject = _("Job refusé")
+                    body = _("L'utilisateur {user} ({username}) a déclaré que vous n'aviez pas passé {time} minutes pour accomplir le job {job}. Votre compte n'a donc pas été crédité.\n")\
+                    .format(user=demand.receiver.get_full_name(), job=demand.title, time=success.time, username=demand.receiver)
+                    if form.cleaned_data['comment'] != "":
+                        body += _("L'utilisateur {user} ({username}) a laissé un commentaire, expliquant pourquoi il n'a pas désiré créditer votre compte : {comment}\n"
+                        "Vous pouvez recréer une demande de confirmation avec un nouveau montant de crédit correspondant plus à la perception du demandeur d'aide.\n"
+                        "Si vous ne parvenez pas à trouver un terrain d'entente avec l'utilisateur {user} ({username}), vous pouvez contacter un administrateur pour régler le problème.")\
+                        .format(user=demand.receiver.get_full_name(), comment=form.cleaned_data['comment'], username=demand.receiver)
+                    pm_write(demand.receiver, demand.donor, subject, body)
+                    
+                    return redirect('home')
+
+        return render(request,'job/manage_success.html', locals())
+
+    else :
+        return refuse(request)

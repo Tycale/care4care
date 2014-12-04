@@ -2,7 +2,7 @@ from django import forms
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy as __
 from django.utils import timezone
-from main.models import User, VerifiedInformation, EmergencyContact, JobType, MemberType
+from main.models import User, VerifiedInformation, EmergencyContact, JobType, MemberType, GIVINGTO
 from branch.models import Job, Branch, JobCategory, TIME_CHOICES
 from multiselectfield import MultiSelectField
 from bootstrap3_datetime.widgets import DateTimePicker
@@ -11,6 +11,9 @@ from django.forms.extras import SelectDateWidget
 import datetime
 
 from django.template.defaultfilters import filesizeformat
+
+
+
 
 class CareRegistrationForm(forms.ModelForm):
     first_name = forms.CharField(label=__("Prénom"),)
@@ -56,14 +59,18 @@ class CareRegistrationForm(forms.ModelForm):
                 raise forms.ValidationError(_("Les mots de passe ne sont pas identiques."))
 
         id = self.cleaned_data.get('id')
+        id_user_type = self.cleaned_data.get('user_type')
 
-        try:
-            Branch.objects.get(pk=id)
-        except Branch.DoesNotExist:
-            raise forms.ValidationError("Veuillez choisir une branche en choisissant un marqueur rouge sur la carte")
+        # si c'est un user de type membre verifier qu'il a une branche
+        # sinon ne rien faire
+        if int(id_user_type) == MemberType.MEMBER:
+            try:
+                Branch.objects.get(pk=id)
+            except Branch.DoesNotExist:
+                raise forms.ValidationError(_("Veuillez choisir une branche en choisissant un marqueur rouge sur la carte"))
 
-        if id == -1:
-            raise forms.ValidationError("Veuillez choisir une branche en choisissant un marqueur rouge sur la carte")
+            if id == -1:
+                raise forms.ValidationError(_("Veuillez choisir une branche en choisissant un marqueur rouge sur la carte"))
 
         return self.cleaned_data
 
@@ -160,8 +167,8 @@ class ContentTypeRestrictedFileField(forms.FileField):
             if content_type in self.content_types or content_types == None:
                 if file._size > self.max_upload_size:
                     raise forms.ValidationError(_('Votre fichier doit peser moins de '
-                                                '%s. Taille actuelle %s')
-                                                % (filesizeformat(self.max_upload_size), filesizeformat(file._size)))
+                                                '{maxsize}. Taille actuelle {currentsize}').format(maxsize=self.max_upload_size, currentsize=file._size))
+        
             else:
                 raise forms.ValidationError(_('Type de fichier non supporté'))
         except AttributeError:
@@ -185,8 +192,8 @@ class EmergencyContactCreateForm(forms.ModelForm):
         exclude = ['user', 'latitude', 'longitude']
 
 class JobSearchForm(forms.Form):
-    job_type =  forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=JobType.JOB_TYPES, label = __("Type de job"))
-    category = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=JobCategory.JOB_CATEGORIES, label = __("Catégorie du job"))
+    job_type =  forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=JobType.JOB_TYPES, label = __("Type de job (rien = tout)"))
+    category = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=JobCategory.JOB_CATEGORIES, label = __("Catégorie du job (rien = tout"))
     date1 = forms.DateTimeField(required=False, label =__("A partir du"),widget=DateTimePicker(options={"pickTime": False,}))
     date2 = forms.DateTimeField(required=False, label =__("jusqu'au"),widget=DateTimePicker(options={"pickTime": False,}))
     receive_help_from_who = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=MemberType.MEMBER_TYPES_GROUP, label = __("Qui peut fournir son aide ?"))
@@ -204,7 +211,10 @@ class JobSearchForm(forms.Form):
             if self.cleaned_data['date2']<timezone.now()-timezone.timedelta(hours=24):
                 raise forms.ValidationError(_("Incohérence dans les dates."))
 
+
+
 class GiftForm(forms.Form):
+    check = forms.ChoiceField(label = _("Donner à :"),widget=forms.RadioSelect, choices=GIVINGTO, initial=1)
     user = forms.CharField(label = __("Username"), widget=AutoCompleteWidget('user'))
     amount = forms.IntegerField(label = __("Montant du temps (plus que 1)"), min_value=1, initial=60)
     message = forms.CharField(required=False, widget=forms.Textarea, label = __("Message"))

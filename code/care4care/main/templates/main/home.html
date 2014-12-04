@@ -72,10 +72,58 @@
 </div>
 {% endif %}
 
+{% if request.user.success_pending.all %}
+<div class="row mt">
+    <div class="col-md-12">
+        <div class="content-panel ph">
+        <h4>{% trans "Jobs en attente de confirmation" %}</h4>
+        {% blocktrans %}
+        <p class="text-center">Ci-dessous la liste des jobs à confirmer</p>
+        {% endblocktrans %}
+        <table class="table table-striped table-advance table-hover rowlink">
+            <thead>
+                <tr>
+                    <th>{% trans "Photo" %}</th>
+                    <th>{% trans "Personne vous ayant aidée" %}</th>
+                    <th>{% trans "Tâche" %}</th>
+                    <th style="width: 190px">{% trans "Actions" %}</th>
+                </tr>
+            </thead>
+            <tbody data-link='row' data-target="a.mainlink">
+                {% for uv in request.user.success_pending.all %}
+                <tr>
+                    <td>
+                    <a href="{{uv.demand.receiver.get_absolute_url}}">
+                    <img class="img-circle" src="{% thumbnail uv.demand.donor.photo 40x40 crop %}" />
+                    </a>
+                    </td>
+                    <td>
+                        <a href="{{ uv.demand.donor.get_absolute_url }}">
+                        {{ uv.demand.donor.get_full_name }}
+                        </a>
+                    </td>
+                    <td><a href="{{ uv.demand.get_absolute_url }}">{{uv.demand.title}}</a></td>
+                    <td class="rowlink-skip">
+                        <a class="btn btn-primary btn-sm mainlink" href="{% url 'manage_success' uv.id %}">
+                            {% bootstrap_icon "ok" %} {% trans "Gérer" %}
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+{% if request.user.user_type != NON_MEMBER_TYPE %}
 <div class="row mt">
   <div class="col-md-6 col-sm-12 text-center"> <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#needHelpModal">{% trans "J'ai besoin d'aide" %}</button> </div>
   <div class="col-md-6 col-sm-12 text-center"><button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#offerHelpModal">{% trans "Offrir mon aide" %}</button></div>
 </div>
+{% endif %}
 
 <!-- need help Modal -->
 <div class="modal fade" id="needHelpModal" tabindex="-1" role="dialog" aria-labelledby="needHelpLabel" aria-hidden="true">
@@ -139,10 +187,12 @@
   </div>
 </div>
 
+{% if request.user.user_type != NON_MEMBER_TYPE %}
 <div class="row mt">
   {% show_demands request demands show_branch=True %}
   {% show_offers request offers show_branch=True %}
 </div>
+{% endif %}
 
 {% endblock %}
 

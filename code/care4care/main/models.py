@@ -120,6 +120,8 @@ class JobCategory:
 
 BOOL_CHOICES = ((True, _('Oui')), (False, _('Non')))
 
+GIVINGTO = (('1', 'Un autre utilisateur',), ('2', 'A l\'administration',))
+
 class JobType:
     OFFRE = 1
     DEMAND = 2
@@ -256,7 +258,7 @@ class User(AbstractBaseUser, PermissionsMixin, CommonInfo, VerifiedUser):
     """
     email = models.EmailField(_("Adresse email"), unique=False)
     date_joined = models.DateTimeField(auto_now_add=True)
-    photo = ThumbnailerImageField(upload_to='photos/', blank=False, default='photos/tinder_match.jpg')
+    photo = ThumbnailerImageField(upload_to='photos/', blank=False, default='photos/default_avatar.png')
 
     username = models.CharField(_("Nom d'utilisateur"), max_length=30, unique=True,
         validators = [

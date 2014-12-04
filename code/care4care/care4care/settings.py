@@ -53,6 +53,12 @@ INSTALLED_APPS = (
     'postman',
     'ajax_select',
     'rosetta',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.twitter',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -67,6 +73,7 @@ MIDDLEWARE_CLASSES = (
     'pagination.middleware.PaginationMiddleware',
 )
 
+
 TEMPLATE_CONTEXT_PROCESSORS = (
     "django.contrib.auth.context_processors.auth",
     "django.core.context_processors.debug",
@@ -76,7 +83,19 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.tz",
     "django.contrib.messages.context_processors.messages",
     "django.core.context_processors.request",
+    "care4care.context_processors.member_type_global",
+    "allauth.account.context_processors.account",
+    "allauth.socialaccount.context_processors.socialaccount",
 )
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    "django.contrib.auth.backends.ModelBackend",
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
 
 STATICFILES_FINDERS = (
     "django.contrib.staticfiles.finders.FileSystemFinder",
@@ -184,3 +203,19 @@ POSTMAN_AUTOCOMPLETER_APP = {
 }
 
 PAGINATION_DEFAULT_PAGINATION = 15
+
+SOCIALACCOUNT_ADAPTER = 'care4care.adapter.MyAccountAdapter'
+
+ACCOUNT_EMAIL_VERIFICATION = "none"
+
+SOCIALACCOUNT_PROVIDERS = \
+    { 'google':
+        { 'SCOPE': ['profile', 'email'],
+          'AUTH_PARAMS': { 'access_type': 'online' } },
+        'facebook':
+           {'SCOPE': ['email', 'publish_stream'],
+            'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+            'METHOD': 'oauth2',
+            #'LOCALE_FUNC': 'path.to.callable',
+            'VERIFIED_EMAIL': False,
+            'VERSION': 'v2.2'}}

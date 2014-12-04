@@ -92,6 +92,7 @@
                     <th>{% trans "Photo" %}</th>
                     <th>{% trans "Utilisateur" %}</th>
                     <th>{% trans "Commentaire" %}</th>
+                    <th>{% trans "Disponibilités" %}</th>
                     <th>{% trans "Km" %}</th>
                     <th style="width: 190px">{% trans "Actions" %}</th>
                 </tr>
@@ -110,6 +111,7 @@
                         </a>
                     </td>
                     <td>{{ volunteer.comment }}</td>
+                    <td>{{ volunteer.get_verbose_time }}</td>
                     <td>{{ volunteer.km }} {% trans "km" %}</td>
                     <td class="rowlink-skip text-right">
                         <a class="btn btn-primary btn-sm" href="{% url 'volunteer_accept' volunteer.id %}">

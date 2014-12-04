@@ -21,7 +21,12 @@ urlpatterns = patterns(
     url(r'^volunteer/success/create/(?P<demand_id>\d+)/$',
          CreateSuccessDemand.as_view(),
          name='success_demand'),
+    url(r'^volunteer/unsuccess/(?P<demand_id>\d+)/$',
+         'branch.views.unsuccess_job',
+         name='unsuccess_job'),
+    url(r'^success/manage/(?P<success_demand_id>\d+)/$',
+         'branch.views.manage_success',
+         name='manage_success'),
 
-    
     url(r'^b/(?P<branch_id>\d+)/(?P<slug>[-\w\d]+)/jobs/', include('branch.urls_job')),
 )

@@ -6,9 +6,6 @@
 
 
 {% block content %}
-
-<h3>{% trans "Confirmer votre présence pour le job:" %} "{{ demand.title }}"</h3>
-
 <div class="row mt">
     <div class="col-lg-12">
         <form action="." class="form-horizontal style-form" role="form" method="post">
@@ -18,7 +15,11 @@
 
             <div class="col-lg-12 col-sm-12 background-gris">
                 <div class="showback">
-                    <h4 class="mb"> {% trans "Formulaire" %}</h4>
+                    <h4 class="mb">
+                    {% blocktrans with demand.title as title and demand.receiver.get_full_name as user %}
+                    Confirmer votre présence pour le job: "{{ title }}" de {{user}}
+                    {% endblocktrans %}
+                    </h4>
                     {% bootstrap_form form %}
                 </div>
             </div>
@@ -29,9 +30,14 @@
                 <div class="col-md-6 mb"><button type="submit" class="btn btn-success btn-lg btn-block">
                     {% bootstrap_icon "ok" %} &nbsp; {% trans "Envoyer" %}
                 </button></div>
-                <div class="col-md-6"><a href="{% url 'home' %}" class="btn btn-danger btn-lg btn-block">
+                <div class="col-md-6 mb"><a href="{% url 'home' %}" class="btn btn-primary btn-lg btn-block">
                     {% bootstrap_icon "remove" %} &nbsp; {% trans "Annuler" %}
                 </a></div>
+                <div class="col-md-12 mb">
+                <a type="submit" class="btn btn-danger btn-lg btn-block" href="{% url "unsuccess_job" demand.id %}">
+                    {% bootstrap_icon "remove" %} &nbsp; {% trans "Je n'ai pas rempli ce job" %}
+                </a>
+                </div>
             </div>
             {% endbuttons %}
             </div>

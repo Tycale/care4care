@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load i18n bootstrap3 %}
+
+{% block head_title %}{% trans "Inscription" %}{% endblock %}
+
+{% block content %}
+<h3><i class="fa fa-angle-right"></i> {% trans "Inscription" %}</h3>
+
+<div class="row mt">
+    <div class="col-lg-12 col-sm-12 background-gris">
+        <div class="showback">
+			<p>{% blocktrans with provider_name=account.get_provider.name site_name=site.name %}
+			Vous êtes sur le point d'utiliser votre compte {{provider_name}} pour vous connecter sur 
+			Pens(i)ons Voisins. Complétez ce formulaire afin de procéder à votre connexion:
+			{% endblocktrans %}</p>
+			
+			
+			<form class="signup" id="signup_form" method="post" action="{% url 'socialaccount_signup' %}">
+			    {% csrf_token %}
+			    {% bootstrap_form form %}
+			    <input type="hidden" name="{{ redirect_field_name }}" value="/branch/join/" />
+			    <button type="submit" class="btn btn-success btn-block">{% bootstrap_icon 'pencil' %} {% trans "Inscription" %}</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

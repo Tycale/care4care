@@ -63,7 +63,10 @@
         		<form action="."  enctype="multipart/form-data" role="form" method="post">
         		{% csrf_token %}
             	<h3> {% trans "Cadeaux : J'aimerais offrir une partie de mon temps à :" %}</h3>
-            	{% bootstrap_form form %}
+                {% bootstrap_field form.check %}
+            	{% bootstrap_field form.user %}
+                {% bootstrap_field form.amount %}
+                {% bootstrap_field form.message %}
             	<button type="submit" class="btn btn-info btn-lg btn-block mb">
 	                {% bootstrap_icon "gift" %} &nbsp; {% trans "Offrir" %}
 	        	</button>

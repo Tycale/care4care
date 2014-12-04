@@ -174,7 +174,7 @@
                 {% if request.user.is_authenticated %}
                 <li class="search-bar">
                   <form method="get" action="{% url 'search' %}" id="search">
-                    <input name="q" type="text" size="30" placeholder="{% trans "Trouver un membre..."%}" />
+                    <input name="q" type="text" class="force-size" size="30" placeholder="{% trans "Trouver un membre..."%}" />
                   </form>
                 </li>
                 {% endif %}
@@ -189,7 +189,7 @@
                   <ul class="dropdown-menu" role="user-menu">
                     <li><a href="{% url 'profile' %}">
                     {% bootstrap_icon 'user' %} &nbsp; {% trans "Mon Profil" %}</a>
-                    {% if not request.user.is_verified %}
+                    {% if  request.user.user_type != NON_MEMBER_TYPE and not request.user.is_verified %}
                       <a href="{% url 'verified_profile' user_id=request.user.id%}">
                       {% bootstrap_icon 'star' %} &nbsp; {% trans "Devenir vérifié" %}</a>
                     {% endif %}
@@ -227,15 +227,22 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                           <input class="btn btn-theme03 btn-block" type="button" id="sign-in-google" value="{% trans "se connecter via Google"%}">
-                           <input class="btn btn-theme03 btn-block" type="button" id="sign-in-twitter" value="{% trans "se connecter via Twitter"%}">
+                           <a class="btn btn-theme03 btn-block sign-in-social" type="button" id="sign-in-google" href="{% url "google_login" %}">{% trans "se connecter via Google"%}</a>
+                           <a class="btn btn-theme03 btn-block sign-in-social" type="button" id="sign-in-facebook" href="{% url "facebook_login" %}">{% trans "se connecter via Facebook"%}</a>
+                           <a class="btn btn-theme03 btn-block sign-in-social" type="button" id="sign-in-twitter" href="{% url "twitter_login" %}">{% trans "se connecter via Twitter"%}</a>
                         </li>
                      </ul>
                   {% endif %}
                 </li>
                 <li>
+                  <div class="btn-group" style="margin-right : 15px;">
+                    <button id="minustext" alt="Decrease text size" class="btn btn-theme btn-zoom force-size  " onclick="countam();resizeText();"><i class="fa fa-search-minus"></i></button>
+                    <button id="plustext" alt="Increase text size" class="btn btn-theme btn-zoom force-size" onclick="counta();resizeText();"><i class="fa fa-search-plus"></i></button>
+                  </div>
+                </li>
+                <li>
                   <div class="lang-box">
-                  
+
                   {% get_language_info for LANGUAGE_CODE as lang %}
                   <form action="{% url 'set_language' %}" method="post" id="lang_form">
                     {% csrf_token %}
@@ -294,6 +301,7 @@
                   </li>
 
                   {% if request.user.is_authenticated %}
+                  {% if request.user.user_type != NON_MEMBER_TYPE %}
                   <li class="sub-menu">
                       <a href="javascript:;" >
                           <i class="fa fa-globe"></i>
@@ -317,6 +325,7 @@
                           {% endif %}
                       </ul>
                   </li>
+                  {% endif %}
                   <li class="sub-menu">
                     <a href="javascript:;" >
                       <i class="fa fa-user"></i>
@@ -327,16 +336,17 @@
                     <ul class="sub">
                     <li><span><a href="{% url 'profile' %}"> {% trans "Mon Profil" %}</a></span></li>
                     </ul>
-
-                    {% if not request.user.is_verified %}
+                    {% if  request.user.user_type != NON_MEMBER_TYPE and not request.user.is_verified %}
                       <ul class="sub">
                       <li><span><a href="{% url 'verified_profile' user_id=request.user.id %}"> {% bootstrap_icon 'star' %} &nbsp; {% trans "Devenir vérifié" %}</a></span></li>
                       </ul>
                     {% endif %}
 
+                    {% if request.user.user_type != NON_MEMBER_TYPE %}
                     <ul class="sub">
                     <li><span><a href="{% url 'credit_page' %}"> {% trans "Mes crédits" %}</a></span></li>
                     </ul>
+                    {% endif %}
 
                     {% if request.user.is_superuser %}
                     <ul class="sub">
@@ -610,6 +620,24 @@
     {% endcomment %}
 
   <script type="text/javascript">
+        function counta(){
+          counter += 1;
+          if(counter > 9){
+            counter = 9;
+          }
+        }
+
+        function countam(){
+          counter -= 1;
+          if(counter < 5){
+            counter = 5;
+          }
+        }
+
+        function resizeText() {
+          document.body.style.fontSize = (counter * 2) + "px";
+          $.cookie('zoom', counter);
+        }
 
         $(document).ready(function () {
         //Handles menu drop down
@@ -634,9 +662,22 @@
             });
         {% endfor %}
 
+        if (document.body.style.fontSize == "") {
+            document.body.style.fontSize = "12px";
+          }
+
+        counter = 6;
+        if($.cookie('zoom')){
+          counter = parseInt($.cookie('zoom'));
+        }
+
+        resizeText();
+
         return false;
         });
+  
   </script>
+
   {% block extra_footer %}{% endblock %}
 
   </body>

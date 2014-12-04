@@ -1,0 +1,18 @@
+Google:
+ 
+Client ID
+    517393531289-9pn791u31ptt4i6vtqvpqms7tif57ve1.apps.googleusercontent.com
+Client secret
+    odNMMP8jLYZdo2j9DiYIYje8 
+
+Twitter:
+
+Consumer Key (API Key) 8xb7STygk334xUdmzgC8nId6n
+Consumer Secret (API Secret) XN20uYRLswtA9ukro1jCIHrXlumVSJEwxWUUzi1b5MoZB0ozwo
+
+Facebook:
+
+
+
+For help implementing in django-allauth:
+http://django-allauth.readthedocs.org/en/latest/providers.html

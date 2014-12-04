@@ -11,7 +11,7 @@ from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
 from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm, \
             VerifiedProfileForm, JobSearchForm, GiftForm, AddUser
-from main.models import User, VerifiedInformation, EmergencyContact, JobCategory, JobType, MemberType
+from main.models import User, VerifiedInformation, EmergencyContact, JobCategory, JobType, MemberType, GIVINGTO
 from branch.models import Demand, Offer
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
@@ -407,6 +407,7 @@ class RegistrationView(BaseRegistrationView):
         new_user.first_name = first_name
         new_user.birth_date = cleaned_data['birth_date']
         new_user.how_found = cleaned_data['how_found']
+        new_user.user_type = cleaned_data['user_type']
         #new_user.languages = cleaned_data['languages']
         new_user.phone_number = cleaned_data['phone_number']
         new_user.mobile_number = cleaned_data['mobile_number']
@@ -416,9 +417,12 @@ class RegistrationView(BaseRegistrationView):
 
 
         new_user.save()
-        branch = Branch.objects.get(pk=cleaned_data['id'])
-        bm = BranchMembers(user=new_user, branch=branch, is_admin=False, joined=timezone.now())
-        bm.save()
+
+        # chercher une branche uniquement pour le membre de type membre
+        if new_user.user_type == MemberType.MEMBER:
+            branch = Branch.objects.get(pk=cleaned_data['id'])
+            bm = BranchMembers(user=new_user, branch=branch, is_admin=False, joined=timezone.now())
+            bm.save()
 
         signals.user_registered.send(sender=self.__class__,
                                      user=new_user,
@@ -688,7 +692,7 @@ def job_search_view(request):
 
 
             if not form.cleaned_data['date1']:
-                date1 = timezone.now()
+                date1 = timezone.now()+timezone.timedelta(hours=-24)
             else:
                 date1 = form.cleaned_data['date1']
 
@@ -699,7 +703,7 @@ def job_search_view(request):
 
             if not form.cleaned_data['category']:
                 category = [str(l[0]) for l in JobCategory.JOB_CATEGORIES]
-                print(category)
+                
             else:
                 category = form.cleaned_data['category']
 
@@ -727,11 +731,9 @@ def job_search_view(request):
                 request_category |= Q(category__contains=l)
 
             if str(JobType.OFFRE) in job_type:
-                print("test")
                 offers = Offer.objects.filter(Q(date__gte=date1) &  Q(date__lte=date2) & Q(receive_help_from_who__in = receive_help_from_who) & request_time & request_category).all()
 
             if str(JobType.DEMAND) in job_type:
-                print(job_type)
                 demands = Demand.objects.filter(Q(date__gte=date1) &  Q(date__lte=date2) & Q(receive_help_from_who__in = receive_help_from_who) & request_time & request_category & Q(closed=False)).all()
 
 
@@ -745,13 +747,13 @@ def job_search_view(request):
 def credits_view(request):
     user = request.user
     #TODO : Rajouter le champ finish = true dans job et offer et finish = false dans les autres.
-    jobs = Demand.objects.filter(closed=True,donor=user).all() # tâches que j'ai faîtes
-    offer = Demand.objects.filter(closed=True,receiver=user).all() # tâches que j'ai reçue
-    jobs_pending = Demand.objects.filter(closed=True,donor=user).all() # tâches que je vais faire
-    offer_pending = Demand.objects.filter(closed=True,receiver=user).all() # tâches que je vais recevoir
+    jobs = Demand.objects.filter(closed=True,donor=user,success=True).all() # tâches que j'ai faîtes
+    offer = Demand.objects.filter(closed=True,receiver=user,success=True).all() # tâches que j'ai reçue
+    jobs_pending = Demand.objects.filter(closed=True,donor=user,success=None).all() # tâches que je vais faire
+    offer_pending = Demand.objects.filter(closed=True,receiver=user,success=None).all() # tâches que je vais recevoir
     num_jobs = len(jobs)
     average_time_job = 0
-    km = 0      # TODO: This variable is not used
+    km = 0      # TODO: This variable is not used (On l'affiche dans la template)
     for job in jobs :
         average_time_job += job.real_time
         km += job.km
@@ -761,14 +763,17 @@ def credits_view(request):
     if request.POST:
         form = GiftForm(request.POST, ruser=user)
         if form.is_valid():
-            friend = User.objects.get(username=form.cleaned_data['user'])
+            if form.cleaned_data['check'] == 1:
+                friend = User.objects.get(username=form.cleaned_data['user'])
+            else :
+                friend = get_object_or_404(User, pk=1)
             if not friend :
                 return render(request,'credit/credit_page.html.html', locals())
             friend.credit += form.cleaned_data['amount']
             user.credit -= form.cleaned_data['amount']
             user.save()
             friend.save()
-            title = _("Cadeau de : ")+str(form.cleaned_data['amount'])+_("minutes")
+            title = _("Cadeau de : {amount} minutes").format(amount=str(form.cleaned_data['amount']))
             pm_write(user, friend, title, form.cleaned_data['message'])
             return redirect('home')
 

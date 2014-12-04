@@ -10,24 +10,32 @@ from django.db import connection
 
 
 MONTHS = {
-    1:  {'name': __("January"),   'days': 31},
-    2:  {'name': __("February"),   'days': 28},
-    3:  {'name': __("March"),      'days': 31},
-    4:  {'name': __("April"),     'days': 30},
-    5:  {'name': __("May"),       'days': 31},
-    6:  {'name': __("June"),      'days': 30},
-    7:  {'name': __("July"),   'days': 31},
-    8:  {'name': __("August"),      'days': 31},
-    9:  {'name': __("September"), 'days': 30},
-    10: {'name': __("October"),   'days': 31},
-    11: {'name': __("November"),  'days': 30},
-    12: {'name': __("December"),  'days': 31}
+    1:  {'name': _("Janvier"),     'days': 31},
+    2:  {'name': _("Février"),     'days': 28},
+    3:  {'name': _("Mars"),        'days': 31},
+    4:  {'name': _("Avril"),       'days': 30},
+    5:  {'name': _("Mai"),         'days': 31},
+    6:  {'name': _("Juin"),        'days': 30},
+    7:  {'name': _("Juillet"),     'days': 31},
+    8:  {'name': _("Août"),        'days': 31},
+    9:  {'name': _("Septembre"),   'days': 30},
+    10: {'name': _("Octobre"),     'days': 31},
+    11: {'name': _("Novembre"),    'days': 30},
+    12: {'name': _("Décembre"),    'days': 31}
 }
+
+
+def previous_month(n):
+    if n == 1:
+        return len(MONTHS)
+    else:
+        return n-1
 
 
 def next_month(n):
     n = n % len(MONTHS)
     return n+1
+
 
 def month_list(i, n):
     result = []
@@ -35,6 +43,37 @@ def month_list(i, n):
         result.append(i)
         i = next_month(i)
     return result
+
+
+def get_last_n_months(n):
+    now = timezone.now()
+    last_m = []
+    this_month = now.month
+    i = now.month
+    for j in range(1, n):
+        i = previous_month(i)
+
+    nex_month = next_month(this_month)
+    while i != nex_month:
+        last_m.append(str(MONTHS[i]['name']))
+        i = next_month(i)
+    return last_m
+
+
+def get_days_in_month(n):
+    return MONTHS[n]['days']
+
+
+def get_last_day_of_month(month_date):
+    n = month_date.month
+    days_of_month_n = get_days_in_month(n)
+    n_months_ago = month_date.replace(day=days_of_month_n, hour=23, minute=59, second=59, microsecond=0)
+    return n_months_ago
+
+
+def get_job_labels():
+    return [str(l[1]) for l in JobCategory.JOB_CATEGORIES]
+
 
 
 class Color:
@@ -56,6 +95,9 @@ class Color:
         return 'rgba('+rgb_values+', '+str(a)+')'
 
 
+
+
+### Statistics
 
 # Account status colors
 ACTIVE_COLOR_HEX = Color.GREEN_HEX
@@ -79,27 +121,6 @@ def generate_line_colors(color_rgb):
         'pointHighlightStroke': Color.rgba(color_rgb, 1),
     }
 
-
-
-
-def get_last_n_months(n):
-    last_m = [datetime.date.today() + datetime.timedelta(weeks=4*(-i)) for i in range(0, n)]
-    return [MONTHS[d.month]['name'] for d in reversed(last_m)]
-
-
-def get_days_in_month(n):
-    return MONTHS[n]['days']
-
-
-def get_last_day_of_month(month_date):
-    n = month_date.month
-    days_of_month_n = get_days_in_month(n)
-    n_months_ago = month_date.replace(day=days_of_month_n, hour=23, minute=59, second=59, microsecond=0)
-    return n_months_ago
-
-
-def get_job_labels():
-    return [str(l[1]) for l in JobCategory.JOB_CATEGORIES]
 
 
 # Global statistics
@@ -444,7 +465,7 @@ def get_user_km_amount_json(user_id):
     # the base index is the first month and is equal to the index 0 in the data_list
     # the key is the month number
     for job in jobs_amount:
-        print('job', job)
+        #print('job', job)
         key = int(job['month'][5:7])
         km_amount = job['km_amount']
         if km_amount is not None:
