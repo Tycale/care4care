@@ -10,7 +10,8 @@ from branch.models import Branch, BranchMembers, Demand, Offer, Comment, DemandP
 from main.models import User, VerifiedInformation, JobCategory, MemberType
 
 from branch.forms import CreateBranchForm, ChooseBranchForm, OfferHelpForm, NeedHelpForm, \
-            CommentForm, UpdateNeedHelpForm, VolunteerForm, ForceVolunteerForm, SuccessDemandForm
+            CommentForm, UpdateNeedHelpForm, VolunteerForm, ForceVolunteerForm, SuccessDemandForm, \
+            CommentConfirmForm
 from django.utils import timezone
 from django.core.urlresolvers import reverse
 from django.utils import formats
@@ -609,7 +610,60 @@ def unsuccess_job(request, demand_id):
     else:
         return refuse(request)
 
+def manage_success(request, success_demand_id):
+    success = get_object_or_404(SuccessDemand, pk=success_demand_id)
+    demand = success.demand
 
+    form = CommentConfirmForm()
+
+    if can_manage_branch_specific(success.ask_to, request.user, success.branch):
+        if request.POST:
+            form = CommentConfirmForm(request.POST)
+            if form.is_valid():
+                if 'accept' in request.POST:
+                    if success.time > 100000:
+                        success.time = 100000
+                    if success.time < 0:
+                        success.time = 0
+
+                    demand.real_time =  success.time
+                    demand.success = True
+                    demand.save()
+
+                    demand.donor.credit += success.time
+                    demand.donor.save()
+                    demand.receiver.credit -= success.time
+                    demand.receiver.save()
+
+
+                    # TODO : pm_write
+                    # personne à qui écrire : demand.donor
+                    # de la part de : demand.receiver
+                    # le message : 
+                    # demand.receiver a confirmé votre job. Vous avez été crédité de success.time minutes
+                    # et alors tu mets "commentaire : \n\n " success.comment
+
+                    return redirect('home')
+                if 'decline' in request.POST:
+                    success.delete()
+                    demand.success_fill = False
+                    demand.save()
+
+                    # TODO : pm_write
+                    # personne à qui écrire : demand.donor
+                    # de la part de : demand.receiver
+                    # le message :
+                    # demand.receiver a refusé de confirmer votre job. Voici le message qu'il a laissé :
+                    # success.comment
+                    # Vous pouvez resoumettre une demande afin d'être crédité. En cas de conflit, contactez
+                    # un administrateur de votre branche ( demand.branch.name )
+                    
+                    return redirect('home')
+
+        return render(request,'job/manage_success.html', locals())
+
+    else :
+        return refuse(request)
 
 
 

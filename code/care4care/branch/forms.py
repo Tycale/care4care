@@ -119,5 +119,7 @@ class SuccessDemandForm(forms.ModelForm):
         model = SuccessDemand
         fields = ['comment', 'time']
 
+class CommentConfirmForm(forms.Form):
+    comment = forms.CharField(required=False, widget=forms.Textarea, label = _("Commentaire"))
 
 
