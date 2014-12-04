@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-04 10:00+0000\n"
-"PO-Revision-Date: 2014-12-04 09:58+0000\n"
+"POT-Creation-Date: 2014-12-04 10:32+0000\n"
+"PO-Revision-Date: 2014-12-04 10:13+0000\n"
 "Last-Translator: b'vv vv <vv@vv.be>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -1510,7 +1510,7 @@ msgstr "Manage"
 
 #: main/templates/main/home.html:96
 msgid "Dans quelle branche souhaitez-vous demander de l'aide ?"
-msgstr "Which branch would you like to ask for help?"
+msgstr "Which branch would you like to ask for help in ?"
 
 #: main/templates/main/home.html:106
 msgid ""
@@ -1526,7 +1526,7 @@ msgstr "Sign up"
 
 #: main/templates/main/home.html:124
 msgid "Dans quelle branche souhaitez-vous offrir votre aide ?"
-msgstr "Which branch would you like to offer help?"
+msgstr "Which branch would you like to offer help in?"
 
 #: main/templates/main/home.html:134
 msgid ""
@@ -2564,6 +2564,11 @@ msgstr "As superuser, you can see all the branches"
 #: templates/base.html:364
 msgid "Messages"
 msgstr "Messages"
+
+#, fuzzy
+#~| msgid "Nom d'utilisateur"
+#~ msgid "Nom d'utilisateur test"
+#~ msgstr "Username"
 
 #~ msgid "Explication du service"
 #~ msgstr "Explanation of the service"
