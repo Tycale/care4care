@@ -189,7 +189,7 @@
                   <ul class="dropdown-menu" role="user-menu">
                     <li><a href="{% url 'profile' %}">
                     {% bootstrap_icon 'user' %} &nbsp; {% trans "Mon Profil" %}</a>
-                    {% if not request.user.is_verified %}
+                    {% if  request.user.user_type != NON_MEMBER_TYPE and not request.user.is_verified %}
                       <a href="{% url 'verified_profile' user_id=request.user.id%}">
                       {% bootstrap_icon 'star' %} &nbsp; {% trans "Devenir vérifié" %}</a>
                     {% endif %}
@@ -235,7 +235,7 @@
                 </li>
                 <li>
                   <div class="lang-box">
-                  
+
                   {% get_language_info for LANGUAGE_CODE as lang %}
                   <form action="{% url 'set_language' %}" method="post" id="lang_form">
                     {% csrf_token %}
@@ -294,6 +294,7 @@
                   </li>
 
                   {% if request.user.is_authenticated %}
+                  {% if request.user.user_type != NON_MEMBER_TYPE %}
                   <li class="sub-menu">
                       <a href="javascript:;" >
                           <i class="fa fa-globe"></i>
@@ -317,6 +318,7 @@
                           {% endif %}
                       </ul>
                   </li>
+                  {% endif %}
                   <li class="sub-menu">
                     <a href="javascript:;" >
                       <i class="fa fa-user"></i>
@@ -327,8 +329,7 @@
                     <ul class="sub">
                     <li><span><a href="{% url 'profile' %}"> {% trans "Mon Profil" %}</a></span></li>
                     </ul>
-
-                    {% if not request.user.is_verified %}
+                    {% if  request.user.user_type != NON_MEMBER_TYPE and not request.user.is_verified %}
                       <ul class="sub">
                       <li><span><a href="{% url 'verified_profile' user_id=request.user.id %}"> {% bootstrap_icon 'star' %} &nbsp; {% trans "Devenir vérifié" %}</a></span></li>
                       </ul>
