@@ -210,7 +210,7 @@ class JobSearchForm(forms.Form):
 
 class GiftForm(forms.Form):
     user = forms.CharField(label = __("Username"), widget=AutoCompleteWidget('user'))
-    amount = forms.IntegerField(label = __("Montant du temps (plus que 1)"), min_value=1, initial=60)
+    amount = forms.IntegerField(label = _("Montant du temps (plus que 1)"), min_value=1, initial=60)
     message = forms.CharField(required=False, widget=forms.Textarea, label = __("Message"))
 
     def __init__(self, *args, **kwargs):
