@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from branch.models import Demand, Offer, Comment, Branch, DemandProposition
+from branch.models import Demand, Offer, Comment, Branch, DemandProposition, SuccessDemand
 
 class OfferAdmin(admin.ModelAdmin):
     list_display = ('get_verbose_category', 'get_user', 'branch', 'date',)
@@ -27,8 +27,12 @@ class BranchAdmin(admin.ModelAdmin):
 class DemandPropositionAdmin(admin.ModelAdmin):
     pass
 
+class SuccessDemandAdmin(admin.ModelAdmin):
+    pass
+
 admin.site.register(Demand, DemandAdmin)
 admin.site.register(Offer, OfferAdmin)
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(Branch, BranchAdmin)
 admin.site.register(DemandProposition, DemandPropositionAdmin)
+admin.site.register(SuccessDemand, SuccessDemandAdmin)
