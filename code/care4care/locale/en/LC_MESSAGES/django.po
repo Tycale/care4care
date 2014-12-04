@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-04 10:09+0000\n"
+"POT-Creation-Date: 2014-12-04 10:30+0000\n"
 "PO-Revision-Date: 2014-12-04 09:58+0000\n"
 "Last-Translator: b'vv vv <vv@vv.be>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -343,7 +343,7 @@ msgstr ""
 #: branch/templates/branch/branch_home.html:78
 #: branch/templates/job/details_demand.html:63
 #: branch/templates/job/details_demand.html:73
-#: main/templates/main/home.html:91 main/templates/main/home.html.py:119
+#: main/templates/main/home.html:91 main/templates/main/home.html.py:122
 msgid "fermer"
 msgstr "close"
 
@@ -402,7 +402,7 @@ msgstr "I need help"
 #: branch/templates/branch/branch_home.html:124
 #: branch/templates/job/details_demand.html:43
 #: branch/templates/job/details_demand.html:177
-#: main/templates/main/home.html:83 main/templates/main/home.html.py:120
+#: main/templates/main/home.html:83 main/templates/main/home.html.py:123
 msgid "Offrir mon aide"
 msgstr "Offer my help"
 
@@ -502,7 +502,9 @@ msgid "Annuler le bannissement"
 msgstr "Cancel the ban"
 
 #: branch/templates/branch/branch_join.html:5
-#: branch/templates/branch/branch_join.html:13 templates/base.html:314
+#: branch/templates/branch/branch_join.html:13
+#: main/templates/main/home.html:103 main/templates/main/home.html.py:134
+#: templates/base.html:314
 msgid "Rejoindre une branche"
 msgstr "Join a branch"
 
@@ -1512,7 +1514,17 @@ msgstr "Manage"
 msgid "Dans quelle branche souhaitez-vous demander de l'aide ?"
 msgstr "Which branch would you like to ask for help?"
 
-#: main/templates/main/home.html:106
+#: main/templates/main/home.html:102
+#, fuzzy
+#| msgid ""
+#| " Vous devez être connecté afin de pouvoir demander de l'aide. <br />\n"
+#| "        Pas encore inscrit ? "
+msgid "Vous devez rejoindre une branche avant de pouvoir demander de l'aide."
+msgstr ""
+"You must be logged in to ask for help? <br />\n"
+"\tNot registered? "
+
+#: main/templates/main/home.html:109
 msgid ""
 " Vous devez être connecté afin de pouvoir demander de l'aide. <br />\n"
 "        Pas encore inscrit ? "
@@ -1520,15 +1532,19 @@ msgstr ""
 "You must be logged in to ask for help? <br />\n"
 "\tNot registered? "
 
-#: main/templates/main/home.html:107 main/templates/main/home.html.py:135
+#: main/templates/main/home.html:110 main/templates/main/home.html.py:141
 msgid "Inscrivez-vous"
 msgstr "Sign up"
 
-#: main/templates/main/home.html:124
+#: main/templates/main/home.html:127
 msgid "Dans quelle branche souhaitez-vous offrir votre aide ?"
 msgstr "Which branch would you like to offer help?"
 
-#: main/templates/main/home.html:134
+#: main/templates/main/home.html:133
+msgid "Vous devez rejoindre une branche avant de pouvoir offrir de l'aide."
+msgstr ""
+
+#: main/templates/main/home.html:140
 msgid ""
 " Vous devez être connecté afin de pouvoir offrir votre aide. <br />\n"
 "        Pas encore inscrit ? "
