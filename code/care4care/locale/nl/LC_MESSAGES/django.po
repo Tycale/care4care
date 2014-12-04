@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-04 11:18+0000\n"
+"POT-Creation-Date: 2014-12-04 11:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -954,6 +954,19 @@ msgstr ""
 
 #: branch/views.py:586
 msgid "Demande envoyée"
+msgstr ""
+
+#: branch/views.py:588
+msgid "Confirmation de job accompli"
+msgstr ""
+
+#: branch/views.py:589
+#, python-format
+msgid ""
+"L'utilisateur %s affirme avoir accompli le job suivant : %s.\n"
+"Il déclare avoir pris %s minutes pour accomplir ce job.\n"
+"Si ces informations vous semble correctes, vous pouvez confirmer que ce job "
+"a été accompli avec succès."
 msgstr ""
 
 #: care4care/settings.py:123
