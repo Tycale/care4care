@@ -56,14 +56,19 @@ class CareRegistrationForm(forms.ModelForm):
                 raise forms.ValidationError(_("Les mots de passe ne sont pas identiques."))
 
         id = self.cleaned_data.get('id')
+        id_user_type = self.cleaned_data.get('user_type')
 
-        try:
-            Branch.objects.get(pk=id)
-        except Branch.DoesNotExist:
-            raise forms.ValidationError("Veuillez choisir une branche en choisissant un marqueur rouge sur la carte")
+        # si c'est un user de type membre verifier qu'il a une branche
+        # sinon ne rien faire
+        if int(id_user_type) == MemberType.MEMBER:
+            print("try to member")
+            try:
+                Branch.objects.get(pk=id)
+            except Branch.DoesNotExist:
+                raise forms.ValidationError("Veuillez choisir une branche en choisissant un marqueur rouge sur la carte")
 
-        if id == -1:
-            raise forms.ValidationError("Veuillez choisir une branche en choisissant un marqueur rouge sur la carte")
+            if id == -1:
+                raise forms.ValidationError("Veuillez choisir une branche en choisissant un marqueur rouge sur la carte")
 
         return self.cleaned_data
 

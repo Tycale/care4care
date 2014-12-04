@@ -407,6 +407,7 @@ class RegistrationView(BaseRegistrationView):
         new_user.first_name = first_name
         new_user.birth_date = cleaned_data['birth_date']
         new_user.how_found = cleaned_data['how_found']
+        new_user.user_type = cleaned_data['user_type']
         #new_user.languages = cleaned_data['languages']
         new_user.phone_number = cleaned_data['phone_number']
         new_user.mobile_number = cleaned_data['mobile_number']
@@ -416,9 +417,12 @@ class RegistrationView(BaseRegistrationView):
 
 
         new_user.save()
-        branch = Branch.objects.get(pk=cleaned_data['id'])
-        bm = BranchMembers(user=new_user, branch=branch, is_admin=False, joined=timezone.now())
-        bm.save()
+
+        # chercher une branche uniquement pour le membre de type membre
+        if new_user.user_type == MemberType.MEMBER:
+            branch = Branch.objects.get(pk=cleaned_data['id'])
+            bm = BranchMembers(user=new_user, branch=branch, is_admin=False, joined=timezone.now())
+            bm.save()
 
         signals.user_registered.send(sender=self.__class__,
                                      user=new_user,
