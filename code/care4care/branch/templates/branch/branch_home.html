@@ -130,10 +130,27 @@
 </div>
 
 
+{% if is_branch_admin or request.user.is_superuser %}
+<div class="row mt">
+    <div class="col-lg-12">
+        <div class="content-panel ph">
+            <h4><i class="fa fa-angle-right"></i> {% trans "Coin administrateur" %}
+            </h4>
+
+            <p>{% trans "En tant qu'administrateur, vous pouvez voir les statistiques de cette branche." %}</p>
+            <a class="btn btn-primary btn-block mb" href="{% url "stats_branch"  branch_id=branch.id slug=branch.slug user_id=request.user.id %}">
+                <i class=" fa fa-bar-chart-o"></i>
+                {% trans "Statistiques" %}
+            </a>
+        </div>
+    </div>
+</div>
+{% endif %}
+
 <div class="row mt">
     <div class="col-lg-12">
 
-    	<div class="content-panel">
+    	<div class="content-panel ph">
             {% with mall=branch.membership.all%}
             <h4><i class="fa fa-angle-right"></i> {% trans "Liste des membres" %}
             </h4>
@@ -202,7 +219,7 @@
     <div class="row mt">
         <div class="col-lg-12">
 
-            <div class="content-panel">
+            <div class="content-panel ph">
                 {% with banned=branch.banned.all%}
                 <h4><i class="fa fa-angle-right"></i> {% trans "Liste des membres bannis" %}
                 </h4>
@@ -241,16 +258,6 @@
             </div>
         </div>
     </div>
-{% endif %}
-
-
-{% if is_branch_admin or request.user.is_superuser %}
-<div class="row mt">
-  <div class="col-md-6 col-sm-12 text-center"><a class="btn btn-primary btn-lg" href="{% url "stats_branch"  branch_id=branch.id slug=branch.slug user_id=request.user.id %}">
-    <i class=" fa fa-bar-chart-o"></i>
-    {% trans "Statistiques" %}
-  </a></div>
-</div>
 {% endif %}
 
 

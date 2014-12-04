@@ -16,8 +16,12 @@
          	<div class="showback">
           	 	<h4> {% trans "Mon crédit : " %}{{user.get_verbose_credit|safe}}</h4>
           	 	<h4> {% trans "Jobs effectués : " %}{{num_jobs}}</h4>
-          	 	<h4> {% trans "Temps moyen par travail : " %}{{average_time_job}}</h4>
-          	 	<h4> {% trans "J'ai parcouru : " %}{{km}}{% trans "km" %}</h4>
+          	 	{% if average_time_job > 0 %}
+                <h4> {% trans "Temps moyen par travail : " %}{{average_time_job}} {% trans "minutes" %}</h4>
+          	 	{% else %}
+                <h4> {% trans "Temps moyen par travail : " %}{{average_time_job}} {% trans "minute" %}</h4>
+                {% endif %}
+                <h4> {% trans "J'ai parcouru : " %}{{km}} {% trans "km" %}</h4>
             </div>
          </div>
     </div>

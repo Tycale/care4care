@@ -12,9 +12,9 @@
   	<div class="panel panel-default">
 		<div class="panel-heading">
 			{% if modify %}
-				<h2>{% trans "Modifier une news" %}</h2>
+				<h4>{% trans "Modifier une news" %}</h4>
 			{% else %}
-				<h3>{% trans "Ajouter une news" %}</h3>
+				<h4>{% trans "Ajouter une news" %}</h4>
 			{% endif %}
 		</div>
 		<div class="panel-body">
@@ -28,7 +28,7 @@
 				</div>
 				</div>
 	            <br />
-				<button type="submit" class="btn btn-block btn-lg btn-inverse">{% trans "Envoyer" %}</button>
+				<button type="submit" class="btn btn-block btn-lg btn-primary">{% trans "Envoyer" %}</button>
 			</form>
 		</div>
 	</div>
@@ -40,5 +40,4 @@
 
 {% block extra_footer %}
 {{form.media}}
-<script src="{% static 'js/rowlink.js' %}"></script>
 {% endblock %}
