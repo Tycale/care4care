@@ -692,7 +692,7 @@ def job_search_view(request):
 
 
             if not form.cleaned_data['date1']:
-                date1 = timezone.now()
+                date1 = timezone.now()+timezone.timedelta(hours=-24)
             else:
                 date1 = form.cleaned_data['date1']
 
@@ -711,11 +711,6 @@ def job_search_view(request):
                 job_type = [str(l[0]) for l in JobType.JOB_TYPES]
             else:
                 job_type = form.cleaned_data['job_type']
-
-            if not form.cleaned_data['dist']:
-                dist = sys.maxsize
-            else:
-                dist = form.cleaned_data['dist']
 
             if not form.cleaned_data['receive_help_from_who']:
                 receive_help_from_who = [str(l[0]) for l in MemberType.MEMBER_TYPES_GROUP]
@@ -741,7 +736,6 @@ def job_search_view(request):
             if str(JobType.DEMAND) in job_type:
                 demands = Demand.objects.filter(Q(date__gte=date1) &  Q(date__lte=date2) & Q(receive_help_from_who__in = receive_help_from_who) & request_time & request_category & Q(closed=False)).all()
 
-                demands = Demand.objects.filter(Q(date__gte=date1) &  Q(date__lte=date2) & Q(receive_help_from_who__in = receive_help_from_who) & request_time & request_category & Q(closed=False)).all()
 
             return render(request, 'search/job_result.html',locals())
 
@@ -753,10 +747,10 @@ def job_search_view(request):
 def credits_view(request):
     user = request.user
     #TODO : Rajouter le champ finish = true dans job et offer et finish = false dans les autres.
-    jobs = Demand.objects.filter(closed=True,donor=user).all() # tâches que j'ai faîtes
-    offer = Demand.objects.filter(closed=True,receiver=user).all() # tâches que j'ai reçue
-    jobs_pending = Demand.objects.filter(closed=True,donor=user).all() # tâches que je vais faire
-    offer_pending = Demand.objects.filter(closed=True,receiver=user).all() # tâches que je vais recevoir
+    jobs = Demand.objects.filter(closed=True,donor=user,success=True).all() # tâches que j'ai faîtes
+    offer = Demand.objects.filter(closed=True,receiver=user,success=True).all() # tâches que j'ai reçue
+    jobs_pending = Demand.objects.filter(closed=True,donor=user,success=None).all() # tâches que je vais faire
+    offer_pending = Demand.objects.filter(closed=True,receiver=user,success=None).all() # tâches que je vais recevoir
     num_jobs = len(jobs)
     average_time_job = 0
     km = 0      # TODO: This variable is not used (On l'affiche dans la template)
@@ -779,7 +773,7 @@ def credits_view(request):
             user.credit -= form.cleaned_data['amount']
             user.save()
             friend.save()
-            title = _("Cadeau de : ")+str(form.cleaned_data['amount'])+_("minutes")
+            title = _("Cadeau de : {amount} minutes").format(amount=str(form.cleaned_data['amount']))
             pm_write(user, friend, title, form.cleaned_data['message'])
             return redirect('home')
 
