@@ -8,8 +8,15 @@ class MyAccountAdapter(DefaultSocialAccountAdapter):
 
     def populate_user(self, request, sociallogin, data):
         sociallogin.account.user.is_active = True
+        if sociallogin.account.provider == "twitter":
+            username = data['name']
+        else:
+            username = data['first_name'] + data['last_name']
+            sociallogin.account.user.first_name = data.get('first_name')
+            sociallogin.account.user.last_name = data.get('last_name')
+            sociallogin.account.user.email = data.get('email')
+            sociallogin.account.user.name = data.get('name')
 
-        username = data['first_name'] + data['last_name']
         if User.objects.filter(username=username).exists():
             base_username = username
             count = 1
@@ -18,9 +25,5 @@ class MyAccountAdapter(DefaultSocialAccountAdapter):
                 count += 1
 
 
-        sociallogin.account.user.first_name = data.get('first_name')
-        sociallogin.account.user.last_name = data.get('last_name')
-        sociallogin.account.user.email = data.get('email')
-        sociallogin.account.user.name = data.get('name')
         data['username'] = username
         super(MyAccountAdapter,self).populate_user(request, sociallogin, data)
