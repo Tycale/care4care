@@ -98,6 +98,9 @@
         <div class="btn-group-vertical" role="group">
         {% for mbranch in request.user.membership.all %}
         <a href="{% url "create_demand" branch_id=mbranch.branch.id slug=mbranch.branch.slug user_id=request.user.id %}" class="btn btn-primary btn-lg btn-block">{{ mbranch.branch }}</a>
+        {% empty %}
+        <p class="text-danger">{% trans "Vous devez rejoindre une branche avant de pouvoir demander de l'aide." %}</p>
+        <a href="{% url "branch_join" %}" class="btn btn-primary btn-lg btn-block">{% trans "Rejoindre une branche" %}</a>
         {% endfor %}
         </div>
 
@@ -126,6 +129,9 @@
         <div class="btn-group-vertical" role="group">
         {% for mbranch in request.user.membership.all %}
         <a href="{% url "create_offer" branch_id=mbranch.branch.id slug=mbranch.branch.slug user_id=request.user.id %}" class="btn btn-primary btn-lg btn-block">{{ mbranch.branch }}</a>
+        {% empty %}
+        <p class="text-danger">{% trans "Vous devez rejoindre une branche avant de pouvoir offrir de l'aide." %}</p>
+        <a href="{% url "branch_join" %}" class="btn btn-primary btn-lg btn-block">{% trans "Rejoindre une branche" %}</a>
         {% endfor %}
         </div>
 
