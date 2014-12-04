@@ -1,0 +1,11 @@
+Google:
+ 
+Client ID
+    517393531289-9pn791u31ptt4i6vtqvpqms7tif57ve1.apps.googleusercontent.com
+Client secret
+    odNMMP8jLYZdo2j9DiYIYje8 
+
+Twitter:
+
+Facebook:
+
