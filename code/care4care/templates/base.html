@@ -174,7 +174,7 @@
                 {% if request.user.is_authenticated %}
                 <li class="search-bar">
                   <form method="get" action="{% url 'search' %}" id="search">
-                    <input name="q" type="text" size="30" placeholder="{% trans "Trouver un membre..."%}" />
+                    <input name="q" type="text" class="force-size" size="30" placeholder="{% trans "Trouver un membre..."%}" />
                   </form>
                 </li>
                 {% endif %}
@@ -232,6 +232,12 @@
                         </li>
                      </ul>
                   {% endif %}
+                </li>
+                <li>
+                  <div class="btn-group" style="margin-right : 15px;">
+                    <button id="plustext" alt="Increase text size" class="btn btn-theme02 btn-zoom force-size" onclick="resizeText(1)"><i class="fa fa-search-plus"></i></button>
+                    <button id="minustext" alt="Decrease text size" class="btn btn-theme02 btn-zoom force-size  " onclick="resizeText(-1)"><i class="fa fa-search-minus"></i></button>
+                  </div>
                 </li>
                 <li>
                   <div class="lang-box">
@@ -640,6 +646,20 @@
         return false;
         });
   </script>
+
+   <script type="text/javascript">
+      var counter = 0;
+      function resizeText(multiplier) {
+        if (document.body.style.fontSize == "") {
+          document.body.style.fontSize = "1.2em";
+        }
+        if((multiplier == 1 && counter<5) || (multiplier == -1 && counter>0)) {
+          document.body.style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
+          counter += multiplier;
+        }
+      }
+   </script>
+
   {% block extra_footer %}{% endblock %}
 
   </body>

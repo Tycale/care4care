@@ -2628,3 +2628,7 @@ textarea {
     padding-left: 20px !important;
     padding-right: 20px !important;
 }
+
+.btn-zoom{
+    margin-top: 15px;
+}
