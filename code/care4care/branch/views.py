@@ -330,6 +330,7 @@ class CreateDemandView(CreateView):
         find_offers = discriminate_offers(self.request, find_offers)
         
         for offer in find_offers:
+            pass
             # pm_write
             # à envoyer à : self.offer.donor
             # de la part de : self.object.receiver
