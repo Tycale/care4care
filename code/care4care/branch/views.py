@@ -330,26 +330,21 @@ class CreateDemandView(CreateView):
         find_offers = discriminate_offers(self.request, find_offers)
         
         for offer in find_offers:
-            # pm_write
-            # à envoyer à : self.offer.donor
-            # de la part de : self.object.receiver
-            #
-            # En gros, on a un match, une demande correspond à une offre.
-            # Là, on prévient le mec qui a fait une offre que la demande
-            # self.object.title de self.object.get_full_name() correspond
-            # à sa demande d'offre
-            # 
-            # donne l'url au mec : self.object.get_absolute_url()
-            # lui dire de supprimer son offre s'il ne souhaite plus recevoir
-            # des mails pour cette offre là.
 
-            # pm_write
-            # à envoyer à : self.object.receiver
-            # de la part de : self.offer.donor
-            # Bah, l'inverse. Dire à la meuf qui a fait la demande qu'un
-            # message à été envoyé à self.offer.donor.get_full_name
-            # car il a créé une offre qui correspond à sa demande.
+            subject = _("Une correspondance a été trouvée !")
+            body1 = _("Nous avons trouvé une demande correspondant à une de vos offre d'aide !\nCette demande d'aide a été faite par l'utilisateur {user} ({username}) et a pour titre {title}.\n"
+                "Vous pouvez consulter cette demande et vous proposer comme volontaire en suivant ce lien :\n{link}\n"
+                "Si vous décidez de vous proposez pour cette demande et que votre offre d'aide n'est donc plus valable,"
+                " vous pouvez annuler votre offre d'aide via la page d'accueil de votre branche ou la page d'accueil du site.")\
+            .format(user=self.object.receiver.get_full_name(), title=self.object.title, link=self.object.get_absolute_url(), username=self.object.receiver)
 
+            pm_write(self.object.receiver, self.offer.donor, subject, body1)
+
+            body2 = _("Nous avons trouvé une offre correspondant à une de vos demande d'aide !\nCette offre d'aide a été faite par l'utilisateur {user} ({username}) et correspond a votre demande {title}.\n"
+                "Un message automatique a été envoyé à {user} ({username}) pour l'informer de cette correspondance et celui-ci devrait se proposer comme volontaire pour votre demande sous peu.")\
+            .format(user=self.offer.donor.get_full_name(), title=self.object.title, username=self.offer.donor)
+
+            pm_write(self.offer.donor, self.object.reveiver, subject, body2)
 
         return self.object.get_absolute_url()
 
@@ -623,7 +618,9 @@ class CreateSuccessDemand(CreateView):
         messages.add_message(self.request, messages.INFO, _('Demande envoyée'))
 
         subject = _("Confirmation de job accompli")
-        body = _("L'utilisateur {user} affirme avoir accompli le job suivant : {job}.\nIl déclare avoir pris {time} minutes pour accomplir ce job.\nSi ces informations vous semble correctes, vous pouvez confirmer que ce job a été accompli avec succès.").format(user=self.object.asked_by, job=self.object.demand.title, time=self.object.time)
+        body = _("L'utilisateur {user} ({username}) affirme avoir accompli le job suivant : {job}.\nIl déclare avoir pris {time} minutes pour accomplir ce job.\n"
+            "Si ces informations vous semble correctes, vous pouvez confirmer que ce job a été accompli avec succès.")\
+        .format(user=self.object.asked_by.get_full_name(), job=self.object.demand.title, time=self.object.time, username=self.object.asked_by)
         pm_write(self.object.asked_by, self.object.ask_to, subject, body)
         return reverse('home')
 
@@ -637,7 +634,10 @@ def unsuccess_job(request, demand_id):
        demand.save()
 
        subject = _("Absence lors d'un job")
-       body = _("L'utilisateur {user} n'était apparemment pas présent pour accomplir le job {job}.\nS'il s'agit d'une erreur et que {user} était bien présent, veuillez contacter un administrateur pour régler le problème.\nSi vous désirez ne plus demander d'aide à l'utilisateur {user}, vous pouvez l'ignorer en vous rendant sur son profil.").format(user=demand.donor, job=demand.title)
+       body = _("L'utilisateur {user} ({username}) n'était apparemment pas présent pour accomplir le job {job}.\n"
+        "S'il s'agit d'une erreur et que {user} ({username}) était bien présent, veuillez contacter un administrateur pour régler le problème.\n"
+        "Si vous désirez ne plus demander d'aide à l'utilisateur {user} ({username}), vous pouvez l'ignorer en vous rendant sur son profil.")\
+       .format(user=demand.donor.get_full_name(), job=demand.title, username=demand.donor)
        pm_write(demand.donor, demand.receiver, subject, body)
 
        messages.add_message(request, messages.INFO, _('Vous avez indiqué la tâche {demand} comme non-completée').format(demand=demand))
@@ -671,9 +671,11 @@ def manage_success(request, success_demand_id):
                     demand.receiver.save()
 
                     subject = _("Job confirmé")
-                    body = _("L'utilisateur {user} a confirmé que vous aviez accompli le job {job} avec succès ! Votre compte a donc été crédité de {time} minutes.\n").format(user=demand.receiver,job=demand.title,time=success.time)
+                    body = _("L'utilisateur {user} ({username}) a confirmé que vous aviez accompli le job {job} avec succès ! Votre compte a donc été crédité de {time} minutes.\n")\
+                    .format(user=demand.receiver.get_full_name(), job=demand.title, time=success.time, username=demand.receiver)
                     if form.cleaned_data['comment'] != "":
-                        body += _("L'utilisateur {user} a laissé le commentaire suivant : {comment}").format(user=demand.receiver,comment=form.cleaned_data['comment'])
+                        body += _("L'utilisateur {user} ({username}) a laissé le commentaire suivant : {comment}")\
+                        .format(user=demand.receiver.get_full_name(), comment=form.cleaned_data['comment'], username=demand.receiver)
                     pm_write(demand.receiver, demand.donor, subject, body)
                     success.delete()
                     demand.save()
@@ -685,9 +687,13 @@ def manage_success(request, success_demand_id):
                     demand.save()
 
                     subject = _("Job refusé")
-                    body = _("L'utilisateur {user} a déclaré que vous n'aviez pas passé {time} minutes pour accomplir le job {job}. Votre compte n'a donc pas été crédité.\n").format(user=demand.receiver,job=demand.title, time=success.time)
+                    body = _("L'utilisateur {user} ({username}) a déclaré que vous n'aviez pas passé {time} minutes pour accomplir le job {job}. Votre compte n'a donc pas été crédité.\n")\
+                    .format(user=demand.receiver.get_full_name(), job=demand.title, time=success.time, username=demand.receiver)
                     if form.cleaned_data['comment'] != "":
-                        body += _("L'utilisateur {user} a laissé un commentaire, expliquant pourquoi il n'a pas désiré créditer votre compte : {comment}\n Vous pouvez recréer une demande de confirmation avec un nouveau montant de crédit correspondant plus à la perception du demandeur d'aide.\nSi vous ne parvenez pas à trouver un terrain d'entente avec l'utilisateur {user}, vous pouvez contacter un administrateur pour régler le problème.").format(user=demand.receiver,comment=form.cleaned_data['comment'])
+                        body += _("L'utilisateur {user} ({username}) a laissé un commentaire, expliquant pourquoi il n'a pas désiré créditer votre compte : {comment}\n"
+                        "Vous pouvez recréer une demande de confirmation avec un nouveau montant de crédit correspondant plus à la perception du demandeur d'aide.\n"
+                        "Si vous ne parvenez pas à trouver un terrain d'entente avec l'utilisateur {user} ({username}), vous pouvez contacter un administrateur pour régler le problème.")\
+                        .format(user=demand.receiver.get_full_name(), comment=form.cleaned_data['comment'], username=demand.receiver)
                     pm_write(demand.receiver, demand.donor, subject, body)
                     
                     return redirect('home')
