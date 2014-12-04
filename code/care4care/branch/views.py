@@ -625,6 +625,12 @@ def manage_success(request, success_demand_id):
                     demand.success = True
                     demand.save()
 
+                    demand.donor.credit += success.time
+                    demand.donor.save()
+                    demand.receiver.credit += success.time
+                    demand.receiver.save()
+
+
                     # TODO : pm_write
                     # personne à qui écrire : demand.donor
                     # de la part de : demand.receiver
