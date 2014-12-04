@@ -712,11 +712,6 @@ def job_search_view(request):
             else:
                 job_type = form.cleaned_data['job_type']
 
-            if not form.cleaned_data['dist']:
-                dist = sys.maxsize
-            else:
-                dist = form.cleaned_data['dist']
-
             if not form.cleaned_data['receive_help_from_who']:
                 receive_help_from_who = [str(l[0]) for l in MemberType.MEMBER_TYPES_GROUP]
             else:
@@ -753,10 +748,10 @@ def job_search_view(request):
 def credits_view(request):
     user = request.user
     #TODO : Rajouter le champ finish = true dans job et offer et finish = false dans les autres.
-    jobs = Demand.objects.filter(closed=True,donor=user).all() # tâches que j'ai faîtes
-    offer = Demand.objects.filter(closed=True,receiver=user).all() # tâches que j'ai reçue
-    jobs_pending = Demand.objects.filter(closed=True,donor=user).all() # tâches que je vais faire
-    offer_pending = Demand.objects.filter(closed=True,receiver=user).all() # tâches que je vais recevoir
+    jobs = Demand.objects.filter(closed=True,donor=user,success=True).all() # tâches que j'ai faîtes
+    offer = Demand.objects.filter(closed=True,receiver=user,success=True).all() # tâches que j'ai reçue
+    jobs_pending = Demand.objects.filter(closed=True,donor=user,success=None).all() # tâches que je vais faire
+    offer_pending = Demand.objects.filter(closed=True,receiver=user,success=None).all() # tâches que je vais recevoir
     num_jobs = len(jobs)
     average_time_job = 0
     km = 0      # TODO: This variable is not used (On l'affiche dans la template)
