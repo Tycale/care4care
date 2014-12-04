@@ -29,9 +29,14 @@
                 <div class="col-md-6 mb"><button type="submit" class="btn btn-success btn-lg btn-block">
                     {% bootstrap_icon "ok" %} &nbsp; {% trans "Envoyer" %}
                 </button></div>
-                <div class="col-md-6"><a href="{% url 'home' %}" class="btn btn-danger btn-lg btn-block">
+                <div class="col-md-6 mb"><a href="{% url 'home' %}" class="btn btn-primary btn-lg btn-block">
                     {% bootstrap_icon "remove" %} &nbsp; {% trans "Annuler" %}
                 </a></div>
+                <div class="col-md-12 mb">
+                <a type="submit" class="btn btn-danger btn-lg btn-block" href="{% url "unsuccess_job" demand.id %}">
+                    {% bootstrap_icon "remove" %} &nbsp; {% trans "Je n'ai pas rempli ce job" %}
+                </a>
+                </div>
             </div>
             {% endbuttons %}
             </div>

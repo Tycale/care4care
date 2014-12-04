@@ -573,6 +573,7 @@ class CreateSuccessDemand(CreateView):
         form.instance.demand = demand
         form.instance.asked_by = demand.donor
         form.instance.ask_to = demand.receiver
+        form.instance.branch = demand.branch
         demand.success_fill = True
         demand.save()
         return super(CreateSuccessDemand, self).form_valid(form)
@@ -591,7 +592,25 @@ class CreateSuccessDemand(CreateView):
         return reverse('home')
 
 
+def unsuccess_job(request, demand_id):
+    demand = get_object_or_404(Demand, pk=demand_id)
 
+    if can_manage_branch_specific(demand.donor, request.user, demand.branch):
+       demand.success_fill=True
+       demand.success=False
+       demand.save()
+
+       # TODO : pm_write
+       # personne à qui écrire : demand.receiver
+       # de la part de : demand.donor
+       # le message :
+       # donor a indiqué qu'il n'avait pas accompli la demande "demand.title".
+       # mais avec les formes..
+
+       messages.add_message(request, messages.INFO, _('Vous avez indiqué la tâche {demand} comme non-completée').format(demand=demand))
+       return redirect('home')
+    else:
+        return refuse(request)
 
 
 
