@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-04 11:39+0000\n"
-"PO-Revision-Date: 2014-12-04 11:44+0000\n"
+"POT-Creation-Date: 2014-12-04 11:45+0000\n"
+"PO-Revision-Date: 2014-12-04 11:51+0000\n"
 "Last-Translator: b'vv vv <vv@vv.be>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -772,6 +772,10 @@ msgstr "Confirme your presence for the job :"
 msgid "Formulaire"
 msgstr "Form"
 
+#: branch/templates/job/success_demand.html:37
+msgid "Je n'ai pas rempli ce job"
+msgstr "I have not completed this job"
+
 #: branch/templates/job/volunteer_demand.html:10
 msgid "Proposer son aide pour"
 msgstr "Help for"
@@ -972,16 +976,15 @@ msgid ""
 "d'aide:"
 msgstr "You can accept the offer of help by consulting you demand :"
 
-#: branch/views.py:586
+#: branch/views.py:587
 msgid "Demande envoyée"
 msgstr "Demand sent"
 
-#: branch/views.py:588
-#| msgid "Informations de contact"
+#: branch/views.py:589
 msgid "Confirmation de job accompli"
 msgstr "Confirmation job done"
 
-#: branch/views.py:589
+#: branch/views.py:590
 #, python-format
 msgid ""
 "L'utilisateur %s affirme avoir accompli le job suivant : %s.\n"
@@ -991,6 +994,11 @@ msgstr ""
 "User %s claims to have accomplished the following job: %s.\n"
 "He says he took %s minutes to complete this job.\n"
 "If you think that is correct, you can confirm that this job was completed successfully."
+
+#: branch/views.py:610
+#, python-brace-format
+msgid "Vous avez indiqué la tâche {demand} comme non-completée"
+msgstr "You indicated the task {demand} as a non-completed"
 
 #: care4care/settings.py:123
 msgid "Français"
@@ -2271,8 +2279,9 @@ msgid "Chercher des demandes intéressantes"
 msgstr "Find interesting demands"
 
 #: main/templates/statistics/branch_statistics.html:14
-msgid "Statistiques de la branche"
-msgstr "Branch's statistics"
+#| msgid "Statistiques de la branche"
+msgid "Statistiques de la branche:"
+msgstr "Branch's statistics :"
 
 #: main/templates/statistics/branch_statistics.html:24
 #: main/templates/statistics/statistics.html:25
