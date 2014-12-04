@@ -774,7 +774,7 @@ def credits_view(request):
             user.credit -= form.cleaned_data['amount']
             user.save()
             friend.save()
-            title = _("Cadeau de : ")+str(form.cleaned_data['amount'])+_("minutes")
+            title = _("Cadeau de : {amount} minutes").format(amount=str(form.cleaned_data['amount']))
             pm_write(user, friend, title, form.cleaned_data['message'])
             return redirect('home')
 
