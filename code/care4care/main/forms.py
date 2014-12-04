@@ -2,7 +2,7 @@ from django import forms
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy as __
 from django.utils import timezone
-from main.models import User, VerifiedInformation, EmergencyContact, JobType, MemberType
+from main.models import User, VerifiedInformation, EmergencyContact, JobType, MemberType, GIVINGTO
 from branch.models import Job, Branch, JobCategory, TIME_CHOICES
 from multiselectfield import MultiSelectField
 from bootstrap3_datetime.widgets import DateTimePicker
@@ -11,6 +11,9 @@ from django.forms.extras import SelectDateWidget
 import datetime
 
 from django.template.defaultfilters import filesizeformat
+
+
+
 
 class CareRegistrationForm(forms.ModelForm):
     first_name = forms.CharField(label=__("Prénom"),)
@@ -189,8 +192,8 @@ class EmergencyContactCreateForm(forms.ModelForm):
         exclude = ['user', 'latitude', 'longitude']
 
 class JobSearchForm(forms.Form):
-    job_type =  forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=JobType.JOB_TYPES, label = __("Type de job"))
-    category = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=JobCategory.JOB_CATEGORIES, label = __("Catégorie du job"))
+    job_type =  forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=JobType.JOB_TYPES, label = __("Type de job (rien = tout)"))
+    category = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=JobCategory.JOB_CATEGORIES, label = __("Catégorie du job (rien = tout"))
     date1 = forms.DateTimeField(required=False, label =__("A partir du"),widget=DateTimePicker(options={"pickTime": False,}))
     date2 = forms.DateTimeField(required=False, label =__("jusqu'au"),widget=DateTimePicker(options={"pickTime": False,}))
     receive_help_from_who = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=MemberType.MEMBER_TYPES_GROUP, label = __("Qui peut fournir son aide ?"))
@@ -208,7 +211,10 @@ class JobSearchForm(forms.Form):
             if self.cleaned_data['date2']<timezone.now()-timezone.timedelta(hours=24):
                 raise forms.ValidationError(_("Incohérence dans les dates."))
 
+
+
 class GiftForm(forms.Form):
+    check = forms.ChoiceField(label = _("Donner à :"),widget=forms.RadioSelect, choices=GIVINGTO, initial=1)
     user = forms.CharField(label = __("Username"), widget=AutoCompleteWidget('user'))
     amount = forms.IntegerField(label = __("Montant du temps (plus que 1)"), min_value=1, initial=60)
     message = forms.CharField(required=False, widget=forms.Textarea, label = __("Message"))
