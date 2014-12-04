@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-04 11:18+0000\n"
+"POT-Creation-Date: 2014-12-04 11:45+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -755,6 +755,10 @@ msgstr ""
 msgid "Formulaire"
 msgstr ""
 
+#: branch/templates/job/success_demand.html:37
+msgid "Je n'ai pas rempli ce job"
+msgstr ""
+
 #: branch/templates/job/volunteer_demand.html:10
 msgid "Proposer son aide pour"
 msgstr ""
@@ -952,8 +956,26 @@ msgid ""
 "d'aide:"
 msgstr ""
 
-#: branch/views.py:586
+#: branch/views.py:587
 msgid "Demande envoyée"
+msgstr ""
+
+#: branch/views.py:589
+msgid "Confirmation de job accompli"
+msgstr ""
+
+#: branch/views.py:590
+#, python-format
+msgid ""
+"L'utilisateur %s affirme avoir accompli le job suivant : %s.\n"
+"Il déclare avoir pris %s minutes pour accomplir ce job.\n"
+"Si ces informations vous semble correctes, vous pouvez confirmer que ce job "
+"a été accompli avec succès."
+msgstr ""
+
+#: branch/views.py:610
+#, python-brace-format
+msgid "Vous avez indiqué la tâche {demand} comme non-completée"
 msgstr ""
 
 #: care4care/settings.py:123
@@ -2205,7 +2227,7 @@ msgid "Chercher des demandes intéressantes"
 msgstr ""
 
 #: main/templates/statistics/branch_statistics.html:14
-msgid "Statistiques de la branche"
+msgid "Statistiques de la branche:"
 msgstr ""
 
 #: main/templates/statistics/branch_statistics.html:24

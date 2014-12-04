@@ -72,10 +72,12 @@
 </div>
 {% endif %}
 
+{% if request.user.user_type != NON_MEMBER_TYPE %}
 <div class="row mt">
   <div class="col-md-6 col-sm-12 text-center"> <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#needHelpModal">{% trans "J'ai besoin d'aide" %}</button> </div>
   <div class="col-md-6 col-sm-12 text-center"><button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#offerHelpModal">{% trans "Offrir mon aide" %}</button></div>
 </div>
+{% endif %}
 
 <!-- need help Modal -->
 <div class="modal fade" id="needHelpModal" tabindex="-1" role="dialog" aria-labelledby="needHelpLabel" aria-hidden="true">
@@ -139,10 +141,12 @@
   </div>
 </div>
 
+{% if request.user.user_type != NON_MEMBER_TYPE %}
 <div class="row mt">
   {% show_demands request demands show_branch=True %}
   {% show_offers request offers show_branch=True %}
 </div>
+{% endif %}
 
 {% endblock %}
 
