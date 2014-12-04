@@ -14,326 +14,327 @@
 
 {% block content %}
 <div class="mt ">
-<ul class="nav nav-tabs" id="myTab">
+    <ul class="nav nav-tabs" id="myTab">
 
-  <li class="active"><a data-toggle="tab" href="#profile">{% trans 'Profil' %}</a></li>
-  {% if request.user.id == user_to_display.id %}
-  <li><a data-toggle="tab" href="#favoris">{% trans 'Favoris' %}</a></li>
-  <li><a data-toggle="tab" href="#network" />{% trans 'Mon Réseau' %}</a></li>
-  <li><a data-toggle="tab" href="#ignored" />{% trans 'Utilisateurs ignorés' %}</a></li>
-  <li><a data-toggle="tab" href="#stats" />{% trans 'Statistiques' %}</a></li>
-  {% endif %}
-</ul>
-
-<div class="tab-content">
-
-  {% if request.user.id != user_to_display.id %}
-  <div class="modal fade bs-ignore-modal-sm" id="ignore_user_modal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-          <h4 class="modal-title">Ignorer cette personne</h4>
-        </div>
-        <div class="modal-body">
-          <p>  {% trans 'Êtes vous sur de vouloir Ignorer cette personne ? elle sera supprimée de vos favoris et de votre réseau et vous ne recevrez plus d&#39;aide de celle-ci.' %}</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'Annuler' %}</button>
-          <button type="button" class="btn btn-primary" id="ignore_user">{% trans 'Confirmer' %}</button>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
-  {% endif %}
-
-  <div id="profile" class="tab-pane fade in active">
-      <input id="user_id" value="{{ user_to_display.id }}" type="hidden"/>
-      <input id="csrf_token" value="{{ csrf_token }}" type="hidden"/>
-      <div class="row mt ">
-        <div class="col-sm-6"><!--left col-->
-
-          <div class="panel panel-default">
-            <div class="panel-heading profile-head">
-
-              <div class="text-right">
-                <div class="pull-left">
-                  <div class="media">
-                    <a class="media-left" href="#">
-                      <img class="img-circle" src="{% thumbnail user_to_display.photo 50x50 crop %}" />
-                    </a>
-                    <div class="media-body">
-                      <h4 class="media-heading">{{user_to_display.get_full_name}}
-                        {% if request.user.id != user_to_display.id %}
-                        <a href="#" class="glyphicon glyphicon-ban-circle red_icon" data-toggle="modal" data-target=".bs-ignore-modal-sm" title="{% trans 'Ignorer cette personne' %}"></a>
-                        {% endif %}
-                      </h4>
-                    </div>
-                  </div>
-                </div>
-
-
-                {% if request.user.id != user_to_display.id and user_to_display not in request.user.ignore_list.all %}
-                {% if is_my_friend %}
-                <a href="#{{is_my_friend}}" class="btn btn-default btn-sm" id="add_favorite_link"  data-toggle="tooltip" data-placement="top" title="{% trans 'Retirer cette personne de vos favoris.' %}">
-                  <span class="glyphicon glyphicon glyphicon-star" id="is_favorite_star">  </span> {% trans 'Favoris' %}
-                </a>
-                {% else %}
-                <a href="#{{is_my_friend}}" class="btn btn-default btn-sm" id="add_favorite_link"  data-toggle="tooltip" data-placement="top" title="{% trans 'Ajouter cette personne à vos favoris.' %}">
-                  <span class="glyphicon glyphicon glyphicon-star-empty" id="is_favorite_star">  </span> {% trans 'Favoris' %}
-                </a>
-
-                {% endif %}
-
-                <a href="#{{is_in_my_network}}" class="btn btn-default btn-sm" id="add_network_link">
-                  {% if is_in_my_network %}
-                    {% trans 'Retirer de mon réseau' %}
-                  {% else %}
-                    {% trans 'Ajouter à mon réseau' %}
-                  {% endif %}
-                </a>
-
-                {% endif %}
-
-                {%  if request.user.id == user_to_display.id or request.user.is_superuser %}
-                <!-- TODO: Fix this shit -->
-                <a class="text-right" href="{% url 'edit_profile' user_to_display.id %}">
-                  {% bootstrap_icon "edit" %} {% trans 'Modifier' %}
-                </a>
-                {% endif %}
-              </div>
-            </div>
-
-            <ul class="list-group">
-
-              <li class="list-group-item text-right"><span class="pull-left"><strong>{% trans "Date d'inscription" %}</strong></span> &nbsp; {{user_to_display.date_joined}}</li>
-              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Nom" %}</strong></span> &nbsp; {{user_to_display.get_full_name}} </li>
-              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Email" %}</strong></span> &nbsp; {{user_to_display.email}}</li>
-              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Type de compte" %}</strong></span> &nbsp; {{user_to_display.get_account_type}}</li>
-              {% if user_to_display.get_verbose_languages %}
-              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Langues" %}</strong></span> &nbsp; {{user_to_display.get_verbose_languages}} </li>
-              {% endif %}
-
-              {% if in_other_network or can_manage_user %}
-              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Status" %}</strong></span> &nbsp; {{user_to_display.get_verbose_status}}</li>
-              {% if user_to_display.phone_number %}
-              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Telephone Fixe" %}</strong></span> &nbsp; {{user_to_display.phone_number}} </li>
-              {% endif %}
-              {% if user_to_display.mobile_number %}
-              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Telephone Mobile" %}</strong></span> &nbsp; {{user_to_display.mobile_number}} </li>
-              {% endif %}
-              {% if user_to_display.get_verbose_receive %}
-              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Recevoir aide et demande" %}</strong></span> &nbsp; {{user_to_display.get_verbose_receive}} </li>
-              {% endif %}
-              {% if user_to_display.get_verbose_car %}
-              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Voiture" %}</strong></span> &nbsp; {{user_to_display.get_verbose_car}} </li>
-              {% endif %}
-              {% if user_to_display.get_verbose_license %}
-              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Type de permis" %}</strong></span> &nbsp; {{user_to_display.get_verbose_license}} </li>
-              {% endif %}
-              {% if user_to_display.get_verbose_can_wheelchair %}
-              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Possibilité de chaise roulante" %}</strong></span> &nbsp; {{user_to_display.get_verbose_can_wheelchair}} </li>
-              {% endif %}
-              {% if user_to_display.hobbies %}
-              <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Hobbies" %}</strong></span> &nbsp; {{user_to_display.hobbies}} </li>
-              {% endif %}
-              {% endif %}
-            </ul>
-
-          </div>
-
-          <div class="panel panel-default">
-            <div class="panel-heading"> {% trans "Données professionnelles" %} <i class="fa fa-link fa-1x"></i></div>
-            <ul class="list-group">
-
-              <li class="list-group-item text-right"><span class="pull-left"><strong>{% trans "Organization" %}</strong></span> <div> &nbsp; {{user_to_display.organization}} </div> </li>
-              <li class="list-group-item text-right"><span class="pull-left"><strong>{% trans "Profession" %}</strong></span> &nbsp; {{user_to_display.work}} </li>
-            </ul>
-          </div>
-
-          <div class="panel panel-default">
-            <div class="panel-heading"> {% trans "Site web" %} <i class="fa fa-link fa-1x"></i></div>
-            <div class="panel-body"><a href="http://bootply.com">care4care.com</a></div>
-          </div>
-
-          <div class="panel panel-default">
-            <div class="panel-heading"> {% trans "Réseaux sociaux" %}</div>
-            <div class="panel-body">
-              <i class="fa fa-facebook fa-2x"></i> <i class="fa fa-twitter fa-2x"></i>  <i class="fa fa-google-plus fa-2x"></i>
-            </div>
-          </div>
-
-        </div>
-        {% if request.user.id == user_to_display.id or request.user.is_superuser %}
-        <!-- Emergency users -->
-        <div class="col-sm-6">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <div class="text-right">
-              <span class="pull-left">
-                {% trans "Contacts d'urgence" %}
-              </span>
-              <a href="{% url 'add_emergency_contact' user_to_display.id %}">
-                {% bootstrap_icon "plus" %} {% trans 'Ajouter' %}
-              </a>
-            </div>
-
-          </div>
-          <div class="panel-body">
-            <table class="table table-striped table-hover rowlink">
-              <thead>
-                <tr>
-                <th> {% trans "Prénom" %}</th>
-                <th> {% trans "Nom" %}</th>
-                <th> {% trans "Priorité" %}</th>
-                <th> {% trans "Modifier" %}</th>
-                </tr>
-              </thead>
-              <tbody data-link="row">
-              {% for personne in user_to_display.emergency_contacts.all %}
-              <tr>
-                <td><a href="{% url 'see_emergency_contact' personne.id %}">{{ personne.first_name }}</a></td>
-                <td>{{ personne.last_name }}</td>
-                <td>{{ personne.get_verbose_order }}</td>
-                <td><a href="{% url 'update_emergency_contact' user_to_display.id personne.id %}">{% bootstrap_icon 'edit' %} &nbsp; {% trans "Modifier" %}</a></td>
-              </tr>
-              {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        {% if user_to_display.latitude !=  None and  user_to_display.longitude != None %}
-        {% if in_other_network or can_manage_user %}
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            {% trans 'Adresse' %}
-          </div>
-          <div class="panel-body">
-            {{user_to_display.location}}
-            <div id="map" style="min-width: 500px; min-height: 300px; width: 100%; height: 100%;"></div>
-          </div>
-        </div>
+        <li class="active"><a data-toggle="tab" href="#profile">{% trans 'Profil' %}</a></li>
+        {% if request.user.id == user_to_display.id %}
+        <li><a data-toggle="tab" href="#favoris">{% trans 'Favoris' %}</a></li>
+        <li><a data-toggle="tab" href="#network" />{% trans 'Mon Réseau' %}</a></li>
+        <li><a data-toggle="tab" href="#ignored" />{% trans 'Utilisateurs ignorés' %}</a></li>
+        <li><a data-toggle="tab" href="#stats" />{% trans 'Statistiques' %}</a></li>
         {% endif %}
-      </div>
-      {% endif %}
-      {% endif %}
+    </ul>
 
-      </div>
-  </div>
+    <div class="tab-content">
 
-  <div id="favoris" class="tab-pane fade ">
-    <div class="row mt">
-      {% if request.user.id == user_to_display.id %}
-      <div class="col-lg-12 col-sm-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            {% trans "Ajouter un nouveau membre à mes favoris" %}
-            <div class="pull-right">
+        {% if request.user.id != user_to_display.id %}
+        <div class="modal fade bs-ignore-modal-sm" id="ignore_user_modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title">Ignorer cette personne</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>  {% trans 'Êtes vous sur de vouloir Ignorer cette personne ? elle sera supprimée de vos favoris et de votre réseau et vous ne recevrez plus d&#39;aide de celle-ci.' %}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">{% trans 'Annuler' %}</button>
+                        <button type="button" class="btn btn-primary" id="ignore_user">{% trans 'Confirmer' %}</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        {% endif %}
+
+        <div id="profile" class="tab-pane fade in active">
+            <input id="user_id" value="{{ user_to_display.id }}" type="hidden"/>
+            <input id="csrf_token" value="{{ csrf_token }}" type="hidden"/>
+            <div class="row mt ">
+                <div class="col-sm-6"><!--left col-->
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading profile-head">
+
+                            <div class="text-right">
+                                <div class="pull-left">
+                                    <div class="media">
+                                        <a class="media-left" href="#">
+                                            <img class="img-circle" src="{% thumbnail user_to_display.photo 50x50 crop %}" />
+                                        </a>
+                                        <div class="media-body">
+                                            <h4 class="media-heading">{{user_to_display.get_full_name}}
+                                                {% if request.user.id != user_to_display.id %}
+                                                <a href="#" class="glyphicon glyphicon-ban-circle red_icon" data-toggle="modal" data-target=".bs-ignore-modal-sm" title="{% trans 'Ignorer cette personne' %}"></a>
+                                                {% endif %}
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                {% if request.user.id != user_to_display.id and user_to_display not in request.user.ignore_list.all %}
+                                {% if is_my_friend %}
+                                <a href="#{{is_my_friend}}" class="btn btn-default btn-sm" id="add_favorite_link"  data-toggle="tooltip" data-placement="top" title="{% trans 'Retirer cette personne de vos favoris.' %}">
+                                    <span class="glyphicon glyphicon glyphicon-star" id="is_favorite_star">  </span> {% trans 'Favoris' %}
+                                </a>
+                                {% else %}
+                                <a href="#{{is_my_friend}}" class="btn btn-default btn-sm" id="add_favorite_link"  data-toggle="tooltip" data-placement="top" title="{% trans 'Ajouter cette personne à vos favoris.' %}">
+                                    <span class="glyphicon glyphicon glyphicon-star-empty" id="is_favorite_star">  </span> {% trans 'Favoris' %}
+                                </a>
+
+                                {% endif %}
+
+                                <a href="#{{is_in_my_network}}" class="btn btn-default btn-sm" id="add_network_link">
+                                    {% if is_in_my_network %}
+                                    {% trans 'Retirer de mon réseau' %}
+                                    {% else %}
+                                    {% trans 'Ajouter à mon réseau' %}
+                                    {% endif %}
+                                </a>
+
+                                {% endif %}
+
+                                {%  if request.user.id == user_to_display.id or request.user.is_superuser %}
+                                <!-- TODO: Fix this shit -->
+                                <a class="text-right" href="{% url 'edit_profile' user_to_display.id %}">
+                                    {% bootstrap_icon "edit" %} {% trans 'Modifier' %}
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <ul class="list-group">
+
+                            <li class="list-group-item text-right"><span class="pull-left"><strong>{% trans "Date d'inscription" %}</strong></span> &nbsp; {{user_to_display.date_joined}}</li>
+                            <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Nom" %}</strong></span> &nbsp; {{user_to_display.get_full_name}} </li>
+                            <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Email" %}</strong></span> &nbsp; {{user_to_display.email}}</li>
+                            <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Type de compte" %}</strong></span> &nbsp; {{user_to_display.get_account_type}}</li>
+                            {% if user_to_display.get_verbose_languages %}
+                            <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Langues" %}</strong></span> &nbsp; {{user_to_display.get_verbose_languages}} </li>
+                            {% endif %}
+
+                            {% if in_other_network or can_manage_user %}
+                            <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Status" %}</strong></span> &nbsp; {{user_to_display.get_verbose_status}}</li>
+                            {% if user_to_display.phone_number %}
+                            <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Telephone Fixe" %}</strong></span> &nbsp; {{user_to_display.phone_number}} </li>
+                            {% endif %}
+                            {% if user_to_display.mobile_number %}
+                            <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Telephone Mobile" %}</strong></span> &nbsp; {{user_to_display.mobile_number}} </li>
+                            {% endif %}
+                            {% if user_to_display.get_verbose_receive %}
+                            <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Recevoir aide et demande" %}</strong></span> &nbsp; {{user_to_display.get_verbose_receive}} </li>
+                            {% endif %}
+                            {% if user_to_display.get_verbose_car %}
+                            <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Voiture" %}</strong></span> &nbsp; {{user_to_display.get_verbose_car}} </li>
+                            {% endif %}
+                            {% if user_to_display.get_verbose_license %}
+                            <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Type de permis" %}</strong></span> &nbsp; {{user_to_display.get_verbose_license}} </li>
+                            {% endif %}
+                            {% if user_to_display.get_verbose_can_wheelchair %}
+                            <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Possibilité de chaise roulante" %}</strong></span> &nbsp; {{user_to_display.get_verbose_can_wheelchair}} </li>
+                            {% endif %}
+                            {% if user_to_display.hobbies %}
+                            <li class="list-group-item text-right"><span class="pull-left"><strong> {% trans "Hobbies" %}</strong></span> &nbsp; {{user_to_display.hobbies}} </li>
+                            {% endif %}
+                            {% endif %}
+                        </ul>
+
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading"> {% trans "Données professionnelles" %} <i class="fa fa-link fa-1x"></i></div>
+                        <ul class="list-group">
+
+                            <li class="list-group-item text-right"><span class="pull-left"><strong>{% trans "Organization" %}</strong></span> <div> &nbsp; {{user_to_display.organization}} </div> </li>
+                            <li class="list-group-item text-right"><span class="pull-left"><strong>{% trans "Profession" %}</strong></span> &nbsp; {{user_to_display.work}} </li>
+                        </ul>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading"> {% trans "Site web" %} <i class="fa fa-link fa-1x"></i></div>
+                        <div class="panel-body"><a href="http://bootply.com">care4care.com</a></div>
+                    </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading"> {% trans "Réseaux sociaux" %}</div>
+                        <div class="panel-body">
+                            <i class="fa fa-facebook fa-2x"></i> <i class="fa fa-twitter fa-2x"></i>  <i class="fa fa-google-plus fa-2x"></i>
+                        </div>
+                    </div>
+
+                </div>
+                {% if request.user.id == user_to_display.id or request.user.is_superuser %}
+                <!-- Emergency users -->
+                <div class="col-sm-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="text-right">
+                                <span class="pull-left">
+                                    {% trans "Contacts d'urgence" %}
+                                </span>
+                                <a href="{% url 'add_emergency_contact' user_to_display.id %}">
+                                    {% bootstrap_icon "plus" %} {% trans 'Ajouter' %}
+                                </a>
+                            </div>
+
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-striped table-hover rowlink">
+                                <thead>
+                                    <tr>
+                                        <th> {% trans "Prénom" %}</th>
+                                        <th> {% trans "Nom" %}</th>
+                                        <th> {% trans "Priorité" %}</th>
+                                        <th> {% trans "Modifier" %}</th>
+                                    </tr>
+                                </thead>
+                                <tbody data-link="row">
+                                    {% for personne in user_to_display.emergency_contacts.all %}
+                                    <tr>
+                                        <td><a href="{% url 'see_emergency_contact' personne.id %}">{{ personne.first_name }}</a></td>
+                                        <td>{{ personne.last_name }}</td>
+                                        <td>{{ personne.get_verbose_order }}</td>
+                                        <td><a href="{% url 'update_emergency_contact' user_to_display.id personne.id %}">{% bootstrap_icon 'edit' %} &nbsp; {% trans "Modifier" %}</a></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    {% if user_to_display.latitude !=  None and  user_to_display.longitude != None %}
+                    {% if in_other_network or can_manage_user %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            {% trans 'Adresse' %}
+                        </div>
+                        <div class="panel-body">
+                            {{user_to_display.location}}
+                            <div id="map" style="min-width: 500px; min-height: 300px; width: 100%; height: 100%;"></div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+                {% endif %}
+
             </div>
-          </div>
-          <div class="panel-body">
-          {% blocktrans %}
-          Ajouter des membres en favoris vous permet de restreindre vos demandes et offres à ces personnes.
-          {% endblocktrans %}
-
-          <div class="row mt">
-            <form method="post" action="#favoris">
-            <div class="col-lg-9">
-              {% csrf_token %}
-              {% bootstrap_form form_favorite %}
-            </div>
-            <div class="col-lg-3">
-              <input type="submit" name="favorite" value="{% trans "Ajouter à mes favoris" %}" class="btn btn-success btn-block btn-fav" />
-            </div>
-            </form>
-          </div>
-
-          </div>
         </div>
-      </div>
-      <div class="col-lg-12 col-sm-12">
-        {% show_favorites request user_to_display.favorites.all %}
-      </div>
     </div>
-  </div>
 
-  <div id="network" class="tab-pane fade">
-    <div class="row mt">
-      <div class="col-lg-12 col-sm-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            {% trans "Ajouter un nouveau membre à mon réseau personnel" %}
-            <div class="pull-right">
-            </div>
-          </div>
-          <div class="panel-body">
-          {% blocktrans %}
-          Ajouter des membres à votre réseau personnel leur donne accès à plus d'informations sur votre profile.
-          {% endblocktrans %}
+    <div id="favoris" class="tab-pane fade ">
+        <div class="row mt">
+            {% if request.user.id == user_to_display.id %}
+            <div class="col-lg-12 col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        {% trans "Ajouter un nouveau membre à mes favoris" %}
+                        <div class="pull-right">
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        {% blocktrans %}
+                        Ajouter des membres en favoris vous permet de restreindre vos demandes et offres à ces personnes.
+                        {% endblocktrans %}
 
-          <div class="row mt">
-            <form method="post" action="#network">
-            <div class="col-lg-9">
-              {% csrf_token %}
-              {% bootstrap_form form_network %}
-            </div>
-            <div class="col-lg-3">
-              <input type="submit" name="network" value="{% trans "Ajouter à mon réseau" %}" class="btn btn-success btn-block btn-fav" />
-            </div>
-            </form>
-          </div>
+                        <div class="row mt">
+                            <form method="post" action="#favoris">
+                                <div class="col-lg-9">
+                                    {% csrf_token %}
+                                    {% bootstrap_form form_favorite %}
+                                </div>
+                                <div class="col-lg-3">
+                                    <input type="submit" name="favorite" value="{% trans "Ajouter à mes favoris" %}" class="btn btn-success btn-block btn-fav" />
+                                </div>
+                            </form>
+                        </div>
 
-          </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-sm-12">
+                {% show_favorites request user_to_display.favorites.all %}
+            </div>
         </div>
-      </div>
-      <div class="col-lg-12 col-sm-12">
-        {% show_personal_network request user_to_display.personal_network.all %}
-      </div>
     </div>
-  </div>
 
-  <div id="ignored" class="tab-pane fade">
-    <div class="row mt">
-          <div class="col-lg-12 col-sm-12">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            {% trans "Ignorer un utilisateur" %}
-            <div class="pull-right">
-            </div>
-          </div>
-          <div class="panel-body">
-          {% blocktrans %}
-          Ignorer un utilisateur l'empêche de voir vos offres et demandes.
-          {% endblocktrans %}
+    <div id="network" class="tab-pane fade">
+        <div class="row mt">
+            <div class="col-lg-12 col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        {% trans "Ajouter un nouveau membre à mon réseau personnel" %}
+                        <div class="pull-right">
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        {% blocktrans %}
+                        Ajouter des membres à votre réseau personnel leur donne accès à plus d'informations sur votre profile.
+                        {% endblocktrans %}
 
-          <div class="row mt">
-            <form method="post" action="#ignored">
-            <div class="col-lg-9">
-              {% csrf_token %}
-              {% bootstrap_form form_ignored %}
-            </div>
-            <div class="col-lg-3">
-              <input type="submit" name="ignored" value="{% trans "Ajouter aux ignorés" %}" class="btn btn-success btn-block btn-fav" />
-            </div>
-            </form>
-          </div>
+                        <div class="row mt">
+                            <form method="post" action="#network">
+                                <div class="col-lg-9">
+                                    {% csrf_token %}
+                                    {% bootstrap_form form_network %}
+                                </div>
+                                <div class="col-lg-3">
+                                    <input type="submit" name="network" value="{% trans "Ajouter à mon réseau" %}" class="btn btn-success btn-block btn-fav" />
+                                </div>
+                            </form>
+                        </div>
 
-          </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-sm-12">
+                {% show_personal_network request user_to_display.personal_network.all %}
+            </div>
         </div>
-      </div>
-      <div class="col-lg-12 col-sm-12">
-        {% show_ignore_list request user_to_display.ignore_list.all %}
-      </div>
     </div>
-  </div>
 
-  <div id="stats" class="tab-pane fade">
-    <div class="mt">
-      {% show_user_stats request user_to_display.id %}
+    <div id="ignored" class="tab-pane fade">
+        <div class="row mt">
+            <div class="col-lg-12 col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        {% trans "Ignorer un utilisateur" %}
+                        <div class="pull-right">
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        {% blocktrans %}
+                        Ignorer un utilisateur l'empêche de voir vos offres et demandes.
+                        {% endblocktrans %}
+
+                        <div class="row mt">
+                            <form method="post" action="#ignored">
+                                <div class="col-lg-9">
+                                    {% csrf_token %}
+                                    {% bootstrap_form form_ignored %}
+                                </div>
+                                <div class="col-lg-3">
+                                    <input type="submit" name="ignored" value="{% trans "Ajouter aux ignorés" %}" class="btn btn-success btn-block btn-fav" />
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-sm-12">
+                {% show_ignore_list request user_to_display.ignore_list.all %}
+            </div>
+        </div>
     </div>
-  </div>
-  {% endif %}
+
+    <div id="stats" class="tab-pane fade">
+        <div class="mt">
+            {% show_user_stats request user_to_display.id %}
+        </div>
+    </div>
+    {% endif %}
 </div>
 </div>
 {% endblock %}
@@ -345,235 +346,235 @@
 {{ form_network.media }}
 {{ form_ignored.media }}
 <script type="application/javascript">
-  var remove_favorite_success = function(name){
-    $("#add_favorite_link").attr("href","#False");
-    $("#is_favorite_star").addClass("glyphicon-star-empty");
-    $("#is_favorite_star").removeClass("glyphicon-star");
-    if (name){
-      $.gritter.add({
-        // (string | mandatory) the heading of the notification
-        title: '{% trans "Notification" %}',
-        // (string | mandatory) the text inside the notification
-        text: '{% trans "Utilisateur" %} '+ name + ' {% trans "supprimé" %}',
-        // (string | optional) the image to display on the left
-        //image: 'assets/img/ui-sam.jpg',
-        // (bool | optional) if you want it to fade out on its own or just sit there
-        sticky: false,
-        // (int | optional) the time you want it to be alive for before fading out
-        time: '5000',
-        // (string | optional) the class name you want to apply to that specific message
-        //class_name: 'notification-class'
-      });
-    }
-  }
+    var remove_favorite_success = function(name){
+        $("#add_favorite_link").attr("href","#False");
+        $("#is_favorite_star").addClass("glyphicon-star-empty");
+        $("#is_favorite_star").removeClass("glyphicon-star");
+        if (name){
+            $.gritter.add({
+                    // (string | mandatory) the heading of the notification
+title: '{% trans "Notification" %}',
+// (string | mandatory) the text inside the notification
+text: '{% trans "Utilisateur" %} '+ name + ' {% trans "supprimé" %}',
+// (string | optional) the image to display on the left
+//image: 'assets/img/ui-sam.jpg',
+// (bool | optional) if you want it to fade out on its own or just sit there
+sticky: false,
+// (int | optional) the time you want it to be alive for before fading out
+time: '5000',
+// (string | optional) the class name you want to apply to that specific message
+//class_name: 'notification-class'
+});
+}
+}
 
-  var add_favorite_success = function(name){
+var add_favorite_success = function(name){
     $("#add_favorite_link").attr("href","#True");
     $("#is_favorite_star").removeClass("glyphicon-star-empty");
     $("#is_favorite_star").addClass("glyphicon-star");
     if (name){
-      $.gritter.add({
-        // (string | mandatory) the heading of the notification
-        title: '{% trans "Notification" %}',
-        // (string | mandatory) the text inside the notification
-        text: '{% trans "Utilisateur" %} '+ name + ' {% trans "ajouté" %}',
-        // (string | optional) the image to display on the left
-        //image: 'assets/img/ui-sam.jpg',
-        // (bool | optional) if you want it to fade out on its own or just sit there
-        sticky: false,
-        // (int | optional) the time you want it to be alive for before fading out
-        time: '5000',
-        // (string | optional) the class name you want to apply to that specific message
-        //class_name: 'notification-class'
-      });
-    }
-  }
+        $.gritter.add({
+                // (string | mandatory) the heading of the notification
+title: '{% trans "Notification" %}',
+// (string | mandatory) the text inside the notification
+text: '{% trans "Utilisateur" %} '+ name + ' {% trans "ajouté" %}',
+// (string | optional) the image to display on the left
+//image: 'assets/img/ui-sam.jpg',
+// (bool | optional) if you want it to fade out on its own or just sit there
+sticky: false,
+// (int | optional) the time you want it to be alive for before fading out
+time: '5000',
+// (string | optional) the class name you want to apply to that specific message
+//class_name: 'notification-class'
+});
+}
+}
 
-  var add_favorite_fail = function(){
+var add_favorite_fail = function(){
     $.gritter.add({
-      // (string | mandatory) the heading of the notification
-      title: '{% trans "Notification" %}',
-      // (string | mandatory) the text inside the notification
-      text: "{% trans "Impossible d'ajouter l'utilisateur:" %}"  + name + ". {% trans "Vous avez ignoré ce dernier." %}",
-      // (string | optional) the image to display on the left
-      //image: 'assets/img/ui-sam.jpg',
-      // (bool | optional) if you want it to fade out on its own or just sit there
-      sticky: false,
-      // (int | optional) the time you want it to be alive for before fading out
-      time: '5000',
-      // (string | optional) the class name you want to apply to that specific message
-      //class_name: 'notification-class'
-    });
-  }
+            // (string | mandatory) the heading of the notification
+title: '{% trans "Notification" %}',
+// (string | mandatory) the text inside the notification
+text: "{% trans "Impossible d'ajouter l'utilisateur:" %}"  + name + ". {% trans "Vous avez ignoré ce dernier." %}",
+// (string | optional) the image to display on the left
+//image: 'assets/img/ui-sam.jpg',
+// (bool | optional) if you want it to fade out on its own or just sit there
+sticky: false,
+// (int | optional) the time you want it to be alive for before fading out
+time: '5000',
+// (string | optional) the class name you want to apply to that specific message
+//class_name: 'notification-class'
+});
+}
 
-  var remove_network_success = function(name){
+var remove_network_success = function(name){
     $("#add_network_link").text("{% trans 'Ajouter à mon réseau' %}");
     $("#add_network_link").attr("href","#False");
     if (name){
-      $.gritter.add({
-        // (string | mandatory) the heading of the notification
-        title: '{% trans "Notification" %}',
-        // (string | mandatory) the text inside the notification
-        text: '{% trans "Utilisateur" %} '+ name + ' {% trans "supprimé" %}',
-        // (string | optional) the image to display on the left
-        //image: 'assets/img/ui-sam.jpg',
-        // (bool | optional) if you want it to fade out on its own or just sit there
-        sticky: false,
-        // (int | optional) the time you want it to be alive for before fading out
-        time: '5000',
-        // (string | optional) the class name you want to apply to that specific message
-        //class_name: 'notification-class'
-      });
-    }
-  }
+        $.gritter.add({
+                // (string | mandatory) the heading of the notification
+title: '{% trans "Notification" %}',
+// (string | mandatory) the text inside the notification
+text: '{% trans "Utilisateur" %} '+ name + ' {% trans "supprimé" %}',
+// (string | optional) the image to display on the left
+//image: 'assets/img/ui-sam.jpg',
+// (bool | optional) if you want it to fade out on its own or just sit there
+sticky: false,
+// (int | optional) the time you want it to be alive for before fading out
+time: '5000',
+// (string | optional) the class name you want to apply to that specific message
+//class_name: 'notification-class'
+});
+}
+}
 
-  var add_network_success = function(name){
+var add_network_success = function(name){
     $("#add_network_link").text("{% trans 'Retirer de mon réseau' %}");
     $("#add_network_link").attr("href","#True");
     if (name){
-      $.gritter.add({
-        // (string | mandatory) the heading of the notification
-        title: '{% trans "Notification" %}',
-        // (string | mandatory) the text inside the notification
-        text: '{% trans "Utilisateur" %} '+ name + ' {% trans "ajouté" %}',
-        // (string | optional) the image to display on the left
-        //image: 'assets/img/ui-sam.jpg',
-        // (bool | optional) if you want it to fade out on its own or just sit there
-        sticky: false,
-        // (int | optional) the time you want it to be alive for before fading out
-        time: '5000',
-        // (string | optional) the class name you want to apply to that specific message
-        //class_name: 'notification-class'
-      });
-    }
-  }
+        $.gritter.add({
+                // (string | mandatory) the heading of the notification
+title: '{% trans "Notification" %}',
+// (string | mandatory) the text inside the notification
+text: '{% trans "Utilisateur" %} '+ name + ' {% trans "ajouté" %}',
+// (string | optional) the image to display on the left
+//image: 'assets/img/ui-sam.jpg',
+// (bool | optional) if you want it to fade out on its own or just sit there
+sticky: false,
+// (int | optional) the time you want it to be alive for before fading out
+time: '5000',
+// (string | optional) the class name you want to apply to that specific message
+//class_name: 'notification-class'
+});
+}
+}
 
-  var add_network_fail = function(){
+var add_network_fail = function(){
     $.gritter.add({
-      // (string | mandatory) the heading of the notification
-      title: '{% trans "Notification" %}',
-      // (string | mandatory) the text inside the notification
-      text: "{% trans "Impossible d'ajouter l'utilisateur:" %}"  + name + ". {% trans "Vous avez ignoré ce dernier." %}",
-      // (string | optional) the image to display on the left
-      //image: 'assets/img/ui-sam.jpg',
-      // (bool | optional) if you want it to fade out on its own or just sit there
-      sticky: false,
-      // (int | optional) the time you want it to be alive for before fading out
-      time: '5000',
-      // (string | optional) the class name you want to apply to that specific message
-      //class_name: 'notification-class'
-    });
-  }
+            // (string | mandatory) the heading of the notification
+title: '{% trans "Notification" %}',
+// (string | mandatory) the text inside the notification
+text: "{% trans "Impossible d'ajouter l'utilisateur:" %}"  + name + ". {% trans "Vous avez ignoré ce dernier." %}",
+// (string | optional) the image to display on the left
+//image: 'assets/img/ui-sam.jpg',
+// (bool | optional) if you want it to fade out on its own or just sit there
+sticky: false,
+// (int | optional) the time you want it to be alive for before fading out
+time: '5000',
+// (string | optional) the class name you want to apply to that specific message
+//class_name: 'notification-class'
+});
+}
 
-  var add_ignore_success = function(name){
+var add_ignore_success = function(name){
     $('#ignore_user_modal').modal('hide');
     $('#add_favorite_link').hide();
     $('#add_network_link').hide();
     remove_favorite_success();
     remove_network_success();
     $.gritter.add({
-        // (string | mandatory) the heading of the notification
-        title: 'Notification',
-        // (string | mandatory) the text inside the notification
-        text: '{% trans "Utilisateur" %} '+ name + ' {% trans "bloqué" %}',
-        // (string | optional) the image to display on the left
-        //image: 'assets/img/ui-sam.jpg',
-        // (bool | optional) if you want it to fade out on its own or just sit there
-        sticky: false,
-        // (int | optional) the time you want it to be alive for before fading out
-        time: '5000',
-        // (string | optional) the class name you want to apply to that specific message
-        //class_name: 'notification-class'
-    });
-  }
+            // (string | mandatory) the heading of the notification
+title: 'Notification',
+// (string | mandatory) the text inside the notification
+text: '{% trans "Utilisateur" %} '+ name + ' {% trans "bloqué" %}',
+// (string | optional) the image to display on the left
+//image: 'assets/img/ui-sam.jpg',
+// (bool | optional) if you want it to fade out on its own or just sit there
+sticky: false,
+// (int | optional) the time you want it to be alive for before fading out
+time: '5000',
+// (string | optional) the class name you want to apply to that specific message
+//class_name: 'notification-class'
+});
+}
 
-  $(document).ready(function(){
+$(document).ready(function(){
 
 
-    $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="tooltip"]').tooltip();
 
-    // show active tab on reload
-    if (location.hash !== '') $('a[href="' + location.hash + '"]').tab('show');
+        // show active tab on reload
+        if (location.hash !== '') $('a[href="' + location.hash + '"]').tab('show');
 
-    // remember the hash in the URL without jumping
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
-       if(history.pushState) {
+        // remember the hash in the URL without jumping
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+            if(history.pushState) {
             history.pushState(null, null, '#'+$(e.target).attr('href').substr(1));
-       } else {
+            } else {
             location.hash = '#'+$(e.target).attr('href').substr(1);
-    }});
+            }});
 
-    $('#add_favorite_link').click(function (event) {
-      event.preventDefault();
-      if ($(this).attr('href') != '#True'){
-        add_favorite($("#user_id").val(),add_favorite_success, add_favorite_fail );
-      }else{
-        remove_favorite($("#user_id").val(),remove_favorite_success);
-      }
-    });
-
-    $('#add_network_link').click(function (event) {
-      event.preventDefault();
-      if ($(this).attr('href') == '#True'){
-        remove_network($("#user_id").val(),remove_network_success);
-      }else{
-        add_network($("#user_id").val(),add_network_success, add_network_fail);
-      }
-    });
-
-    $('#ignore_user').click(function (event) {
-        add_ignored($("#user_id").val(), add_ignore_success);
-    });
-
-  });
-
-  {% if user_to_display.latitude !=  None and  user_to_display.longitude != None %}
-  $(document).ready(function () {
-
-      var locations = [
-      ['{{user_to_display.location}}', {{user_to_display.latitude}}, {{user_to_display.longitude}}, {{user_to_display.id}}, 0],
-      ];
-
-    (function() {
-      // map options
-      var options = {
-        zoom: 14,
-        center: new google.maps.LatLng({{user_to_display.latitude}},  {{user_to_display.longitude}}),
-        streetViewControl: false,
-        mapTypeControl: false,
-        scrollwheel: false,
-      };
-
-      // init map
-      var map = new google.maps.Map(document.getElementById('map'), options);
-
-      // set multiple marker
-      for (var i = 0; i < locations.length; ++i) {
-        var pos = new google.maps.LatLng(locations[i][1], locations[i][2]);
-        var marker = new google.maps.Marker({
-          position: pos,
-          map: map,
-          title: locations[i][0]
-        });
-        // process multiple info windows
-        (function(marker, i) {
-          // add click event
-          google.maps.event.addListener(marker, 'click', function() {
-            $('#id_id').val(locations[i][3]);
-            infowindow = new google.maps.InfoWindow({
-              content: ''+locations[i][0]
+        $('#add_favorite_link').click(function (event) {
+            event.preventDefault();
+            if ($(this).attr('href') != '#True'){
+            add_favorite($("#user_id").val(),add_favorite_success, add_favorite_fail );
+            }else{
+            remove_favorite($("#user_id").val(),remove_favorite_success);
+            }
             });
-            infowindow.open(map, marker);
-          });
-        })(marker, i);
-      }
 
-      $('.fa-bars').click(function () {
+        $('#add_network_link').click(function (event) {
+                event.preventDefault();
+                if ($(this).attr('href') == '#True'){
+                remove_network($("#user_id").val(),remove_network_success);
+                }else{
+                add_network($("#user_id").val(),add_network_success, add_network_fail);
+                }
+                });
+
+        $('#ignore_user').click(function (event) {
+                add_ignored($("#user_id").val(), add_ignore_success);
+                });
+
+});
+
+{% if user_to_display.latitude !=  None and  user_to_display.longitude != None %}
+$(document).ready(function () {
+
+        var locations = [
+        ['{{user_to_display.location}}', {{user_to_display.latitude}}, {{user_to_display.longitude}}, {{user_to_display.id}}, 0],
+        ];
+
+        (function() {
+         // map options
+         var options = {
+zoom: 14,
+center: new google.maps.LatLng({{user_to_display.latitude}},  {{user_to_display.longitude}}),
+streetViewControl: false,
+mapTypeControl: false,
+scrollwheel: false,
+};
+
+// init map
+var map = new google.maps.Map(document.getElementById('map'), options);
+
+// set multiple marker
+for (var i = 0; i < locations.length; ++i) {
+var pos = new google.maps.LatLng(locations[i][1], locations[i][2]);
+var marker = new google.maps.Marker({
+position: pos,
+map: map,
+title: locations[i][0]
+});
+// process multiple info windows
+(function(marker, i) {
+ // add click event
+ google.maps.event.addListener(marker, 'click', function() {
+     $('#id_id').val(locations[i][3]);
+     infowindow = new google.maps.InfoWindow({
+content: ''+locations[i][0]
+});
+     infowindow.open(map, marker);
+     });
+ })(marker, i);
+}
+
+$('.fa-bars').click(function () {
         google.maps.event.trigger(map, 'resize');
-      });
+        });
 
-    })();
-  });
-   {% endif %}
+})();
+});
+{% endif %}
 </script>
 {% endblock %}
