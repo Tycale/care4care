@@ -335,9 +335,11 @@
                       </ul>
                     {% endif %}
 
+                    {% if request.user.user_type != NON_MEMBER_TYPE %}
                     <ul class="sub">
                     <li><span><a href="{% url 'credit_page' %}"> {% trans "Mes crédits" %}</a></span></li>
                     </ul>
+                    {% endif %}
 
                     {% if request.user.is_superuser %}
                     <ul class="sub">
