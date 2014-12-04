@@ -330,6 +330,7 @@ class CreateDemandView(CreateView):
         find_offers = discriminate_offers(self.request, find_offers)
         
         for offer in find_offers:
+            pass
             # pm_write
             # à envoyer à : self.offer.donor
             # de la part de : self.object.receiver
@@ -349,8 +350,6 @@ class CreateDemandView(CreateView):
             # Bah, l'inverse. Dire à la meuf qui a fait la demande qu'un
             # message à été envoyé à self.offer.donor.get_full_name
             # car il a créé une offre qui correspond à sa demande.
-
-
         return self.object.get_absolute_url()
 
 class UpdateDemandView(UpdateView):
