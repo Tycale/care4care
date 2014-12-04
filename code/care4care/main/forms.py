@@ -61,7 +61,6 @@ class CareRegistrationForm(forms.ModelForm):
         # si c'est un user de type membre verifier qu'il a une branche
         # sinon ne rien faire
         if int(id_user_type) == MemberType.MEMBER:
-            print("try to member")
             try:
                 Branch.objects.get(pk=id)
             except Branch.DoesNotExist:
