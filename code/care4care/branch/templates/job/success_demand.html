@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}{% load i18n %}{% load staticfiles %}
+
+
+{% block title %}{% trans "Aider" %}{% endblock %}
+
+
+{% block content %}
+<div class="row mt">
+    <div class="col-lg-12">
+        <form action="." class="form-horizontal style-form" role="form" method="post">
+            {% csrf_token %}
+
+            {% bootstrap_form_errors form %}
+
+            <div class="col-lg-12 col-sm-12 background-gris">
+                <div class="showback">
+                    <h4 class="mb">
+                    {% blocktrans with demand.title as title and demand.receiver.get_full_name as user %}
+                    Confirmer votre présence pour le job: "{{ title }}" de {{user}}
+                    {% endblocktrans %}
+                    </h4>
+                    {% bootstrap_form form %}
+                </div>
+            </div>
+
+            <div class="col-sm-12">
+            {% buttons %}
+            <div class="row">
+                <div class="col-md-6 mb"><button type="submit" class="btn btn-success btn-lg btn-block">
+                    {% bootstrap_icon "ok" %} &nbsp; {% trans "Envoyer" %}
+                </button></div>
+                <div class="col-md-6 mb"><a href="{% url 'home' %}" class="btn btn-primary btn-lg btn-block">
+                    {% bootstrap_icon "remove" %} &nbsp; {% trans "Annuler" %}
+                </a></div>
+                <div class="col-md-12 mb">
+                <a type="submit" class="btn btn-danger btn-lg btn-block" href="{% url "unsuccess_job" demand.id %}">
+                    {% bootstrap_icon "remove" %} &nbsp; {% trans "Je n'ai pas rempli ce job" %}
+                </a>
+                </div>
+            </div>
+            {% endbuttons %}
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block extra_footer %}
+
+{% endblock %}

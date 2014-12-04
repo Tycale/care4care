@@ -11,7 +11,7 @@ from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
 from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm, \
             VerifiedProfileForm, JobSearchForm, GiftForm, AddUser
-from main.models import User, VerifiedInformation, EmergencyContact, JobCategory, JobType, MemberType
+from main.models import User, VerifiedInformation, EmergencyContact, JobCategory, JobType, MemberType, GIVINGTO
 from branch.models import Demand, Offer
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
@@ -25,7 +25,7 @@ from django.views.generic.detail import DetailView
 from django.core import serializers
 
 
-from ajax.views import *
+from main.ajax.views import *
 import sys
 from os.path import abspath, dirname
 import datetime
@@ -62,6 +62,32 @@ def home(request):
 
     return render(request, 'main/home.html', locals())
 
+def help(request):
+    user = request.user
+
+    if user.is_authenticated():
+        branch_ids = [b.branch.id for b in user.membership.all()]
+        demands = Demand.objects.filter(branch__in=branch_ids).all()
+        offers = Offer.objects.filter(branch__in=branch_ids).all()
+    else :
+        demands = Demand.objects.all()
+        offers = Offer.objects.all()
+
+    date_now = timezone.now() + timezone.timedelta(hours=-24)
+
+    demands = demands.up_to_date()
+    offers = offers.up_to_date()
+
+    if user.is_authenticated():
+        demands = discriminate_demands(request, demands)
+        offers = discriminate_offers(request, offers)
+
+    nb_branch = Branch.objects.all().count()
+    branches = Branch.objects.all()
+    nb_users = User.objects.all().count()
+
+    return render(request, 'main/help.html', locals())
+
 def logout(request):
     _logout(request)
     messages.add_message(request, messages.INFO, _('Vous êtes désormais déconnecté.'))
@@ -92,8 +118,26 @@ def user_profile(request, user_id):
     """ Get profile from a user"""
     user_to_display = get_object_or_404(User, pk=user_id)
     user = request.user
+    in_other_network = False
+    in_other_ignore_list = False
+    can_manage_user = False
 
     if user.is_authenticated():
+
+        if request.user.id != user_to_display.id:
+            if request.user in user_to_display.personal_network.all():
+                in_other_network = True
+            if request.user in user_to_display.ignore_list.all():
+                in_other_ignore_list = True
+            if can_manage(user_to_display,user):
+                can_manage_user = True
+        else:
+            can_manage_user = True
+
+        if in_other_ignore_list:
+            messages.add_message(request, messages.INFO, _('Vous êtes pas autoriser à consulter ce profil'))
+            return redirect('home')
+
         pending_demands = Demand.objects.filter(donor=user_to_display)
         is_my_friend = False
         is_in_my_network = False
@@ -363,6 +407,7 @@ class RegistrationView(BaseRegistrationView):
         new_user.first_name = first_name
         new_user.birth_date = cleaned_data['birth_date']
         new_user.how_found = cleaned_data['how_found']
+        new_user.user_type = cleaned_data['user_type']
         #new_user.languages = cleaned_data['languages']
         new_user.phone_number = cleaned_data['phone_number']
         new_user.mobile_number = cleaned_data['mobile_number']
@@ -372,9 +417,12 @@ class RegistrationView(BaseRegistrationView):
 
 
         new_user.save()
-        branch = Branch.objects.get(pk=cleaned_data['id'])
-        bm = BranchMembers(user=new_user, branch=branch, is_admin=False, joined=timezone.now())
-        bm.save()
+
+        # chercher une branche uniquement pour le membre de type membre
+        if new_user.user_type == MemberType.MEMBER:
+            branch = Branch.objects.get(pk=cleaned_data['id'])
+            bm = BranchMembers(user=new_user, branch=branch, is_admin=False, joined=timezone.now())
+            bm.save()
 
         signals.user_registered.send(sender=self.__class__,
                                      user=new_user,
@@ -476,105 +524,156 @@ def similar_offers(request):
 ### Statistics ###
 
 def statistics(request):
+    if not request.user.is_superuser:
+        return HttpResponse(PERMISSION_DENIED, status=401)
+
     # Account status color
-    ACTIVE_COLOR_HEX = Statistics.ACTIVE_COLOR_HEX
-    ON_HOLIDAY_COLOR_HEX = Statistics.ON_HOLIDAY_COLOR_HEX
-    UNSUBSCRIBED_COLOR_HEX = Statistics.UNSUBSCRIBED_COLOR_HEX
+    ACTIVE_COLOR = ACTIVE_COLOR_HEX
+    ON_HOLIDAY_COLOR = ON_HOLIDAY_COLOR_HEX
+    UNSUBSCRIBED_COLOR = UNSUBSCRIBED_COLOR_HEX
 
     # Account types colors
-    MEMBER_COLOR_HEX = Statistics.MEMBER_COLOR_HEX
-    VERIFIED_MEMBER_COLOR_HEX = Statistics.VERIFIED_MEMBER_COLOR_HEX
-    NON_MEMBER_COLOR_HEX = Statistics.NON_MEMBER_COLOR_HEX
+    MEMBER_COLOR = MEMBER_COLOR_HEX
+    VERIFIED_MEMBER_COLOR = VERIFIED_MEMBER_COLOR_HEX
+    NON_MEMBER_COLOR = NON_MEMBER_COLOR_HEX
 
     return render(request, 'statistics/statistics.html', locals())
 
 # Return json-type HttpResponse from method() result
-def get_json_from(method):
-    return HttpResponse(method, content_type="application/json")
+def get_json_from(text):
+    return HttpResponse(text, content_type="application/json")
 
 PERMISSION_DENIED = "Permission denied. This event will be reported."
 
 
+# Global statistics
+
 @login_required
-def get_job_categories_json_branch(request,branch_id):
+def get_registrated_users_json_view(request):
     if not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
-    return get_json_from(Statistics.get_job_categories_json_branch(branch_id))
+    return get_json_from(get_users_registrated_json())
 
 @login_required
-def get_registrated_users_json_branch(request,branch_id):
+def get_account_types_json_view(request):
     if not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
-    return get_json_from(Statistics.get_users_registrated_json_branch(branch_id))
-
-@login_required
-def get_registrated_users_json(request):
-    if not request.user.is_superuser:
-        return HttpResponse(PERMISSION_DENIED, status=401)
-    return get_json_from(Statistics.get_users_registrated_json())
+    return get_json_from(get_account_types_json())
 
 
 @login_required
-def get_account_types_json(request):
-    if not request.user.is_superuser:
-        return HttpResponse(PERMISSION_DENIED, status=401)
-    return get_json_from(Statistics.get_account_types_json())
-
-
-@login_required
-def get_users_status_json(request):
+def get_users_status_json_view(request):
     if not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
 
-    return get_json_from(Statistics.get_users_status_json())
+    return get_json_from(get_users_status_json())
 
 
 @login_required
-def get_job_categories_json(request):
+def get_job_categories_json_view(request):
     if not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
 
-    return get_json_from(Statistics.get_job_categories_json())
+    return get_json_from(get_job_categories_json())
 
 
+# Branch statistics
 @login_required
-def get_user_job_categories_json(request, user_id):
-    if request.user.id != user_id and not request.user.is_superuser:
+def branch_statistics(request, branch_id, slug, user_id):
+    branch = get_object_or_404(Branch, pk=branch_id)
+    if not is_branch_admin(request.user, branch) or not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
 
-    return get_json_from(Statistics.get_user_job_categories_json(user_id))
+    # Account status color
+    ACTIVE_COLOR = ACTIVE_COLOR_HEX
+    ON_HOLIDAY_COLOR = ON_HOLIDAY_COLOR_HEX
+    UNSUBSCRIBED_COLOR = UNSUBSCRIBED_COLOR_HEX
+
+    # Account types colors
+    MEMBER_COLOR = MEMBER_COLOR_HEX
+    VERIFIED_MEMBER_COLOR = VERIFIED_MEMBER_COLOR_HEX
+    NON_MEMBER_COLOR = NON_MEMBER_COLOR_HEX
+
+    branch = get_object_or_404(Branch, pk=branch_id)
+
+    return render(request, 'statistics/branch_statistics.html', locals())
 
 
 @login_required
-def get_user_job_avg_time_json(request, user_id):
-    if request.user.id != user_id and not request.user.is_superuser:
+def get_branch_reg_users_json_view(request, branch_id, slug, user_id):
+    branch = get_object_or_404(Branch, pk=branch_id)
+    if not is_branch_admin(request.user, branch) or not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
-
-    return get_json_from(Statistics.get_user_job_avg_time_json(user_id))
+    return get_json_from(get_branch_users_registrated_json(branch_id))
 
 
 @login_required
-def get_user_jobs_amount_json(request, user_id):
+def get_branch_account_types_json_view(request, branch_id, slug, user_id):
+    branch = get_object_or_404(Branch, pk=branch_id)
+    if not is_branch_admin(request.user, branch) or not request.user.is_superuser:
+        return HttpResponse(PERMISSION_DENIED, status=401)
+    return get_json_from(get_branch_account_types_json(branch_id))
+
+
+@login_required
+def get_branch_user_status_json_view(request, branch_id, slug, user_id):
+    branch = get_object_or_404(Branch, pk=branch_id)
+    if not is_branch_admin(request.user, branch) or not request.user.is_superuser:
+        return HttpResponse(PERMISSION_DENIED, status=401)
+    return get_json_from(get_branch_user_status_json(branch_id))
+
+
+@login_required
+def get_branch_job_categories_json_view(request, branch_id, slug, user_id):
+    branch = get_object_or_404(Branch, pk=branch_id)
+    if not is_branch_admin(request.user, branch) or not request.user.is_superuser:
+        return HttpResponse(PERMISSION_DENIED, status=401)
+    return get_json_from(get_branch_job_categories_json(branch_id))
+
+
+
+
+
+# Users statistics
+
+@login_required
+def get_user_job_categories_json_view(request, user_id):
     if request.user.id != int(user_id) and not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
 
-    return get_json_from(Statistics.get_user_jobs_amount_json(user_id))
+    return get_json_from(get_user_job_categories_json(user_id))
 
 
 @login_required
-def get_user_time_amount_json(request, user_id):
+def get_user_job_avg_time_json_view(request, user_id):
     if request.user.id != int(user_id) and not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
 
-    return get_json_from(Statistics.get_user_time_amount_json(user_id))
+    return get_json_from(get_user_job_avg_time_json(user_id))
 
 
 @login_required
-def get_user_km_amount_json(request, user_id):
+def get_user_jobs_amount_json_view(request, user_id):
     if request.user.id != int(user_id) and not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
 
-    return get_json_from(Statistics.get_user_km_amount_json(user_id))
+    return get_json_from(get_user_jobs_amount_json(user_id))
+
+
+@login_required
+def get_user_time_amount_json_view(request, user_id):
+    if request.user.id != int(user_id) and not request.user.is_superuser:
+        return HttpResponse(PERMISSION_DENIED, status=401)
+
+    return get_json_from(get_user_time_amount_json(user_id))
+
+
+@login_required
+def get_user_km_amount_json_view(request, user_id):
+    if request.user.id != int(user_id) and not request.user.is_superuser:
+        return HttpResponse(PERMISSION_DENIED, status=401)
+
+    return get_json_from(get_user_km_amount_json(user_id))
 
 
 ### Search ###
@@ -593,7 +692,7 @@ def job_search_view(request):
 
 
             if not form.cleaned_data['date1']:
-                date1 = timezone.now()
+                date1 = timezone.now()+timezone.timedelta(hours=-24)
             else:
                 date1 = form.cleaned_data['date1']
 
@@ -604,7 +703,7 @@ def job_search_view(request):
 
             if not form.cleaned_data['category']:
                 category = [str(l[0]) for l in JobCategory.JOB_CATEGORIES]
-                print(category)
+                
             else:
                 category = form.cleaned_data['category']
 
@@ -632,11 +731,9 @@ def job_search_view(request):
                 request_category |= Q(category__contains=l)
 
             if str(JobType.OFFRE) in job_type:
-                print("test")
                 offers = Offer.objects.filter(Q(date__gte=date1) &  Q(date__lte=date2) & Q(receive_help_from_who__in = receive_help_from_who) & request_time & request_category).all()
 
             if str(JobType.DEMAND) in job_type:
-                print(job_type)
                 demands = Demand.objects.filter(Q(date__gte=date1) &  Q(date__lte=date2) & Q(receive_help_from_who__in = receive_help_from_who) & request_time & request_category & Q(closed=False)).all()
 
 
@@ -650,28 +747,35 @@ def job_search_view(request):
 def credits_view(request):
     user = request.user
     #TODO : Rajouter le champ finish = true dans job et offer et finish = false dans les autres.
-    jobs = Demand.objects.filter(closed=True,donor=user).all() # tâches que j'ai faîtes
-    offer = Demand.objects.filter(closed=True,receiver=user).all() # tâches que j'ai reçue
-    jobs_pending = Demand.objects.filter(closed=True,donor=user).all() # tâches que je vais faire
-    offer_pending = Demand.objects.filter(closed=True,receiver=user).all() # tâches que je vais recevoir
+    jobs = Demand.objects.filter(closed=True,donor=user,success=True).all() # tâches que j'ai faîtes
+    offer = Demand.objects.filter(closed=True,receiver=user,success=True).all() # tâches que j'ai reçue
+    jobs_pending = Demand.objects.filter(closed=True,donor=user,success=None).all() # tâches que je vais faire
+    offer_pending = Demand.objects.filter(closed=True,receiver=user,success=None).all() # tâches que je vais recevoir
     num_jobs = len(jobs)
     average_time_job = 0
-    km = 0      # TODO: This variable is not used
+    km = 0      # TODO: This variable is not used (On l'affiche dans la template)
     for job in jobs :
         average_time_job += job.real_time
         km += job.km
     if num_jobs != 0:
         average_time_job = average_time_job/num_jobs
-
     form = GiftForm(ruser=user)
     if request.POST:
         form = GiftForm(request.POST, ruser=user)
         if form.is_valid():
-            user = User.objects.filter(username=form.cleaned_data['user'])
-            if not user :
-                return render(request,'credits/menu.html', locals())
-
+            if form.cleaned_data['check'] == 1:
+                friend = User.objects.get(username=form.cleaned_data['user'])
+            else :
+                friend = get_object_or_404(User, pk=1)
+            if not friend :
+                return render(request,'credit/credit_page.html.html', locals())
+            friend.credit += form.cleaned_data['amount']
+            user.credit -= form.cleaned_data['amount']
+            user.save()
+            friend.save()
+            title = _("Cadeau de : {amount} minutes").format(amount=str(form.cleaned_data['amount']))
+            pm_write(user, friend, title, form.cleaned_data['message'])
             return redirect('home')
 
 
-    return render(request,'credits/menu.html', locals())
+    return render(request,'credit/credit_page.html', locals())

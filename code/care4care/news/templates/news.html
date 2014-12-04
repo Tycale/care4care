@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}{% load i18n %}{% load jobs_extra %}{% load staticfiles %}
+
+
+{% block title %}{% trans "News" %}{% endblock %}
+
+
+{% block content %}
+<div class="row mt">
+  	<div class="col-lg-12">
+  		<h3 class="mb">
+  		{% if request.user.is_superuser %}
+  			<a class="btn btn-primary pull-right" href="{% url 'news_add' %}">{% bootstrap_icon "plus" %} {% trans "Créer une news" %}</a>
+ 		{% endif %}
+  		<i class="fa fa-angle-right"></i> {% trans "Les nouvelles" %}
+ 		</h3>
+  		
+
+	{% for a in news %}
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4>
+			{% if request.user.is_superuser %}
+				<a class="btn btn-default btn-primary pull-right" href="{{ a.get_absolute_modify_url }}">{% bootstrap_icon "edit" %} {% trans "Modifier" %}</a>
+			{% endif %}
+			<a href="{{ a.get_absolute_url }}" class="panel-title">{{ a.titre | safe }}</a>
+			
+			</h4>
+		</div>
+
+		<div class="panel-body">
+			<p>{{ a.corps |truncatechars:140}}</p>
+
+			<a href="{{ a.get_absolute_url }}" class="btn btn-inverse btn more pull-right">{% trans "Lire la suite" %} »</a>
+			<i class="pull-left author">{% trans "&Eacute;crit le" %} {{a.date_creation | date:"DATE_FORMAT"}} {% trans "par" %} {{ a.auteur.get_full_name }}</i>
+		</div>
+	</div>
+	{% endfor %}
+	<div class="text-center">
+	<ul class="pagination pagination-centered">
+            {% if news.has_previous %}
+                <li><a href="?page=1"><<</a></li>
+                <li><a href="?page={{ news.previous_page_number }}"><</a></li>
+            {% endif %}
+
+            {% if paginator.num_pages != 1 %}
+            {% for i in paginator.page_range %}
+                <li {% if news.number == i %} class="active" {% endif %}><a href="?page={{i}}">{{i}}</a></li>
+            {% endfor %}
+            {% endif %}
+
+            {% if news.has_next %}
+                <li><a href="?page={{ news.next_page_number }}">></a></li>
+                <li><a href="?page={{ news.paginator.num_pages }}">>></a></li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+</div>
+
+
+{% endblock %}
+
+{% block extra_footer %}
+{% endblock %}

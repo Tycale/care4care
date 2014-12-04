@@ -7,7 +7,7 @@
 
 {% block content %}
 
-<h3>{% trans "Proposer son aide pour " %}"{{ demand.title }}"</h3>
+<h3>{% trans "Proposer son aide pour" %} "{{ demand.title }}"</h3>
 
 <div class="row mt">
     <div class="col-lg-12">
@@ -52,12 +52,15 @@ $(document).ready(function () {
     {{pt}}-1,
   {% endfor %}
   ]
+  //alert(to_keep);
   var total_checkbox = $("div.checkbox").length;
-  for(var i=0; i < total_checkbox; i++){
+  for(var i=0; i < total_checkbox; ++i){
 
-    if($.inArray(i, to_keep) ){
+    if(to_keep.indexOf(i) !== -1){
+      
+    } else {
       $('#id_time_'+i+'').parent().parent().remove();
-    } else {}
+    }
   }
   
   

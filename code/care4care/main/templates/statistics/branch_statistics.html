@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}{% load i18n %}
+
+{% block title %}{% trans "Statistiques" %}{% endblock %}
+
+{% block content %}
+<div id="stats">
+	{% load staticfiles %}
+	<script src="{% static "js/statistics.js" %}"></script>
+	<link rel="stylesheet" type="text/css" href="{% static "css/statistics.css" %}" />
+
+	<h2>
+		<i class="fa fa-angle-right"></i>
+		{% trans "Statistiques de la branche:" %} {{ branch.name }}
+	</h2>
+
+
+	<div class="row">
+		<div class="col-md-6">
+			<div class="panel panel-default">
+			  	<div class="panel-body">
+			  		<h4>
+			  			<i class="fa fa-angle-right"></i>
+			  			{% trans "Nombre de comptes créés" %}
+			  		</h4>
+					<canvas id="branch_registrated_users" width="475" height="200"></canvas>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			<div class="panel panel-default">
+			  	<div class="panel-body">
+			  		<h4>
+			  			<div class="stats_title">
+			  				<i class="fa fa-angle-right"></i>
+			  				{% trans "Types de comptes" %}
+			  			</div>
+
+			  			<div class="legend_container">
+			  				{% trans "Légende" %}:
+			  				<ul>
+					            <li style="color: {{ MEMBER_COLOR }}">
+					            	{% trans "Membres" %}
+					            </li>
+					            <li style="color: {{ VERIFIED_MEMBER_COLOR }}">
+					            	{% trans "Membres vérifiés" %}
+					            </li>
+					            <li style="color: {{ NON_MEMBER_COLOR }}">
+					            	{% trans "Non-membres" %}
+					            </li>
+					        </ul>
+						</div>
+			  		</h4>
+
+					<canvas id="account_types" width="475" height="200"></canvas>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="col-md-6">
+			<div class="panel panel-default">
+			  	<div class="panel-body">
+		  			<h4>
+			  			<div class="stats_title">
+			  				<i class="fa fa-angle-right"></i>
+			  				{% trans "Statut des utilisateurs" %}
+			  			</div>
+
+			  			<div id="users_status_legend" class="legend_container">
+			  				{% trans "Légende" %}:
+			  				<ul>
+					            <li style="color: {{ ACTIVE_COLOR }}">
+					            	{% trans "Actifs" %}
+					            </li>
+					            <li style="color: {{ ON_HOLIDAY_COLOR }}">
+					            	{% trans "En vacances" %}
+					            </li>
+					            <li style="color: {{ UNSUBSCRIBED_COLOR }}">
+					            	{% trans "Désactivés" %}
+					            </li>
+					        </ul>
+						</div>
+			  		</h4>
+
+					<canvas id="users_status_canvas" width="475" height="200"></canvas>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			<div class="panel panel-default">
+			  	<div class="panel-body">
+			  		<h4>
+			  			<i class="fa fa-angle-right"></i>
+			  			{% trans "Types de jobs effectués" %}
+			  		</h4>
+					<canvas id="job_categories" width="475" height="200"></canvas>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+<script type="application/javascript">
+var branch_reg_user_url = "{% url 'stats_branch_reg_users_json' branch_id=branch.id slug=branch.slug user_id=request.user.id %}";
+var branch_account_types_url = "{% url 'stats_branch_account_types_json' branch_id=branch.id slug=branch.slug user_id=request.user.id %}";
+var branch_user_status_url = "{% url 'stats_branch_user_status_json' branch_id=branch.id slug=branch.slug user_id=request.user.id %}";
+var branch_job_categories_url = "{% url 'stats_branch_job_categories_json' branch_id=branch.id slug=branch.slug user_id=request.user.id %}";
+
+$(document).ready(function(){
+	create_chart(branch_reg_user_url, "branch_registrated_users", "Line");
+	create_chart(branch_account_types_url, "account_types", "Doughnut");
+	create_chart(branch_user_status_url, "users_status_canvas", "Doughnut");
+	create_chart(branch_job_categories_url, "job_categories", "Radar");
+});
+</script>
+{% endblock %}

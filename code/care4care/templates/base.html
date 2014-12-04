@@ -8,7 +8,7 @@
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>Care4Care - {% block title %}{% endblock%}</title>
+    <title>{% trans "Pens(i)ons Voisins" %} - {% block title %}{% endblock%}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
@@ -58,7 +58,7 @@
                   <div class="fa fa-bars tooltips" data-placement="right" data-original-title="{% trans "Activer/désactiver le menu de navigation" %}"></div>
               </div>
             <!--logo start-->
-            <a href="{% url 'home' %}" class="logo"><b>CARE 4 CARE</b></a>
+            <a href="{% url 'home' %}" class="logo"><b>{% trans "Pens(i)ons Voisins" %}</b></a>
             <!--logo end-->
             <div class="nav notify-row" id="top_menu">
                 <!--  notification start -->
@@ -174,7 +174,7 @@
                 {% if request.user.is_authenticated %}
                 <li class="search-bar">
                   <form method="get" action="{% url 'search' %}" id="search">
-                    <input name="q" type="text" size="30" placeholder="{% trans "Trouver un membre..."%}" />
+                    <input name="q" type="text" class="force-size" size="30" placeholder="{% trans "Trouver un membre..."%}" />
                   </form>
                 </li>
                 {% endif %}
@@ -189,7 +189,7 @@
                   <ul class="dropdown-menu" role="user-menu">
                     <li><a href="{% url 'profile' %}">
                     {% bootstrap_icon 'user' %} &nbsp; {% trans "Mon Profil" %}</a>
-                    {% if not request.user.is_verified %}
+                    {% if  request.user.user_type != NON_MEMBER_TYPE and not request.user.is_verified %}
                       <a href="{% url 'verified_profile' user_id=request.user.id%}">
                       {% bootstrap_icon 'star' %} &nbsp; {% trans "Devenir vérifié" %}</a>
                     {% endif %}
@@ -234,8 +234,14 @@
                   {% endif %}
                 </li>
                 <li>
+                  <div class="btn-group" style="margin-right : 15px;">
+                    <button id="plustext" alt="Increase text size" class="btn btn-theme btn-zoom force-size" onclick="resizeText(1)"><i class="fa fa-search-plus"></i></button>
+                    <button id="minustext" alt="Decrease text size" class="btn btn-theme btn-zoom force-size  " onclick="resizeText(-1)"><i class="fa fa-search-minus"></i></button>
+                  </div>
+                </li>
+                <li>
                   <div class="lang-box">
-                  
+
                   {% get_language_info for LANGUAGE_CODE as lang %}
                   <form action="{% url 'set_language' %}" method="post" id="lang_form">
                     {% csrf_token %}
@@ -294,6 +300,7 @@
                   </li>
 
                   {% if request.user.is_authenticated %}
+                  {% if request.user.user_type != NON_MEMBER_TYPE %}
                   <li class="sub-menu">
                       <a href="javascript:;" >
                           <i class="fa fa-globe"></i>
@@ -317,25 +324,28 @@
                           {% endif %}
                       </ul>
                   </li>
+                  {% endif %}
                   <li class="sub-menu">
                     <a href="javascript:;" >
                       <i class="fa fa-user"></i>
+
                       <span>{% trans "Mon Profil" %}</span>
                     </a>
 
                     <ul class="sub">
                     <li><span><a href="{% url 'profile' %}"> {% trans "Mon Profil" %}</a></span></li>
                     </ul>
-
-                    {% if not request.user.is_verified %}
+                    {% if  request.user.user_type != NON_MEMBER_TYPE and not request.user.is_verified %}
                       <ul class="sub">
                       <li><span><a href="{% url 'verified_profile' user_id=request.user.id %}"> {% bootstrap_icon 'star' %} &nbsp; {% trans "Devenir vérifié" %}</a></span></li>
                       </ul>
                     {% endif %}
 
+                    {% if request.user.user_type != NON_MEMBER_TYPE %}
                     <ul class="sub">
-                    <li><span><a href="{% url 'credits' %}"> {% trans "Mes crédits" %}</a></span></li>
+                    <li><span><a href="{% url 'credit_page' %}"> {% trans "Mes crédits" %}</a></span></li>
                     </ul>
+                    {% endif %}
 
                     {% if request.user.is_superuser %}
                     <ul class="sub">
@@ -380,14 +390,14 @@
                   {% endif %}
 
                   <li class="sub-menu">
-                      <a href="javascript:;" >
+                      <a href="{% url "news_home" %}" >
                           <i class="fa fa-cogs"></i>
                           <span>{% trans "News" %}</span>
                       </a>
                   </li>
 
-                  <li class="sub-menu">
-                      <a href="javascript:;" >
+                  <li>
+                      <a href="{% url "help" %}">
                           <i class="fa fa-book"></i>
                           <span>{% trans "Aide" %}</span>
                       </a>
@@ -636,6 +646,20 @@
         return false;
         });
   </script>
+
+   <script type="text/javascript">
+      var counter = 0;
+      function resizeText(multiplier) {
+        if (document.body.style.fontSize == "") {
+          document.body.style.fontSize = "1.2em";
+        }
+        if((multiplier == 1 && counter<5) || (multiplier == -1 && counter>0)) {
+          document.body.style.fontSize = parseFloat(document.body.style.fontSize) + (multiplier * 0.2) + "em";
+          counter += multiplier;
+        }
+      }
+   </script>
+
   {% block extra_footer %}{% endblock %}
 
   </body>

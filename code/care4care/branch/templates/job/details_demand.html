@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load staticfiles thumbnail i18n bootstrap3 humanize %}
 
-{% block title %}{% trans "object.title" %}{% endblock %}
+{% block title %}{{object.title }}{% endblock %}
 
 
 {% block extra_head %}
@@ -92,6 +92,7 @@
                     <th>{% trans "Photo" %}</th>
                     <th>{% trans "Utilisateur" %}</th>
                     <th>{% trans "Commentaire" %}</th>
+                    <th>{% trans "Disponibilités" %}</th>
                     <th>{% trans "Km" %}</th>
                     <th style="width: 190px">{% trans "Actions" %}</th>
                 </tr>
@@ -110,6 +111,7 @@
                         </a>
                     </td>
                     <td>{{ volunteer.comment }}</td>
+                    <td>{{ volunteer.get_verbose_time }}</td>
                     <td>{{ volunteer.km }} {% trans "km" %}</td>
                     <td class="rowlink-skip text-right">
                         <a class="btn btn-primary btn-sm" href="{% url 'volunteer_accept' volunteer.id %}">
@@ -258,7 +260,7 @@
                     </div>
                 </li>
                 {% endfor %}
-            </ul>      
+            </ul>
             
             <form action="." class="style-form" role="form" method="post">
                 <div class="row vertical-align">

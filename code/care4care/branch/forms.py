@@ -3,7 +3,7 @@ from django.utils.translation import ugettext as _
 from bootstrap3_datetime.widgets import DateTimePicker
 from multiselectfield import MultiSelectField
 
-from branch.models import Branch, Demand, Offer, Comment, DemandProposition
+from branch.models import Branch, Demand, Offer, Comment, DemandProposition, SuccessDemand
 
 from django.utils import timezone
 from datetime import timedelta
@@ -87,7 +87,7 @@ class OfferHelpForm(forms.ModelForm):
 
     def clean_date(self):
         date = self.cleaned_data.get('date')
-        if date < timezone.now():
+        if date < timezone.now() + timezone.timedelta(hours=-24):
             raise forms.ValidationError(_("Veuillez choisir une date dans le futur."))
         return date
 
@@ -113,5 +113,13 @@ class ForceVolunteerForm(forms.ModelForm):
     class Meta:
         model = DemandProposition
         fields = ['user', 'comment', 'km', 'time',]
+
+class SuccessDemandForm(forms.ModelForm):
+    class Meta:
+        model = SuccessDemand
+        fields = ['comment', 'time']
+
+class CommentConfirmForm(forms.Form):
+    comment = forms.CharField(required=False, widget=forms.Textarea, label = _("Commentaire"))
 
 

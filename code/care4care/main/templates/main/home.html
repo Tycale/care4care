@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load bootstrap3 %}{% load i18n %}{% load jobs_extra %}{% load staticfiles %}
+{% load bootstrap3 %}{% load i18n %}{% load jobs_extra %}{% load staticfiles thumbnail %}
 
 {% block title %}{% trans "Accueil" %}{% endblock %}
 
@@ -14,7 +14,7 @@
             </div>
             <div style="display:none;">
             <div id="title-home">
-                <h2>Care4Care</h2>
+                <h2>{% trans "Pens(i)ons Voisins" %}</h2>
                 <h4>{% trans "Réseau d'entraide" %}</h4>
                 <h5><i class="fa fa-globe"></i>
                   {{nb_branch}} {% trans "branches" %}
@@ -27,10 +27,103 @@
     </div>
 </div>
 
+{% if request.user.uservol.no_successs.down_to_date.all %}
+<div class="row mt">
+    <div class="col-md-12">
+        <div class="content-panel ph">
+        <h4>{% trans "Jobs en attente de validation" %}</h4>
+        {% blocktrans %}
+        <p class="text-center">Ci-dessous la liste des jobs que vous devez confirmer</p>
+        {% endblocktrans %}
+        <table class="table table-striped table-advance table-hover rowlink">
+            <thead>
+                <tr>
+                    <th>{% trans "Photo" %}</th>
+                    <th>{% trans "Personne aidée" %}</th>
+                    <th>{% trans "Demande" %}</th>
+                    <th style="width: 190px">{% trans "Actions" %}</th>
+                </tr>
+            </thead>
+            <tbody data-link='row' data-target="a.mainlink">
+                {% for uv in request.user.uservol.no_successs.down_to_date.all %}
+                <tr>
+                    <td>
+                    <a href="{{uv.demand.receiver.get_absolute_url}}">
+                    <img class="img-circle" src="{% thumbnail uv.demand.receiver.photo 40x40 crop %}" />
+                    </a>
+                    </td>
+                    <td>
+                        <a href="{{ uv.demand.receiver.get_absolute_url }}">
+                        {{ uv.demand.receiver.get_full_name }}
+                        </a>
+                    </td>
+                    <td><a href="{{ uv.demand.get_absolute_url }}">{{uv.demand.title}}</a></td>
+                    <td class="rowlink-skip">
+                        <a class="btn btn-primary btn-sm mainlink" href="{% url 'success_demand' uv.demand.id %}">
+                            {% bootstrap_icon "ok" %} {% trans "Gérer" %}
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if request.user.success_pending.all %}
+<div class="row mt">
+    <div class="col-md-12">
+        <div class="content-panel ph">
+        <h4>{% trans "Jobs en attente de confirmation" %}</h4>
+        {% blocktrans %}
+        <p class="text-center">Ci-dessous la liste des jobs à confirmer</p>
+        {% endblocktrans %}
+        <table class="table table-striped table-advance table-hover rowlink">
+            <thead>
+                <tr>
+                    <th>{% trans "Photo" %}</th>
+                    <th>{% trans "Personne vous ayant aidée" %}</th>
+                    <th>{% trans "Tâche" %}</th>
+                    <th style="width: 190px">{% trans "Actions" %}</th>
+                </tr>
+            </thead>
+            <tbody data-link='row' data-target="a.mainlink">
+                {% for uv in request.user.success_pending.all %}
+                <tr>
+                    <td>
+                    <a href="{{uv.demand.receiver.get_absolute_url}}">
+                    <img class="img-circle" src="{% thumbnail uv.demand.donor.photo 40x40 crop %}" />
+                    </a>
+                    </td>
+                    <td>
+                        <a href="{{ uv.demand.donor.get_absolute_url }}">
+                        {{ uv.demand.donor.get_full_name }}
+                        </a>
+                    </td>
+                    <td><a href="{{ uv.demand.get_absolute_url }}">{{uv.demand.title}}</a></td>
+                    <td class="rowlink-skip">
+                        <a class="btn btn-primary btn-sm mainlink" href="{% url 'manage_success' uv.id %}">
+                            {% bootstrap_icon "ok" %} {% trans "Gérer" %}
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+
+{% if request.user.user_type != NON_MEMBER_TYPE %}
 <div class="row mt">
   <div class="col-md-6 col-sm-12 text-center"> <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#needHelpModal">{% trans "J'ai besoin d'aide" %}</button> </div>
   <div class="col-md-6 col-sm-12 text-center"><button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#offerHelpModal">{% trans "Offrir mon aide" %}</button></div>
 </div>
+{% endif %}
 
 <!-- need help Modal -->
 <div class="modal fade" id="needHelpModal" tabindex="-1" role="dialog" aria-labelledby="needHelpLabel" aria-hidden="true">
@@ -47,6 +140,9 @@
         <div class="btn-group-vertical" role="group">
         {% for mbranch in request.user.membership.all %}
         <a href="{% url "create_demand" branch_id=mbranch.branch.id slug=mbranch.branch.slug user_id=request.user.id %}" class="btn btn-primary btn-lg btn-block">{{ mbranch.branch }}</a>
+        {% empty %}
+        <p class="text-danger">{% trans "Vous devez rejoindre une branche avant de pouvoir demander de l'aide." %}</p>
+        <a href="{% url "branch_join" %}" class="btn btn-primary btn-lg btn-block">{% trans "Rejoindre une branche" %}</a>
         {% endfor %}
         </div>
 
@@ -75,6 +171,9 @@
         <div class="btn-group-vertical" role="group">
         {% for mbranch in request.user.membership.all %}
         <a href="{% url "create_offer" branch_id=mbranch.branch.id slug=mbranch.branch.slug user_id=request.user.id %}" class="btn btn-primary btn-lg btn-block">{{ mbranch.branch }}</a>
+        {% empty %}
+        <p class="text-danger">{% trans "Vous devez rejoindre une branche avant de pouvoir offrir de l'aide." %}</p>
+        <a href="{% url "branch_join" %}" class="btn btn-primary btn-lg btn-block">{% trans "Rejoindre une branche" %}</a>
         {% endfor %}
         </div>
 
@@ -88,10 +187,12 @@
   </div>
 </div>
 
+{% if request.user.user_type != NON_MEMBER_TYPE %}
 <div class="row mt">
   {% show_demands request demands show_branch=True %}
   {% show_offers request offers show_branch=True %}
 </div>
+{% endif %}
 
 {% endblock %}
 
