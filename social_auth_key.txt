@@ -7,5 +7,12 @@ Client secret
 
 Twitter:
 
+Consumer Key (API Key) 8xb7STygk334xUdmzgC8nId6n
+Consumer Secret (API Secret) XN20uYRLswtA9ukro1jCIHrXlumVSJEwxWUUzi1b5MoZB0ozwo
+
 Facebook:
 
+
+
+For help implementing in django-allauth:
+http://django-allauth.readthedocs.org/en/latest/providers.html
