@@ -195,16 +195,26 @@ class UserLanguageTestCase(TestCase):
     def test_verbose_lg(self):
         self.assertEqual(self.user.get_verbose_languages(), "Français")
 
-class MainView(TestCase):
+class MainViewTestCase(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
         self.user = User.objects.create(first_name="first_test", last_name="last_test",\
         username="username_test",birth_date=timezone.now(),how_found=0,\
         email="test@test.com", password="test")
 
-        def test_details(self):
+        def test_home(self):
             # Create an instance of a GET request.
             request = self.factory.get('home')
+
+            request.user = self.user
+
+            # Test my_view() as if it were deployed at /customer/details
+            response = my_view(request)
+            self.assertEqual(response.status_code, 200)
+
+        def test_loggin(self):
+            # Create an instance of a GET request.
+            request = self.factory.get('login')
 
             request.user = self.user
 
