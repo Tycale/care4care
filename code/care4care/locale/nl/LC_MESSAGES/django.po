@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-05 17:01+0000\n"
+"POT-Creation-Date: 2014-12-05 17:51+0000\n"
 "PO-Revision-Date: 2014-12-05 10:52+0000\n"
 "Last-Translator: b'vv vv <vv@vv.be>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -385,14 +385,14 @@ msgstr ""
 #: main/templates/profile/user_profile.html:451
 #: main/templates/profile/user_profile.html:472
 #: main/templates/profile/user_profile.html:512
-#: main/templates/search/search.html:24 templates/base.html:146
+#: main/templates/search/search.html:22 templates/base.html:146
 msgid "Utilisateur"
 msgstr ""
 
 #: branch/templates/branch/branch_home.html:102
 #: branch/templates/branch/branch_home.html:164
 #: branch/templates/branch/branch_home.html:281
-#: main/templates/search/search.html:25
+#: main/templates/search/search.html:23
 msgid "Nom complet"
 msgstr ""
 
@@ -444,7 +444,7 @@ msgstr ""
 
 #: branch/templates/branch/branch_home.html:169
 #: branch/templates/branch/branch_home.html:285
-#: main/templates/search/search.html:27
+#: main/templates/search/search.html:25
 msgid "Ecrire"
 msgstr ""
 
@@ -488,7 +488,7 @@ msgstr ""
 #: main/templates/profile/user_profile.html:171
 #: main/templates/profile/user_profile.html:217
 #: main/templates/profile/user_profile.html:226 news/templates/news.html:25
-#: news/templates/read.html:15
+#: news/templates/read.html:33
 msgid "Modifier"
 msgstr ""
 
@@ -536,7 +536,7 @@ msgstr ""
 
 #: branch/templates/branch/branch_home.html:255
 #: branch/templates/branch/branch_home.html:300
-#: main/templates/search/search.html:36
+#: main/templates/search/search.html:34
 msgid "écrire"
 msgstr ""
 
@@ -1042,47 +1042,47 @@ msgstr ""
 msgid "Description : "
 msgstr ""
 
-#: branch/views.py:285
+#: branch/views.py:286
 msgid "En cas d'incident durant cette tâche, voici les personnes à contacter :"
 msgstr ""
 
-#: branch/views.py:287
+#: branch/views.py:288
 msgid "Prénom :"
 msgstr ""
 
-#: branch/views.py:288
+#: branch/views.py:289
 msgid "Nom :"
 msgstr ""
 
-#: branch/views.py:289
+#: branch/views.py:290
 msgid "Téléphone fixe :"
 msgstr ""
 
-#: branch/views.py:290
+#: branch/views.py:291
 msgid "Téléphone mobile :"
 msgstr ""
 
-#: branch/views.py:291
+#: branch/views.py:292
 msgid "Langues parlées :"
 msgstr ""
 
-#: branch/views.py:293
+#: branch/views.py:295
 msgid "N'hésitez pas à me contacter pour de plus amples informations"
 msgstr ""
 
-#: branch/views.py:294
+#: branch/views.py:296
 msgid "À bientôt,"
 msgstr ""
 
-#: branch/views.py:309
+#: branch/views.py:311
 msgid "Vous avez accepté cette aide !"
 msgstr ""
 
-#: branch/views.py:361
+#: branch/views.py:363
 msgid "Une correspondance a été trouvée !"
 msgstr ""
 
-#: branch/views.py:362
+#: branch/views.py:364
 #, python-brace-format
 msgid ""
 "Nous avons trouvé une demande correspondant à une de vos offre d'aide !\n"
@@ -1090,13 +1090,13 @@ msgid ""
 "pour titre {title}.\n"
 "Vous pouvez consulter cette demande et vous proposer comme volontaire en "
 "suivant ce lien :\n"
-"{link}\n"
+"http://{meta}{link}\n"
 "Si vous décidez de vous proposez pour cette demande et que votre offre "
 "d'aide n'est donc plus valable, vous pouvez annuler votre offre d'aide via "
 "la page d'accueil de votre branche ou la page d'accueil du site."
 msgstr ""
 
-#: branch/views.py:370
+#: branch/views.py:372
 #, python-brace-format
 msgid ""
 "Nous avons trouvé une offre correspondant à une de vos demande d'aide !\n"
@@ -1107,53 +1107,53 @@ msgid ""
 "votre demande sous peu."
 msgstr ""
 
-#: branch/views.py:525 branch/views.py:526
+#: branch/views.py:527 branch/views.py:528
 msgid "a commenté votre offre"
 msgstr ""
 
-#: branch/views.py:527 branch/views.py:573 branch/views.py:614
+#: branch/views.py:529 branch/views.py:575 branch/views.py:616
 msgid "Commentaire : "
 msgstr ""
 
-#: branch/views.py:528
+#: branch/views.py:530
 msgid "Vous pouvez lui répondre en vous rendant sur votre offre :"
 msgstr ""
 
-#: branch/views.py:571 branch/views.py:572
+#: branch/views.py:573 branch/views.py:574
 msgid "a commenté votre demande '"
 msgstr ""
 
-#: branch/views.py:574
+#: branch/views.py:576
 msgid "Vous pouvez lui répondre en vous rendant sur votre demande:"
 msgstr ""
 
-#: branch/views.py:612 branch/views.py:613
+#: branch/views.py:614 branch/views.py:615
 msgid "vous offre son aide pour '"
 msgstr ""
 
-#: branch/views.py:615
+#: branch/views.py:617
 msgid "Km de chez vous : "
 msgstr ""
 
-#: branch/views.py:616
+#: branch/views.py:618
 msgid "Heure(s) choisies(s) : "
 msgstr ""
 
-#: branch/views.py:617
+#: branch/views.py:619
 msgid ""
 "Vous pouvez accepter son offre d'aide en vous rendant sur votre demande "
 "d'aide:"
 msgstr ""
 
-#: branch/views.py:669
+#: branch/views.py:671
 msgid "Demande envoyée"
 msgstr ""
 
-#: branch/views.py:671
+#: branch/views.py:673
 msgid "Confirmation de job accompli"
 msgstr ""
 
-#: branch/views.py:672
+#: branch/views.py:674
 #, python-brace-format
 msgid ""
 "L'utilisateur {user} ({username}) affirme avoir accompli le job suivant : "
@@ -1163,11 +1163,11 @@ msgid ""
 "a été accompli avec succès."
 msgstr ""
 
-#: branch/views.py:688
+#: branch/views.py:690
 msgid "Absence lors d'un job"
 msgstr ""
 
-#: branch/views.py:689
+#: branch/views.py:691
 #, python-brace-format
 msgid ""
 "L'utilisateur {user} ({username}) n'était apparemment pas présent pour "
@@ -1178,33 +1178,33 @@ msgid ""
 "vous pouvez l'ignorer en vous rendant sur son profil."
 msgstr ""
 
-#: branch/views.py:695
+#: branch/views.py:697
 #, python-brace-format
 msgid "Vous avez indiqué la tâche {demand} comme non-completée"
 msgstr ""
 
-#: branch/views.py:726
+#: branch/views.py:728
 msgid "Job confirmé"
 msgstr ""
 
-#: branch/views.py:727
+#: branch/views.py:729
 #, python-brace-format
 msgid ""
 "L'utilisateur {user} ({username}) a confirmé que vous aviez accompli le job "
 "{job} avec succès ! Votre compte a donc été crédité de {time} minutes.\n"
 msgstr ""
 
-#: branch/views.py:730
+#: branch/views.py:732
 #, python-brace-format
 msgid ""
 "L'utilisateur {user} ({username}) a laissé le commentaire suivant : {comment}"
 msgstr ""
 
-#: branch/views.py:742
+#: branch/views.py:744
 msgid "Job refusé"
 msgstr ""
 
-#: branch/views.py:743
+#: branch/views.py:745
 #, python-brace-format
 msgid ""
 "L'utilisateur {user} ({username}) a déclaré que vous n'aviez pas passé "
@@ -1212,7 +1212,7 @@ msgid ""
 "crédité.\n"
 msgstr ""
 
-#: branch/views.py:746
+#: branch/views.py:748
 #, python-brace-format
 msgid ""
 "L'utilisateur {user} ({username}) a laissé un commentaire, expliquant "
@@ -1501,6 +1501,14 @@ msgstr ""
 msgid "Non"
 msgstr ""
 
+#: main/models.py:123
+msgid "Un autre utilisateur"
+msgstr ""
+
+#: main/models.py:123
+msgid "A l'administration"
+msgstr ""
+
 #: main/models.py:130
 msgid "Offre"
 msgstr ""
@@ -1597,7 +1605,7 @@ msgstr ""
 
 #: main/models.py:277 main/templates/profile/user_profile.html:113
 #: main/templates/registration/registration_form.html:61
-#: main/templates/search/search.html:26
+#: main/templates/search/search.html:24
 #: main/templates/verified/verified_display.html:23
 msgid "Type de compte"
 msgstr ""
@@ -2674,7 +2682,7 @@ msgstr ""
 msgid "Aucun résultat"
 msgstr ""
 
-#: main/templates/search/search.html:40
+#: main/templates/search/search.html:38
 msgid ""
 "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Aucun utilisateur ne correspond à votre "
 "recherche."
@@ -2889,59 +2897,91 @@ msgid ""
 "Vous êtes administrateur de la branche, vous pouvez voir toutes les offres."
 msgstr ""
 
-#: main/views.py:102
+#: main/views.py:40
+msgid "Type de job (rien = tout)"
+msgstr ""
+
+#: main/views.py:41
+msgid "Catégorie du job (rien = tout)"
+msgstr ""
+
+#: main/views.py:42
+msgid "Qui peut fournir son aide ?"
+msgstr ""
+
+#: main/views.py:43
+msgid "A quelle heure ?"
+msgstr ""
+
+#: main/views.py:44
+msgid "A partir du"
+msgstr ""
+
+#: main/views.py:45
+msgid "Jusqu'au"
+msgstr ""
+
+#: main/views.py:46
+msgid "Donner à :"
+msgstr ""
+
+#: main/views.py:47
+msgid "Montant du temps (plus que 1)"
+msgstr ""
+
+#: main/views.py:112
 msgid "Vous êtes désormais déconnecté."
 msgstr ""
 
-#: main/views.py:119
+#: main/views.py:129
 msgid "Vous êtes désormais connecté."
 msgstr ""
 
-#: main/views.py:122
+#: main/views.py:132
 msgid ""
 "Impossible de vous connecter, vous                     êtes inactif. "
 "Vérifiez vos emails afin de valider votre compte."
 msgstr ""
 
-#: main/views.py:125
+#: main/views.py:135
 msgid "Impossible de se connecter."
 msgstr ""
 
-#: main/views.py:150
+#: main/views.py:160
 msgid "Vous êtes pas autoriser à consulter ce profil"
 msgstr ""
 
-#: main/views.py:214 main/views.py:372
+#: main/views.py:224 main/views.py:382
 msgid "Profil modifié avec succès !"
 msgstr ""
 
-#: main/views.py:252
+#: main/views.py:262
 msgid "Modification sauvegardée"
 msgstr ""
 
-#: main/views.py:278 main/views.py:295
+#: main/views.py:288 main/views.py:305
 msgid "Accord du status de membre vérifié"
 msgstr ""
 
-#: main/views.py:279
+#: main/views.py:289
 msgid "Le status de membre vérifié vous a été accordé ! Félicitations."
 msgstr ""
 
-#: main/views.py:281
+#: main/views.py:291
 msgid "Droit accordé"
 msgstr ""
 
-#: main/views.py:296
+#: main/views.py:306
 msgid ""
 "Le status de membre vérifié vous a été refusé. Pour plus d'informations, "
 "contactez l'officier responsable de votre branche."
 msgstr ""
 
-#: main/views.py:298
+#: main/views.py:308
 msgid "Droit refusé et demande supprimée"
 msgstr ""
 
-#: main/views.py:811
+#: main/views.py:821
 #, python-brace-format
 msgid "Cadeau de : {amount} minutes"
 msgstr ""
@@ -2991,7 +3031,7 @@ msgstr ""
 msgid "&Eacute;crit le"
 msgstr ""
 
-#: news/templates/news.html:36 news/templates/read.html:23
+#: news/templates/news.html:36 news/templates/read.html:42
 msgid "par"
 msgstr ""
 
@@ -2999,7 +3039,7 @@ msgstr ""
 msgid "Aucune news actuellement"
 msgstr ""
 
-#: news/templates/read.html:23
+#: news/templates/read.html:42
 msgid "&Eacute;crit le "
 msgstr ""
 
