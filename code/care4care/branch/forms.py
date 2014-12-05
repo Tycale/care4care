@@ -11,6 +11,7 @@ from django.utils import formats
 from branch.widgets import OneJobSelect
 
 class CreateBranchForm(forms.ModelForm):
+    """ Form for creating a branch """
     class Meta:
         model = Branch
         fields = ['name', 'location', 'latitude', 'longitude']
@@ -21,6 +22,7 @@ class CreateBranchForm(forms.ModelForm):
         }
 
 class ChooseBranchForm(forms.Form):
+    """ Form for choosing a branch """
     id = forms.IntegerField(widget=forms.HiddenInput)
 
     def clean(self):
@@ -35,6 +37,7 @@ class ChooseBranchForm(forms.Form):
         fields = ['id']
 
 class CommentForm(forms.ModelForm):
+    """ Form for making a comment """ 
     class Meta:
         model = Comment
         fields = ['comment']
@@ -43,6 +46,7 @@ class CommentForm(forms.ModelForm):
         }
 
 class NeedHelpForm(forms.ModelForm):
+    """ Form for asking help """
     category = MultiSelectField(verbose_name=_("Categorie"), max_choices=1)
 
     def clean_date(self):
@@ -83,6 +87,7 @@ class UpdateNeedHelpForm(NeedHelpForm):
         }
 
 class OfferHelpForm(forms.ModelForm):
+    """ Form for offering help """
     category = MultiSelectField(verbose_name=_("Categorie"))
 
     def clean_date(self):
