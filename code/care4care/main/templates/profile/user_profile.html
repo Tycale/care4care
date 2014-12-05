@@ -147,7 +147,7 @@
                     </div>
 
                     <div class="panel panel-default">
-                        <div class="panel-heading"> {% trans "Données professionnelles" %} 
+                        <div class="panel-heading"> {% trans "Données professionnelles" %}
                             {%  if request.user.id == user_to_display.id or request.user.is_superuser %}
                             <a class="pull-right" href="{% url 'edit_non_profile' user_to_display.id %}">
                                 {% bootstrap_icon "edit" %} {% trans 'Modifier' %}
@@ -160,7 +160,7 @@
                             <li class="list-group-item text-right"><span class="pull-left"><strong>{% trans "Profession" %}</strong></span> &nbsp; {{user_to_display.work}} </li>
                         </ul>
                     </div>
-
+                    {%  if request.user.id == user_to_display.id or request.user.is_superuser %}
                     <div class="panel panel-default">
                         <div class="panel-heading"> {% trans "Réseaux sociaux" %}
                             {%  if request.user.id == user_to_display.id or request.user.is_superuser %}
@@ -186,6 +186,7 @@
                             {% endif %}
                         </div>
                     </div>
+                    {% endif %}
 
                 </div>
                 {% if request.user.id == user_to_display.id or request.user.is_superuser %}
