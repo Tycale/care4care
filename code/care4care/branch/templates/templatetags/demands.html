@@ -40,7 +40,7 @@
       <div id="filter-bar" class="text-ccc text-right">
           <label>
                {% trans "Cacher les demandes où un volontaire a déjà été choisi :" %}
-               <input id="filterD" type="checkbox" checked="checked">
+               <input id="filterD" type="checkbox" {% if check_progress %}checked="checked"{% endif %}>
           </label>
       </div>
 </div>
@@ -50,10 +50,13 @@
 $(function () {
     $('#demands').bootstrapTable(); // init via javascript
 
+    {% if check_progress %}
     $('.searchable tr').hide();
     $('.searchable tr').filter(function() {
         return !$(this).hasClass("success")
     }).show();
+    {% endif %}
+
     $(window).resize(function () {
         $('#demands').bootstrapTable('resetView');
     });
