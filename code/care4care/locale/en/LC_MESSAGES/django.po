@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-05 19:01+0000\n"
-"PO-Revision-Date: 2014-12-05 19:01+0000\n"
+"PO-Revision-Date: 2014-12-05 20:01+0000\n"
 "Last-Translator: b'care4care care4care <care4care@tycale.be>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -887,7 +887,7 @@ msgstr "I have not completed this job"
 
 #: branch/templates/job/take_offer.html:17
 msgid "Demande d'aide de "
-msgstr "Help request "
+msgstr "Help demand from "
 
 #: branch/templates/job/take_offer.html:17
 msgid " dans la branche "
@@ -1007,8 +1007,8 @@ msgstr "Cancellation banishment of the branch {branch}"
 #: branch/views.py:169
 #, python-brace-format
 #| msgid ""
-#| "s avons annulé le bannissement de la branche %s vous concernant. Vous vez à "
-#| "présent rejoindre cette branche si vous le souhaitez."
+#| "nnulé le bannissement de la branche %s vous concernant. Vous vez à t oindre "
+#| "cette branche si vous le souhaitez."
 msgid ""
 "Nous avons annulé le bannissement de la branche {branch} vous concernant. "
 "Vous pouvez à présent rejoindre cette branche si vous le souhaitez."
@@ -1155,7 +1155,7 @@ msgstr "You can reply by consulting your offer :"
 
 #: branch/views.py:573 branch/views.py:574
 msgid "a commenté votre demande '"
-msgstr "commented your request '"
+msgstr "commented your demand '"
 
 #: branch/views.py:576
 msgid "Vous pouvez lui répondre en vous rendant sur votre demande:"
@@ -2236,7 +2236,7 @@ msgstr "Sign in with Google"
 
 #: main/templates/profile/login.html:46 templates/base.html:163
 msgid "se connecter via Facebook"
-msgstr "connect via Facebook"
+msgstr "Sign in with Facebook"
 
 #: main/templates/profile/login.html:47 templates/base.html:164
 msgid "se connecter via Twitter"
