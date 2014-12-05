@@ -12,7 +12,7 @@
     <div class="col-md-6 col-md-offset-3 col-xs-12">
         <div class="login">
             <div class="white-header">
-                <h4>{% trans "Connectez-vous " %} 
+                <h4>{% trans "Connectez-vous " %}
                     {% if next != '/' %}
                     {% trans "afin d'accéder à cette page" %}
                     {% endif %}
@@ -36,17 +36,18 @@
                 <div class="form-group">
                     <button type="submit" class="btn btn-theme btn-block"><i class="fa fa-user"></i> {% trans "se connecter"%}</button>
                 </div>
-            </form>  
+            </form>
 
             <p class="text-center">{% trans "Pas encore de compte ?" %} <a href="{% url 'registration_register' %}">{% trans 'Inscrivez-vous !'%}</a><br/>
             {% trans "Mot de passe perdu ?" %} <a href="{% url 'password_reset' %}">{% trans 'Retrouvez votre mot de passe !'%}</a></p>
             <hr />
             <p class="text-center">{% trans "Ou connectez-vous via :" %}</p>
-            <input class="btn btn-theme03 btn-block" type="button" id="sign-in-google" value="{% trans "se connecter via Google"%}" />
-            <input class="btn btn-theme03 btn-block" type="button" id="sign-in-twitter" value="{% trans "se connecter via Twitter"%}" />
+            <a class="btn btn-theme03 btn-block sign-in-social" type="button" id="sign-in-google" href="{% url "google_login" %}">{% trans "se connecter via Google"%}</a>
+            <a class="btn btn-theme03 btn-block sign-in-social" type="button" id="sign-in-facebook" href="{% url "facebook_login" %}">{% trans "se connecter via Facebook"%}</a>
+            <a class="btn btn-theme03 btn-block sign-in-social" type="button" id="sign-in-twitter" href="{% url "twitter_login" %}">{% trans "se connecter via Twitter"%}</a>
             </div>
         </div>
     </div>
-</div><!-- col-lg-12-->      	
+</div><!-- col-lg-12-->
 </div>
 {% endblock %}
