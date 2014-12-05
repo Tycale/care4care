@@ -38,6 +38,7 @@ SHORT_TIME = (
     )
 
 class Branch(models.Model):
+    """ Representation of a branch """
     name = models.CharField(verbose_name=_("Nom de la branche"), max_length=255)
     slug = models.SlugField()
     creator = models.ForeignKey(User, verbose_name=_("Créateur de la branche"))
@@ -63,6 +64,7 @@ class Branch(models.Model):
         ordering = ['name']
 
 class BranchMembers(models.Model):
+    """ Class used for the representation of a member who is in a branch """
     user = models.ForeignKey(User, related_name='membership')
     branch = models.ForeignKey(Branch, related_name='membership')
     is_admin = models.BooleanField(default=False)
@@ -78,6 +80,7 @@ class BranchMembers(models.Model):
         ordering = ['-is_admin']
 
 class Comment(models.Model):
+    """ Representation of a comment """
     user = models.ForeignKey(User)
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField()
@@ -105,6 +108,7 @@ class JobManager(QuerySet):
 
 
 class Job(models.Model):
+    """ Representation of a job (demand or offer) """
     branch = models.ForeignKey(Branch, verbose_name=_("Branche"), related_name="%(class)s_branch")
     donor = models.ForeignKey(User, verbose_name=_("Donneur"), related_name="%(class)s_donor", null=True, blank=True)
     receiver =  models.ForeignKey(User, verbose_name=_("Receveur"), related_name="%(class)s_receiver", null=True, blank=True)
@@ -136,6 +140,7 @@ class Job(models.Model):
         abstract = True
 
 class Demand(Job):
+    """ Representation of a demand """
     title = models.CharField(_('Titre'), max_length=120, null=True, blank=False)
     location = models.CharField(_('Adresse'), max_length=256, null=True, blank=True)
     latitude = models.CharField(_('Latitude'), max_length=20, null=True, blank=True)
@@ -160,6 +165,7 @@ class Demand(Job):
         ordering = ['date']
 
 class Offer(Job):
+    """ Representation of a job """
     comments = GenericRelation(Comment)
 
     @models.permalink
@@ -184,6 +190,7 @@ class DemandPropositionManager(QuerySet):
         return self.filter(demand__success_fill=False)
 
 class DemandProposition(models.Model):
+    """ Representation of a demand Proposition"""
     user = models.ForeignKey(User, related_name='uservol')
     demand = models.ForeignKey(Demand, related_name='propositions')
     comment = models.TextField(verbose_name=_("Commentaire (facultatif)"), blank=True, null=True)
@@ -204,6 +211,7 @@ class DemandProposition(models.Model):
 
 
 class SuccessDemand(models.Model):
+    """ Representation of a complete demand"""
     demand = models.ForeignKey(Demand, related_name='success_demand', blank=True, null=True)
     comment = models.TextField(verbose_name=_('Commentaire'), blank=True, null=True)
     time = models.IntegerField(verbose_name=_("Temps passé (en minutes)"), blank=True, null=True)

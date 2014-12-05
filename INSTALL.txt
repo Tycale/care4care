@@ -1,0 +1,15 @@
+
+
+Social app setup:
+
+1) You can find all the Client ID and KEY in the file social_auth_key.txt file.
+
+2) You will need to go to the django administration panel
+
+- Create a site in the sites "section" with you domain name (localhost:8000 for test)
+
+- Create 3 social app Facebook, Google, Twitter in the Social applications section
+
+  - Use App/Client ID for the client ID
+  - Use secret key for the secret key
+  - Add the site to the availables sites
