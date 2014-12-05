@@ -17,8 +17,6 @@
 
 
             <table class="table table-striped table-advance table-hover rowlink">
-
-
                 <thead>
                 <tr>
                     <th><i class="fa fa-user"></i> {% trans "Utilisateur" %}</th>
@@ -32,7 +30,7 @@
                     <tr>
                         <td><a href="{{ user.get_absolute_url }}" class="mainlink">{{user}}</a></td>
                         <td>{{user.get_full_name}}</td>
-                        <td>{{user.get_account_type}}</td>
+                        <td>{{user.get_account_type }}</td>
                          <td><a href="{% url 'postman_write' user.username %}"><i class="fa fa-comments"> {% trans "écrire" %}</i></a></td>
                     </tr>
                     {% empty %}
@@ -51,5 +49,6 @@
 {% endblock %}
 
 {% block extra_footer %}
+<script src="{% static 'js/rowlink.js' %}"></script>
 {{ form.media }}
 {% endblock %}
