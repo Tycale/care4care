@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-05 18:46+0000\n"
+"POT-Creation-Date: 2014-12-05 19:01+0000\n"
 "PO-Revision-Date: 2014-12-05 10:52+0000\n"
 "Last-Translator: b'vv vv <vv@vv.be>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -951,14 +951,14 @@ msgid "Vous avez quitté la branche {branch}"
 msgstr ""
 
 #: branch/views.py:144
-#, python-format
-msgid "Bannissement de la branche %s"
+#, python-brace-format
+msgid "Bannissement de la branche {branch}"
 msgstr ""
 
 #: branch/views.py:145
-#, python-format
+#, python-brace-format
 msgid ""
-"Vous avez été banni de la branche %s. Vous ne pouvez à présent plus "
+"Vous avez été banni de la branche {branch}. Vous ne pouvez à présent plus "
 "rejoindre cette branche. Pour plus d'informations, contactez un "
 "adminstrateur ou l'officier en charge de la branche en question"
 msgstr ""
@@ -969,15 +969,15 @@ msgid "{user} a été banni de la branche {branch}"
 msgstr ""
 
 #: branch/views.py:168
-#, python-format
-msgid "Annulation du bannissement de la branche %s"
+#, python-brace-format
+msgid "Annulation du bannissement de la branche {branch}"
 msgstr ""
 
 #: branch/views.py:169
-#, python-format
+#, python-brace-format
 msgid ""
-"Nous avons annulé le bannissement de la branche %s vous concernant. Vous "
-"pouvez à présent rejoindre cette branche si vous le souhaitez."
+"Nous avons annulé le bannissement de la branche {branch} vous concernant. "
+"Vous pouvez à présent rejoindre cette branche si vous le souhaitez."
 msgstr ""
 
 #: branch/views.py:171
