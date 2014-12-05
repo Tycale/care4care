@@ -326,15 +326,36 @@
 
                   <li class="sub-menu">
                       <a href="{% url "news_home" %}" >
-                          <i class="fa fa-cogs"></i>
+                          <i class="fa fa-rss"></i>
                           <span>{% trans "News" %}</span>
                       </a>
                   </li>
 
                   <li>
                       <a href="{% url "help" %}">
-                          <i class="fa fa-book"></i>
+                          <i class="fa fa-question"></i>
                           <span>{% trans "Aide" %}</span>
+                      </a>
+                  </li>
+
+                  <li>
+                      <a href="{% url "about_us" %}">
+                          <i class="fa fa-group"></i>
+                          <span>{% trans "A propos" %}</span>
+                      </a>
+                  </li>
+
+                  <li>
+                      <a href="{% url "what_is" %}">
+                          <i class="fa fa-bullhorn"></i>
+                          <span>{% trans "Qu'est-ce que Care4Care ?" %}</span>
+                      </a>
+                  </li>
+
+                  <li class="sub-menu">
+                      <a href="{% url "jobs_care4care" %}" >
+                          <i class="fa fa-briefcase"></i>
+                          <span>{% trans "Jobs@Care4Care" %}</span>
                       </a>
                   </li>
 
