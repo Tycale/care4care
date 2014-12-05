@@ -707,7 +707,7 @@ def job_search_view(request):
 
 
             if not form.cleaned_data['date1']:
-                date1 = timezone.now()+timezone.timedelta(hours=-24)
+                date1 = timezone.now()+timezone.timedelta(hours=-25)
             else:
                 date1 = form.cleaned_data['date1']
 
