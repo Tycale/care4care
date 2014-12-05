@@ -11,7 +11,6 @@ class SimpleTestCase(TestCase):
 
 class UserTestCase(TestCase):
 
-    @classmethod
     def setUp(self):
         user = User.objects.create(first_name="first_test", last_name="last_test",\
         username="username_test",birth_date=timezone.now(),how_found=0,\
@@ -38,7 +37,6 @@ class UserTestCase(TestCase):
 
 class UserFavoriteTestCase(TestCase):
 
-    @classmethod
     def setUp(self):
         user = User.objects.create(first_name="first_test", last_name="last_test",\
         username="username_test",birth_date=timezone.now(),how_found=0,\
@@ -55,3 +53,41 @@ class UserFavoriteTestCase(TestCase):
     def remove_favorite(self):
         user.favorites.remove(user2)
         self.assertEqual(user.favorites.contains(user2), False)
+
+class UserNetworkTestCase(TestCase):
+
+    def setUp(self):
+        user = User.objects.create(first_name="first_test", last_name="last_test",\
+        username="username_test",birth_date=timezone.now(),how_found=0,\
+        email="test@test.com", password="test")
+
+        user2 = User.objects.create(first_name="first_test2", last_name="last_test2",\
+        username="username_test2",birth_date=timezone.now(),how_found=0,\
+        email="test2@test.com", password="test2")
+
+    def add_network(self):
+        user.personal_network.add(user2)
+        self.assertEqual(user.personal_network.contains(user2), True)
+
+    def remove_network(self):
+        user.personal_network.remove(user2)
+        self.assertEqual(user.personal_network.contains(user2), False)
+
+class UserIgnoreTestCase(TestCase):
+
+    def setUp(self):
+        user = User.objects.create(first_name="first_test", last_name="last_test",\
+        username="username_test",birth_date=timezone.now(),how_found=0,\
+        email="test@test.com", password="test")
+
+        user2 = User.objects.create(first_name="first_test2", last_name="last_test2",\
+        username="username_test2",birth_date=timezone.now(),how_found=0,\
+        email="test2@test.com", password="test2")
+
+    def add_ignore(self):
+        user.ignore_list.add(user2)
+        self.assertEqual(user.personal_network.contains(user2), True)
+
+    def remove_ignore(self):
+        user.ignore_list.remove(user2)
+        self.assertEqual(user.personal_network.contains(user2), False)
