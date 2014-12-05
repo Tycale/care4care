@@ -2,21 +2,22 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-05 10:10+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2014-12-05 10:52+0000\n"
+"Last-Translator: b'vv vv <vv@vv.be>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.7.4\n"
 
 #: branch/forms.py:31
 msgid "Veuillez choisir un point sur la carte"
@@ -328,8 +329,7 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"                            Êtes-vous sûr de vouloir quitter la branche "
-"%(branch)s ?\n"
+"                            Êtes-vous sûr de vouloir quitter la branche %(branch)s ?\n"
 "                            "
 msgstr ""
 
@@ -351,8 +351,7 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"                            Êtes-vous sûr de vouloir SUPPRIMER la branche "
-"%(branch)s ? <br />\n"
+"                            Êtes-vous sûr de vouloir SUPPRIMER la branche %(branch)s ? <br />\n"
 "                            Cette action est irréversible. <br />\n"
 "                            "
 msgstr ""
@@ -494,8 +493,7 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"                                            Êtes-vous sûr de vouloir "
-"SUPPRIMER %(name)s de la branche %(branch)s ? <br />\n"
+"                                            Êtes-vous sûr de vouloir SUPPRIMER %(name)s de la branche %(branch)s ? <br />\n"
 "                                            "
 msgstr ""
 
@@ -515,8 +513,7 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"                                            Êtes-vous sûr de vouloir BANNIR "
-"%(name)s de la branche %(branch)s ? <br />\n"
+"                                            Êtes-vous sûr de vouloir BANNIR %(name)s de la branche %(branch)s ? <br />\n"
 "                                            "
 msgstr ""
 
@@ -610,8 +607,7 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"          Êtes-vous sûr de vouloir SUPPRIMER votre demande "
-"%(object.title)s ? <br />\n"
+"          Êtes-vous sûr de vouloir SUPPRIMER votre demande %(object.title)s ? <br />\n"
 "          Cette action est irréversible. <br />\n"
 "          "
 msgstr ""
@@ -627,8 +623,7 @@ msgstr ""
 #: branch/templates/job/details_demand.html:86
 msgid ""
 "\n"
-"        <p class=\"text-center\">Ci-dessous la liste des personnes prêtes à "
-"vous aider</p>\n"
+"        <p class=\"text-center\">Ci-dessous la liste des personnes prêtes à vous aider</p>\n"
 "        "
 msgstr ""
 
@@ -712,7 +707,8 @@ msgid "A pied"
 msgstr ""
 
 #: branch/templates/job/details_demand.html:213
-msgid "Vous devez indiquer votre adresse personnelle afin d'avoir l'itinéraire"
+msgid ""
+"Vous devez indiquer votre adresse personnelle afin d'avoir l'itinéraire"
 msgstr ""
 
 #: branch/templates/job/details_demand.html:214
@@ -765,8 +761,7 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"                    <h3 class=\"mb\"> Confirmer que %(donor)s a bien "
-"effectué votre tâche \"%(title)s\"</h3>\n"
+"                    <h3 class=\"mb\"> Confirmer que %(donor)s a bien effectué votre tâche \"%(title)s\"</h3>\n"
 "                    "
 msgstr ""
 
@@ -775,14 +770,11 @@ msgstr ""
 msgid ""
 "\n"
 "                    <p>\n"
-"                      %(donor)s déclare vous avoir aidé pendant %(time)s "
-"minutes pour votre demande \"%(title)s\".\n"
+"                      %(donor)s déclare vous avoir aidé pendant %(time)s minutes pour votre demande \"%(title)s\".\n"
 "                      <br />\n"
-"                      Si ces informations sont correctes, vous serez débité "
-"de %(time)s minutes de crédit-temps.\n"
+"                      Si ces informations sont correctes, vous serez débité de %(time)s minutes de crédit-temps.\n"
 "                      <br />\n"
-"                      Vous pouvez laisser un petit message en commentaire si "
-"vous le souhaitez.\n"
+"                      Vous pouvez laisser un petit message en commentaire si vous le souhaitez.\n"
 "                    </p>\n"
 "                    "
 msgstr ""
@@ -837,8 +829,7 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"                    Confirmer votre présence pour le job: \"%(title)s\" de "
-"%(user)s\n"
+"                    Confirmer votre présence pour le job: \"%(title)s\" de %(user)s\n"
 "                    "
 msgstr ""
 
@@ -1021,25 +1012,18 @@ msgstr ""
 #, python-brace-format
 msgid ""
 "Nous avons trouvé une demande correspondant à une de vos offre d'aide !\n"
-"Cette demande d'aide a été faite par l'utilisateur {user} ({username}) et a "
-"pour titre {title}.\n"
-"Vous pouvez consulter cette demande et vous proposer comme volontaire en "
-"suivant ce lien :\n"
+"Cette demande d'aide a été faite par l'utilisateur {user} ({username}) et a pour titre {title}.\n"
+"Vous pouvez consulter cette demande et vous proposer comme volontaire en suivant ce lien :\n"
 "{link}\n"
-"Si vous décidez de vous proposez pour cette demande et que votre offre "
-"d'aide n'est donc plus valable, vous pouvez annuler votre offre d'aide via "
-"la page d'accueil de votre branche ou la page d'accueil du site."
+"Si vous décidez de vous proposez pour cette demande et que votre offre d'aide n'est donc plus valable, vous pouvez annuler votre offre d'aide via la page d'accueil de votre branche ou la page d'accueil du site."
 msgstr ""
 
 #: branch/views.py:342
 #, python-brace-format
 msgid ""
 "Nous avons trouvé une offre correspondant à une de vos demande d'aide !\n"
-"Cette offre d'aide a été faite par l'utilisateur {user} ({username}) et "
-"correspond a votre demande {title}.\n"
-"Un message automatique a été envoyé à {user} ({username}) pour l'informer de "
-"cette correspondance et celui-ci devrait se proposer comme volontaire pour "
-"votre demande sous peu."
+"Cette offre d'aide a été faite par l'utilisateur {user} ({username}) et correspond a votre demande {title}.\n"
+"Un message automatique a été envoyé à {user} ({username}) pour l'informer de cette correspondance et celui-ci devrait se proposer comme volontaire pour votre demande sous peu."
 msgstr ""
 
 #: branch/views.py:474 branch/views.py:475
@@ -1091,11 +1075,9 @@ msgstr ""
 #: branch/views.py:619
 #, python-brace-format
 msgid ""
-"L'utilisateur {user} ({username}) affirme avoir accompli le job suivant : "
-"{job}.\n"
+"L'utilisateur {user} ({username}) affirme avoir accompli le job suivant : {job}.\n"
 "Il déclare avoir pris {time} minutes pour accomplir ce job.\n"
-"Si ces informations vous semble correctes, vous pouvez confirmer que ce job "
-"a été accompli avec succès."
+"Si ces informations vous semble correctes, vous pouvez confirmer que ce job a été accompli avec succès."
 msgstr ""
 
 #: branch/views.py:634
@@ -1105,12 +1087,9 @@ msgstr ""
 #: branch/views.py:635
 #, python-brace-format
 msgid ""
-"L'utilisateur {user} ({username}) n'était apparemment pas présent pour "
-"accomplir le job {job}.\n"
-"S'il s'agit d'une erreur et que {user} ({username}) était bien présent, "
-"veuillez contacter un administrateur pour régler le problème.\n"
-"Si vous désirez ne plus demander d'aide à l'utilisateur {user} ({username}), "
-"vous pouvez l'ignorer en vous rendant sur son profil."
+"L'utilisateur {user} ({username}) n'était apparemment pas présent pour accomplir le job {job}.\n"
+"S'il s'agit d'une erreur et que {user} ({username}) était bien présent, veuillez contacter un administrateur pour régler le problème.\n"
+"Si vous désirez ne plus demander d'aide à l'utilisateur {user} ({username}), vous pouvez l'ignorer en vous rendant sur son profil."
 msgstr ""
 
 #: branch/views.py:641
@@ -1132,7 +1111,8 @@ msgstr ""
 #: branch/views.py:675
 #, python-brace-format
 msgid ""
-"L'utilisateur {user} ({username}) a laissé le commentaire suivant : {comment}"
+"L'utilisateur {user} ({username}) a laissé le commentaire suivant : "
+"{comment}"
 msgstr ""
 
 #: branch/views.py:687
@@ -1150,13 +1130,9 @@ msgstr ""
 #: branch/views.py:691
 #, python-brace-format
 msgid ""
-"L'utilisateur {user} ({username}) a laissé un commentaire, expliquant "
-"pourquoi il n'a pas désiré créditer votre compte : {comment}\n"
-"Vous pouvez recréer une demande de confirmation avec un nouveau montant de "
-"crédit correspondant plus à la perception du demandeur d'aide.\n"
-"Si vous ne parvenez pas à trouver un terrain d'entente avec l'utilisateur "
-"{user} ({username}), vous pouvez contacter un administrateur pour régler le "
-"problème."
+"L'utilisateur {user} ({username}) a laissé un commentaire, expliquant pourquoi il n'a pas désiré créditer votre compte : {comment}\n"
+"Vous pouvez recréer une demande de confirmation avec un nouveau montant de crédit correspondant plus à la perception du demandeur d'aide.\n"
+"Si vous ne parvenez pas à trouver un terrain d'entente avec l'utilisateur {user} ({username}), vous pouvez contacter un administrateur pour régler le problème."
 msgstr ""
 
 #: care4care/settings.py:142
@@ -1530,8 +1506,8 @@ msgstr ""
 
 #: main/models.py:265
 msgid ""
-"Entrez un nom d'utilisateur valide.             30 caractères ou moins. Peut "
-"contenir des lettres, nombres et les caractères @/./+/-/_ "
+"Entrez un nom d'utilisateur valide.             30 caractères ou moins. Peut"
+" contenir des lettres, nombres et les caractères @/./+/-/_ "
 msgstr ""
 
 #: main/models.py:277 main/templates/profile/user_profile.html:113
@@ -1543,11 +1519,11 @@ msgstr ""
 
 #: main/models.py:278
 msgid ""
-"Un member pourra aider ou être aidé alors "
-"qu'un                                         non-membre est un "
-"professionnel qui s'inscrira pour avoir accès aux données "
-"d'un                                         patient. Veuillez choisir celui "
-"qui vous correspond"
+"Un member pourra aider ou être aidé alors qu'un"
+"                                         non-membre est un professionnel qui"
+" s'inscrira pour avoir accès aux données d'un"
+"                                         patient. Veuillez choisir celui qui"
+" vous correspond"
 msgstr ""
 
 #: main/models.py:282
@@ -1801,8 +1777,8 @@ msgstr ""
 
 #: main/templates/main/help.html:337
 msgid ""
-"Vous pourrez faire une demande s'adressant seulement aux personnes présentes "
-"dans"
+"Vous pourrez faire une demande s'adressant seulement aux personnes présentes"
+" dans"
 msgstr ""
 
 #: main/templates/main/help.html:338
@@ -1891,8 +1867,7 @@ msgstr ""
 #: main/templates/main/home.html:35
 msgid ""
 "\n"
-"        <p class=\"text-center\">Ci-dessous la liste des jobs que vous devez "
-"confirmer</p>\n"
+"        <p class=\"text-center\">Ci-dessous la liste des jobs que vous devez confirmer</p>\n"
 "        "
 msgstr ""
 
@@ -1915,8 +1890,7 @@ msgstr ""
 #: main/templates/main/home.html:80
 msgid ""
 "\n"
-"        <p class=\"text-center\">Ci-dessous la liste des jobs à confirmer</"
-"p>\n"
+"        <p class=\"text-center\">Ci-dessous la liste des jobs à confirmer</p>\n"
 "        "
 msgstr ""
 
@@ -2232,8 +2206,8 @@ msgstr ""
 
 #: main/templates/profile/user_profile.html:40
 msgid ""
-"Êtes vous sur de vouloir Ignorer cette personne ? elle sera supprimée de vos "
-"favoris et de votre réseau et vous ne recevrez plus d&#39;aide de celle-ci."
+"Êtes vous sur de vouloir Ignorer cette personne ? elle sera supprimée de vos"
+" favoris et de votre réseau et vous ne recevrez plus d&#39;aide de celle-ci."
 msgstr ""
 
 #: main/templates/profile/user_profile.html:69
@@ -2334,8 +2308,7 @@ msgstr ""
 #: main/templates/profile/user_profile.html:266
 msgid ""
 "\n"
-"                        Ajouter des membres en favoris vous permet de "
-"restreindre vos demandes et offres à ces personnes.\n"
+"                        Ajouter des membres en favoris vous permet de restreindre vos demandes et offres à ces personnes.\n"
 "                        "
 msgstr ""
 
@@ -2350,8 +2323,7 @@ msgstr ""
 #: main/templates/profile/user_profile.html:301
 msgid ""
 "\n"
-"                        Ajouter des membres à votre réseau personnel leur "
-"donne accès à plus d'informations sur votre profil.\n"
+"                        Ajouter des membres à votre réseau personnel leur donne accès à plus d'informations sur votre profil.\n"
 "                        "
 msgstr ""
 
@@ -2362,8 +2334,7 @@ msgstr ""
 #: main/templates/profile/user_profile.html:336
 msgid ""
 "\n"
-"                        Ignorer un utilisateur l'empêche de voir vos offres "
-"et demandes.\n"
+"                        Ignorer un utilisateur l'empêche de voir vos offres et demandes.\n"
 "                        "
 msgstr ""
 
@@ -2768,7 +2739,8 @@ msgstr ""
 
 #: main/utils.py:53
 msgid ""
-"Vous êtes administrateur de la branche, vous pouvez voir toutes les demandes."
+"Vous êtes administrateur de la branche, vous pouvez voir toutes les "
+"demandes."
 msgstr ""
 
 #: main/utils.py:80
@@ -2979,9 +2951,7 @@ msgstr ""
 #, python-format
 msgid ""
 "\n"
-"\t\t\tVous êtes sur le point d'utiliser votre compte %(provider_name)s pour "
-"vous connecter sur \n"
-"\t\t\tPens(i)ons Voisins. Complétez ce formulaire afin de procéder à votre "
-"connexion:\n"
+"\t\t\tVous êtes sur le point d'utiliser votre compte %(provider_name)s pour vous connecter sur \n"
+"\t\t\tPens(i)ons Voisins. Complétez ce formulaire afin de procéder à votre connexion:\n"
 "\t\t\t"
 msgstr ""
