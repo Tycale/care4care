@@ -36,6 +36,16 @@ from django.contrib.messages.views import SuccessMessageMixin
 from main.utils import can_manage, is_branch_admin, refuse, can_manage_branch_specific, is_in_branch, \
                         discriminate_demands, discriminate_offers
 
+def trad(request):
+    a = _("Type de job (rien = tout)")
+    b = _("Catégorie du job (rien = tout)")
+    c = _("Qui peut fournir son aide ?")
+    d = _("A quelle heure ?")
+    e = _("A partir du")
+    f = _("Jusqu'au")
+    g = _("Donner à :")
+    h = _("Montant du temps (plus que 1)")
+
 def home(request):
     """
         View used for the home_page.
@@ -146,7 +156,7 @@ def user_profile(request, user_id):
         else:
             can_manage_user = True
 
-        if in_other_ignore_list:
+        if in_other_ignore_list and not request.user.is_superuser :
             messages.add_message(request, messages.INFO, _('Vous êtes pas autoriser à consulter ce profil'))
             return redirect('home')
 

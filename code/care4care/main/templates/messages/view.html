@@ -33,7 +33,7 @@ in the INSTALLED_APPS setting.
                             </tr>
                         </table>
                     </div>
-                    <div class=" panel-body">{{ message.body|linebreaksbr }}</div>
+                    <div class=" panel-body">{{ message.body|urlize|linebreaksbr }}</div>
                 </div>
                 {% if forloop.last %}
                 <form action="" method="post">{% csrf_token %}

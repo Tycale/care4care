@@ -214,7 +214,7 @@ class JobSearchForm(forms.Form):
 
 
 class GiftForm(forms.Form):
-    check = forms.ChoiceField(label = _("Donner à :"),widget=forms.RadioSelect, choices=GIVINGTO, initial=1)
+    check = forms.ChoiceField(label = __("Donner à :"),widget=forms.RadioSelect, choices=GIVINGTO, initial=1)
     user = forms.CharField(label = __("Username"), widget=AutoCompleteWidget('user'))
     amount = forms.IntegerField(label = __("Montant du temps (plus que 1)"), min_value=1, initial=60)
     message = forms.CharField(required=False, widget=forms.Textarea, label = __("Message"))
