@@ -104,6 +104,13 @@ def what_is(request):
 
     return render(request, 'main/what_is.html', locals())
 
+def agreements(request):
+    """
+        agreements view calling the agreements template           
+    """
+
+    return render(request, 'main/agreements.html', locals())
+
 def logout(request):
     """
         log out the user and return to the home page
