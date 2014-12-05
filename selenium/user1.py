@@ -111,23 +111,23 @@ class User(unittest.TestCase):
         driver.find_element_by_xpath("//button[@type='submit']").click()
 
         print("test search")
-        driver.get(self.base_url + "")
-        driver.find_element_by_xpath("//ul[@id='nav-accordion']/li[4]/a/span").click()
+        driver.get(self.base_url + "search/job/")
         driver.find_element_by_id("id_job_type_1").click()
         driver.find_element_by_id("id_category_6").click()
         driver.find_element_by_id("id_receive_help_from_who_0").click()
+        driver.find_element_by_id("id_time_3").click()
         driver.find_element_by_id("id_date1").clear()
         driver.find_element_by_id("id_date1").send_keys("14/12/2014")
         driver.find_element_by_id("id_date2").clear()
         driver.find_element_by_id("id_date2").send_keys("20/12/2014")
         driver.find_element_by_xpath("//button[@type='submit']").click()
 
-        print("test accept help")
+        """print("test accept help")
         driver.get(self.base_url + "")
         driver.find_element_by_xpath("//tr[@id='sizcache07375152724184825']/td[4]").click()
         driver.find_element_by_link_text("Planter un arbre dans mon jardin").click()
-        driver.find_element_by_link_text("Accepter").click()
-
+        driver.find_element_by_link_text("Accepter").click()"""
+        
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
         except NoSuchElementException: return False
