@@ -106,7 +106,7 @@ def login(request):
             messages.add_message(request, messages.ERROR, _('Impossible de se connecter.'))
     return render(request, 'profile/login.html', locals())
 
-
+@login_required
 def user_profile(request, user_id):
     """ Get profile from a user"""
     user_to_display = get_object_or_404(User, pk=user_id)
