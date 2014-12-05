@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-05 17:51+0000\n"
+"POT-Creation-Date: 2014-12-05 19:01+0000\n"
 "PO-Revision-Date: 2014-12-05 10:52+0000\n"
 "Last-Translator: b'vv vv <vv@vv.be>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -171,7 +171,7 @@ msgstr ""
 #: branch/templates/job/details_offer.html:22
 #: branch/templates/templatetags/demands.html:18
 #: branch/templates/templatetags/offers.html:16
-#: main/templates/messages/inbox_base.html:48
+#: templates/messages/inbox_base.html:48
 msgid "Date"
 msgstr ""
 
@@ -488,7 +488,7 @@ msgstr ""
 #: main/templates/profile/user_profile.html:171
 #: main/templates/profile/user_profile.html:217
 #: main/templates/profile/user_profile.html:226 news/templates/news.html:25
-#: news/templates/read.html:33
+#: news/templates/read.html:28
 msgid "Modifier"
 msgstr ""
 
@@ -759,10 +759,6 @@ msgstr ""
 msgid "Vous"
 msgstr ""
 
-#: branch/templates/job/details_offer.html:4
-msgid "object.title"
-msgstr ""
-
 #: branch/templates/job/details_offer.html:16
 msgid "offre son aide dans la branche "
 msgstr ""
@@ -837,7 +833,7 @@ msgstr ""
 #: branch/templates/job/need_help.html:67
 #: branch/templates/job/offer_help.html:36
 #: branch/templates/job/success_demand.html:31
-#: branch/templates/job/take_offer.html:76 news/templates/add.html:31
+#: branch/templates/job/take_offer.html:76 news/templates/add.html:25
 msgid "Envoyer"
 msgstr ""
 
@@ -954,34 +950,34 @@ msgstr ""
 msgid "Vous avez quitté la branche {branch}"
 msgstr ""
 
-#: branch/views.py:147
-#, python-format
-msgid "Bannissement de la branche %s"
+#: branch/views.py:144
+#, python-brace-format
+msgid "Bannissement de la branche {branch}"
 msgstr ""
 
-#: branch/views.py:148
-#, python-format
+#: branch/views.py:145
+#, python-brace-format
 msgid ""
-"Vous avez été banni de la branche %s. Vous ne pouvez à présent plus "
+"Vous avez été banni de la branche {branch}. Vous ne pouvez à présent plus "
 "rejoindre cette branche. Pour plus d'informations, contactez un "
 "adminstrateur ou l'officier en charge de la branche en question"
 msgstr ""
 
-#: branch/views.py:150
+#: branch/views.py:147
 #, python-brace-format
 msgid "{user} a été banni de la branche {branch}"
 msgstr ""
 
 #: branch/views.py:168
-#, python-format
-msgid "Annulation du bannissement de la branche %s"
+#, python-brace-format
+msgid "Annulation du bannissement de la branche {branch}"
 msgstr ""
 
 #: branch/views.py:169
-#, python-format
+#, python-brace-format
 msgid ""
-"Nous avons annulé le bannissement de la branche %s vous concernant. Vous "
-"pouvez à présent rejoindre cette branche si vous le souhaitez."
+"Nous avons annulé le bannissement de la branche {branch} vous concernant. "
+"Vous pouvez à présent rejoindre cette branche si vous le souhaitez."
 msgstr ""
 
 #: branch/views.py:171
@@ -1732,6 +1728,14 @@ msgstr ""
 msgid "A propos de nous ... texte"
 msgstr ""
 
+#: main/templates/main/agreements.html:5 main/templates/main/agreements.html:9
+msgid "Conditions d'utilisations de Care4Care"
+msgstr ""
+
+#: main/templates/main/agreements.html:10
+msgid "Conditions d'utilisations de Care4Care text"
+msgstr ""
+
 #: main/templates/main/help.html:5 main/templates/main/help.html.py:9
 #: templates/base.html:337
 msgid "Aide"
@@ -1743,7 +1747,8 @@ msgstr ""
 
 #: main/templates/main/help.html:10 main/templates/main/help.html.py:399
 #: main/templates/main/home.html:17 templates/base.html:11
-#: templates/base.html.py:64
+#: templates/base.html.py:64 templates/messages/email_user.txt:9
+#: templates/messages/email_user_subject.txt:1
 msgid "Pens(i)ons Voisins"
 msgstr "Het buurtpensioen"
 
@@ -2062,137 +2067,6 @@ msgstr ""
 
 #: main/templates/main/what_is.html:10
 msgid "Care4Care ... texte"
-msgstr ""
-
-#: main/templates/messages/archives.html:3
-msgid "Archived Messages"
-msgstr ""
-
-#: main/templates/messages/archives.html:7
-msgid ""
-"Messages in this folder will never be removed. You can use this folder for "
-"long term storage."
-msgstr ""
-
-#: main/templates/messages/base.html:6
-msgid "Messaging"
-msgstr ""
-
-#: main/templates/messages/base_write.html:22
-msgid "Send"
-msgstr ""
-
-#: main/templates/messages/base_write.html:26
-msgid "Cancel"
-msgstr ""
-
-#: main/templates/messages/inbox.html:3
-msgid "Received Messages"
-msgstr ""
-
-#: main/templates/messages/inbox.html:6
-msgid "Received"
-msgstr ""
-
-#: main/templates/messages/inbox_base.html:29
-msgid "by conversation"
-msgstr ""
-
-#: main/templates/messages/inbox_base.html:30
-msgid "by message"
-msgstr ""
-
-#: main/templates/messages/inbox_base.html:34
-msgid "Sorry, this page number is invalid."
-msgstr ""
-
-#: main/templates/messages/inbox_base.html:43
-msgid "Action"
-msgstr ""
-
-#: main/templates/messages/inbox_base.html:44
-msgid "Subject"
-msgstr ""
-
-#: main/templates/messages/inbox_base.html:45
-msgid "Sender"
-msgstr ""
-
-#: main/templates/messages/inbox_base.html:46
-#: main/templates/messages/reply.html:4
-msgid "Recipient"
-msgstr ""
-
-#: main/templates/messages/inbox_base.html:64
-#: main/templates/messages/view.html:29
-msgid "g:i A,M j,n/j/y"
-msgstr ""
-
-#: main/templates/messages/inbox_base.html:70
-#: main/templates/messages/view.html:45
-msgid "Delete"
-msgstr ""
-
-#: main/templates/messages/inbox_base.html:71
-#: main/templates/messages/view.html:44
-msgid "Archive"
-msgstr ""
-
-#: main/templates/messages/inbox_base.html:72
-msgid "Undelete"
-msgstr ""
-
-#: main/templates/messages/inbox_base.html:77
-msgid "No messages."
-msgstr ""
-
-#: main/templates/messages/reply.html:3 main/templates/messages/view.html:42
-#: main/templates/messages/view.html:49 main/templates/messages/view.html:52
-msgid "Reply"
-msgstr ""
-
-#: main/templates/messages/sent.html:3 templates/base.html:84
-#: templates/base.html.py:304
-msgid "Sent Messages"
-msgstr ""
-
-#: main/templates/messages/sent.html:6
-msgid "Sent"
-msgstr ""
-
-#: main/templates/messages/trash.html:3
-msgid "Deleted Messages"
-msgstr ""
-
-#: main/templates/messages/trash.html:10
-msgid ""
-"Messages in this folder can be removed from time to time. For long term "
-"storage, use instead the archive folder."
-msgstr ""
-
-#: main/templates/messages/view.html:20
-msgid "Conversation"
-msgstr ""
-
-#: main/templates/messages/view.html:20
-msgid "Message"
-msgstr ""
-
-#: main/templates/messages/view.html:31
-msgid "Rejected"
-msgstr ""
-
-#: main/templates/messages/view.html:31
-msgid ":"
-msgstr ""
-
-#: main/templates/messages/view.html:41
-msgid "Back"
-msgstr ""
-
-#: main/templates/messages/write.html:3 templates/base.html:85
-#: templates/base.html.py:307
-msgid "Write"
 msgstr ""
 
 #: main/templates/profile/edit_nonprofile.html:5
@@ -2659,7 +2533,19 @@ msgstr ""
 msgid "Comment avez-vous entendu parler de nous \t?"
 msgstr ""
 
-#: main/templates/registration/registration_form.html:87
+#: main/templates/registration/registration_form.html:85
+msgid "Attention:"
+msgstr ""
+
+#: main/templates/registration/registration_form.html:85
+msgid "En vous inscrivant, vous acceptez"
+msgstr ""
+
+#: main/templates/registration/registration_form.html:85
+msgid "les conditions d'utilisations de Care4Care"
+msgstr ""
+
+#: main/templates/registration/registration_form.html:92
 msgid "M'inscrire"
 msgstr ""
 
@@ -2929,59 +2815,59 @@ msgstr ""
 msgid "Montant du temps (plus que 1)"
 msgstr ""
 
-#: main/views.py:112
+#: main/views.py:119
 msgid "Vous êtes désormais déconnecté."
 msgstr ""
 
-#: main/views.py:129
+#: main/views.py:136
 msgid "Vous êtes désormais connecté."
 msgstr ""
 
-#: main/views.py:132
+#: main/views.py:139
 msgid ""
 "Impossible de vous connecter, vous                     êtes inactif. "
 "Vérifiez vos emails afin de valider votre compte."
 msgstr ""
 
-#: main/views.py:135
+#: main/views.py:142
 msgid "Impossible de se connecter."
 msgstr ""
 
-#: main/views.py:160
+#: main/views.py:167
 msgid "Vous êtes pas autoriser à consulter ce profil"
 msgstr ""
 
-#: main/views.py:224 main/views.py:382
+#: main/views.py:231 main/views.py:389
 msgid "Profil modifié avec succès !"
 msgstr ""
 
-#: main/views.py:262
+#: main/views.py:269
 msgid "Modification sauvegardée"
 msgstr ""
 
-#: main/views.py:288 main/views.py:305
+#: main/views.py:295 main/views.py:312
 msgid "Accord du status de membre vérifié"
 msgstr ""
 
-#: main/views.py:289
+#: main/views.py:296
 msgid "Le status de membre vérifié vous a été accordé ! Félicitations."
 msgstr ""
 
-#: main/views.py:291
+#: main/views.py:298
 msgid "Droit accordé"
 msgstr ""
 
-#: main/views.py:306
+#: main/views.py:313
 msgid ""
 "Le status de membre vérifié vous a été refusé. Pour plus d'informations, "
 "contactez l'officier responsable de votre branche."
 msgstr ""
 
-#: main/views.py:308
+#: main/views.py:315
 msgid "Droit refusé et demande supprimée"
 msgstr ""
 
-#: main/views.py:821
+#: main/views.py:828
 #, python-brace-format
 msgid "Cadeau de : {amount} minutes"
 msgstr ""
@@ -3031,7 +2917,7 @@ msgstr ""
 msgid "&Eacute;crit le"
 msgstr ""
 
-#: news/templates/news.html:36 news/templates/read.html:42
+#: news/templates/news.html:36 news/templates/read.html:37
 msgid "par"
 msgstr ""
 
@@ -3039,32 +2925,42 @@ msgstr ""
 msgid "Aucune news actuellement"
 msgstr ""
 
-#: news/templates/read.html:42
+#: news/templates/read.html:37
 msgid "&Eacute;crit le "
 msgstr ""
 
-#: news/views.py:30
+#: news/views.py:32
 msgid "Votre news a été créee."
 msgstr ""
 
-#: news/views.py:33
+#: news/views.py:35
 msgid "Un problème s'est déroulé lors de la création de la news."
 msgstr ""
 
-#: news/views.py:57
+#: news/views.py:59
 msgid "Vous n'avez pas pas le droit de modifier cette news."
 msgstr ""
 
-#: news/views.py:68
+#: news/views.py:70
 msgid "Votre news a été modifiée."
 msgstr ""
 
-#: news/views.py:72
+#: news/views.py:74
 msgid "Un problème s'est déroulé lors de la modification de la news."
 msgstr ""
 
 #: templates/base.html:61
 msgid "Activer/désactiver le menu de navigation"
+msgstr ""
+
+#: templates/base.html:84 templates/base.html.py:304
+#: templates/messages/sent.html:3
+msgid "Sent Messages"
+msgstr ""
+
+#: templates/base.html:85 templates/base.html.py:307
+#: templates/messages/write.html:3
+msgid "Write"
 msgstr ""
 
 #: templates/base.html:86 templates/base.html.py:310
@@ -3113,6 +3009,148 @@ msgstr ""
 
 #: templates/base.html:351
 msgid "Qu'est-ce que Care4Care ?"
+msgstr ""
+
+#: templates/messages/archives.html:3
+msgid "Archived Messages"
+msgstr ""
+
+#: templates/messages/archives.html:7
+msgid ""
+"Messages in this folder will never be removed. You can use this folder for "
+"long term storage."
+msgstr ""
+
+#: templates/messages/base.html:6
+msgid "Messaging"
+msgstr ""
+
+#: templates/messages/base_write.html:22
+msgid "Send"
+msgstr ""
+
+#: templates/messages/base_write.html:26
+msgid "Cancel"
+msgstr ""
+
+#: templates/messages/email_user.txt:1
+msgid "Cher utilisateur,"
+msgstr ""
+
+#: templates/messages/email_user.txt:3
+#, python-format
+msgid "You have received a message from the user '%(sender)s'."
+msgstr ""
+
+#: templates/messages/email_user.txt:5
+#, python-format
+msgid ""
+"\n"
+"%(body)s\n"
+msgstr ""
+
+#: templates/messages/email_user.txt:9
+msgid "Merci d'utiliser"
+msgstr ""
+
+#: templates/messages/email_user_subject.txt:1
+#, python-format
+msgid "Message reçu \"%(subject)s\""
+msgstr ""
+
+#: templates/messages/inbox.html:3
+msgid "Received Messages"
+msgstr ""
+
+#: templates/messages/inbox.html:6
+msgid "Received"
+msgstr ""
+
+#: templates/messages/inbox_base.html:29
+msgid "by conversation"
+msgstr ""
+
+#: templates/messages/inbox_base.html:30
+msgid "by message"
+msgstr ""
+
+#: templates/messages/inbox_base.html:34
+msgid "Sorry, this page number is invalid."
+msgstr ""
+
+#: templates/messages/inbox_base.html:43
+msgid "Action"
+msgstr ""
+
+#: templates/messages/inbox_base.html:44
+msgid "Subject"
+msgstr ""
+
+#: templates/messages/inbox_base.html:45
+msgid "Sender"
+msgstr ""
+
+#: templates/messages/inbox_base.html:46 templates/messages/reply.html:4
+msgid "Recipient"
+msgstr ""
+
+#: templates/messages/inbox_base.html:64 templates/messages/view.html:29
+msgid "g:i A,M j,n/j/y"
+msgstr ""
+
+#: templates/messages/inbox_base.html:70 templates/messages/view.html:45
+msgid "Delete"
+msgstr ""
+
+#: templates/messages/inbox_base.html:71 templates/messages/view.html:44
+msgid "Archive"
+msgstr ""
+
+#: templates/messages/inbox_base.html:72
+msgid "Undelete"
+msgstr ""
+
+#: templates/messages/inbox_base.html:77
+msgid "No messages."
+msgstr ""
+
+#: templates/messages/reply.html:3 templates/messages/view.html:42
+#: templates/messages/view.html.py:49 templates/messages/view.html:52
+msgid "Reply"
+msgstr ""
+
+#: templates/messages/sent.html:6
+msgid "Sent"
+msgstr ""
+
+#: templates/messages/trash.html:3
+msgid "Deleted Messages"
+msgstr ""
+
+#: templates/messages/trash.html:10
+msgid ""
+"Messages in this folder can be removed from time to time. For long term "
+"storage, use instead the archive folder."
+msgstr ""
+
+#: templates/messages/view.html:20
+msgid "Conversation"
+msgstr ""
+
+#: templates/messages/view.html:20
+msgid "Message"
+msgstr ""
+
+#: templates/messages/view.html:31
+msgid "Rejected"
+msgstr ""
+
+#: templates/messages/view.html:31
+msgid ":"
+msgstr ""
+
+#: templates/messages/view.html:41
+msgid "Back"
 msgstr ""
 
 #: templates/socialaccount/connections.html:8

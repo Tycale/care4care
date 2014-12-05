@@ -81,12 +81,18 @@
 
 
             </div>
+            <div class="col-lg-12 col-sm-12 background-gris">
+                <div class="alert alert-danger"><b>{% trans "Attention:"%}</b> {% trans "En vous inscrivant, vous acceptez"%} <a href="{% url 'agreements' %}"> {% trans "les conditions d'utilisations de Care4Care" %}</a>.
+                </div>
+            </div>
+            <div class="col-lg-12 col-sm-12 background-gris">
 
             {% buttons %}
             <button type="submit" class="btn btn-success btn-lg btn-block">
                 {% bootstrap_icon "ok" %} &nbsp; {% trans "M'inscrire" %}
             </button>
             {% endbuttons %}
+        </div>
         </form>
     </div>
 </div><!-- col-lg-12-->
