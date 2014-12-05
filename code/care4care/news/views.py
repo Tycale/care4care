@@ -9,11 +9,13 @@ from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy as __
 
 def read(request, id, slug):
+    """ View for displaying a signle news """
     a = get_object_or_404(News, id=id)
 
     return render(request, 'read.html', locals())
 
 def add(request):
+    """ View  for creating a news """
     if request.method == "POST":
         form = NewsForm(request.user, request.POST)
         if form.is_valid():
@@ -36,6 +38,7 @@ def add(request):
     return render(request, 'add.html', locals())
 
 def list(request, slug='all', page=1):
+    """ View used for displaying the list on the latest news """
     news = News.objects.filter(visible=True).order_by('-date_debut')
     
     page = request.GET.get('page', 1)
@@ -47,6 +50,7 @@ def list(request, slug='all', page=1):
     return render(request, 'news.html', locals())
 
 def modify(request, id, slug):
+    """ View  for creating a news """
     article = get_object_or_404(News, id=id)
     modify = True
     if  not request.user.is_superuser:
