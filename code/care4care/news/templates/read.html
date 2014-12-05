@@ -9,7 +9,7 @@
 <meta content="Titre" property="og:title"></meta>
 <meta content="Care4Care" property="og:site_name"></meta>
 <meta content="Description" property="og:description"></meta>
-<meta content="{{request.META.HTTP_HOST}}{% static "img/ui-sam.jpg" %}" property="og:image"></meta>
+<meta content="http://{{request.META.HTTP_HOST}}{% static "img/ui-sam.jpg" %}" property="og:image"></meta>
 {% endblock %}
 
 {% block content %}
@@ -22,7 +22,7 @@
 		<div class="panel-heading">
 			<h4><a href="{{ a.get_absolute_url }}" class="panel-title">{{ a.titre | safe }}</a>
 
-			<div class="fb-share-button pull-right" data-layout="button"></div>
+			<div class="fb-share-button pull-right" data-layout="button" data-href="{{a.get_absolute_url}}"></div>
 			
 			{% if request.user.is_superuser %}
 				<a class="btn btn-default btn-xs btn-primary pull-right" href="{{ a.get_absolute_modify_url }}" style="margin-right : 15px;"><span class="fui-gear"></span>{% trans "Modifier" %}</a>
