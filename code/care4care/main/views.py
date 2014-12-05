@@ -425,7 +425,7 @@ class RegistrationView(BaseRegistrationView):
         new_user.save()
 
         # chercher une branche uniquement pour le membre de type membre
-        if new_user.user_type == MemberType.MEMBER:
+        if int(new_user.user_type) == int(MemberType.MEMBER):
             branch = Branch.objects.get(pk=cleaned_data['id'])
             bm = BranchMembers(user=new_user, branch=branch, is_admin=False, joined=timezone.now())
             bm.save()
