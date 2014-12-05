@@ -152,7 +152,6 @@ def branch_ban(request, branch_id, user_id):
             d.delete()
         for d in Offer.objects.up_to_date().filter(branch=branch_id, donor=user_id):
             d.delete()
-
     else :
         return refuse(request)
 
