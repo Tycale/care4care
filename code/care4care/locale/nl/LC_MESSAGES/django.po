@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-05 18:39+0000\n"
+"POT-Creation-Date: 2014-12-05 18:46+0000\n"
 "PO-Revision-Date: 2014-12-05 10:52+0000\n"
 "Last-Translator: b'vv vv <vv@vv.be>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -759,10 +759,6 @@ msgstr ""
 msgid "Vous"
 msgstr ""
 
-#: branch/templates/job/details_offer.html:4
-msgid "object.title"
-msgstr ""
-
 #: branch/templates/job/details_offer.html:16
 msgid "offre son aide dans la branche "
 msgstr ""
@@ -954,12 +950,12 @@ msgstr ""
 msgid "Vous avez quitté la branche {branch}"
 msgstr ""
 
-#: branch/views.py:147
+#: branch/views.py:144
 #, python-format
 msgid "Bannissement de la branche %s"
 msgstr ""
 
-#: branch/views.py:148
+#: branch/views.py:145
 #, python-format
 msgid ""
 "Vous avez été banni de la branche %s. Vous ne pouvez à présent plus "
@@ -967,7 +963,7 @@ msgid ""
 "adminstrateur ou l'officier en charge de la branche en question"
 msgstr ""
 
-#: branch/views.py:150
+#: branch/views.py:147
 #, python-brace-format
 msgid "{user} a été banni de la branche {branch}"
 msgstr ""
@@ -1730,6 +1726,14 @@ msgstr ""
 
 #: main/templates/main/about_us.html:10
 msgid "A propos de nous ... texte"
+msgstr ""
+
+#: main/templates/main/agreements.html:5 main/templates/main/agreements.html:9
+msgid "Conditions d'utilisations de Care4Care"
+msgstr ""
+
+#: main/templates/main/agreements.html:10
+msgid "Conditions d'utilisations de Care4Care text"
 msgstr ""
 
 #: main/templates/main/help.html:5 main/templates/main/help.html.py:9
@@ -2541,7 +2545,7 @@ msgstr ""
 msgid "les conditions d'utilisations de Care4Care"
 msgstr ""
 
-#: main/templates/registration/registration_form.html:91
+#: main/templates/registration/registration_form.html:92
 msgid "M'inscrire"
 msgstr ""
 

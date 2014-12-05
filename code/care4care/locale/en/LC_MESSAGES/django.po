@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-05 18:39+0000\n"
-"PO-Revision-Date: 2014-12-05 18:41+0000\n"
+"POT-Creation-Date: 2014-12-05 18:46+0000\n"
+"PO-Revision-Date: 2014-12-05 18:46+0000\n"
 "Last-Translator: b'care4care care4care <care4care@tycale.be>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -776,10 +776,6 @@ msgstr "Comment"
 msgid "Vous"
 msgstr "You"
 
-#: branch/templates/job/details_offer.html:4
-msgid "object.title"
-msgstr "object.title"
-
 #: branch/templates/job/details_offer.html:16
 msgid "offre son aide dans la branche "
 msgstr "is offering help in the branch"
@@ -982,12 +978,12 @@ msgstr "You joined the branch {branch}"
 msgid "Vous avez quitté la branche {branch}"
 msgstr "You left the branch {branch}"
 
-#: branch/views.py:147
+#: branch/views.py:144
 #, python-format
 msgid "Bannissement de la branche %s"
 msgstr "Ban from the branch %s"
 
-#: branch/views.py:148
+#: branch/views.py:145
 #, python-format
 msgid ""
 "Vous avez été banni de la branche %s. Vous ne pouvez à présent plus "
@@ -997,7 +993,7 @@ msgstr ""
 "You have been banned from the branch %s. You can't join it.\n"
 "For more information, please contact an administrator or the branch officer."
 
-#: branch/views.py:150
+#: branch/views.py:147
 #, python-brace-format
 msgid "{user} a été banni de la branche {branch}"
 msgstr "{user} was banned from the branch {branch}"
@@ -1775,6 +1771,16 @@ msgstr "About us"
 #: main/templates/main/about_us.html:10
 msgid "A propos de nous ... texte"
 msgstr "About us ... "
+
+#: main/templates/main/agreements.html:5 main/templates/main/agreements.html:9
+#| msgid "les conditions d'utilisations de Care4Care"
+msgid "Conditions d'utilisations de Care4Care"
+msgstr "The agreements of Care4Care"
+
+#: main/templates/main/agreements.html:10
+#| msgid "les conditions d'utilisations de Care4Care"
+msgid "Conditions d'utilisations de Care4Care text"
+msgstr "The agreements of Care4Care ..."
 
 #: main/templates/main/help.html:5 main/templates/main/help.html.py:9
 #: templates/base.html:337
@@ -2595,7 +2601,6 @@ msgid "Comment avez-vous entendu parler de nous \t?"
 msgstr "How did you hear about us?"
 
 #: main/templates/registration/registration_form.html:85
-#| msgid "Action"
 msgid "Attention:"
 msgstr "Warning: "
 
@@ -2607,7 +2612,7 @@ msgstr "By completing your registration, you agree"
 msgid "les conditions d'utilisations de Care4Care"
 msgstr "the agreements of Care4Care"
 
-#: main/templates/registration/registration_form.html:91
+#: main/templates/registration/registration_form.html:92
 msgid "M'inscrire"
 msgstr "Sign up"
 
@@ -3257,6 +3262,9 @@ msgid ""
 msgstr ""
 "\n"
 "You are about to use your account %(provider_name)s to log on Care4Care. Complete this form in order to make your connection:"
+
+#~ msgid "object.title"
+#~ msgstr "object.title"
 
 #~ msgid "Username"
 #~ msgstr "Username"
