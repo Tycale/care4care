@@ -1,19 +1,38 @@
 {% extends "base.html" %}
 {% load bootstrap3 %}{% load i18n %}{% load jobs_extra %}{% load staticfiles %}
 
-
 {% block title %}{{ a.titre }}{% endblock %}
 
 
+{% block extra_head %}
+<meta content="958033600891660" property="fb:app_id"></meta>
+<meta content="Titre" property="og:title"></meta>
+<meta content="Care4Care" property="og:site_name"></meta>
+<meta content="Description" property="og:description"></meta>
+<meta content="{% static "img/ui-sam.jpg" %}" property="og:image"></meta>
+{% endblock %}
+
 {% block content %}
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&appId=958033600891660&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
 <div class="row mt">
   	<div class="col-lg-12">
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h4><a href="{{ a.get_absolute_url }}" class="panel-title">{{ a.titre | safe }}</a>
+			<div class="fb-share-button pull-right" data-layout="button"></div>
 			{% if request.user.is_superuser %}
 				<a class="btn btn-default btn-xs btn-danger pull-right btn-modify" href="{{ a.get_absolute_modify_url }}"><span class="fui-gear"></span>{% trans "Modifier" %}</a>
 			{% endif %}
+
 			</h4>
 		</div>
 
