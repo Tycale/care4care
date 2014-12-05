@@ -21,6 +21,11 @@ class CreateBranchForm(forms.ModelForm):
             'location': forms.HiddenInput,
         }
 
+    def clean(self):
+        if not self.cleaned_data.get('latitude') or not self.cleaned_data('longitude'):
+            raise forms.ValidationError(_("Veuillez choisir une adresse"))
+        super(CreateBranchForm, self).clean()
+
 class ChooseBranchForm(forms.Form):
     """ Form for choosing a branch """
     id = forms.IntegerField(widget=forms.HiddenInput)
