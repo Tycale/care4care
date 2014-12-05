@@ -33,6 +33,5 @@ requests==2.4.3
 requests-oauthlib==0.4.2
 selenium==2.44.0
 six==1.8.0
-django-model-utils==2.2
 gunicorn
 psycopg2
