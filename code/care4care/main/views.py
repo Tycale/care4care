@@ -50,10 +50,8 @@ def home(request):
         demands = Demand.objects.filter(branch__in=branch_ids).all()
         offers = Offer.objects.filter(branch__in=branch_ids).all()
     else :
-        demands = Demand.objects.all()
-        offers = Offer.objects.all()
-
-    date_now = timezone.now() + timezone.timedelta(hours=-24)
+        demands = Demand.objects.filter(receive_help_from_who=MemberType.ALL).all()
+        offers = Offer.objects.filter(receive_help_from_who=MemberType.ALL).all()
 
     demands = demands.up_to_date()
     offers = offers.up_to_date()
@@ -74,6 +72,27 @@ def help(request):
     """
 
     return render(request, 'main/help.html', locals())
+
+def jobs_care4care(request):
+    """
+        jobs_care4care view calling the jobs_care4care template           
+    """
+
+    return render(request, 'main/jobs_care4care.html', locals())
+
+def about_us(request):
+    """
+        about_us view calling the about_us template           
+    """
+
+    return render(request, 'main/about_us.html', locals())
+
+def what_is(request):
+    """
+        what_is view calling the what_is template           
+    """
+
+    return render(request, 'main/what_is.html', locals())
 
 def logout(request):
     """
@@ -127,7 +146,7 @@ def user_profile(request, user_id):
         else:
             can_manage_user = True
 
-        if in_other_ignore_list:
+        if in_other_ignore_list and not request.user.is_superuser :
             messages.add_message(request, messages.INFO, _('Vous êtes pas autoriser à consulter ce profil'))
             return redirect('home')
 
@@ -425,7 +444,7 @@ class RegistrationView(BaseRegistrationView):
         new_user.save()
 
         # chercher une branche uniquement pour le membre de type membre
-        if new_user.user_type == MemberType.MEMBER:
+        if int(new_user.user_type) == int(MemberType.MEMBER):
             branch = Branch.objects.get(pk=cleaned_data['id'])
             bm = BranchMembers(user=new_user, branch=branch, is_admin=False, joined=timezone.now())
             bm.save()
@@ -707,7 +726,7 @@ def job_search_view(request):
 
 
             if not form.cleaned_data['date1']:
-                date1 = timezone.now()+timezone.timedelta(hours=-24)
+                date1 = timezone.now()+timezone.timedelta(hours=-25)
             else:
                 date1 = form.cleaned_data['date1']
 

@@ -73,7 +73,7 @@ class User(unittest.TestCase):
         driver.find_element_by_css_selector("#ignored > div.row.mt > div.col-lg-12.col-sm-12 > div.panel.panel-default > div.panel-body > div.row.mt > form > div.col-lg-9 > div.form-group > #id_user").clear()
         driver.find_element_by_css_selector("#ignored > div.row.mt > div.col-lg-12.col-sm-12 > div.panel.panel-default > div.panel-body > div.row.mt > form > div.col-lg-9 > div.form-group > #id_user").send_keys("user1")
         driver.find_element_by_name("ignored").click()
-
+        """
         print("test offer help")
         driver.get(self.base_url + "")
         driver.find_element_by_link_text("Planter un arbre dans mon jardin").click()
@@ -81,7 +81,7 @@ class User(unittest.TestCase):
         driver.find_element_by_id("id_time_3").click()
         driver.find_element_by_id("id_comment").clear()
         driver.find_element_by_id("id_comment").send_keys("Je suis partant!")
-        driver.find_element_by_xpath("//button[@type='submit']").click()
+        driver.find_element_by_xpath("//button[@type='submit']").click()"""
 
         print("test create emergency contact")
         driver.get(self.base_url + "accounts/profile/")
@@ -115,11 +115,11 @@ class User(unittest.TestCase):
         driver.find_element_by_xpath("//button[@type='submit']").click()
 
         print("test search")
-        driver.get(self.base_url + "")
-        driver.find_element_by_xpath("//ul[@id='nav-accordion']/li[4]/a/span").click()
+        driver.get(self.base_url + "search/job/")
         driver.find_element_by_id("id_job_type_1").click()
         driver.find_element_by_id("id_category_6").click()
         driver.find_element_by_id("id_receive_help_from_who_0").click()
+        driver.find_element_by_id("id_time_3").click()
         driver.find_element_by_id("id_date1").clear()
         driver.find_element_by_id("id_date1").send_keys("14/12/2014")
         driver.find_element_by_id("id_date2").clear()

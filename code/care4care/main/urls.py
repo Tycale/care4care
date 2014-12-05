@@ -7,6 +7,9 @@ urlpatterns = patterns(
     url(r'^accounts/logout/$', 'main.views.logout', name='logout'),
     url(r'^accounts/login/$', 'main.views.login', name='login'),
     url(r'^help/$', 'main.views.help', name='help'),
+    url(r'^jobs/$', 'main.views.jobs_care4care', name='jobs_care4care'),
+    url(r'^about_us/$', 'main.views.about_us', name='about_us'),
+    url(r'^what_is/$', 'main.views.what_is', name='what_is'),
 
     url(r'^accounts/', include('main.urls_register')),
     url(r'^accounts/', include('main.urls_profile')),

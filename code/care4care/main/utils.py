@@ -69,9 +69,10 @@ def discriminate_demands(request, demands):
             if not request.user.verified_favorites.filter(user=demand.receiver).exists():
                 exclude_demand_ids.append(demand.id)
 
-    while request.user.id in exclude_demand_ids:
-        exclude_demand_ids.remove(request.user.id)
-
+        if demand.receiver.id == request.user.id:
+            if demand.id in exclude_demand_ids:
+                exclude_demand_ids.remove(demand.id)
+        
     demands = demands.exclude(id__in=exclude_demand_ids)
     return demands
 
@@ -99,8 +100,9 @@ def discriminate_offers(request, offers):
             if not request.user.verified_favorites.filter(user=offer.donor).exists():
                 exclude_offer_ids.append(offer.id)
 
-    while request.user.id in exclude_offer_ids:
-        exclude_offer_ids.remove(request.user.id)
+        if offer.donor.id == request.user.id:
+            if offer.id in exclude_offer_ids:
+                exclude_offer_ids.remove(offer.id)
 
     offers = offers.exclude(id__in=exclude_offer_ids)
     return offers
