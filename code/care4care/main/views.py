@@ -36,16 +36,6 @@ from django.contrib.messages.views import SuccessMessageMixin
 from main.utils import can_manage, is_branch_admin, refuse, can_manage_branch_specific, is_in_branch, \
                         discriminate_demands, discriminate_offers
 
-def trad(request):
-    a = _("Type de job (rien = tout)")
-    b = _("Catégorie du job (rien = tout)")
-    c = _("Qui peut fournir son aide ?")
-    d = _("A quelle heure ?")
-    e = _("A partir du")
-    f = _("Jusqu'au")
-    g = _("Donner à :")
-    h = _("Montant du temps (plus que 1)")
-
 def home(request):
     """
         View used for the home_page.
@@ -630,7 +620,7 @@ def get_job_categories_json_view(request):
 @login_required
 def branch_statistics(request, branch_id, slug, user_id):
     branch = get_object_or_404(Branch, pk=branch_id)
-    if not is_branch_admin(request.user, branch) or not request.user.is_superuser:
+    if not is_branch_admin(request.user, branch) and not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
 
     # Account status color
