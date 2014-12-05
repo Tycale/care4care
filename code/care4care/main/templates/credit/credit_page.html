@@ -2,7 +2,6 @@
 {% load bootstrap3 %}{% load i18n %}{% load staticfiles %}{% load jobs_extra %}
 
 {% block extra_head %}{{ block.super }}
-
 <script src="{% static "js/jquery-ui-1.9.2.custom.min.js" %}"></script>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -13,8 +12,6 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 <link type="text/css" media="all" rel="stylesheet" href="{% static "css/jquery-ui-1.9.2.custom.css" %}" />
-<meta content="{% static "img/ui-sam.jpg" %}" property="og:image"></meta>
-
 {% endblock %}
 
 {% block title %}{% trans "Mes crédits" %}{% endblock %}
@@ -33,7 +30,7 @@
                 <h4> {% trans "Temps moyen par travail : " %}{{average_time_job}} {% trans "minute" %}</h4>
                 {% endif %}
                 <h4> {% trans "J'ai parcouru : " %}{{km}} {% trans "km" %}</h4>
-                <div class="fb-share-button" data-href="http://care4demo.tycale.be" data-layout="button_count"></div>
+                <div class="fb-share-button" data-href="http://care4demo.tycale.be/" data-layout="button_count"></div>
             </div>
          </div>
     </div>
