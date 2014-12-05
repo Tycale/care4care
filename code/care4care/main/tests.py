@@ -3,7 +3,8 @@ from django.utils import timezone
 from main.models import MemberType, STATUS, ACTIVE
 from main.models import User
 from django.contrib.auth import authenticate, login as _login
-from django.test.client import Client
+from django.test.client import Client, RequestFactory
+
 
 class UserFullNameTestCase(TestCase):
 
@@ -178,14 +179,14 @@ class UserEditTestCase(TestCase):
         self.user.save()
         self.assertEqual(self.user.email,"coucou@coucou.be")
 
-class SuperUserCreationTest(TestCase):
+class SuperUserCreationTestCase(TestCase):
     def setUp(self):
          self.super = User.objects.create_superuser(username="username_test",email="test@test.com", password="test")
 
     def test_super(self):
         self.assertEqual(self.super.is_superuser, True)
 
-class UserLanguageTest(TestCase):
+class UserLanguageTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create(first_name="first_test", last_name="last_test",\
         username="username_test",birth_date=timezone.now(),how_found=0,\
@@ -193,3 +194,20 @@ class UserLanguageTest(TestCase):
 
     def test_verbose_lg(self):
         self.assertEqual(self.user.get_verbose_languages(), "Français")
+
+class MainView(TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.user = User.objects.create(first_name="first_test", last_name="last_test",\
+        username="username_test",birth_date=timezone.now(),how_found=0,\
+        email="test@test.com", password="test")
+
+        def test_details(self):
+            # Create an instance of a GET request.
+            request = self.factory.get('home')
+
+            request.user = self.user
+
+            # Test my_view() as if it were deployed at /customer/details
+            response = my_view(request)
+            self.assertEqual(response.status_code, 200)
