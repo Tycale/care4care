@@ -24,6 +24,7 @@ from django.db.models import Q
 @login_required
 @user_passes_test(lambda u: u.is_verified)
 def branch_create(request):
+    """ View for creating a branch """
     user = request.user
     form = CreateBranchForm()
 
@@ -41,6 +42,7 @@ def branch_create(request):
     return render(request,'branch/branch_create.html', locals())
 
 def branch_home(request, branch_id, slug):
+    """ Display branch id information """
     branch = get_object_or_404(Branch, pk=branch_id)
     user = request.user
 
@@ -85,6 +87,7 @@ def branch_home(request, branch_id, slug):
 
 @login_required
 def branch_join(request):
+    """ Rejoign a branch """
     branches = Branch.objects.all()
     form = ChooseBranchForm()
     user = request.user
@@ -109,6 +112,7 @@ def branch_join(request):
 
 @login_required
 def branch_leave(request, branch_id, user_id):
+    """ Leave a branch """
     branch = get_object_or_404(Branch, pk=branch_id)
     user = get_object_or_404(User, pk=user_id)
 
@@ -126,6 +130,7 @@ def branch_leave(request, branch_id, user_id):
 
 @login_required
 def branch_ban(request, branch_id, user_id):
+    """ Ban an user form the branch id """
     branch = get_object_or_404(Branch, pk=branch_id)
     user = get_object_or_404(User, pk=user_id)
 
@@ -147,6 +152,7 @@ def branch_ban(request, branch_id, user_id):
 
 @login_required
 def branch_unban(request, branch_id, user_id):
+    """ Unban an user from the branch admin """
     branch = get_object_or_404(Branch, pk=branch_id)
     user = get_object_or_404(User, pk=user_id)
 
@@ -167,6 +173,7 @@ def branch_unban(request, branch_id, user_id):
 
 @login_required
 def branch_promote(request, branch_id, user_id):
+    """ Promote (admin) the user_id in branch_id """
     branch = get_object_or_404(Branch, pk=branch_id)
     user = get_object_or_404(User, pk=user_id)
 
@@ -185,6 +192,7 @@ def branch_promote(request, branch_id, user_id):
 
 @login_required
 def branch_demote(request, branch_id, user_id):
+    """ Demote the user_id on branch_id """
     branch = get_object_or_404(Branch, pk=branch_id)
     user = get_object_or_404(User, pk=user_id)
 
@@ -203,6 +211,7 @@ def branch_demote(request, branch_id, user_id):
 
 @login_required
 def branch_delete(request, branch_id):
+    """ Delete a branch """
     branch = get_object_or_404(Branch, pk=branch_id)
 
     if request.user == branch.creator or request.user.is_superuser:
@@ -217,6 +226,7 @@ def branch_delete(request, branch_id):
 
 @login_required
 def delete_demand(request, branch_id, slug, demand_id):
+    """ Delete a demand """
     demand = get_object_or_404(Demand, pk=demand_id)
 
     if can_manage_branch_specific(demand.receiver, request.user, demand.branch):
@@ -228,6 +238,7 @@ def delete_demand(request, branch_id, slug, demand_id):
 
 @login_required
 def delete_offer(request, branch_id, slug, offer_id):
+    """ Delete an offer """
     offer = get_object_or_404(Offer, pk=offer_id)
 
     if can_manage_branch_specific(offer.donor, request.user, offer.branch):
@@ -238,6 +249,7 @@ def delete_offer(request, branch_id, slug, offer_id):
 
 @login_required
 def volunteer_decline(request, volunteer_id):
+    """ Decline an help form the volunteer_id """
     demandProposition = DemandProposition.objects.get(pk=volunteer_id)
     demand = demandProposition.demand
 
@@ -249,6 +261,7 @@ def volunteer_decline(request, volunteer_id):
 
 @login_required
 def volunteer_accept(request, volunteer_id):
+    """ Accept an help from the volunteer_id """
     demandProposition = DemandProposition.objects.get(pk=volunteer_id)
     demand = demandProposition.demand
 
@@ -624,6 +637,7 @@ class CreateSuccessDemand(CreateView):
 
 
 def unsuccess_job(request, demand_id):
+    """ View for a job who has not been completed """
     demand = get_object_or_404(Demand, pk=demand_id)
 
     if can_manage_branch_specific(demand.donor, request.user, demand.branch):
@@ -644,6 +658,7 @@ def unsuccess_job(request, demand_id):
         return refuse(request)
 
 def manage_success(request, success_demand_id):
+    """ View for a job who has been completed """
     success = get_object_or_404(SuccessDemand, pk=success_demand_id)
     demand = success.demand
 
