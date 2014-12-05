@@ -3,7 +3,10 @@ from django.test import TestCase
 from main.ajax.views import previous_month, next_month, month_list, \
                         get_days_in_month, \
                         get_users_registrated_json, get_account_types_json, \
-                        get_users_status_json, get_job_categories_json
+                        get_users_status_json, get_job_categories_json, \
+                        get_user_job_categories_json, get_user_job_avg_time_json, \
+                        get_user_jobs_amount_json, get_user_time_amount_json, \
+                        get_user_km_amount_json
 from branch.models import Branch, Demand
 from main.models import User, MemberType, ACTIVE, HOLIDAYS, UNSUBSCRIBE, \
                         JobCategory
@@ -198,6 +201,145 @@ class Global_Job_Categories_TestCase(TestCase):
         other = json.loads(get_job_categories_json())
         data = other['datasets'][0]['data']
         self.assertEqual(data, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
+
+
+
+class User_Job_Categories_Statistics(TestCase):
+
+    def test_user_job_categories_json(self):
+        """
+        Test job categories of user
+        """
+
+        # Create users
+        donor_id = 5
+        creator = User.objects.create(username='creator_user')
+        donor   = User.objects.create(id=donor_id, username='donor')
+        branch  = Branch.objects.create(creator=creator, name='my_branch')
+
+        # Test empty jobs
+        empty = json.loads(get_user_job_categories_json(donor_id))
+        data = empty['datasets'][0]['data']
+        self.assertEqual(data, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+
+        # Test that one job has been added
+        Demand.objects.create(branch=branch, category=['1'], donor=donor, date=timezone.now())
+        one_job = json.loads(get_user_job_categories_json(donor_id))
+        data = one_job['datasets'][0]['data']
+        self.assertEqual(data, [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+
+
+
+class User_Job_Avg_Time_Statistics(TestCase):
+
+    def test_user_job_avg_time_json(self):
+        """
+        Test job average time of user
+        """
+
+        # Create users
+        donor_id = 5
+        creator = User.objects.create(username='creator_user')
+        donor   = User.objects.create(id=donor_id, username='donor')
+        branch  = Branch.objects.create(creator=creator, name='my_branch')
+
+        # Test empty jobs
+        empty = json.loads(get_user_job_avg_time_json(donor_id))
+        data = empty['datasets'][0]['data']
+        self.assertEqual(data, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+
+        # Test that one job has been added
+        Demand.objects.create(branch=branch, category=['1'], donor=donor, real_time=30, date=timezone.now())
+        one_job = json.loads(get_user_job_avg_time_json(donor_id))
+        data = one_job['datasets'][0]['data']
+        self.assertEqual(data, [30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+
+        # Test that a second job has been added
+        Demand.objects.create(branch=branch, category=['1'], donor=donor, real_time=50, date=timezone.now())
+        one_job = json.loads(get_user_job_avg_time_json(donor_id))
+        data = one_job['datasets'][0]['data']
+        self.assertEqual(data, [40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+
+
+
+
+class User_Jobs_Amount_Statistics(TestCase):
+
+    def test_user_jobs_amount_json(self):
+        """
+        Test job amount of user in the last 6 months
+        """
+
+        # Create users
+        donor_id = 5
+        creator = User.objects.create(username='creator_user')
+        donor   = User.objects.create(id=donor_id, username='donor')
+        branch  = Branch.objects.create(creator=creator, name='my_branch')
+
+        # Test empty jobs
+        empty = json.loads(get_user_jobs_amount_json(donor_id))
+        data = empty['datasets'][0]['data']
+        self.assertEqual(data, [0, 0, 0, 0, 0, 0])
+
+        # Test that one job has been added
+        Demand.objects.create(branch=branch, category=[JobCategory.OTHER], donor=donor, date=timezone.now())
+        one_job = json.loads(get_user_jobs_amount_json(donor_id))
+        data = one_job['datasets'][0]['data']
+        self.assertEqual(data, [0, 0, 0, 0, 0, 1])
+
+
+
+
+class User_Time_Amount_Statistics(TestCase):
+
+    def test_user_time_amount_json(self):
+        """
+        Test time taken by user for jobs in the last 6 months
+        """
+
+        # Create users
+        donor_id = 5
+        creator = User.objects.create(username='creator_user')
+        donor   = User.objects.create(id=donor_id, username='donor')
+        branch  = Branch.objects.create(creator=creator, name='my_branch')
+
+        # Test empty jobs
+        empty = json.loads(get_user_time_amount_json(donor_id))
+        data = empty['datasets'][0]['data']
+        self.assertEqual(data, [0, 0, 0, 0, 0, 0])
+
+        # Test that one job has been added
+        Demand.objects.create(branch=branch, category=[JobCategory.OTHER], donor=donor, real_time=50, date=timezone.now())
+        one_job = json.loads(get_user_time_amount_json(donor_id))
+        data = one_job['datasets'][0]['data']
+        self.assertEqual(data, [0, 0, 0, 0, 0, 50])
+
+
+
+class User_Km_Amount_Statistics(TestCase):
+
+    def test_user_km_amount_json(self):
+        """
+        Test kilometers covered by user for jobs in the last 6 months
+        """
+
+        # Create users
+        donor_id = 5
+        creator = User.objects.create(username='creator_user')
+        donor   = User.objects.create(id=donor_id, username='donor')
+        branch  = Branch.objects.create(creator=creator, name='my_branch')
+
+        # Test empty jobs
+        empty = json.loads(get_user_km_amount_json(donor_id))
+        data = empty['datasets'][0]['data']
+        self.assertEqual(data, [0, 0, 0, 0, 0, 0])
+
+        # Test that one job has been added
+        Demand.objects.create(branch=branch, category=[JobCategory.OTHER], donor=donor, km=50, date=timezone.now())
+        one_job = json.loads(get_user_km_amount_json(donor_id))
+        data = one_job['datasets'][0]['data']
+        self.assertEqual(data, [0, 0, 0, 0, 0, 50])
+
 
 
 

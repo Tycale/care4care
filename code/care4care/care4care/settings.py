@@ -124,6 +124,17 @@ DATABASES = {
     }
 }
 
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'NAME': 'care4care',
+#        'USER': 'care4care',
+#        'PASSWORD': 'care4password',
+#        'HOST': '127.0.0.1',
+#        'PORT': '5432',
+#    }
+#}
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
