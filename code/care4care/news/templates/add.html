@@ -20,13 +20,7 @@
 		<div class="panel-body">
 			<form method="post" enctype="multipart/form-data" action=".">
 				{% csrf_token %}
-				{% bootstrap_field form.titre %}
-				{% bootstrap_field form.corps %}
-				<div class="form-group {% if form.date_debut.errors %}has-error{% endif %}">
-				<div class="">
-					{% bootstrap_field form.date_debut %}
-				</div>
-				</div>
+				{% bootstrap_form form %}
 	            <br />
 				<button type="submit" class="btn btn-block btn-lg btn-primary">{% trans "Envoyer" %}</button>
 			</form>

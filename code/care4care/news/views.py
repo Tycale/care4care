@@ -7,6 +7,7 @@ from django.core.paginator import Paginator, EmptyPage
 from datetime import datetime
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy as __
+from django.utils import timezone
 
 def read(request, id, slug):
     """ View for displaying a signle news """
@@ -24,6 +25,7 @@ def add(request):
                 art.nom_auteur = request.user.username
                 art.auteur = request.user
                 art.visible = True
+                art.date_debut = timezone.now()
                 art.save()
 
 
@@ -39,7 +41,7 @@ def add(request):
 
 def list(request, slug='all', page=1):
     """ View used for displaying the list on the latest news """
-    news = News.objects.filter(visible=True).order_by('-date_debut')
+    news = News.objects.filter(visible=True)
     
     page = request.GET.get('page', 1)
     paginator = Paginator(news, 5)

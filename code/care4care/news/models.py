@@ -35,4 +35,4 @@ class News(models.Model):
         return ('news_modify', (), { 'id' : self.id, 'slug' : self.slug,})
 
     class Meta:
-        ordering = ['-date_debut'] 
+        ordering = ['-date_debut']
