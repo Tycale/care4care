@@ -24,6 +24,8 @@ class CreateBranchForm(forms.ModelForm):
     def clean(self):
         if not 'latitude' in self.cleaned_data or not 'longitude' in self.cleaned_data:
             raise forms.ValidationError(_("Veuillez choisir une adresse"))
+        if not 'location' in self.cleaned_data or not self.cleaned_data['location']:
+            raise forms.ValidationError(_("Veuillez choisir une adresse"))
         super(CreateBranchForm, self).clean()
 
 class ChooseBranchForm(forms.Form):
