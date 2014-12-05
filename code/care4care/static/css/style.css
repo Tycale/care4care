@@ -2642,3 +2642,15 @@ a.sign-in-social:hover{
     background-color: #37bc9b !important;
     border-color: #37bc9b !important;
 }
+
+.text-ccc {
+    color: #ccc;
+}
+
+#filter-bar {
+    margin-top: 5px;
+}
+
+.panel-offdem{
+    min-height: 340px;
+}

@@ -10,7 +10,7 @@ from django.contrib.sites.models import Site
 from registration.models import RegistrationProfile
 from registration.backends.default.views import RegistrationView as BaseRegistrationView
 from main.forms import ProfileManagementForm, VerifiedInformationForm, EmergencyContactCreateForm, \
-            VerifiedProfileForm, JobSearchForm, GiftForm, AddUser
+            VerifiedProfileForm, JobSearchForm, GiftForm, AddUser, NonProfileManagementForm
 from main.models import User, VerifiedInformation, EmergencyContact, JobCategory, JobType, MemberType, GIVINGTO
 from branch.models import Demand, Offer
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -371,6 +371,25 @@ class EditProfileView(UpdateView, SuccessMessageMixin):
         if obj.id != self.request.user.id and not self.request.user.is_superuser:
             return redirect(obj.get_absolute_url())
         return super(EditProfileView, self).dispatch(*args, **kwargs)
+
+    def get_object(self, queryset=None):
+        return User.objects.get(pk=self.kwargs['user_id'])
+
+    def get_success_url(self):
+        return self.get_object().get_absolute_url()
+
+class EditNonProfileView(UpdateView, SuccessMessageMixin):
+    """ Return the edit page for the current logged user"""
+    form_class = NonProfileManagementForm
+    model = User
+    template_name = 'profile/edit_nonprofile.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        obj = self.get_object()
+        if obj.id != self.request.user.id and not self.request.user.is_superuser:
+            return redirect(obj.get_absolute_url())
+        return super(EditNonProfileView, self).dispatch(*args, **kwargs)
 
     def get_object(self, queryset=None):
         return User.objects.get(pk=self.kwargs['user_id'])

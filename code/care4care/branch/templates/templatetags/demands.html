@@ -4,7 +4,8 @@
   <div class="panel-heading">
     {% trans "Demandes" %}
   </div>
-  <div class="panel-body">
+  <div class="panel-body panel-offdem">
+      
       <table id="demands" data-toggle="table" data-height="260" class="rowlink table striped table-hover">
         <thead >
           <tr>
@@ -18,7 +19,7 @@
             <th>{% trans "Heure" %}</th>
           </tr>
         </thead>
-        <tbody data-link="row" data-target="a.mainlink">
+        <tbody data-link="row" data-target="a.mainlink" class="searchable">
         {% for demand in demands %}
         <tr class="{% if demand.closed %}success{% endif %}">
           <td><a data-toggle="tooltip" data-placement="right" title="{{demand.receiver.get_full_name}}" href="{{ demand.receiver.get_absolute_url }}"><img class="img-circle" src="{% thumbnail demand.receiver.photo 50x50 crop %}" alt="{{demand.receiver.get_full_name}}" /></a></td>
@@ -35,15 +36,35 @@
         {% endfor %}
         </tbody>
       </table>
+      <br />
+      <div id="filter-bar" class="text-ccc text-right">
+          <label>
+               {% trans "Cacher les demandes où un volontaire a déjà été choisi :" %}
+               <input id="filterD" type="checkbox" checked="checked">
+          </label>
+      </div>
 </div>
 </div>
 </div>
 <script type="application/javascript">
 $(function () {
     $('#demands').bootstrapTable(); // init via javascript
-
+    $('.searchable tr').hide();
+    $('.searchable tr').filter(function() {
+        return !$(this).hasClass("success")
+    }).show();
     $(window).resize(function () {
         $('#demands').bootstrapTable('resetView');
+    });
+    $('#filterD').on('change', function(){
+        if(this.checked){
+            $('.searchable tr').hide();
+            $('.searchable tr').filter(function() {
+                return !$(this).hasClass("success")
+            }).show();
+        }else{
+            $('.searchable tr').show();
+        }
     });
 });
 </script>
