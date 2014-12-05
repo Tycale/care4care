@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-12-05 17:51+0000\n"
-"PO-Revision-Date: 2014-12-05 17:52+0000\n"
+"PO-Revision-Date: 2014-12-05 18:14+0000\n"
 "Last-Translator: b'care4care care4care <care4care@tycale.be>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1581,7 +1581,7 @@ msgstr "Receive offers and demands"
 
 #: main/models.py:155
 msgid "Quelles sont les tâches que vous souhaitez effectuer ?"
-msgstr "What jobs you want to do?"
+msgstr "What jobs do you want to do?"
 
 #: main/models.py:161
 msgid "Vos hobbies"

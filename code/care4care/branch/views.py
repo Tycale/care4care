@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext as _
-from django.utils.translation import ugettext_lazy as __
 from django.contrib import messages
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.detail import DetailView
@@ -141,14 +140,14 @@ def branch_ban(request, branch_id, user_id):
             to_remove = BranchMembers.objects.get(branch=branch_id, user=user_id)
             to_remove.delete()
 
-            branch.banned.add(to_remove.user)
-            subject = __('Bannissement de la branche %s' % branch.name)
-            body = __('Vous avez été banni de la branche %s. Vous ne pouvez à présent plus rejoindre cette branche. Pour plus d\'informations, contactez un adminstrateur ou l\'officier en charge de la branche en question' % branch.name)
-            pm_write(request.user, user, subject, body)
-            messages.add_message(request, messages.INFO, _('{user} a été banni de la branche {branch}').format(branch=branch, user=user))
-
             Demand.objects.up_to_date.filter(branch=branch_id, receiver=user_id).delete()
             Offer.objects.up_to_date.filter(branch=branch_id, donor=user_id).delete()
+
+            branch.banned.add(to_remove.user)
+            subject = _('Bannissement de la branche %s' % branch.name)
+            body = _('Vous avez été banni de la branche %s. Vous ne pouvez à présent plus rejoindre cette branche. Pour plus d\'informations, contactez un adminstrateur ou l\'officier en charge de la branche en question' % branch.name)
+            pm_write(request.user, user, subject, body)
+            messages.add_message(request, messages.INFO, _('{user} a été banni de la branche {branch}').format(branch=branch, user=user))
         except:
             pass
     else :
