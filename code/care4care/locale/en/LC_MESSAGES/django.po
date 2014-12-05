@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-05 18:28+0000\n"
-"PO-Revision-Date: 2014-12-05 18:30+0000\n"
+"POT-Creation-Date: 2014-12-05 18:39+0000\n"
+"PO-Revision-Date: 2014-12-05 18:41+0000\n"
 "Last-Translator: b'care4care care4care <care4care@tycale.be>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2594,7 +2594,20 @@ msgstr "Contact Information"
 msgid "Comment avez-vous entendu parler de nous \t?"
 msgstr "How did you hear about us?"
 
-#: main/templates/registration/registration_form.html:87
+#: main/templates/registration/registration_form.html:85
+#| msgid "Action"
+msgid "Attention:"
+msgstr "Warning: "
+
+#: main/templates/registration/registration_form.html:85
+msgid "En vous inscrivant, vous acceptez"
+msgstr "By completing your registration, you agree"
+
+#: main/templates/registration/registration_form.html:85
+msgid "les conditions d'utilisations de Care4Care"
+msgstr "the agreements of Care4Care"
+
+#: main/templates/registration/registration_form.html:91
 msgid "M'inscrire"
 msgstr "Sign up"
 
@@ -2869,15 +2882,15 @@ msgstr "Give to :"
 msgid "Montant du temps (plus que 1)"
 msgstr "How many (> 1)"
 
-#: main/views.py:112
+#: main/views.py:119
 msgid "Vous êtes désormais déconnecté."
 msgstr "You have been disconnected"
 
-#: main/views.py:129
+#: main/views.py:136
 msgid "Vous êtes désormais connecté."
 msgstr "Connected"
 
-#: main/views.py:132
+#: main/views.py:139
 msgid ""
 "Impossible de vous connecter, vous                     êtes inactif. "
 "Vérifiez vos emails afin de valider votre compte."
@@ -2885,35 +2898,35 @@ msgstr ""
 "Unable to connect because you are inactive. Check your email to verify your "
 "account."
 
-#: main/views.py:135
+#: main/views.py:142
 msgid "Impossible de se connecter."
 msgstr "Unable to connect."
 
-#: main/views.py:160
+#: main/views.py:167
 msgid "Vous êtes pas autoriser à consulter ce profil"
 msgstr "You can't consult this profile"
 
-#: main/views.py:224 main/views.py:382
+#: main/views.py:231 main/views.py:389
 msgid "Profil modifié avec succès !"
 msgstr "Successful profile modification"
 
-#: main/views.py:262
+#: main/views.py:269
 msgid "Modification sauvegardée"
 msgstr "Change saved"
 
-#: main/views.py:288 main/views.py:305
+#: main/views.py:295 main/views.py:312
 msgid "Accord du status de membre vérifié"
 msgstr "Agreement status verified member"
 
-#: main/views.py:289
+#: main/views.py:296
 msgid "Le status de membre vérifié vous a été accordé ! Félicitations."
 msgstr "'Verified member' status awarded to you! Congratulations."
 
-#: main/views.py:291
+#: main/views.py:298
 msgid "Droit accordé"
 msgstr "Status granted"
 
-#: main/views.py:306
+#: main/views.py:313
 msgid ""
 "Le status de membre vérifié vous a été refusé. Pour plus d'informations, "
 "contactez l'officier responsable de votre branche."
@@ -2921,11 +2934,11 @@ msgstr ""
 "The status verified member was denied. For more information, contact your "
 "branch officer."
 
-#: main/views.py:308
+#: main/views.py:315
 msgid "Droit refusé et demande supprimée"
 msgstr "Status refused and demand deleted"
 
-#: main/views.py:821
+#: main/views.py:828
 #, python-brace-format
 msgid "Cadeau de : {amount} minutes"
 msgstr "Gift :  {amount} minutes"
@@ -3094,7 +3107,6 @@ msgid "Cancel"
 msgstr "Cancel"
 
 #: templates/messages/email_user.txt:1
-#| msgid "utilisateurs"
 msgid "Cher utilisateur,"
 msgstr "Dear user, "
 
@@ -3113,7 +3125,6 @@ msgstr ""
 "%(body)s\n"
 
 #: templates/messages/email_user.txt:9
-#| msgid "Nom d'utilisateur"
 msgid "Merci d'utiliser"
 msgstr "Thank you for using"
 
