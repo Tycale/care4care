@@ -68,6 +68,11 @@ class NeedHelpForm(forms.ModelForm):
             raise forms.ValidationError(_("Le temps estimé doit être plus grand que 0 minute."))
         return est
 
+    def clean(self):
+        if not self.cleaned_data['latitude'] and not self.cleaned_data['longitude']:
+            raise forms.ValidationError(_("Veuillez choisir une adresse"))
+        super(NeedHelpForm, self).clean()
+
     class Meta:
         model = Demand
         fields = ['description', 'estimated_time', 'category', 'date', 'time', 'location', 'latitude', 'longitude', 'title', 'receive_help_from_who']

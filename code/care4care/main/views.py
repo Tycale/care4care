@@ -50,10 +50,8 @@ def home(request):
         demands = Demand.objects.filter(branch__in=branch_ids).all()
         offers = Offer.objects.filter(branch__in=branch_ids).all()
     else :
-        demands = Demand.objects.all()
-        offers = Offer.objects.all()
-
-    date_now = timezone.now() + timezone.timedelta(hours=-24)
+        demands = Demand.objects.filter(receive_help_from_who=MemberType.ALL).all()
+        offers = Offer.objects.filter(receive_help_from_who=MemberType.ALL).all()
 
     demands = demands.up_to_date()
     offers = offers.up_to_date()
@@ -728,7 +726,7 @@ def job_search_view(request):
 
 
             if not form.cleaned_data['date1']:
-                date1 = timezone.now()+timezone.timedelta(hours=-24)
+                date1 = timezone.now()+timezone.timedelta(hours=-25)
             else:
                 date1 = form.cleaned_data['date1']
 

@@ -121,7 +121,7 @@
                   <ul class="dropdown-menu" role="user-menu">
                     <li><a href="{% url 'profile' %}">
                     {% bootstrap_icon 'user' %} &nbsp; {% trans "Mon Profil" %}</a>
-                    {% if  request.user.user_type != NON_MEMBER_TYPE and not request.user.is_verified %}
+                    {% if request.user.user_type != NON_MEMBER_TYPE and not request.user.is_verified %}
                       <a href="{% url 'verified_profile' user_id=request.user.id%}">
                       {% bootstrap_icon 'star' %} &nbsp; {% trans "Devenir vérifié" %}</a>
                     {% endif %}
@@ -315,7 +315,7 @@
                   </li>
                   {% endif %}
 
-                  {% if request.user.is_authenticated %}
+                  {% if request.user.is_authenticated and request.user.user_type != NON_MEMBER_TYPE %}
                     <li class="sub-menu">
                       <a href="{% url "job_search" %}" >
                           <i class="fa fa-search"></i>
