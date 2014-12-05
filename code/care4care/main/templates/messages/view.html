@@ -23,7 +23,7 @@ in the INSTALLED_APPS setting.
                     <div class=" panel-heading ">
                         <table>
                             <tr>
-                                <td><div class="photo"> <img class="img-circle" src="{% thumbnail message.sender.photo 35x35 crop %}" /> </div></td>                <td style="position: absolute; top: 5 px; left: 100px"><div class="pm_subject" > Title : {{ message.subject }}</div>
+                                <td><div class="photo"> <img class="img-circle" src="{% thumbnail message.sender.photo 35x35 crop %}" /> </div></td>                <td style="top: 5 px; left: 100px"><div class="pm_subject" > Title : {{ message.subject }}</div>
                                 <span class="pm_sender">  From : {{ message.obfuscated_sender|or_me:user }}</span>
                                 <span class="pm_recipient"> To :{{ message.obfuscated_recipient|or_me:user }}</span>
                                 <span class="pm_date">{{message.sent_at|compact_date:_("g:i A,M j,n/j/y")}}</span>
