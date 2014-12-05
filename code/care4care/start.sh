@@ -1,2 +1,2 @@
 #!/bin/sh
-python manage.py run_gunicorn -b 127.0.0.1 -w 2
+gunicorn care4care.wsgi -b 127.0.0.1:8123 -w 2
