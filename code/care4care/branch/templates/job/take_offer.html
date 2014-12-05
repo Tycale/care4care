@@ -16,6 +16,16 @@
 
 <h3> {% trans "Demande d'aide de " %}{{ ruser.get_full_name }}{% trans " dans la branche "%}{{ branch }} - {{ offer.date|date:"DATE_FORMAT"}}</h3>
 
+<div class="alert alert-info" role="alert">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <span class="sr-only">{% trans "Information" %}</span>
+  {% blocktrans with offer.donor.get_full_name as name %}
+  Afin de profiter de l'offre de {{name}}, vous devez remplir une demande rentrant dans ses critères.<br />
+  Ce formulaire vous limite donc afin que l'utilisateur {{name}} soit intéressé par votre demande.<br />
+  Cet utilisateur sera ensuite averti et pourra décider de vous venir en aide.
+  {% endblocktrans %}
+</div>
+
 <div class="row mt">
     <div class="col-lg-12">
         <form action="." class="form-horizontal style-form" role="form" method="post">
