@@ -8,12 +8,12 @@ from django.utils.translation import ugettext_lazy as __
 # Create your models here.
 class News(models.Model):
     """ Model descripting the news system """
-    titre = models.CharField(max_length=250, null=False, blank=False, verbose_name=_("Titre de l'article"))
+    titre = models.CharField(max_length=250, null=False, blank=False, verbose_name=__("Titre de l'article"))
     slug = models.SlugField()
-    corps = models.TextField(_("Corps de l'article"))
+    corps = models.TextField(__("Corps de l'article"))
     date_creation = models.DateTimeField(auto_now_add=True, editable=False)
-    date_debut = models.DateTimeField(_("Date de publication désirée"))
-    date_fin = models.DateTimeField(_("Date de fin de publication (laisser vide si aucune expiration voulue)"), blank=True, null=True)
+    date_debut = models.DateTimeField(__("Date de publication désirée"))
+    date_fin = models.DateTimeField(__("Date de fin de publication (laisser vide si aucune expiration voulue)"), blank=True, null=True)
     auteur = models.ForeignKey(User, blank=True, null=True)
     
     visible = models.BooleanField(default=False)
