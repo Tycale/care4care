@@ -48,8 +48,6 @@ class User(unittest.TestCase):
         print("modify profile")
         driver.get(self.base_url + "accounts/profile/")
         driver.find_element_by_link_text("Modifier").click()
-        #driver.find_element_by_id("id_photo").clear()
-        #driver.find_element_by_id("id_photo").send_keys("/Users/Denis/Downloads/dirk.jpg")
         driver.find_element_by_id("id_facebook").clear()
         driver.find_element_by_id("id_facebook").send_keys("https://www.facebook.com/dirk.frimout.568")
         driver.find_element_by_id("id_offered_job_0").click()
@@ -122,11 +120,6 @@ class User(unittest.TestCase):
         driver.find_element_by_id("id_date2").send_keys("20/12/2014")
         driver.find_element_by_xpath("//button[@type='submit']").click()
 
-        """print("test accept help")
-        driver.get(self.base_url + "")
-        driver.find_element_by_xpath("//tr[@id='sizcache07375152724184825']/td[4]").click()
-        driver.find_element_by_link_text("Planter un arbre dans mon jardin").click()
-        driver.find_element_by_link_text("Accepter").click()"""
         
     def is_element_present(self, how, what):
         try: self.driver.find_element(by=how, value=what)
