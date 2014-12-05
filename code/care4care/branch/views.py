@@ -11,7 +11,7 @@ from main.models import User, VerifiedInformation, JobCategory, MemberType
 
 from branch.forms import CreateBranchForm, ChooseBranchForm, OfferHelpForm, NeedHelpForm, \
             CommentForm, UpdateNeedHelpForm, VolunteerForm, ForceVolunteerForm, SuccessDemandForm, \
-            CommentConfirmForm
+            CommentConfirmForm, TakeOfferForm
 from django.utils import timezone
 from django.core.urlresolvers import reverse
 from django.utils import formats
@@ -351,14 +351,37 @@ class CreateDemandView(CreateView):
                 " vous pouvez annuler votre offre d'aide via la page d'accueil de votre branche ou la page d'accueil du site.")\
             .format(user=self.object.receiver.get_full_name(), title=self.object.title, link=self.object.get_absolute_url(), username=self.object.receiver)
 
-            pm_write(self.object.receiver, self.offer.donor, subject, body1)
+            pm_write(self.object.receiver, offer.donor, subject, body1)
 
             body2 = _("Nous avons trouvé une offre correspondant à une de vos demande d'aide !\nCette offre d'aide a été faite par l'utilisateur {user} ({username}) et correspond a votre demande {title}.\n"
                 "Un message automatique a été envoyé à {user} ({username}) pour l'informer de cette correspondance et celui-ci devrait se proposer comme volontaire pour votre demande sous peu.")\
-            .format(user=self.offer.donor.get_full_name(), title=self.object.title, username=self.offer.donor)
+            .format(user=offer.donor.get_full_name(), title=self.object.title, username=offer.donor)
 
-            pm_write(self.offer.donor, self.object.reveiver, subject, body2)
+            pm_write(offer.donor, self.object.receiver, subject, body2)
         return self.object.get_absolute_url()
+
+class TakeOfferDemandView(CreateDemandView):
+    form_class = TakeOfferForm
+    template_name = 'job/take_offer.html'
+
+    def form_valid(self, form):
+        form.instance.date = Offer.objects.get(pk=self.kwargs['offer_id']).date
+        return super(TakeOfferDemandView, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(TakeOfferDemandView, self).get_context_data(**kwargs)
+        offer = Offer.objects.get(pk=self.kwargs['offer_id'])
+        context['offer'] = offer
+        category_keep = []
+        for cat in offer.category:
+            if cat == 'a':
+                category_keep.append(10)
+            elif cat == 'b':
+                category_keep.append(11)
+            else :
+                category_keep.append(cat)
+        context['category_keep'] = category_keep
+        return context
 
 class UpdateDemandView(UpdateView):
     """
