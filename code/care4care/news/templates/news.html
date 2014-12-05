@@ -36,7 +36,10 @@
 			<i class="pull-left author">{% trans "&Eacute;crit le" %} {{a.date_creation | date:"DATE_FORMAT"}} {% trans "par" %} {{ a.auteur.get_full_name }}</i>
 		</div>
 	</div>
+  {% empty %}
+  <p class="text-center text-info">{% trans "Aucune news actuellement" %}</p>
 	{% endfor %}
+
 	<div class="text-center">
 	<ul class="pagination pagination-centered">
             {% if news.has_previous %}
