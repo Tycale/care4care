@@ -177,3 +177,19 @@ class UserEditTestCase(TestCase):
         self.user.email="coucou@coucou.be"
         self.user.save()
         self.assertEqual(self.user.email,"coucou@coucou.be")
+
+class SuperUserCreationTest(TestCase):
+    def setUp(self):
+         self.super = User.objects.create_superuser(username="username_test",email="test@test.com", password="test")
+
+    def test_super(self):
+        self.assertEqual(self.super.is_superuser, True)
+
+class UserLanguageTest(TestCase):
+    def setUp(self):
+        self.user = User.objects.create(first_name="first_test", last_name="last_test",\
+        username="username_test",birth_date=timezone.now(),how_found=0,\
+        email="test@test.com", password="test", languages=["fr"])
+
+    def test_verbose_lg(self):
+        self.assertEqual(self.user.get_verbose_languages(), "Français")
