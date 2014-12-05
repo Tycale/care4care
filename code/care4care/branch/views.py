@@ -121,6 +121,7 @@ def branch_leave(request, branch_id, user_id):
         try:
             to_remove = BranchMembers.objects.get(branch=branch_id, user=user_id)
             to_remove.delete()
+            Demand.objects.filter(branch=branch, receiver=user, success=None, closed=False).delete()
             messages.add_message(request, messages.INFO, _('Vous avez quitté la branche {branch}').format(branch=branch))
         except:
             pass
@@ -148,7 +149,8 @@ def branch_ban(request, branch_id, user_id):
         pm_write(request.user, user, subject, body)
         messages.add_message(request, messages.INFO, _('{user} a été banni de la branche {branch}').format(branch=branch, user=user))
 
-        Demand.objects.filter(branch=branch, receiver=user).delete()
+
+        Demand.objects.filter(branch=branch, receiver=user, success=None, closed=False).delete()
 
     else :
         return refuse(request)
