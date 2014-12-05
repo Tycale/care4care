@@ -3,6 +3,7 @@ from django.utils import timezone
 from main.models import MemberType, STATUS, ACTIVE
 from main.models import User
 from django.contrib.auth import authenticate, login as _login
+from django.test.client import Client
 
 class UserFullNameTestCase(TestCase):
 
@@ -28,6 +29,51 @@ class UserDefaultTestCase(TestCase):
         self.assertEqual(user.credit,0)
         self.assertEqual(user.status, ACTIVE)
         self.assertEqual(user.is_verified, False)
+
+class UserLoginTestCase(TestCase):
+
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(first_name="first_test", last_name="last_test",\
+        username="username_test",birth_date=timezone.now(),how_found=0,\
+        email="test@test.com", password="test")
+
+    def test_login_user_with_correct_info(self):
+        login = self.client.login(username=self.user.username, password="test")
+        self.assertEqual(login, True)
+
+    def test_login_user_with_incorrect_info(self):
+        login = self.client.login(username="username_test", password="bidon")
+        self.assertEqual(login, False)
+
+class UserAccountTypeVerboseTestCase(TestCase):
+
+    def setUp(self):
+        self.user = User.objects.create(first_name="first_test", last_name="last_test",\
+        username="username_test",birth_date=timezone.now(),how_found=0,\
+        email="test@test.com", password="test")
+
+    def test_check_verbose_m(self):
+        self.assertEqual(self.user.get_account_type(), MemberType.VERBOSE_M)
+
+    def test_check_verbose_nm(self):
+        self.user.user_type = MemberType.NON_MEMBER
+        self.user.save()
+        self.assertEqual(self.user.get_account_type(), MemberType.VERBOSE_NM)
+
+    def test_check_verbose_vm(self):
+        self.user.user_type = MemberType.VERIFIED_MEMBER
+        self.user.save()
+        self.assertEqual(self.user.get_account_type(), MemberType.VERBOSE_VM)
+
+class UserCreditTestCase(TestCase):
+    def setUp(self):
+        self.user = User.objects.create(first_name="first_test", last_name="last_test",\
+        username="username_test",birth_date=timezone.now(),how_found=0,\
+        email="test@test.com", password="test", credit=60)
+
+    def test_credit(self):
+        self.assertEqual(self.user.get_verbose_credit(), "1 heure")
 
 class UserAddFavoriteTestCase(TestCase):
 
@@ -119,3 +165,15 @@ class UserIgnoreTestCase(TestCase):
         user2 = User.objects.get(first_name="first_test2")
         user.ignore_list.remove(user2)
         self.assertEqual(user.ignore_list.filter(pk=user2.id).count(), 0)
+
+class UserEditTestCase(TestCase):
+
+    def setUp(self):
+        self.user = User.objects.create(first_name="first_test", last_name="last_test",\
+        username="username_test",birth_date=timezone.now(),how_found=0,\
+        email="test@test.com", password="test")
+
+    def test_modify_status(self):
+        self.user.email="coucou@coucou.be"
+        self.user.save()
+        self.assertEqual(self.user.email,"coucou@coucou.be")

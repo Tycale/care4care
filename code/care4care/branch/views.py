@@ -281,6 +281,7 @@ def volunteer_accept(request, volunteer_id):
         body += '\n' + _('Heure(s) désirée(s) : ') + demand.get_verbose_time()
         body += '\n' + _('Description : ') + demand.description
 
+        body += '\n'
         if demand.receiver.emergency_contacts.count() > 0:
             body += '\n' + _('En cas d\'incident durant cette tâche, voici les personnes à contacter :')
             for ec in demand.receiver.emergency_contacts.all():
@@ -289,7 +290,8 @@ def volunteer_accept(request, volunteer_id):
                 body += '\n' + _('Téléphone fixe :') + ' ' + ec.phone_number
                 body += '\n' + _('Téléphone mobile :') + ' ' + ec.mobile_number
                 body += '\n' + _('Langues parlées :') + ' ' + ec.get_verbose_languages()
-
+                body += '\n'
+        
         body += '\n\n' + _('N\'hésitez pas à me contacter pour de plus amples informations')
         body += '\n' + _('À bientôt,') + '\n'
         body += demand.receiver.first_name
@@ -360,10 +362,10 @@ class CreateDemandView(CreateView):
         for offer in find_offers:
             subject = _("Une correspondance a été trouvée !")
             body1 = _("Nous avons trouvé une demande correspondant à une de vos offre d'aide !\nCette demande d'aide a été faite par l'utilisateur {user} ({username}) et a pour titre {title}.\n"
-                "Vous pouvez consulter cette demande et vous proposer comme volontaire en suivant ce lien :\n{link}\n"
+                "Vous pouvez consulter cette demande et vous proposer comme volontaire en suivant ce lien :\nhttp://{meta}{link}\n"
                 "Si vous décidez de vous proposez pour cette demande et que votre offre d'aide n'est donc plus valable,"
                 " vous pouvez annuler votre offre d'aide via la page d'accueil de votre branche ou la page d'accueil du site.")\
-            .format(user=self.object.receiver.get_full_name(), title=self.object.title, link=self.object.get_absolute_url(), username=self.object.receiver)
+            .format(user=self.object.receiver.get_full_name(), title=self.object.title, link=self.object.get_absolute_url(), username=self.object.receiver, meta=self.request.META['HTTP_HOST'])
 
             pm_write(self.object.receiver, offer.donor, subject, body1)
 
