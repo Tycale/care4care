@@ -21,26 +21,47 @@ class User(unittest.TestCase):
         driver.get(self.base_url + "")
         driver.find_element_by_xpath("(//button[@type='button'])[2]").click()
         driver.find_element_by_id("username").clear()
-        driver.find_element_by_id("username").send_keys("user2")
+        driver.find_element_by_id("username").send_keys("VVelghe")
         driver.find_element_by_id("password").clear()
-        driver.find_element_by_id("password").send_keys("user2")
+        driver.find_element_by_id("password").send_keys("care4care")
         driver.find_element_by_xpath("//button[@type='submit']").click()
 
-        print("test offer help")
+        print("test search")
+        driver.get(self.base_url + "search/job/")
+        driver.find_element_by_id("id_job_type_1").click()
+        driver.find_element_by_id("id_category_6").click()
+        driver.find_element_by_id("id_receive_help_from_who_0").click()
+        driver.find_element_by_id("id_time_3").click()
+        driver.find_element_by_id("id_date1").clear()
+        driver.find_element_by_id("id_date1").send_keys("21/12/2014")
+        driver.find_element_by_id("id_date2").clear()
+        driver.find_element_by_id("id_date2").send_keys("20/12/2014")
+        driver.find_element_by_xpath("//button[@type='submit']").click()
+
+        assert len(driver.find_elements_by_class_name("alert")) > 0
+
+        print("bad offer help")
         driver.get(self.base_url + "")
         driver.find_element_by_xpath("//section[@id='main-content']/section/div[2]/div[2]/button").click()
-        driver.find_element_by_xpath("(//a[contains(text(),'Gent')])[3]").click()
-        driver.find_element_by_id("id_category_2").click()
-        driver.find_element_by_id("id_category_1").click()
-        driver.find_element_by_id("id_category_0").click()
-        driver.find_element_by_id("id_date").clear()
+        driver.find_element_by_xpath("(//a[contains(text(),'Bruxelles')])[3]").click()
         driver.find_element_by_id("id_date").send_keys("18/12/2014")
-        driver.find_element_by_id("id_time_3").click()
-        driver.find_element_by_id("id_time_4").click()
-        driver.find_element_by_id("id_time_6").click()
         driver.find_element_by_xpath("//button[@type='submit']").click()
 
+        assert len(driver.find_elements_by_class_name("has-error")) > 0
 
+        print("bad offer 2")
+        driver.get(self.base_url + "")
+        driver.find_element_by_xpath("//section[@id='main-content']/section/div[2]/div[2]/button").click()
+        driver.find_element_by_xpath("(//a[contains(text(),'Bruxelles')])[3]").click()
+        driver.find_element_by_id("id_category_0").click()
+        driver.find_element_by_id("id_date").clear()
+        driver.find_element_by_id("id_date").send_keys("03/12/2014")
+        driver.find_element_by_id("id_time_0").click()
+        driver.find_element_by_xpath("//button[@type='submit']").click()
+
+        assert len(driver.find_elements_by_class_name("has-error")) > 0
+
+        
         print("modify profile")
         driver.get(self.base_url + "accounts/profile/")
         driver.find_element_by_link_text("Modifier").click()
@@ -71,17 +92,11 @@ class User(unittest.TestCase):
         driver.get(self.base_url + "accounts/profile/")
         driver.find_element_by_link_text(u"Utilisateurs ignorés").click()
         driver.find_element_by_css_selector("#ignored > div.row.mt > div.col-lg-12.col-sm-12 > div.panel.panel-default > div.panel-body > div.row.mt > form > div.col-lg-9 > div.form-group > #id_user").clear()
-        driver.find_element_by_css_selector("#ignored > div.row.mt > div.col-lg-12.col-sm-12 > div.panel.panel-default > div.panel-body > div.row.mt > form > div.col-lg-9 > div.form-group > #id_user").send_keys("user1")
+        driver.find_element_by_css_selector("#ignored > div.row.mt > div.col-lg-12.col-sm-12 > div.panel.panel-default > div.panel-body > div.row.mt > form > div.col-lg-9 > div.form-group > #id_user").send_keys("AMoyaux")
         driver.find_element_by_name("ignored").click()
-        """
-        print("test offer help")
-        driver.get(self.base_url + "")
-        driver.find_element_by_link_text("Planter un arbre dans mon jardin").click()
-        driver.find_element_by_css_selector("span.glyphicon.glyphicon-gift").click()
-        driver.find_element_by_id("id_time_3").click()
-        driver.find_element_by_id("id_comment").clear()
-        driver.find_element_by_id("id_comment").send_keys("Je suis partant!")
-        driver.find_element_by_xpath("//button[@type='submit']").click()"""
+        
+
+
 
         print("test create emergency contact")
         driver.get(self.base_url + "accounts/profile/")
@@ -93,39 +108,28 @@ class User(unittest.TestCase):
         driver.find_element_by_id("id_location").clear()
         driver.find_element_by_id("id_location").send_keys("Rue des êtres, Bastogne")
         driver.find_element_by_id("id_phone_number").clear()
-        driver.find_element_by_id("id_phone_number").send_keys("061213652")
+        driver.find_element_by_id("id_phone_number").send_keys("768")
         driver.find_element_by_id("id_mobile_number").clear()
         driver.find_element_by_id("id_mobile_number").send_keys("0494609971")
         driver.find_element_by_id("id_languages_0").click()
         driver.find_element_by_xpath("//button[@type='submit']").click()
+
+        assert len(driver.find_elements_by_class_name("has-error")) > 0
 
         print("test add favorite")
         driver.get(self.base_url + "")
         driver.find_element_by_xpath("//ul[@id='nav-accordion']/li[3]/a").click()
         driver.find_element_by_css_selector("ul.sub > li > span > a").click()
         driver.find_element_by_link_text("Favoris").click()
-        driver.find_element_by_id("id_user").send_keys("user3")
+        driver.find_element_by_id("id_user").send_keys("MHeraly")
         driver.find_element_by_name("favorite").click()
 
         print("test rejoign branch")
         driver.get(self.base_url + "")
         driver.find_element_by_css_selector("a.dcjq-parent > span").click()
         driver.find_element_by_link_text("Rejoindre une branche").click()
-        Select(driver.find_element_by_id("id_id")).select_by_visible_text("Oostende")
+        Select(driver.find_element_by_id("id_id")).select_by_visible_text("Anvers")
         driver.find_element_by_xpath("//button[@type='submit']").click()
-
-        print("test search")
-        driver.get(self.base_url + "search/job/")
-        driver.find_element_by_id("id_job_type_1").click()
-        driver.find_element_by_id("id_category_6").click()
-        driver.find_element_by_id("id_receive_help_from_who_0").click()
-        driver.find_element_by_id("id_time_3").click()
-        driver.find_element_by_id("id_date1").clear()
-        driver.find_element_by_id("id_date1").send_keys("14/12/2014")
-        driver.find_element_by_id("id_date2").clear()
-        driver.find_element_by_id("id_date2").send_keys("20/12/2014")
-        driver.find_element_by_xpath("//button[@type='submit']").click()
-
 
 
     
