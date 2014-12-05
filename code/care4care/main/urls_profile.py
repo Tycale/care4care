@@ -3,7 +3,8 @@ from django.conf.urls import patterns, url
 from django.views.generic.base import TemplateView
 
 from main.views import user_profile, manage_profile, EditProfileView, member_favorite, \
-                        member_personal_network, AddEmergencyContact, EmergencyContactDetails, UpdateEmergencyContact,member_ignore_list
+                        member_personal_network, AddEmergencyContact, EmergencyContactDetails, \
+                        UpdateEmergencyContact,member_ignore_list, EditNonProfileView
 
 urlpatterns = patterns('',
                        url(r'^profile/$',
@@ -12,6 +13,9 @@ urlpatterns = patterns('',
                        url(r'^profile/edit/(?P<user_id>\d+)/$',
                            EditProfileView.as_view(),
                            name='edit_profile'),
+                       url(r'^profile/edit/pro/(?P<user_id>\d+)/$',
+                           EditNonProfileView.as_view(),
+                           name='edit_non_profile'),
                        url(r'^profile/(?P<user_id>\d+)/$',
                            user_profile,
                            name='user_profile'),

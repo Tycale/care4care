@@ -12,9 +12,6 @@ import datetime
 
 from django.template.defaultfilters import filesizeformat
 
-
-
-
 class CareRegistrationForm(forms.ModelForm):
     first_name = forms.CharField(label=__("Prénom"),)
     last_name = forms.CharField(label=__("Nom de famille"),)
@@ -101,6 +98,10 @@ class ProfileManagementForm(forms.ModelForm):
         """
         return self.cleaned_data
 
+class NonProfileManagementForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['organization', 'work']
 
 class VerifiedProfileForm(forms.ModelForm):
     class Meta:
@@ -210,7 +211,6 @@ class JobSearchForm(forms.Form):
         elif self.cleaned_data['date2']:
             if self.cleaned_data['date2']<timezone.now()-timezone.timedelta(hours=24):
                 raise forms.ValidationError(_("Incohérence dans les dates."))
-
 
 
 class GiftForm(forms.Form):
