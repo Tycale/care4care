@@ -4,8 +4,14 @@
 
 {% block title %}{% trans "News" %}{% endblock %}
 
+{% block extra_head %}
+<meta content="http://{{request.META.HTTP_HOST}}{% static "img/care4care.jpg" %}" property="og:image"></meta>
+{% endblock %}
 
 {% block content %}
+
+<div id="fb-root"></div>
+
 <div class="row mt">
   	<div class="col-lg-12">
   		<h3 class="mb">
@@ -21,8 +27,9 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h4>
+        <div class="fb-share-button pull-right" data-layout="button" data-href="{{a.get_absolute_url}}"></div>
 			{% if request.user.is_superuser %}
-				<a class="btn btn-default btn-primary pull-right" href="{{ a.get_absolute_modify_url }}">{% bootstrap_icon "edit" %} {% trans "Modifier" %}</a>
+				<a class="btn btn-default btn-primary pull-right" href="{{ a.get_absolute_modify_url }}" style="margin-right : 15px;">{% bootstrap_icon "edit" %} {% trans "Modifier" %}</a>
 			{% endif %}
 			<a href="{{ a.get_absolute_url }}" class="panel-title">{{ a.titre | safe }}</a>
 			
@@ -66,4 +73,18 @@
 {% endblock %}
 
 {% block extra_footer %}
+{% get_current_language as LANGUAGE_CODE %}
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  {% if LANGUAGE_CODE == 'fr' %}
+  js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&appId=958033600891660&version=v2.0";
+  {% elif LANGUAGE_CODE == 'nl' %}
+  js.src = "//connect.facebook.net/nl_NL/sdk.js#xfbml=1&appId=958033600891660&version=v2.0";
+  {% else %}
+  js.src = "//connect.facebook.net/en_EN/sdk.js#xfbml=1&appId=958033600891660&version=v2.0";
+  {% endif %}
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 {% endblock %}
