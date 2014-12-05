@@ -73,7 +73,6 @@ class UserCreditTestCase(TestCase):
         email="test@test.com", password="test", credit=60)
 
     def test_credit(self):
-        print(self.user.get_verbose_credit())
         self.assertEqual(self.user.get_verbose_credit(), "1 heure")
 
 class UserAddFavoriteTestCase(TestCase):
