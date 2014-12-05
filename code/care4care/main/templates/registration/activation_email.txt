@@ -6,7 +6,7 @@
 
 {% trans "Il ne vous reste plus qu'une petite étape à réaliser afin de pouvoir nous rejoindre, suivez le lien suivant afin d'activer votre compte :" %}
 
-http://localhost:8000/accounts/activate/{{activation_key}}
+http://{{request.META.HTTP_HOST}}/accounts/activate/{{activation_key}}
 
 {% trans "À bientot," %}
 {% trans "L'équipe de Care4Care" %}
