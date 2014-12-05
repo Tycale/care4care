@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-05 17:01+0000\n"
+"POT-Creation-Date: 2014-12-05 17:33+0000\n"
 "PO-Revision-Date: 2014-12-05 10:52+0000\n"
 "Last-Translator: b'vv vv <vv@vv.be>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1042,47 +1042,47 @@ msgstr ""
 msgid "Description : "
 msgstr ""
 
-#: branch/views.py:285
+#: branch/views.py:286
 msgid "En cas d'incident durant cette tâche, voici les personnes à contacter :"
 msgstr ""
 
-#: branch/views.py:287
+#: branch/views.py:288
 msgid "Prénom :"
 msgstr ""
 
-#: branch/views.py:288
+#: branch/views.py:289
 msgid "Nom :"
 msgstr ""
 
-#: branch/views.py:289
+#: branch/views.py:290
 msgid "Téléphone fixe :"
 msgstr ""
 
-#: branch/views.py:290
+#: branch/views.py:291
 msgid "Téléphone mobile :"
 msgstr ""
 
-#: branch/views.py:291
+#: branch/views.py:292
 msgid "Langues parlées :"
 msgstr ""
 
-#: branch/views.py:293
+#: branch/views.py:295
 msgid "N'hésitez pas à me contacter pour de plus amples informations"
 msgstr ""
 
-#: branch/views.py:294
+#: branch/views.py:296
 msgid "À bientôt,"
 msgstr ""
 
-#: branch/views.py:309
+#: branch/views.py:311
 msgid "Vous avez accepté cette aide !"
 msgstr ""
 
-#: branch/views.py:361
+#: branch/views.py:363
 msgid "Une correspondance a été trouvée !"
 msgstr ""
 
-#: branch/views.py:362
+#: branch/views.py:364
 #, python-brace-format
 msgid ""
 "Nous avons trouvé une demande correspondant à une de vos offre d'aide !\n"
@@ -1096,7 +1096,7 @@ msgid ""
 "la page d'accueil de votre branche ou la page d'accueil du site."
 msgstr ""
 
-#: branch/views.py:370
+#: branch/views.py:372
 #, python-brace-format
 msgid ""
 "Nous avons trouvé une offre correspondant à une de vos demande d'aide !\n"
@@ -1107,53 +1107,53 @@ msgid ""
 "votre demande sous peu."
 msgstr ""
 
-#: branch/views.py:525 branch/views.py:526
+#: branch/views.py:527 branch/views.py:528
 msgid "a commenté votre offre"
 msgstr ""
 
-#: branch/views.py:527 branch/views.py:573 branch/views.py:614
+#: branch/views.py:529 branch/views.py:575 branch/views.py:616
 msgid "Commentaire : "
 msgstr ""
 
-#: branch/views.py:528
+#: branch/views.py:530
 msgid "Vous pouvez lui répondre en vous rendant sur votre offre :"
 msgstr ""
 
-#: branch/views.py:571 branch/views.py:572
+#: branch/views.py:573 branch/views.py:574
 msgid "a commenté votre demande '"
 msgstr ""
 
-#: branch/views.py:574
+#: branch/views.py:576
 msgid "Vous pouvez lui répondre en vous rendant sur votre demande:"
 msgstr ""
 
-#: branch/views.py:612 branch/views.py:613
+#: branch/views.py:614 branch/views.py:615
 msgid "vous offre son aide pour '"
 msgstr ""
 
-#: branch/views.py:615
+#: branch/views.py:617
 msgid "Km de chez vous : "
 msgstr ""
 
-#: branch/views.py:616
+#: branch/views.py:618
 msgid "Heure(s) choisies(s) : "
 msgstr ""
 
-#: branch/views.py:617
+#: branch/views.py:619
 msgid ""
 "Vous pouvez accepter son offre d'aide en vous rendant sur votre demande "
 "d'aide:"
 msgstr ""
 
-#: branch/views.py:669
+#: branch/views.py:671
 msgid "Demande envoyée"
 msgstr ""
 
-#: branch/views.py:671
+#: branch/views.py:673
 msgid "Confirmation de job accompli"
 msgstr ""
 
-#: branch/views.py:672
+#: branch/views.py:674
 #, python-brace-format
 msgid ""
 "L'utilisateur {user} ({username}) affirme avoir accompli le job suivant : "
@@ -1163,11 +1163,11 @@ msgid ""
 "a été accompli avec succès."
 msgstr ""
 
-#: branch/views.py:688
+#: branch/views.py:690
 msgid "Absence lors d'un job"
 msgstr ""
 
-#: branch/views.py:689
+#: branch/views.py:691
 #, python-brace-format
 msgid ""
 "L'utilisateur {user} ({username}) n'était apparemment pas présent pour "
@@ -1178,33 +1178,33 @@ msgid ""
 "vous pouvez l'ignorer en vous rendant sur son profil."
 msgstr ""
 
-#: branch/views.py:695
+#: branch/views.py:697
 #, python-brace-format
 msgid "Vous avez indiqué la tâche {demand} comme non-completée"
 msgstr ""
 
-#: branch/views.py:726
+#: branch/views.py:728
 msgid "Job confirmé"
 msgstr ""
 
-#: branch/views.py:727
+#: branch/views.py:729
 #, python-brace-format
 msgid ""
 "L'utilisateur {user} ({username}) a confirmé que vous aviez accompli le job "
 "{job} avec succès ! Votre compte a donc été crédité de {time} minutes.\n"
 msgstr ""
 
-#: branch/views.py:730
+#: branch/views.py:732
 #, python-brace-format
 msgid ""
 "L'utilisateur {user} ({username}) a laissé le commentaire suivant : {comment}"
 msgstr ""
 
-#: branch/views.py:742
+#: branch/views.py:744
 msgid "Job refusé"
 msgstr ""
 
-#: branch/views.py:743
+#: branch/views.py:745
 #, python-brace-format
 msgid ""
 "L'utilisateur {user} ({username}) a déclaré que vous n'aviez pas passé "
@@ -1212,7 +1212,7 @@ msgid ""
 "crédité.\n"
 msgstr ""
 
-#: branch/views.py:746
+#: branch/views.py:748
 #, python-brace-format
 msgid ""
 "L'utilisateur {user} ({username}) a laissé un commentaire, expliquant "
@@ -1325,8 +1325,28 @@ msgstr ""
 msgid "Type de fichier non supporté"
 msgstr ""
 
+#: main/forms.py:198
+msgid "A partir du"
+msgstr ""
+
+#: main/forms.py:199
+msgid "Jusqu'au"
+msgstr ""
+
 #: main/forms.py:208 main/forms.py:210 main/forms.py:213
 msgid "Incohérence dans les dates."
+msgstr ""
+
+#: main/forms.py:217
+msgid "Donner à :"
+msgstr ""
+
+#: main/forms.py:218
+msgid "Username"
+msgstr ""
+
+#: main/forms.py:219
+msgid "Montant du temps (plus que 1)"
 msgstr ""
 
 #: main/forms.py:229
