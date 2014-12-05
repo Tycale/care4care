@@ -61,9 +61,9 @@ def branch_home(request, branch_id, slug):
         except BranchMembers.DoesNotExist:
             bm = BranchMembers(branch=branch, user=user, is_admin=True, joined=timezone.now())
             bm.save()
-    else: 
+    else:
         is_branch_admin = bm.first().is_admin
-        
+
     nb_users = BranchMembers.objects.filter(branch=branch).count()
 
     user_ids = [mb.user.id for mb in branch.membership.all()]
@@ -85,6 +85,7 @@ def branch_home(request, branch_id, slug):
 
     return render(request,'branch/branch_home.html', locals())
 
+@user_passes_test(lambda u: not u.user_type == MemberType.NON_MEMBER)
 @login_required
 def branch_join(request):
     """ Rejoign a branch """
@@ -125,7 +126,7 @@ def branch_leave(request, branch_id, user_id):
             pass
     else :
         return refuse(request)
-    
+
     return redirect('home')
 
 @login_required
@@ -147,7 +148,7 @@ def branch_ban(request, branch_id, user_id):
             pass
     else :
         return refuse(request)
-    
+
     return redirect(branch.get_absolute_url())
 
 @login_required
@@ -168,7 +169,7 @@ def branch_unban(request, branch_id, user_id):
             pass
     else :
         return refuse(request)
-    
+
     return redirect(branch.get_absolute_url())
 
 @login_required
@@ -187,7 +188,7 @@ def branch_promote(request, branch_id, user_id):
             pass
     else :
         return refuse(request)
-    
+
     return redirect(branch.get_absolute_url())
 
 @login_required
@@ -269,7 +270,7 @@ def volunteer_accept(request, volunteer_id):
         demandProposition.accepted = True
         demandProposition.save()
 
-        subject = _("Je vous ai choisi pour '") + demand.title + "'" 
+        subject = _("Je vous ai choisi pour '") + demand.title + "'"
         body = _(" Je vous ai choisi pour effectuer le job '") + demand.title + "'"
         body += '\n\n' + _('Lieu : ') + demand.location
         body += '\n' + _('Date : ') + formats.date_format(demand.date, "DATE_FORMAT")
@@ -305,7 +306,7 @@ class CreateDemandView(CreateView):
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
-        if not is_in_branch(User.objects.get(pk=self.kwargs['user_id']), 
+        if not is_in_branch(User.objects.get(pk=self.kwargs['user_id']),
             Branch.objects.get(pk=self.kwargs['branch_id'])):
             return refuse(self.request)
         return super(CreateDemandView, self).dispatch(*args, **kwargs)
@@ -332,7 +333,7 @@ class CreateDemandView(CreateView):
     def get_success_url(self):
         date = self.object.date
         find_offers = Offer.objects.filter(date=date)
-        
+
         category = self.object.category
         request_time = Q(time__contains=self.object.time[0])
         for r in self.object.time[1:]:
@@ -341,7 +342,7 @@ class CreateDemandView(CreateView):
 
         find_offers = find_offers.filter(request_time & request_category).all()
         find_offers = discriminate_offers(self.request, find_offers)
-        
+
         for offer in find_offers:
             subject = _("Une correspondance a été trouvée !")
             body1 = _("Nous avons trouvé une demande correspondant à une de vos offre d'aide !\nCette demande d'aide a été faite par l'utilisateur {user} ({username}) et a pour titre {title}.\n"
@@ -432,7 +433,7 @@ class CreateOfferView(CreateView):
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
-        if not is_in_branch(User.objects.get(pk=self.kwargs['user_id']), 
+        if not is_in_branch(User.objects.get(pk=self.kwargs['user_id']),
             Branch.objects.get(pk=self.kwargs['branch_id'])):
             return refuse(self.request)
         return super(CreateOfferView, self).dispatch(*args, **kwargs)
@@ -484,8 +485,8 @@ class DetailOfferView(CreateView): # This view is over-hacked. Don't take it as 
 
     def get_success_url(self):
 
-        subject = self.request.user.get_full_name() + ' ' + _("a commenté votre offre") 
-        body = self.request.user.get_full_name() + ' ' + _("a commenté votre offre") 
+        subject = self.request.user.get_full_name() + ' ' + _("a commenté votre offre")
+        body = self.request.user.get_full_name() + ' ' + _("a commenté votre offre")
         body += '\n\n' + _('Commentaire : ') + self.object.comment
         body += '\n\n' + _('Vous pouvez lui répondre en vous rendant sur votre offre :')
         body += '\n' + 'http://' + self.request.META['HTTP_HOST'] + self.get_object().get_absolute_url()
@@ -528,8 +529,8 @@ class DetailDemandView(CreateView): # This view is over-hacked. Don't take it as
 
     def get_success_url(self):
 
-        subject = self.request.user.get_full_name() + ' ' + _("a commenté votre demande '") + self.get_object().title + '\'' 
-        body = self.request.user.get_full_name() + ' ' + _("a commenté votre demande '") + self.get_object().title + '\''        
+        subject = self.request.user.get_full_name() + ' ' + _("a commenté votre demande '") + self.get_object().title + '\''
+        body = self.request.user.get_full_name() + ' ' + _("a commenté votre demande '") + self.get_object().title + '\''
         body += '\n\n' + _('Commentaire : ') + self.object.comment
         body += '\n\n' + _('Vous pouvez lui répondre en vous rendant sur votre demande:')
         body += '\n' + 'http://' + self.request.META['HTTP_HOST'] + self.get_object().get_absolute_url()
@@ -569,8 +570,8 @@ class CreateVolunteerView(CreateView):
         demand = Demand.objects.get(pk=self.kwargs['demand_id'])
         volunteer = self.object.user
 
-        subject = volunteer.get_full_name() + ' ' + _("vous offre son aide pour '") + demand.title + "'" 
-        body = volunteer.get_full_name() + ' ' + _("vous offre son aide pour '") + demand.title + "'" 
+        subject = volunteer.get_full_name() + ' ' + _("vous offre son aide pour '") + demand.title + "'"
+        body = volunteer.get_full_name() + ' ' + _("vous offre son aide pour '") + demand.title + "'"
         body += '\n\n' + _('Commentaire : ') + self.object.comment
         body += '\n' + _('Km de chez vous : ') + str(self.object.km)
         body += '\n' + _('Heure(s) choisies(s) : ') + self.object.get_verbose_time()
@@ -676,7 +677,7 @@ def manage_success(request, success_demand_id):
 
                     demand.real_time =  success.time
                     demand.success = True
-                    
+
 
                     demand.donor.credit += success.time
                     demand.donor.save()
@@ -708,7 +709,7 @@ def manage_success(request, success_demand_id):
                         "Si vous ne parvenez pas à trouver un terrain d'entente avec l'utilisateur {user} ({username}), vous pouvez contacter un administrateur pour régler le problème.")\
                         .format(user=demand.receiver.get_full_name(), comment=form.cleaned_data['comment'], username=demand.receiver)
                     pm_write(demand.receiver, demand.donor, subject, body)
-                    
+
                     return redirect('home')
 
         return render(request,'job/manage_success.html', locals())
