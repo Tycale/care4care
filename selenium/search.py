@@ -21,9 +21,9 @@ class User(unittest.TestCase):
         driver.get(self.base_url + "")
         driver.find_element_by_xpath("(//button[@type='button'])[2]").click()
         driver.find_element_by_id("username").clear()
-        driver.find_element_by_id("username").send_keys("user2")
+        driver.find_element_by_id("username").send_keys("BLacasse")
         driver.find_element_by_id("password").clear()
-        driver.find_element_by_id("password").send_keys("user2")
+        driver.find_element_by_id("password").send_keys("care4care")
         driver.find_element_by_xpath("//button[@type='submit']").click()
 
 
@@ -44,7 +44,7 @@ class User(unittest.TestCase):
         driver.get(self.base_url + "")
         driver.find_element_by_name("q").clear()
         driver.set_page_load_timeout(10)
-        driver.find_element_by_name("q").send_keys("user")
+        driver.find_element_by_name("q").send_keys("MHeraly")
 
 
     
