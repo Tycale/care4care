@@ -168,8 +168,8 @@ def branch_unban(request, branch_id, user_id):
         try:
             to_unban = User.objects.get(id=user_id)
             branch.banned.remove(to_unban)
-            subject = _('Annulation du bannissement de la branche %s' % branch.name)
-            body = _('Nous avons annulé le bannissement de la branche %s vous concernant. Vous pouvez à présent rejoindre cette branche si vous le souhaitez.' % branch.name)
+            subject = _('Annulation du bannissement de la branche {branch}').format(branch=branch.name)
+            body = _('Nous avons annulé le bannissement de la branche {branch} vous concernant. Vous pouvez à présent rejoindre cette branche si vous le souhaitez.').format(branch=branch.name)
             pm_write(request.user, user, subject, body)
             messages.add_message(request, messages.INFO, _('le bannissement de {user} dans la branche {branch} a été annulé').format(branch=branch, user=user))
         except:

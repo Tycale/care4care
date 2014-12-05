@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-05 18:46+0000\n"
-"PO-Revision-Date: 2014-12-05 18:46+0000\n"
+"POT-Creation-Date: 2014-12-05 19:01+0000\n"
+"PO-Revision-Date: 2014-12-05 19:01+0000\n"
 "Last-Translator: b'care4care care4care <care4care@tycale.be>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -979,18 +979,18 @@ msgid "Vous avez quitté la branche {branch}"
 msgstr "You left the branch {branch}"
 
 #: branch/views.py:144
-#, python-format
-msgid "Bannissement de la branche %s"
-msgstr "Ban from the branch %s"
+#, python-brace-format
+msgid "Bannissement de la branche {branch}"
+msgstr "Ban from the branch {branch}"
 
 #: branch/views.py:145
-#, python-format
+#, python-brace-format
 msgid ""
-"Vous avez été banni de la branche %s. Vous ne pouvez à présent plus "
+"Vous avez été banni de la branche {branch}. Vous ne pouvez à présent plus "
 "rejoindre cette branche. Pour plus d'informations, contactez un "
 "adminstrateur ou l'officier en charge de la branche en question"
 msgstr ""
-"You have been banned from the branch %s. You can't join it.\n"
+"You have been banned from the branch {branch}. You can't join it.\n"
 "For more information, please contact an administrator or the branch officer."
 
 #: branch/views.py:147
@@ -999,17 +999,22 @@ msgid "{user} a été banni de la branche {branch}"
 msgstr "{user} was banned from the branch {branch}"
 
 #: branch/views.py:168
-#, python-format
-msgid "Annulation du bannissement de la branche %s"
-msgstr "Cancellation banishment of the branch %s"
+#, python-brace-format
+#| msgid "Annulation du bannissement de la branche %s"
+msgid "Annulation du bannissement de la branche {branch}"
+msgstr "Cancellation banishment of the branch {branch}"
 
 #: branch/views.py:169
-#, python-format
+#, python-brace-format
+#| msgid ""
+#| "s avons annulé le bannissement de la branche %s vous concernant. Vous vez à "
+#| "présent rejoindre cette branche si vous le souhaitez."
 msgid ""
-"Nous avons annulé le bannissement de la branche %s vous concernant. Vous "
-"pouvez à présent rejoindre cette branche si vous le souhaitez."
+"Nous avons annulé le bannissement de la branche {branch} vous concernant. "
+"Vous pouvez à présent rejoindre cette branche si vous le souhaitez."
 msgstr ""
-"We have cancelled your ban for the branch %s. You can join it if you want."
+"We have cancelled your ban for the branch {branch}. You can join it if you "
+"want."
 
 #: branch/views.py:171
 #, python-brace-format
@@ -1773,12 +1778,10 @@ msgid "A propos de nous ... texte"
 msgstr "About us ... "
 
 #: main/templates/main/agreements.html:5 main/templates/main/agreements.html:9
-#| msgid "les conditions d'utilisations de Care4Care"
 msgid "Conditions d'utilisations de Care4Care"
 msgstr "The agreements of Care4Care"
 
 #: main/templates/main/agreements.html:10
-#| msgid "les conditions d'utilisations de Care4Care"
 msgid "Conditions d'utilisations de Care4Care text"
 msgstr "The agreements of Care4Care ..."
 
