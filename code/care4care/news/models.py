@@ -7,6 +7,7 @@ from django.utils.translation import ugettext_lazy as __
 
 # Create your models here.
 class News(models.Model):
+    """ Model descripting the news system """
     titre = models.CharField(max_length=250, null=False, blank=False, verbose_name=_("Titre de l'article"))
     slug = models.SlugField()
     corps = models.TextField(_("Corps de l'article"))
