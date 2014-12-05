@@ -499,7 +499,7 @@
 
         function resizeText() {
           document.body.style.fontSize = (counter * 2) + "px";
-          $.cookie('zoom', counter);
+          $.cookie('zoom', counter, { path: "/" });
         }
 
         $(document).ready(function () {
