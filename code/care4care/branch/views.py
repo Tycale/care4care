@@ -288,7 +288,7 @@ def volunteer_accept(request, volunteer_id):
                 body += '\n' + _('Nom :') + ' ' + ec.last_name
                 body += '\n' + _('Téléphone fixe :') + ' ' + ec.phone_number
                 body += '\n' + _('Téléphone mobile :') + ' ' + ec.mobile_number
-                body += '\n' + _('Langues parlées :') + ' ' + ec.get_verbose_languages
+                body += '\n' + _('Langues parlées :') + ' ' + ec.get_verbose_languages()
 
         body += '\n\n' + _('N\'hésitez pas à me contacter pour de plus amples informations')
         body += '\n' + _('À bientôt,') + '\n'
