@@ -73,6 +73,27 @@ def help(request):
 
     return render(request, 'main/help.html', locals())
 
+def jobs_care4care(request):
+    """
+        jobs_care4care view calling the jobs_care4care template           
+    """
+
+    return render(request, 'main/jobs_care4care.html', locals())
+
+def about_us(request):
+    """
+        about_us view calling the about_us template           
+    """
+
+    return render(request, 'main/about_us.html', locals())
+
+def what_is(request):
+    """
+        what_is view calling the what_is template           
+    """
+
+    return render(request, 'main/what_is.html', locals())
+
 def logout(request):
     """
         log out the user and return to the home page
@@ -125,7 +146,7 @@ def user_profile(request, user_id):
         else:
             can_manage_user = True
 
-        if in_other_ignore_list:
+        if in_other_ignore_list and not request.user.is_superuser :
             messages.add_message(request, messages.INFO, _('Vous êtes pas autoriser à consulter ce profil'))
             return redirect('home')
 

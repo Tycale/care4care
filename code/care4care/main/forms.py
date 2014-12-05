@@ -196,7 +196,7 @@ class JobSearchForm(forms.Form):
     job_type =  forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=JobType.JOB_TYPES, label = __("Type de job (rien = tout)"))
     category = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=JobCategory.JOB_CATEGORIES, label = __("Catégorie du job (rien = tout)"))
     date1 = forms.DateTimeField(required=False, label =__("A partir du"),widget=DateTimePicker(options={"pickTime": False,}))
-    date2 = forms.DateTimeField(required=False, label =__("jusqu'au"),widget=DateTimePicker(options={"pickTime": False,}))
+    date2 = forms.DateTimeField(required=False, label =__("Jusqu'au"),widget=DateTimePicker(options={"pickTime": False,}))
     receive_help_from_who = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=MemberType.MEMBER_TYPES_GROUP, label = __("Qui peut fournir son aide ?"))
     time = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=TIME_CHOICES, label = __("A quelle heure ?"))
 
@@ -214,7 +214,7 @@ class JobSearchForm(forms.Form):
 
 
 class GiftForm(forms.Form):
-    check = forms.ChoiceField(label = _("Donner à :"),widget=forms.RadioSelect, choices=GIVINGTO, initial=1)
+    check = forms.ChoiceField(label = __("Donner à :"),widget=forms.RadioSelect, choices=GIVINGTO, initial=1)
     user = forms.CharField(label = __("Username"), widget=AutoCompleteWidget('user'))
     amount = forms.IntegerField(label = __("Montant du temps (plus que 1)"), min_value=1, initial=60)
     message = forms.CharField(required=False, widget=forms.Textarea, label = __("Message"))

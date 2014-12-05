@@ -2,7 +2,6 @@
 {% load bootstrap3 %}{% load i18n %}{% load staticfiles %}{% load jobs_extra %}
 
 {% block extra_head %}{{ block.super }}
-
 <script src="{% static "js/jquery-ui-1.9.2.custom.min.js" %}"></script>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
@@ -13,8 +12,6 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 <link type="text/css" media="all" rel="stylesheet" href="{% static "css/jquery-ui-1.9.2.custom.css" %}" />
-<meta content="{% static "img/ui-sam.jpg" %}" property="og:image"></meta>
-
 {% endblock %}
 
 {% block title %}{% trans "Mes crédits" %}{% endblock %}
@@ -22,74 +19,86 @@
 {% block content %}
 <h3><i class="fa fa-angle-right"></i> {% trans "Mon compte" %}</h3>
 
-	<div class="row mt">
-		 <div class="col-lg-12 col-sm-12 background-gris">
-         	<div class="showback">
-          	 	<h4> {% trans "Mon crédit : " %}{{user.get_verbose_credit|safe}}</h4>
-          	 	<h4> {% trans "Jobs effectués : " %}{{num_jobs}}</h4>
-          	 	{% if average_time_job > 0 %}
-                <h4> {% trans "Temps moyen par travail : " %}{{average_time_job}} {% trans "minutes" %}</h4>
-          	 	{% else %}
-                <h4> {% trans "Temps moyen par travail : " %}{{average_time_job}} {% trans "minute" %}</h4>
-                {% endif %}
-                <h4> {% trans "J'ai parcouru : " %}{{km}} {% trans "km" %}</h4>
-                <div class="fb-share-button" data-href="http://care4demo.tycale.be" data-layout="button_count"></div>
-            </div>
-         </div>
-    </div>
-    <div class="row mt">
-    	<div class="col-lg-12">
-        	<div class="col-lg-12 col-sm-12 content-panel">
-            	<h3> {% trans "Jobs effectués" %}</h3>
-            	{% if jobs %}
-            	{% show_demands request jobs show_branch=False %}
-            	{% endif %}
-            	{% if offer %}
-            	{% show_offers request offer show_branch=False %}
-            	{% endif %}
-            	{% if not jobs and not offer %}
-            	{% trans "Aucun historique" %}
-            	{% endif %}
-        	</div>
-    	</div>
-	</div>
-	<div class="row mt">
-    	<div class="col-lg-12">
-        	<div class="col-lg-12 col-sm-12 content-panel">
-            	<h3> {% trans "Jobs en cours" %}</h3>
-            	{% if jobs_pending %}
-            	{% show_demands request jobs_pending show_branch=False %}
-            	{% endif %}
-            	{% if offer_pending %}
-            	{% show_offers request offer_pending show_branch=False %}
-            	{% endif %}
-            	{% if not jobs_pending and not offer_pending %}
-            	{% trans "Aucun job en cours" %}
-            	{% endif %}
-        	</div>
-    	</div>
-	</div>
-	<div class="row mt">
-    	<div class="col-lg-12">
-        	<div class="col-lg-12 col-sm-12 mb content-panel">
-        		<form action="."  enctype="multipart/form-data" role="form" method="post">
-        		{% csrf_token %}
-            	<h3> {% trans "Cadeaux : J'aimerais offrir une partie de mon temps à :" %}</h3>
-                {% bootstrap_field form.check %}
-            	{% bootstrap_field form.user %}
-                {% bootstrap_field form.amount %}
-                {% bootstrap_field form.message %}
-            	<button type="submit" class="btn btn-info btn-lg btn-block mb">
-	                {% bootstrap_icon "gift" %} &nbsp; {% trans "Offrir" %}
-	        	</button>
-            	</form>
-        	</div>
-    	</div>
-	</div>
+<div class="row mt">
+	 <div class="col-lg-12 col-sm-12 background-gris">
+     	<div class="showback">
+      	 	<h4> {% trans "Mon crédit : " %}{{user.get_verbose_credit|safe}}</h4>
+      	 	<h4> {% trans "Jobs effectués : " %}{{num_jobs}}</h4>
+      	 	{% if average_time_job > 0 %}
+            <h4> {% trans "Temps moyen par travail : " %}{{average_time_job}} {% trans "minutes" %}</h4>
+      	 	{% else %}
+            <h4> {% trans "Temps moyen par travail : " %}{{average_time_job}} {% trans "minute" %}</h4>
+            {% endif %}
+            <h4> {% trans "J'ai parcouru : " %}{{km}} {% trans "km" %}</h4>
+            <div class="fb-share-button" data-href="http://care4demo.tycale.be/" data-layout="button_count"></div>
+        </div>
+     </div>
+</div>
 
+<div class="row mt">
+	<div class="col-lg-12">
+    	<div class="col-lg-12 col-sm-12 content-panel">
+        	<h3> {% trans "Jobs effectués" %}</h3>
+        	{% if jobs %}
+        	{% show_demands request jobs show_branch=False check_progress=False %}
+        	{% endif %}
+        	{% if offer %}
+        	{% show_offers request offer show_branch=False %}
+        	{% endif %}
+        	{% if not jobs and not offer %}
+        	{% trans "Aucun historique" %}
+        	{% endif %}
+    	</div>
+	</div>
+</div>
+
+<div class="row mt">
+	<div class="col-lg-12">
+    	<div class="col-lg-12 col-sm-12 content-panel">
+        	<h3> {% trans "Jobs en cours" %}</h3>
+        	{% if jobs_pending %}
+        	{% show_demands request jobs_pending show_branch=False %}
+        	{% endif %}
+        	{% if offer_pending %}
+        	{% show_offers request offer_pending show_branch=False %}
+        	{% endif %}
+        	{% if not jobs_pending and not offer_pending %}
+        	{% trans "Aucun job en cours" %}
+        	{% endif %}
+    	</div>
+	</div>
+</div>
+
+<div class="row mt">
+	<div class="col-lg-12">
+    	<div class="col-lg-12 col-sm-12 mb content-panel">
+    		<form action="."  enctype="multipart/form-data" role="form" method="post">
+    		{% csrf_token %}
+        	<h3> {% trans "Cadeaux : J'aimerais offrir une partie de mon temps à :" %}</h3>
+            {% bootstrap_field form.check %}
+        	{% bootstrap_field form.user %}
+            {% bootstrap_field form.amount %}
+            {% bootstrap_field form.message %}
+        	<button type="submit" class="btn btn-info btn-lg btn-block mb">
+                {% bootstrap_icon "gift" %} &nbsp; {% trans "Offrir" %}
+        	</button>
+        	</form>
+    	</div>
+	</div>
+</div>
 {% endblock %}
 
 {% block extra_footer %}
 {{form.media}}
+<script type="text/javascript">
+    $(document).ready(function(){ 
+    $("#id_check_1").click(function() {
+        $("#id_user").parent().hide();
+    });
+    $("#id_check_0").click(function() {
+        $("#id_user").parent().show();
+    }); 
+});
+</script>
 {% endblock %}
 

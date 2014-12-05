@@ -139,6 +139,10 @@ def branch_ban(request, branch_id, user_id):
         try:
             to_remove = BranchMembers.objects.get(branch=branch_id, user=user_id)
             to_remove.delete()
+
+            Demand.objects.up_to_date.filter(branch=branch_id, receiver=user_id).delete()
+            Offer.objects.up_to_date.filter(branch=branch_id, donor=user_id).delete()
+
             branch.banned.add(to_remove.user)
             subject = _('Bannissement de la branche %s' % branch.name)
             body = _('Vous avez été banni de la branche %s. Vous ne pouvez à présent plus rejoindre cette branche. Pour plus d\'informations, contactez un adminstrateur ou l\'officier en charge de la branche en question' % branch.name)
@@ -276,6 +280,16 @@ def volunteer_accept(request, volunteer_id):
         body += '\n' + _('Date : ') + formats.date_format(demand.date, "DATE_FORMAT")
         body += '\n' + _('Heure(s) désirée(s) : ') + demand.get_verbose_time()
         body += '\n' + _('Description : ') + demand.description
+
+        if demand.receiver.emergency_contacts.count() > 0:
+            body += '\n' + _('En cas d\'incident durant cette tâche, voici les personnes à contacter :')
+            for ec in demand.receiver.emergency_contacts.all():
+                body += '\n' + _('Prénom :') + ' ' + ec.first_name
+                body += '\n' + _('Nom :') + ' ' + ec.last_name
+                body += '\n' + _('Téléphone fixe :') + ' ' + ec.phone_number
+                body += '\n' + _('Téléphone mobile :') + ' ' + ec.mobile_number
+                body += '\n' + _('Langues parlées :') + ' ' + ec.get_verbose_languages()
+
         body += '\n\n' + _('N\'hésitez pas à me contacter pour de plus amples informations')
         body += '\n' + _('À bientôt,') + '\n'
         body += demand.receiver.first_name
