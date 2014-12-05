@@ -37,6 +37,12 @@ from main.utils import can_manage, is_branch_admin, refuse, can_manage_branch_sp
                         discriminate_demands, discriminate_offers
 
 def home(request):
+    """
+        View used for the home_page.
+        If the user is authenticate, show the offers and demands in his branch 
+        ,he can choose if he want to see closed demands and offers.
+        Otherwise he can see all offers and demands but he can't see detail.
+    """
     user = request.user
 
     if user.is_authenticated():
@@ -63,37 +69,24 @@ def home(request):
     return render(request, 'main/home.html', locals())
 
 def help(request):
-    user = request.user
-
-    if user.is_authenticated():
-        branch_ids = [b.branch.id for b in user.membership.all()]
-        demands = Demand.objects.filter(branch__in=branch_ids).all()
-        offers = Offer.objects.filter(branch__in=branch_ids).all()
-    else :
-        demands = Demand.objects.all()
-        offers = Offer.objects.all()
-
-    date_now = timezone.now() + timezone.timedelta(hours=-24)
-
-    demands = demands.up_to_date()
-    offers = offers.up_to_date()
-
-    if user.is_authenticated():
-        demands = discriminate_demands(request, demands)
-        offers = discriminate_offers(request, offers)
-
-    nb_branch = Branch.objects.all().count()
-    branches = Branch.objects.all()
-    nb_users = User.objects.all().count()
+    """
+        help view calling the help template           
+    """
 
     return render(request, 'main/help.html', locals())
 
 def logout(request):
+    """
+        log out the user and return to the home page
+    """
     _logout(request)
     messages.add_message(request, messages.INFO, _('Vous êtes désormais déconnecté.'))
     return redirect('home')
 
 def login(request):
+    """
+        log in function used and return to the home page if it success or log in page if it fail.
+    """
     redirect_to = request.POST.get('next',
                                    request.GET.get('next', '/'))
 
@@ -192,23 +185,10 @@ def manage_profile(request):
     """ Return the profile from the current logged user"""
     return user_profile(request, request.user.id)
 
-"""@user_passes_test(lambda u: not u.is_verified)
-@login_required
-def verified_profile_view(request):
-    user = request.user
-    form = VerifiedProfileForm(instance=user)
-    if request.POST :
-        form = VerifiedProfileForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.add_message(request, messages.INFO, _('Modification sauvegardée'))
-            return redirect('verified_documents')
-    return render(request,'verified/verified_profile.html', locals())"""
-
 
 # Classes views
 class VerifiedProfileView(UpdateView, SuccessMessageMixin):
-    """ Return the edit page for the current logged user"""
+    """ Return the edit page for the current logged user and ask to complete"""
     form_class = VerifiedProfileForm
     model = User
     template_name = 'verified/verified_profile.html'
@@ -231,6 +211,7 @@ class VerifiedProfileView(UpdateView, SuccessMessageMixin):
 @user_passes_test(lambda u: not u.is_verified)
 @login_required
 def verified_documents_view(request):
+    """ Ask 2recommendations letter and criminal record to logged user"""
     user = request.user
     form = VerifiedInformationForm()
     try:
@@ -256,6 +237,7 @@ def verified_documents_view(request):
 
 @login_required
 def verified_display_view(request, user_id):
+    """show verified informations on user selected"""
     user_to_display = get_object_or_404(User, pk=user_id)
     verified_documents = get_object_or_404(VerifiedInformation, user=user_id)
     if not can_manage(user_to_display, request.user) or user_to_display.id == request.user.id:
@@ -265,6 +247,7 @@ def verified_display_view(request, user_id):
 
 @login_required
 def verified_status_giving_view(request, user_id):
+    """Give verified status to user with user_id and send a message"""
     user = get_object_or_404(User, pk=user_id)
     if not can_manage(user, request.user) or user.id == request.user.id:
         return refuse(request)
@@ -282,6 +265,7 @@ def verified_status_giving_view(request, user_id):
 
 @login_required
 def verified_status_refuse_view(request, user_id):
+    """Refuse verified status to user with user_id, send a specific message and remove verified demand"""
     user = get_object_or_404(User, pk=user_id)
     if not can_manage(user, request.user) or user.id == request.user.id:
         return refuse(request)
@@ -298,6 +282,7 @@ def verified_status_refuse_view(request, user_id):
 
 @login_required
 def member_favorite(request, user_id):
+    "show user's favorite group where user have the id specified"
     user = request.user
     favorite_user = get_object_or_404(User, pk=user_id)
     if request.method == "PUT":
@@ -317,6 +302,7 @@ def member_favorite(request, user_id):
 
 @login_required
 def member_personal_network(request, user_id):
+    "show user's personal_network where user have the id specified"
     user = request.user
     id_other = user_id
     other_user = get_object_or_404(User, pk=user_id)
@@ -335,6 +321,7 @@ def member_personal_network(request, user_id):
 
 @login_required
 def member_ignore_list(request, user_id):
+    "show user's ignored list where user have the id specified"
     user = request.user
     id_other = user_id
     other_user = get_object_or_404(User, pk=user_id)
@@ -449,6 +436,7 @@ class RegistrationView(BaseRegistrationView):
         return new_user
 
 class AddEmergencyContact(CreateView):
+    """A view for add an emergency_contact"""
     template_name = 'profile/emergency_contact.html'
     form_class = EmergencyContactCreateForm
     model = EmergencyContact
@@ -471,6 +459,7 @@ class AddEmergencyContact(CreateView):
         return self.get_object().get_absolute_url()
 
 class EmergencyContactDetails(DetailView):
+    """show the emergency_contact detail for user logged"""
     model = EmergencyContact
     template_name = 'profile/emergency_details.html'
 
@@ -490,6 +479,7 @@ class EmergencyContactDetails(DetailView):
         return EmergencyContact.objects.get(pk=self.kwargs['emergency_id'])
 
 class UpdateEmergencyContact(UpdateView):
+    """A view for update an emergency_contact"""
     template_name = 'profile/modify_emergency.html'
     form_class = EmergencyContactCreateForm
     model = EmergencyContact
@@ -514,10 +504,12 @@ class UpdateEmergencyContact(UpdateView):
 
 @login_required
 def similar_jobs(request):
+    """view for matching job"""
     return render(request, 'seek_similar_jobs/main.html')
 
 @login_required
 def similar_demands(request):
+    """view for matching demands"""
     user = request.user
     now = datetime.datetime.now()
     user_offers = Offer.objects.filter(donor = user, date__gte=now)
@@ -530,6 +522,7 @@ def similar_demands(request):
 
 @login_required
 def similar_offers(request):
+    """view for matching offers"""
     user = request.user
     now = datetime.datetime.now()
     user_demands = Demand.objects.filter(receiver = user, date__gte=now)
@@ -543,6 +536,7 @@ def similar_offers(request):
 ### Statistics ###
 
 def statistics(request):
+    """Stats"""
     if not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
 
@@ -698,12 +692,14 @@ def get_user_km_amount_json_view(request, user_id):
 ### Search ###
 @login_required
 def search_view(request):
+    """user search in header"""
     input = request.GET.get('q')
     userlist = User.objects.filter(Q(first_name__icontains=input) | Q(last_name__icontains=input) | Q(username__icontains=input))
     return render(request, 'search/search.html', locals())
 
 @login_required
 def job_search_view(request):
+    """job search in left menu"""
     form = JobSearchForm()
     if request.method == 'POST':
         form = JobSearchForm(request.POST)
@@ -764,6 +760,7 @@ def job_search_view(request):
 
 @login_required
 def credits_view(request):
+    """view for credit menu and gitf"""
     user = request.user
     #TODO : Rajouter le champ finish = true dans job et offer et finish = false dans les autres.
     jobs = Demand.objects.filter(closed=True,donor=user,success=True).all() # tâches que j'ai faîtes
