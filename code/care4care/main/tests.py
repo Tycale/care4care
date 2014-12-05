@@ -49,13 +49,31 @@ class UserLoginTestCase(TestCase):
 class UserAccountTypeVerboseTestCase(TestCase):
 
     def setUp(self):
-        User.objects.create(first_name="first_test", last_name="last_test",\
+        self.user = User.objects.create(first_name="first_test", last_name="last_test",\
         username="username_test",birth_date=timezone.now(),how_found=0,\
         email="test@test.com", password="test")
 
-    def test_check_default(self):
-        user = User.objects.get(first_name="first_test")
-        self.assertEqual(user.get_account_type(), MemberType.VERBOSE_M)
+    def test_check_verbose_m(self):
+        self.assertEqual(self.user.get_account_type(), MemberType.VERBOSE_M)
+
+    def test_check_verbose_nm(self):
+        self.user.user_type = MemberType.NON_MEMBER
+        self.user.save()
+        self.assertEqual(self.user.get_account_type(), MemberType.VERBOSE_NM)
+
+    def test_check_verbose_vm(self):
+        self.user.user_type = MemberType.VERIFIED_MEMBER
+        self.user.save()
+        self.assertEqual(self.user.get_account_type(), MemberType.VERBOSE_VM)
+
+class UserCreditTestCase(TestCase):
+    def setUp(self):
+        self.user = User.objects.create(first_name="first_test", last_name="last_test",\
+        username="username_test",birth_date=timezone.now(),how_found=0,\
+        email="test@test.com", password="test", credit=60)
+
+    def test_credit(self):
+        self.assertEqual(self.user.get_verbose_credit(), "1 heure")
 
 class UserAddFavoriteTestCase(TestCase):
 
@@ -159,3 +177,19 @@ class UserEditTestCase(TestCase):
         self.user.email="coucou@coucou.be"
         self.user.save()
         self.assertEqual(self.user.email,"coucou@coucou.be")
+
+class SuperUserCreationTest(TestCase):
+    def setUp(self):
+         self.super = User.objects.create_superuser(username="username_test",email="test@test.com", password="test")
+
+    def test_super(self):
+        self.assertEqual(self.super.is_superuser, True)
+
+class UserLanguageTest(TestCase):
+    def setUp(self):
+        self.user = User.objects.create(first_name="first_test", last_name="last_test",\
+        username="username_test",birth_date=timezone.now(),how_found=0,\
+        email="test@test.com", password="test", languages=["fr"])
+
+    def test_verbose_lg(self):
+        self.assertEqual(self.user.get_verbose_languages(), "Français")

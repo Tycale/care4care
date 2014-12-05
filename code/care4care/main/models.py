@@ -120,7 +120,7 @@ class JobCategory:
 
 BOOL_CHOICES = ((True, _('Oui')), (False, _('Non')))
 
-GIVINGTO = (('1', 'Un autre utilisateur',), ('2', 'A l\'administration',))
+GIVINGTO = (('1', _('Un autre utilisateur'),), ('2', _('A l\'administration'),))
 
 class JobType:
     OFFRE = 1

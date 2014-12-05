@@ -13,7 +13,7 @@ class NewsForm(forms.ModelForm):
 
     class Meta:
         model = News
-        exclude = ('date_creation','date_fin', 'visible', 'auteur', 'slug')
+        exclude = ('date_creation', 'date_debut', 'date_fin', 'visible', 'auteur', 'slug')
         dateTimeOptions = {
         'format': 'DD/MM/YYYY HH:mm',
         'autoclose': True,
