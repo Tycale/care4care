@@ -11,14 +11,35 @@
 \usepackage{caption}% http://ctan.org/pkg/caption
 \captionsetup[figure]{labelformat=empty}%
 
+\title{Care4Care: User Manual}
+
+\author{Group 8 \\ 
+\\
+Baptiste Lacasse \\
+Thibault Gerondal \\
+Michaël Heraly \\
+Denis Genon \\
+Victor Velghe \\
+Jeremy Vanhee \\
+Arnold Moyaux \\
+Aloïs Paulus}
+
+
+\date{\today}
+
 \begin{document}
 
+\maketitle
+
+\tableofcontents
+
+
 \section{Introduction}
-We will together discover the various features of the site Care4Care.
-
-In the various screenshots, the left mouse button is represented by a red dot. 
-
-\section{Sign in}
+Welcome to Care4Care! In this document you will find how to use our application and the description of the database installed on http://care4demo.tycale.be.
+ \section{User Manual}
+ We will together discover the various features of the site Care4Care. In the various screenshots, the left mouse button is represented by a red dot. This help is available on the help page of the website.
+\subsection{Sign in}
+In order to use this website, you will need to make an account.
 \begin{figure}[!ht]
    \includegraphics[width=\textwidth]{img/inscr1.png}
    \caption{Sign in: Step 1}
@@ -35,7 +56,8 @@ In the various screenshots, the left mouse button is represented by a red dot.
 \end{figure}
 
 \clearpage
-\section{Display the menu}
+\subsection{Display the menu}
+The menu is used to navigate between each parts of the website.
 \begin{figure}[!ht]
    \includegraphics[width=\textwidth]{img/menu1.png}
    \caption{Menu: Step 1}
@@ -46,7 +68,8 @@ In the various screenshots, the left mouse button is represented by a red dot.
 \end{figure}
 
 \clearpage
-\section{Sign out}
+\subsection{Sign out}
+If you want to disconnect from the website, follow those steps.
 \begin{figure}[!ht]
    \includegraphics[width=\textwidth]{img/out1.png}
    \caption{Sign out: Step 1}
@@ -57,8 +80,9 @@ In the various screenshots, the left mouse button is represented by a red dot.
 \end{figure}
 
 \clearpage
-\section{My profil}
-\subsection{Display my profil}
+\subsection{My profile}
+Your profile contains all the informations about you needed for using Care4Care.
+\subsubsection{Display my profile}
 \begin{figure}[!ht]
    \includegraphics[width=\textwidth]{img/profil1.png}
    \caption{Display: Step 1}
@@ -73,7 +97,7 @@ In the various screenshots, the left mouse button is represented by a red dot.
 \end{figure}
 
 \clearpage
-\subsection{Edit my profil}
+\subsubsection{Edit my profile}
 Go to: \textbf{My profile}.
 \begin{figure}[!ht]
    \includegraphics[width=\textwidth]{img/profil4.png}
@@ -89,7 +113,8 @@ Go to: \textbf{My profile}.
 \end{figure}
 
 \clearpage
-\section{Ask for help}
+\subsection{Ask for help}
+
 \begin{figure}[!ht]
    \includegraphics[width=\textwidth]{img/dem1.png}
    \caption{Ask: Step 1}
@@ -112,15 +137,15 @@ Go to: \textbf{My profile}.
 \end{figure}
 
 \clearpage
-\section{Offer my help}
+\subsection{Offer my help}
 Follow the same steps for \textbf{Ask for help} but click on \textbf{Offer my help} instead of I need help.
 
 
-\section{Favorites and My network}
-\subsection{What are the differences?}
-You can do demands addressed only to people in \textbf{Favorites}.
-People in \textbf{My network} will see more information about you.
-\subsection{How to add people in Favorites?}
+\subsection{Favorites and My network}
+\subsubsection{What are the differences?}
+You can make demands addressed only to people in \textbf{Favorites}.
+People in \textbf{My network} will see more informations about you.
+\subsubsection{How to add people in Favorites?}
 Go to: \textbf{My profile}.
 \begin{figure}[!ht]
    \includegraphics[width=\textwidth]{img/fav1.png}
@@ -138,13 +163,13 @@ Go to: \textbf{My profile}.
    \includegraphics[width=\textwidth]{img/fav4.png}
    \caption{Favorites: Result}
 \end{figure}
-\subsection{How to add poeple in My network}
+\subsubsection{How to add poeple in My network}
 Follow the same steps as favorites but first click \textbf{My network} instead of \textbf{Favorites}.
 
 \clearpage
-\section{Messages}
-Click on the small mailbox beside \textbf{Care4Care} or click on \textbf{Messages} in the menu, then choose, for example, \textbf{Inbox} , will lead you to the same page. 
-\subsection{Read a received message}
+\subsection{Messages}
+Click on the small mailbox beside \textbf{Care4Care} or click on \textbf{Messages} in the menu, then choose, for example, \textbf{Inbox}, will lead you to the same page. 
+\subsubsection{Read a received message}
 \begin{figure}[!ht]
    \includegraphics[width=\textwidth]{img/mess1.png}
    \caption{Message: Step 1}
@@ -161,6 +186,20 @@ Click on the small mailbox beside \textbf{Care4Care} or click on \textbf{Message
    \includegraphics[width=\textwidth]{img/mess4.png}
    \caption{Message: Result}
 \end{figure}
-
+\section{What's inside the database}
+This describe what is inside the database installed on the website: http://care4demo.tycale.be.
+\subsection{Members and relations}
+The passwords of all those users is ``care4care"
+\begin{itemize}
+	\item ``care4care" is the admin of the website;
+	\item ``MHeraly" is a member, banned of the branch ``Bruxelles";
+	\item ``VVelghe" is the branch officer of the branch ``Bruxelles". He has asked help for walk his dog;
+	\item ``BLacasse" is a member of the branch ``Bruxelles". He offers his help and helps ``TGerondal";
+	\item ``TGerondal" is a verified member, and he is in the branch ``Bruxelles". He is helped by ``BLacasse";
+	\item ``DGenon" is a member of the branch ``Bruxelles", and he is volunteer to help ``VVelghe";
+	\item ``AMoyaux" is a member of the branch ``Bruxelles", he is asking for help and has ``APaulus" and ``VVelghe" in his network;
+	\item ``JVanhee" is a member of the branch "Bruxelles". He is asking for help for shopping and repairing his dishwasher.  ``VVelghe" and ``AMoyaux" are his favorites;
+	\item ``APaulus" is a non-member. He can see the informations of ``JVanhee" and ``AMoyaux" because he is in his personal network. He can see the informations of ``MHeraly" because he is in the personal network of ``AMoyaux".
+\end{itemize}
 
 \end{document}
