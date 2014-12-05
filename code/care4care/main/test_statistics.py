@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from main.ajax.views import previous_month, next_month, month_list, \
-                        previous_month, next_month, get_days_in_month, \
+                        get_days_in_month, \
                         get_users_registrated_json, get_account_types_json, \
                         get_users_status_json, get_job_categories_json
 from branch.models import Branch, Demand
@@ -50,7 +50,7 @@ class Global_Account_Types_TestCase(TestCase):
         self.assertEqual(members, 1)
         self.assertEqual(verif_members, 0)
         self.assertEqual(non_members, 0)
-        
+
 
         User.objects.create(username='user2', user_type=MemberType.VERIFIED_MEMBER)
         two_users = json.loads(get_account_types_json())
@@ -60,7 +60,7 @@ class Global_Account_Types_TestCase(TestCase):
         self.assertEqual(members, 1)
         self.assertEqual(verif_members, 1)
         self.assertEqual(non_members, 0)
-        
+
 
         User.objects.create(username='user3', user_type=MemberType.NON_MEMBER)
         three_users = json.loads(get_account_types_json())
@@ -92,7 +92,7 @@ class Global_Users_Status_TestCase(TestCase):
         self.assertEqual(actives, 1)
         self.assertEqual(on_holiday, 0)
         self.assertEqual(unsubscribed, 0)
-        
+
 
         User.objects.create(username='user2', status=HOLIDAYS)
         two_users = json.loads(get_users_status_json())
@@ -102,7 +102,7 @@ class Global_Users_Status_TestCase(TestCase):
         self.assertEqual(actives, 1)
         self.assertEqual(on_holiday, 1)
         self.assertEqual(unsubscribed, 0)
-        
+
 
         User.objects.create(username='user3', status=UNSUBSCRIBE)
         three_users = json.loads(get_users_status_json())
@@ -144,57 +144,57 @@ class Global_Job_Categories_TestCase(TestCase):
 
         # Test job categories
 
-        demand = Demand.objects.create(branch=branch, category=[JobCategory.VISIT_AT_HOME], donor=donor, date=timezone.now())
+        Demand.objects.create(branch=branch, category=[JobCategory.VISIT_AT_HOME], donor=donor, date=timezone.now())
         visit_at_home = json.loads(get_job_categories_json())
         data = visit_at_home['datasets'][0]['data']
         self.assertEqual(data, [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 
-        demand = Demand.objects.create(branch=branch, category=[JobCategory.ACCOMPANY_SOMEONE], donor=donor, date=timezone.now())
+        Demand.objects.create(branch=branch, category=[JobCategory.ACCOMPANY_SOMEONE], donor=donor, date=timezone.now())
         accompany_someone = json.loads(get_job_categories_json())
         data = accompany_someone['datasets'][0]['data']
         self.assertEqual(data, [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0])
 
-        demand = Demand.objects.create(branch=branch, category=[JobCategory.TRANSPORT_BY_CAR], donor=donor, date=timezone.now())
+        Demand.objects.create(branch=branch, category=[JobCategory.TRANSPORT_BY_CAR], donor=donor, date=timezone.now())
         transport_by_car = json.loads(get_job_categories_json())
         data = transport_by_car['datasets'][0]['data']
         self.assertEqual(data, [1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0])
 
-        demand = Demand.objects.create(branch=branch, category=[JobCategory.SHOPPING], donor=donor, date=timezone.now())
+        Demand.objects.create(branch=branch, category=[JobCategory.SHOPPING], donor=donor, date=timezone.now())
         shopping = json.loads(get_job_categories_json())
         data = shopping['datasets'][0]['data']
         self.assertEqual(data, [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0])
 
-        demand = Demand.objects.create(branch=branch, category=[JobCategory.HOUSEHOULD], donor=donor, date=timezone.now())
+        Demand.objects.create(branch=branch, category=[JobCategory.HOUSEHOULD], donor=donor, date=timezone.now())
         household = json.loads(get_job_categories_json())
         data = household['datasets'][0]['data']
         self.assertEqual(data, [1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0])
 
-        demand = Demand.objects.create(branch=branch, category=[JobCategory.HANDYMAN_JOBS], donor=donor, date=timezone.now())
+        Demand.objects.create(branch=branch, category=[JobCategory.HANDYMAN_JOBS], donor=donor, date=timezone.now())
         handyman_jobs = json.loads(get_job_categories_json())
         data = handyman_jobs['datasets'][0]['data']
         self.assertEqual(data, [1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0])
 
-        demand = Demand.objects.create(branch=branch, category=[JobCategory.GARDENING_JOBS], donor=donor, date=timezone.now())
+        Demand.objects.create(branch=branch, category=[JobCategory.GARDENING_JOBS], donor=donor, date=timezone.now())
         gardening_jobs = json.loads(get_job_categories_json())
         data = gardening_jobs['datasets'][0]['data']
         self.assertEqual(data, [1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0])
 
-        demand = Demand.objects.create(branch=branch, category=[JobCategory.PETS_CARE], donor=donor, date=timezone.now())
+        Demand.objects.create(branch=branch, category=[JobCategory.PETS_CARE], donor=donor, date=timezone.now())
         pets_care = json.loads(get_job_categories_json())
         data = pets_care['datasets'][0]['data']
         self.assertEqual(data, [1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0])
 
-        demand = Demand.objects.create(branch=branch, category=[JobCategory.PERSONAL_CARE], donor=donor, date=timezone.now())
+        Demand.objects.create(branch=branch, category=[JobCategory.PERSONAL_CARE], donor=donor, date=timezone.now())
         personal_care = json.loads(get_job_categories_json())
         data = personal_care['datasets'][0]['data']
         self.assertEqual(data, [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0])
 
-        demand = Demand.objects.create(branch=branch, category=[JobCategory.ADMINISTRATION], donor=donor, date=timezone.now())
+        Demand.objects.create(branch=branch, category=[JobCategory.ADMINISTRATION], donor=donor, date=timezone.now())
         administration = json.loads(get_job_categories_json())
         data = administration['datasets'][0]['data']
         self.assertEqual(data, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0])
 
-        demand = Demand.objects.create(branch=branch, category=[JobCategory.OTHER], donor=donor, date=timezone.now())
+        Demand.objects.create(branch=branch, category=[JobCategory.OTHER], donor=donor, date=timezone.now())
         other = json.loads(get_job_categories_json())
         data = other['datasets'][0]['data']
         self.assertEqual(data, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1])
