@@ -16,8 +16,15 @@
             {% if demands %}
             {% show_demands request demands show_branch=False %}
             {% endif %}
+
             {% if offers %}
             {% show_offers request offers show_branch=False %}
+            {% endif %}
+
+            {% if not demands and not offers %}
+            <p class="text-info text-center">
+                {% trans "Aucun résultat" %}
+            </p>
             {% endif %}
 
         </div>
