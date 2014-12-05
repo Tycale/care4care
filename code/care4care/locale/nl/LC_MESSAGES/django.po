@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-05 17:45+0000\n"
+"POT-Creation-Date: 2014-12-05 17:51+0000\n"
 "PO-Revision-Date: 2014-12-05 10:52+0000\n"
 "Last-Translator: b'vv vv <vv@vv.be>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1325,40 +1325,8 @@ msgstr ""
 msgid "Type de fichier non supporté"
 msgstr ""
 
-#: main/forms.py:196 main/views.py:40
-msgid "Type de job (rien = tout)"
-msgstr ""
-
-#: main/forms.py:197 main/views.py:41
-msgid "Catégorie du job (rien = tout)"
-msgstr ""
-
-#: main/forms.py:198 main/views.py:44
-msgid "A partir du"
-msgstr ""
-
-#: main/forms.py:199 main/views.py:45
-msgid "Jusqu'au"
-msgstr ""
-
-#: main/forms.py:200 main/views.py:42
-msgid "Qui peut fournir son aide ?"
-msgstr ""
-
-#: main/forms.py:201 main/views.py:43
-msgid "A quelle heure ?"
-msgstr ""
-
 #: main/forms.py:208 main/forms.py:210 main/forms.py:213
 msgid "Incohérence dans les dates."
-msgstr ""
-
-#: main/forms.py:217 main/views.py:46
-msgid "Donner à :"
-msgstr ""
-
-#: main/forms.py:219 main/views.py:47
-msgid "Montant du temps (plus que 1)"
 msgstr ""
 
 #: main/forms.py:229
@@ -1531,6 +1499,14 @@ msgstr ""
 #: main/templates/verified/verified_display.html:35
 #: main/templates/verified/verified_display.html:43
 msgid "Non"
+msgstr ""
+
+#: main/models.py:123
+msgid "Un autre utilisateur"
+msgstr ""
+
+#: main/models.py:123
+msgid "A l'administration"
 msgstr ""
 
 #: main/models.py:130
@@ -2919,6 +2895,38 @@ msgstr ""
 #: main/utils.py:84
 msgid ""
 "Vous êtes administrateur de la branche, vous pouvez voir toutes les offres."
+msgstr ""
+
+#: main/views.py:40
+msgid "Type de job (rien = tout)"
+msgstr ""
+
+#: main/views.py:41
+msgid "Catégorie du job (rien = tout)"
+msgstr ""
+
+#: main/views.py:42
+msgid "Qui peut fournir son aide ?"
+msgstr ""
+
+#: main/views.py:43
+msgid "A quelle heure ?"
+msgstr ""
+
+#: main/views.py:44
+msgid "A partir du"
+msgstr ""
+
+#: main/views.py:45
+msgid "Jusqu'au"
+msgstr ""
+
+#: main/views.py:46
+msgid "Donner à :"
+msgstr ""
+
+#: main/views.py:47
+msgid "Montant du temps (plus que 1)"
 msgstr ""
 
 #: main/views.py:112
