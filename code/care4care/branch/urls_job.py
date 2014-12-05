@@ -3,7 +3,8 @@ from django.conf.urls import patterns, url
 from django.views.generic.base import TemplateView
 
 from branch.views import CreateDemandView, CreateOfferView, DetailDemandView, DetailOfferView, \
-                          UpdateDemandView, UpdateOfferView, CreateVolunteerView, ForceCreateVolunteerView
+                          UpdateDemandView, UpdateOfferView, CreateVolunteerView, ForceCreateVolunteerView, \
+                          TakeOfferDemandView
 
 urlpatterns = patterns('',
                        url(r'^new/demand/(?P<user_id>\d+)/$',
@@ -58,5 +59,11 @@ urlpatterns = patterns('',
                        url(r'^branch_stats_job_categories_json/(?P<user_id>\d+)/$',
                        'main.views.get_branch_job_categories_json_view',
                        name='stats_branch_job_categories_json'),
+
+                       url(r'^offer/(?P<user_id>\d+)/take/(?P<offer_id>\d+)/$',
+                        TakeOfferDemandView.as_view(),
+                        name='take_offer'),
+                       
+
                        )
 

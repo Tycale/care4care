@@ -27,6 +27,11 @@
             </ul>
         </div>
     </div>
+    <div class="col-md-12 col-sm-12 mb ph">
+      <a href="{% url 'take_offer' branch_id=object.branch.id slug=object.branch.slug offer_id=object.id user_id=request.user.id %}" class="btn btn-success btn-block">
+        {% bootstrap_icon "gift" %} {% trans "Profiter de cette offre" %}
+      </a>
+    </div>
     {% if can_manage %}
     <div class="col-md-12 col-sm-12 mb">
       <div class="col-md-6 col-sm-6">
