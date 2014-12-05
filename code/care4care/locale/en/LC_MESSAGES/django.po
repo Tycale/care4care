@@ -130,11 +130,6 @@ msgstr "Branch administrators"
 #: branch/models.py:45 branch/models.py:145
 #: branch/templates/branch/branch_create.html:37
 #: branch/templates/job/need_help.html:45
-<<<<<<< HEAD
-#: branch/templates/job/take_offer.html:44 main/models.py:198
-=======
-#: branch/templates/job/take_offer.html:54 main/models.py:198
->>>>>>> ecfb4dbe6ac1bc3c170440c240049600920fbe2c
 #: main/templates/profile/edit_profile.html:100
 #: main/templates/profile/emergency_details.html:16
 #: main/templates/profile/user_profile.html:244
@@ -280,11 +275,6 @@ msgstr "General information"
 
 #: branch/templates/branch/branch_create.html:40
 #: branch/templates/job/need_help.html:48
-<<<<<<< HEAD
-#: branch/templates/job/take_offer.html:47
-=======
-#: branch/templates/job/take_offer.html:57
->>>>>>> ecfb4dbe6ac1bc3c170440c240049600920fbe2c
 #: main/templates/profile/edit_profile.html:103
 #: main/templates/verified/verified_profile.html:97
 msgid "Entrez votre adresse"
@@ -294,13 +284,6 @@ msgstr "Enter your address"
 #: branch/templates/branch/branch_join.html:34
 #: branch/templates/job/need_help.html:49
 #: branch/templates/job/need_help.html:54
-<<<<<<< HEAD
-#: branch/templates/job/take_offer.html:48
-#: branch/templates/job/take_offer.html:53
-=======
-#: branch/templates/job/take_offer.html:58
-#: branch/templates/job/take_offer.html:63
->>>>>>> ecfb4dbe6ac1bc3c170440c240049600920fbe2c
 #: main/templates/profile/edit_profile.html:108
 #: main/templates/registration/registration_form.html:78
 #: main/templates/verified/verified_profile.html:102
@@ -309,11 +292,6 @@ msgstr "Information:"
 
 #: branch/templates/branch/branch_create.html:45
 #: branch/templates/job/need_help.html:54
-<<<<<<< HEAD
-#: branch/templates/job/take_offer.html:53
-=======
-#: branch/templates/job/take_offer.html:63
->>>>>>> ecfb4dbe6ac1bc3c170440c240049600920fbe2c
 #: main/templates/profile/edit_profile.html:108
 #: main/templates/verified/verified_profile.html:102
 msgid "L'emplacement sur la carte peut être approximatif"
@@ -411,11 +389,6 @@ msgstr "Pending request"
 #: main/templates/profile/user_profile.html:451
 #: main/templates/profile/user_profile.html:472
 #: main/templates/profile/user_profile.html:512
-<<<<<<< HEAD
-#: main/templates/search/search.html:24 templates/base.html:218
-=======
-#: main/templates/search/search.html:24 templates/base.html:146
->>>>>>> ecfb4dbe6ac1bc3c170440c240049600920fbe2c
 msgid "Utilisateur"
 msgstr "User"
 
@@ -617,11 +590,6 @@ msgstr "Join"
 #: branch/templates/job/need_help.html:70
 #: branch/templates/job/offer_help.html:39
 #: branch/templates/job/success_demand.html:34
-<<<<<<< HEAD
-#: branch/templates/job/take_offer.html:69
-=======
-#: branch/templates/job/take_offer.html:79
->>>>>>> ecfb4dbe6ac1bc3c170440c240049600920fbe2c
 #: branch/templates/job/volunteer_demand.html:33
 #: main/templates/profile/edit_nonprofile.html:32
 #: main/templates/profile/edit_profile.html:125
@@ -815,11 +783,7 @@ msgstr "is offering help in the branch"
 
 #: branch/templates/job/details_offer.html:32
 msgid "Profiter de cette offre"
-<<<<<<< HEAD
-msgstr "Advantage of this offer"
-=======
 msgstr "Benefit from this offer"
->>>>>>> ecfb4dbe6ac1bc3c170440c240049600920fbe2c
 
 #: branch/templates/job/manage_success.html:5
 #: branch/templates/job/success_demand.html:5
@@ -888,11 +852,6 @@ msgstr "in the branch"
 
 #: branch/templates/job/need_help.html:28
 #: branch/templates/job/offer_help.html:26
-<<<<<<< HEAD
-#: branch/templates/job/take_offer.html:28
-=======
-#: branch/templates/job/take_offer.html:38
->>>>>>> ecfb4dbe6ac1bc3c170440c240049600920fbe2c
 #: main/templates/profile/edit_profile.html:27
 #: main/templates/registration/registration_form.html:36
 #: main/templates/verified/verified_profile.html:27
@@ -900,11 +859,6 @@ msgid "Informations générales"
 msgstr "General information"
 
 #: branch/templates/job/need_help.html:49
-<<<<<<< HEAD
-#: branch/templates/job/take_offer.html:48
-=======
-#: branch/templates/job/take_offer.html:58
->>>>>>> ecfb4dbe6ac1bc3c170440c240049600920fbe2c
 msgid ""
 "Si vous ne souhaitez pas révéler entièrement votre adresse, n'indiquez que "
 "la rue ou un endroit proche. Vous pourrez préciser ensuite votre adresse "
@@ -917,11 +871,6 @@ msgstr ""
 #: branch/templates/job/need_help.html:67
 #: branch/templates/job/offer_help.html:36
 #: branch/templates/job/success_demand.html:31
-<<<<<<< HEAD
-#: branch/templates/job/take_offer.html:66 news/templates/add.html:31
-=======
-#: branch/templates/job/take_offer.html:76 news/templates/add.html:31
->>>>>>> ecfb4dbe6ac1bc3c170440c240049600920fbe2c
 msgid "Envoyer"
 msgstr "Send"
 
@@ -2378,19 +2327,9 @@ msgstr "Or sign in with :"
 msgid "se connecter via Google"
 msgstr "Sign in with Google"
 
-<<<<<<< HEAD
-#: main/templates/profile/login.html:46 templates/base.html:235
 msgid "se connecter via Facebook"
 msgstr "connect via Facebook"
 
-#: main/templates/profile/login.html:47 templates/base.html:236
-=======
-#: main/templates/profile/login.html:46 templates/base.html:163
-msgid "se connecter via Facebook"
-msgstr "connect via Facebook"
-
-#: main/templates/profile/login.html:47 templates/base.html:164
->>>>>>> ecfb4dbe6ac1bc3c170440c240049600920fbe2c
 msgid "se connecter via Twitter"
 msgstr "Sign in with Twitter"
 
@@ -3159,11 +3098,6 @@ msgstr "Become 'Verified Member'"
 msgid "Administration"
 msgstr "Administration"
 
-<<<<<<< HEAD
-#: templates/base.html:289
-=======
-#: templates/base.html:217
->>>>>>> ecfb4dbe6ac1bc3c170440c240049600920fbe2c
 msgid "Crédit restant :"
 msgstr "Remaining credit:"
 
