@@ -530,7 +530,7 @@ class DetailDemandView(CreateView): # This view is over-hacked. Don't take it as
     def dispatch(self, *args, **kwargs):
         if not is_in_branch(self.request.user, self.get_object().branch):
             return refuse(self.request)
-        if self.request.user in self.get_object().receiver.ignore_list.all():
+        if not self.request.user.is_superuser and self.request.user in self.get_object().receiver.ignore_list.all():
             return refuse(self.request)
         return super(DetailDemandView, self).dispatch(*args, **kwargs)
 
