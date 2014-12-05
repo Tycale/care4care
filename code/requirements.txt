@@ -33,3 +33,4 @@ requests-oauthlib==0.4.2
 six==1.8.0
 django-model-utils==2.2
 gunicorn
+psycopg2
