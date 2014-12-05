@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-05 18:28+0000\n"
-"PO-Revision-Date: 2014-12-05 18:30+0000\n"
+"POT-Creation-Date: 2014-12-05 19:01+0000\n"
+"PO-Revision-Date: 2014-12-05 19:01+0000\n"
 "Last-Translator: b'care4care care4care <care4care@tycale.be>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -776,10 +776,6 @@ msgstr "Comment"
 msgid "Vous"
 msgstr "You"
 
-#: branch/templates/job/details_offer.html:4
-msgid "object.title"
-msgstr "object.title"
-
 #: branch/templates/job/details_offer.html:16
 msgid "offre son aide dans la branche "
 msgstr "is offering help in the branch"
@@ -982,38 +978,43 @@ msgstr "You joined the branch {branch}"
 msgid "Vous avez quitté la branche {branch}"
 msgstr "You left the branch {branch}"
 
-#: branch/views.py:147
-#, python-format
-msgid "Bannissement de la branche %s"
-msgstr "Ban from the branch %s"
+#: branch/views.py:144
+#, python-brace-format
+msgid "Bannissement de la branche {branch}"
+msgstr "Ban from the branch {branch}"
 
-#: branch/views.py:148
-#, python-format
+#: branch/views.py:145
+#, python-brace-format
 msgid ""
-"Vous avez été banni de la branche %s. Vous ne pouvez à présent plus "
+"Vous avez été banni de la branche {branch}. Vous ne pouvez à présent plus "
 "rejoindre cette branche. Pour plus d'informations, contactez un "
 "adminstrateur ou l'officier en charge de la branche en question"
 msgstr ""
-"You have been banned from the branch %s. You can't join it.\n"
+"You have been banned from the branch {branch}. You can't join it.\n"
 "For more information, please contact an administrator or the branch officer."
 
-#: branch/views.py:150
+#: branch/views.py:147
 #, python-brace-format
 msgid "{user} a été banni de la branche {branch}"
 msgstr "{user} was banned from the branch {branch}"
 
 #: branch/views.py:168
-#, python-format
-msgid "Annulation du bannissement de la branche %s"
-msgstr "Cancellation banishment of the branch %s"
+#, python-brace-format
+#| msgid "Annulation du bannissement de la branche %s"
+msgid "Annulation du bannissement de la branche {branch}"
+msgstr "Cancellation banishment of the branch {branch}"
 
 #: branch/views.py:169
-#, python-format
+#, python-brace-format
+#| msgid ""
+#| "s avons annulé le bannissement de la branche %s vous concernant. Vous vez à "
+#| "présent rejoindre cette branche si vous le souhaitez."
 msgid ""
-"Nous avons annulé le bannissement de la branche %s vous concernant. Vous "
-"pouvez à présent rejoindre cette branche si vous le souhaitez."
+"Nous avons annulé le bannissement de la branche {branch} vous concernant. "
+"Vous pouvez à présent rejoindre cette branche si vous le souhaitez."
 msgstr ""
-"We have cancelled your ban for the branch %s. You can join it if you want."
+"We have cancelled your ban for the branch {branch}. You can join it if you "
+"want."
 
 #: branch/views.py:171
 #, python-brace-format
@@ -1775,6 +1776,14 @@ msgstr "About us"
 #: main/templates/main/about_us.html:10
 msgid "A propos de nous ... texte"
 msgstr "About us ... "
+
+#: main/templates/main/agreements.html:5 main/templates/main/agreements.html:9
+msgid "Conditions d'utilisations de Care4Care"
+msgstr "The agreements of Care4Care"
+
+#: main/templates/main/agreements.html:10
+msgid "Conditions d'utilisations de Care4Care text"
+msgstr "The agreements of Care4Care ..."
 
 #: main/templates/main/help.html:5 main/templates/main/help.html.py:9
 #: templates/base.html:337
@@ -2594,7 +2603,19 @@ msgstr "Contact Information"
 msgid "Comment avez-vous entendu parler de nous \t?"
 msgstr "How did you hear about us?"
 
-#: main/templates/registration/registration_form.html:87
+#: main/templates/registration/registration_form.html:85
+msgid "Attention:"
+msgstr "Warning: "
+
+#: main/templates/registration/registration_form.html:85
+msgid "En vous inscrivant, vous acceptez"
+msgstr "By completing your registration, you agree"
+
+#: main/templates/registration/registration_form.html:85
+msgid "les conditions d'utilisations de Care4Care"
+msgstr "the agreements of Care4Care"
+
+#: main/templates/registration/registration_form.html:92
 msgid "M'inscrire"
 msgstr "Sign up"
 
@@ -2869,15 +2890,15 @@ msgstr "Give to :"
 msgid "Montant du temps (plus que 1)"
 msgstr "How many (> 1)"
 
-#: main/views.py:112
+#: main/views.py:119
 msgid "Vous êtes désormais déconnecté."
 msgstr "You have been disconnected"
 
-#: main/views.py:129
+#: main/views.py:136
 msgid "Vous êtes désormais connecté."
 msgstr "Connected"
 
-#: main/views.py:132
+#: main/views.py:139
 msgid ""
 "Impossible de vous connecter, vous                     êtes inactif. "
 "Vérifiez vos emails afin de valider votre compte."
@@ -2885,35 +2906,35 @@ msgstr ""
 "Unable to connect because you are inactive. Check your email to verify your "
 "account."
 
-#: main/views.py:135
+#: main/views.py:142
 msgid "Impossible de se connecter."
 msgstr "Unable to connect."
 
-#: main/views.py:160
+#: main/views.py:167
 msgid "Vous êtes pas autoriser à consulter ce profil"
 msgstr "You can't consult this profile"
 
-#: main/views.py:224 main/views.py:382
+#: main/views.py:231 main/views.py:389
 msgid "Profil modifié avec succès !"
 msgstr "Successful profile modification"
 
-#: main/views.py:262
+#: main/views.py:269
 msgid "Modification sauvegardée"
 msgstr "Change saved"
 
-#: main/views.py:288 main/views.py:305
+#: main/views.py:295 main/views.py:312
 msgid "Accord du status de membre vérifié"
 msgstr "Agreement status verified member"
 
-#: main/views.py:289
+#: main/views.py:296
 msgid "Le status de membre vérifié vous a été accordé ! Félicitations."
 msgstr "'Verified member' status awarded to you! Congratulations."
 
-#: main/views.py:291
+#: main/views.py:298
 msgid "Droit accordé"
 msgstr "Status granted"
 
-#: main/views.py:306
+#: main/views.py:313
 msgid ""
 "Le status de membre vérifié vous a été refusé. Pour plus d'informations, "
 "contactez l'officier responsable de votre branche."
@@ -2921,11 +2942,11 @@ msgstr ""
 "The status verified member was denied. For more information, contact your "
 "branch officer."
 
-#: main/views.py:308
+#: main/views.py:315
 msgid "Droit refusé et demande supprimée"
 msgstr "Status refused and demand deleted"
 
-#: main/views.py:821
+#: main/views.py:828
 #, python-brace-format
 msgid "Cadeau de : {amount} minutes"
 msgstr "Gift :  {amount} minutes"
@@ -3094,7 +3115,6 @@ msgid "Cancel"
 msgstr "Cancel"
 
 #: templates/messages/email_user.txt:1
-#| msgid "utilisateurs"
 msgid "Cher utilisateur,"
 msgstr "Dear user, "
 
@@ -3113,7 +3133,6 @@ msgstr ""
 "%(body)s\n"
 
 #: templates/messages/email_user.txt:9
-#| msgid "Nom d'utilisateur"
 msgid "Merci d'utiliser"
 msgstr "Thank you for using"
 
@@ -3246,6 +3265,9 @@ msgid ""
 msgstr ""
 "\n"
 "You are about to use your account %(provider_name)s to log on Care4Care. Complete this form in order to make your connection:"
+
+#~ msgid "object.title"
+#~ msgstr "object.title"
 
 #~ msgid "Username"
 #~ msgstr "Username"

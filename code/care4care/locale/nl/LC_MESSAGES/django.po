@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-05 18:28+0000\n"
+"POT-Creation-Date: 2014-12-05 19:01+0000\n"
 "PO-Revision-Date: 2014-12-05 10:52+0000\n"
 "Last-Translator: b'vv vv <vv@vv.be>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -759,10 +759,6 @@ msgstr ""
 msgid "Vous"
 msgstr ""
 
-#: branch/templates/job/details_offer.html:4
-msgid "object.title"
-msgstr ""
-
 #: branch/templates/job/details_offer.html:16
 msgid "offre son aide dans la branche "
 msgstr ""
@@ -954,34 +950,34 @@ msgstr ""
 msgid "Vous avez quitté la branche {branch}"
 msgstr ""
 
-#: branch/views.py:147
-#, python-format
-msgid "Bannissement de la branche %s"
+#: branch/views.py:144
+#, python-brace-format
+msgid "Bannissement de la branche {branch}"
 msgstr ""
 
-#: branch/views.py:148
-#, python-format
+#: branch/views.py:145
+#, python-brace-format
 msgid ""
-"Vous avez été banni de la branche %s. Vous ne pouvez à présent plus "
+"Vous avez été banni de la branche {branch}. Vous ne pouvez à présent plus "
 "rejoindre cette branche. Pour plus d'informations, contactez un "
 "adminstrateur ou l'officier en charge de la branche en question"
 msgstr ""
 
-#: branch/views.py:150
+#: branch/views.py:147
 #, python-brace-format
 msgid "{user} a été banni de la branche {branch}"
 msgstr ""
 
 #: branch/views.py:168
-#, python-format
-msgid "Annulation du bannissement de la branche %s"
+#, python-brace-format
+msgid "Annulation du bannissement de la branche {branch}"
 msgstr ""
 
 #: branch/views.py:169
-#, python-format
+#, python-brace-format
 msgid ""
-"Nous avons annulé le bannissement de la branche %s vous concernant. Vous "
-"pouvez à présent rejoindre cette branche si vous le souhaitez."
+"Nous avons annulé le bannissement de la branche {branch} vous concernant. "
+"Vous pouvez à présent rejoindre cette branche si vous le souhaitez."
 msgstr ""
 
 #: branch/views.py:171
@@ -1730,6 +1726,14 @@ msgstr ""
 
 #: main/templates/main/about_us.html:10
 msgid "A propos de nous ... texte"
+msgstr ""
+
+#: main/templates/main/agreements.html:5 main/templates/main/agreements.html:9
+msgid "Conditions d'utilisations de Care4Care"
+msgstr ""
+
+#: main/templates/main/agreements.html:10
+msgid "Conditions d'utilisations de Care4Care text"
 msgstr ""
 
 #: main/templates/main/help.html:5 main/templates/main/help.html.py:9
@@ -2529,7 +2533,19 @@ msgstr ""
 msgid "Comment avez-vous entendu parler de nous \t?"
 msgstr ""
 
-#: main/templates/registration/registration_form.html:87
+#: main/templates/registration/registration_form.html:85
+msgid "Attention:"
+msgstr ""
+
+#: main/templates/registration/registration_form.html:85
+msgid "En vous inscrivant, vous acceptez"
+msgstr ""
+
+#: main/templates/registration/registration_form.html:85
+msgid "les conditions d'utilisations de Care4Care"
+msgstr ""
+
+#: main/templates/registration/registration_form.html:92
 msgid "M'inscrire"
 msgstr ""
 
@@ -2799,59 +2815,59 @@ msgstr ""
 msgid "Montant du temps (plus que 1)"
 msgstr ""
 
-#: main/views.py:112
+#: main/views.py:119
 msgid "Vous êtes désormais déconnecté."
 msgstr ""
 
-#: main/views.py:129
+#: main/views.py:136
 msgid "Vous êtes désormais connecté."
 msgstr ""
 
-#: main/views.py:132
+#: main/views.py:139
 msgid ""
 "Impossible de vous connecter, vous                     êtes inactif. "
 "Vérifiez vos emails afin de valider votre compte."
 msgstr ""
 
-#: main/views.py:135
+#: main/views.py:142
 msgid "Impossible de se connecter."
 msgstr ""
 
-#: main/views.py:160
+#: main/views.py:167
 msgid "Vous êtes pas autoriser à consulter ce profil"
 msgstr ""
 
-#: main/views.py:224 main/views.py:382
+#: main/views.py:231 main/views.py:389
 msgid "Profil modifié avec succès !"
 msgstr ""
 
-#: main/views.py:262
+#: main/views.py:269
 msgid "Modification sauvegardée"
 msgstr ""
 
-#: main/views.py:288 main/views.py:305
+#: main/views.py:295 main/views.py:312
 msgid "Accord du status de membre vérifié"
 msgstr ""
 
-#: main/views.py:289
+#: main/views.py:296
 msgid "Le status de membre vérifié vous a été accordé ! Félicitations."
 msgstr ""
 
-#: main/views.py:291
+#: main/views.py:298
 msgid "Droit accordé"
 msgstr ""
 
-#: main/views.py:306
+#: main/views.py:313
 msgid ""
 "Le status de membre vérifié vous a été refusé. Pour plus d'informations, "
 "contactez l'officier responsable de votre branche."
 msgstr ""
 
-#: main/views.py:308
+#: main/views.py:315
 msgid "Droit refusé et demande supprimée"
 msgstr ""
 
-#: main/views.py:821
+#: main/views.py:828
 #, python-brace-format
 msgid "Cadeau de : {amount} minutes"
 msgstr ""
