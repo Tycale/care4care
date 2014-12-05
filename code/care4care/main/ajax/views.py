@@ -4,7 +4,6 @@ from branch.models import Demand, Job, BranchMembers
 from main.models import *
 from django.utils import timezone
 from django.db.models import Count, Avg, Sum
-import datetime
 import json
 from django.db import connection
 
@@ -352,15 +351,26 @@ def get_user_job_avg_time_json(user_id):
 
     user = User.objects.get(pk=user_id)
     #group by django
-    nb_demands = Demand.objects.filter(donor=user).values('category').annotate(help_time=Avg('estimated_time'));
+    nb_demands = Demand.objects.filter(donor=user).values('category').annotate(help_time=Avg('real_time'))
     #construct data list
-    data_list = [0 for i in range(0, len(JobCategory.JOB_CATEGORIES))]
+    data_list = [{'number':0, 'total_time':0} for i in range(0, len(JobCategory.JOB_CATEGORIES))]
     for d in nb_demands:
         for (i, job_cat) in enumerate(JobCategory.JOB_CATEGORIES):
             if d['category'] == job_cat[0] and d['help_time'] is not None:
-                data_list[i] += d['help_time']
+                data_list[i]['total_time'] += d['help_time']
+                data_list[i]['number'] += 1
 
-    first_dataset['data'] = data_list
+    # Compute average
+    data_avg = []
+    for data in data_list:
+        total_time = data['total_time']
+        number = data['number']
+        d_avg  = 0.0
+        if number != 0:
+            d_avg = total_time // number    # integer division
+        data_avg.append(d_avg)
+
+    first_dataset['data'] = data_avg
     datasets.append(first_dataset)
 
     response['datasets'] = datasets
@@ -383,7 +393,7 @@ def get_user_jobs_amount_json(user_id):
     # set the last day of that month
     i_months_ago = get_last_day_of_month(i_months_ago)
     user = User.objects.get(pk=user_id)
-    jobs_amount = Demand.objects.filter(donor=user, date__gte=i_months_ago, date__lte=this_month)
+    jobs_amount = Demand.objects.filter(donor=user, date__gte=i_months_ago, date__lte=now)
     # data_list contains the number of the months
     data_list = month_list(i_months_ago.month, next_month(this_month.month))
     data_dict = dict.fromkeys(data_list, 0)
@@ -415,7 +425,7 @@ def get_user_time_amount_json(user_id):
     response['labels'] = get_last_n_months(N_MONTHS)
 
     truncate_date = connection.ops.date_trunc_sql('month', 'date')
-    now = datetime.datetime.now()
+    now = timezone.now()
     this_month = get_last_day_of_month(now)
     # get date minus 6 months (in number of weeks actually)
     i_months_ago = this_month - timezone.timedelta(weeks=4*N_MONTHS)
@@ -459,7 +469,7 @@ def get_user_km_amount_json(user_id):
     # set the last day of that month
     n_months_ago = get_last_day_of_month(n_months_ago)
     user = User.objects.get(pk=user_id)
-    jobs_amount = Demand.objects.filter(donor=user, date__gte=n_months_ago, date__lte=this_month).extra({'month': truncate_date}).values('month').annotate(km_amount=Sum('km'))
+    jobs_amount = Demand.objects.filter(donor=user, date__gte=n_months_ago, date__lte=now).extra({'month': truncate_date}).values('month').annotate(km_amount=Sum('km'))
     data_list = [0 for i in range(0, N_MONTHS)]
     baseIndex = n_months_ago.month
     # the base index is the first month and is equal to the index 0 in the data_list
