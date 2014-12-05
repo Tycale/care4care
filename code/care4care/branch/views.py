@@ -121,6 +121,7 @@ def branch_leave(request, branch_id, user_id):
         try:
             to_remove = BranchMembers.objects.get(branch=branch_id, user=user_id)
             to_remove.delete()
+            Demand.objects.filter(branch=branch, receiver=user, success=None, closed=False).delete()
             messages.add_message(request, messages.INFO, _('Vous avez quitté la branche {branch}').format(branch=branch))
         except:
             pass
@@ -135,7 +136,7 @@ def branch_ban(request, branch_id, user_id):
     branch = get_object_or_404(Branch, pk=branch_id)
     user = get_object_or_404(User, pk=user_id)
 
-    if can_manage(user, request.user) and user.id != branch.creator :
+    if can_manage(user, request.user):
         try:
             to_remove = BranchMembers.objects.get(branch=branch_id, user=user_id)
             to_remove.delete()
@@ -148,10 +149,9 @@ def branch_ban(request, branch_id, user_id):
         pm_write(request.user, user, subject, body)
         messages.add_message(request, messages.INFO, _('{user} a été banni de la branche {branch}').format(branch=branch, user=user))
 
-        for d in Demand.objects.up_to_date().filter(branch=branch_id, receiver=user_id):
-            d.delete()
-        for d in Offer.objects.up_to_date().filter(branch=branch_id, donor=user_id):
-            d.delete()
+
+        Demand.objects.filter(branch=branch, receiver=user, success=None, closed=False).delete()
+
     else :
         return refuse(request)
 
@@ -163,18 +163,15 @@ def branch_unban(request, branch_id, user_id):
     branch = get_object_or_404(Branch, pk=branch_id)
     user = get_object_or_404(User, pk=user_id)
 
-    if can_manage(user, request.user) and user.id != branch.creator :
-        try:
-            to_unban = User.objects.get(id=user_id)
-            branch.banned.remove(to_unban)
-            subject = _('Annulation du bannissement de la branche {branch}').format(branch=branch.name)
-            body = _('Nous avons annulé le bannissement de la branche {branch} vous concernant. Vous pouvez à présent rejoindre cette branche si vous le souhaitez.').format(branch=branch.name)
-            pm_write(request.user, user, subject, body)
-            messages.add_message(request, messages.INFO, _('le bannissement de {user} dans la branche {branch} a été annulé').format(branch=branch, user=user))
-        except:
-            pass
-    else :
-        return refuse(request)
+    try:
+        to_unban = User.objects.get(id=user_id)
+        branch.banned.remove(to_unban)
+        subject = _('Annulation du bannissement de la branche %s' % branch.name)
+        body = _('Nous avons annulé le bannissement de la branche %s vous concernant. Vous pouvez à présent rejoindre cette branche si vous le souhaitez.' % branch.name)
+        pm_write(request.user, user, subject, body)
+        messages.add_message(request, messages.INFO, _('le bannissement de {user} dans la branche {branch} a été annulé').format(branch=branch, user=user))
+    except:
+        pass
 
     return redirect(branch.get_absolute_url())
 

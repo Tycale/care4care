@@ -50,6 +50,7 @@
                         <div class="modal-body">
                             {% blocktrans %}
                             Êtes-vous sûr de vouloir quitter la branche {{branch}} ?
+                            Cela détruira toute vos demandes dans cette branche.
                             {% endblocktrans %}
                         </div>
                         <div class="modal-footer">
@@ -213,7 +214,8 @@
                                         </div>
                                         <div class="modal-body">
                                             {% blocktrans with member.user.get_full_name as name %}
-                                            Êtes-vous sûr de vouloir SUPPRIMER {{name}} de la branche {{branch}} ? <br />
+                                            Êtes-vous sûr de vouloir SUPPRIMER {{name}} de la branche {{branch}} ? 
+                                            Cela détruira toutes ses demandes et offres<br />
                                             {% endblocktrans %}
                                         </div>
                                         <div class="modal-footer">
@@ -237,7 +239,8 @@
                                         </div>
                                         <div class="modal-body">
                                             {% blocktrans with member.user.get_full_name as name %}
-                                            Êtes-vous sûr de vouloir BANNIR {{name}} de la branche {{branch}} ? <br />
+                                            Êtes-vous sûr de vouloir BANNIR {{name}} de la branche {{branch}} ? 
+                                            Cela détruira toutes ses offres et demandes.<br />
                                             {% endblocktrans %}
                                         </div>
                                         <div class="modal-footer">
