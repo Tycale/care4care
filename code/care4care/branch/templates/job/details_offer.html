@@ -3,13 +3,20 @@
 
 {% block title %}{% trans "object.title" %}{% endblock %}
 
+{% block extra_head %}
+<meta content="http://{{request.META.HTTP_HOST}}{% static "img/care4care.jpg" %}" property="og:image"></meta>
+{% endblock %}
+
 {% block content %}
+
+<div id="fb-root"></div>
 
 <div class="row mt">
     <div class="col-xs-12">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4>
+                    <div class="fb-share-button pull-right" data-layout="button" data-href="{{object.get_absolute_url}}" style="margin-top : 20px;"></div>
                     <a class="float-right" href="{{ object.donor.get_absolute_url }}">
                       <img class="img-circle" src="{% thumbnail object.donor.photo 60x60 crop %}" />
                       {{object.donor.get_full_name}}
@@ -90,5 +97,21 @@
             </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_footer %}
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  {% if LANGUAGE_CODE == 'fr' %}
+  js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&appId=958033600891660&version=v2.0";
+  {% elif LANGUAGE_CODE == 'nl' %}
+  js.src = "//connect.facebook.net/nl_NL/sdk.js#xfbml=1&appId=958033600891660&version=v2.0";
+  {% else %}
+  js.src = "//connect.facebook.net/en_EN/sdk.js#xfbml=1&appId=958033600891660&version=v2.0";
+  {% endif %}
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 {% endblock %}
 
