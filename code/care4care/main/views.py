@@ -146,7 +146,7 @@ def user_profile(request, user_id):
         else:
             can_manage_user = True
 
-        if in_other_ignore_list:
+        if in_other_ignore_list and not request.user.is_superuser :
             messages.add_message(request, messages.INFO, _('Vous êtes pas autoriser à consulter ce profil'))
             return redirect('home')
 
