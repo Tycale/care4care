@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-05 21:36+0000\n"
+"POT-Creation-Date: 2014-12-05 22:40+0000\n"
 "PO-Revision-Date: 2014-12-05 10:52+0000\n"
 "Last-Translator: b'vv vv <vv@vv.be>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1226,63 +1226,63 @@ msgid ""
 "problème."
 msgstr ""
 
-#: care4care/settings.py:142
+#: care4care/settings.py:153
 msgid "Français"
 msgstr ""
 
-#: care4care/settings.py:143
+#: care4care/settings.py:154
 msgid "Anglais"
 msgstr ""
 
-#: care4care/settings.py:144
+#: care4care/settings.py:155
 msgid "Néerlandais"
 msgstr ""
 
-#: main/ajax/views.py:13
+#: main/ajax/views.py:12
 msgid "Janvier"
 msgstr ""
 
-#: main/ajax/views.py:14
+#: main/ajax/views.py:13
 msgid "Février"
 msgstr ""
 
-#: main/ajax/views.py:15
+#: main/ajax/views.py:14
 msgid "Mars"
 msgstr ""
 
-#: main/ajax/views.py:16
+#: main/ajax/views.py:15
 msgid "Avril"
 msgstr ""
 
-#: main/ajax/views.py:17
+#: main/ajax/views.py:16
 msgid "Mai"
 msgstr ""
 
-#: main/ajax/views.py:18
+#: main/ajax/views.py:17
 msgid "Juin"
 msgstr ""
 
-#: main/ajax/views.py:19
+#: main/ajax/views.py:18
 msgid "Juillet"
 msgstr ""
 
-#: main/ajax/views.py:20
+#: main/ajax/views.py:19
 msgid "Août"
 msgstr ""
 
-#: main/ajax/views.py:21
+#: main/ajax/views.py:20
 msgid "Septembre"
 msgstr ""
 
-#: main/ajax/views.py:22
+#: main/ajax/views.py:21
 msgid "Octobre"
 msgstr ""
 
-#: main/ajax/views.py:23
+#: main/ajax/views.py:22
 msgid "Novembre"
 msgstr ""
 
-#: main/ajax/views.py:24
+#: main/ajax/views.py:23
 msgid "Décembre"
 msgstr ""
 
@@ -1327,8 +1327,40 @@ msgstr ""
 msgid "Type de fichier non supporté"
 msgstr ""
 
+#: main/forms.py:196
+msgid "Type de job (rien = tout)"
+msgstr ""
+
+#: main/forms.py:197
+msgid "Catégorie du job (rien = tout)"
+msgstr ""
+
+#: main/forms.py:198
+msgid "A partir du"
+msgstr ""
+
+#: main/forms.py:199
+msgid "Jusqu'au"
+msgstr ""
+
+#: main/forms.py:200
+msgid "Qui peut fournir son aide ?"
+msgstr ""
+
+#: main/forms.py:201
+msgid "A quelle heure ?"
+msgstr ""
+
 #: main/forms.py:208 main/forms.py:210 main/forms.py:213
 msgid "Incohérence dans les dates."
+msgstr ""
+
+#: main/forms.py:217
+msgid "Donner à:"
+msgstr ""
+
+#: main/forms.py:219
+msgid "Montant du temps (plus que 1)"
 msgstr ""
 
 #: main/forms.py:229
@@ -2844,22 +2876,6 @@ msgstr ""
 #: main/views.py:818
 #, python-brace-format
 msgid "Cadeau de : {amount} minutes"
-msgstr ""
-
-#: news/models.py:11
-msgid "Titre de l'article"
-msgstr ""
-
-#: news/models.py:13
-msgid "Corps de l'article"
-msgstr ""
-
-#: news/models.py:15
-msgid "Date de publication désirée"
-msgstr ""
-
-#: news/models.py:16
-msgid "Date de fin de publication (laisser vide si aucune expiration voulue)"
 msgstr ""
 
 #: news/templates/add.html:5 news/templates/news.html:5
