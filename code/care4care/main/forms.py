@@ -194,7 +194,7 @@ class EmergencyContactCreateForm(forms.ModelForm):
 
 class JobSearchForm(forms.Form):
     job_type =  forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=JobType.JOB_TYPES, label = __("Type de job (rien = tout)"))
-    category = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=JobCategory.JOB_CATEGORIES, label = __("Catégorie du job (rien = tout"))
+    category = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=JobCategory.JOB_CATEGORIES, label = __("Catégorie du job (rien = tout)"))
     date1 = forms.DateTimeField(required=False, label =__("A partir du"),widget=DateTimePicker(options={"pickTime": False,}))
     date2 = forms.DateTimeField(required=False, label =__("jusqu'au"),widget=DateTimePicker(options={"pickTime": False,}))
     receive_help_from_who = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple, choices=MemberType.MEMBER_TYPES_GROUP, label = __("Qui peut fournir son aide ?"))

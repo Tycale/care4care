@@ -50,10 +50,8 @@ def home(request):
         demands = Demand.objects.filter(branch__in=branch_ids).all()
         offers = Offer.objects.filter(branch__in=branch_ids).all()
     else :
-        demands = Demand.objects.all()
-        offers = Offer.objects.all()
-
-    date_now = timezone.now() + timezone.timedelta(hours=-24)
+        demands = Demand.objects.filter(receive_help_from_who=MemberType.ALL).all()
+        offers = Offer.objects.filter(receive_help_from_who=MemberType.ALL).all()
 
     demands = demands.up_to_date()
     offers = offers.up_to_date()
@@ -425,7 +423,7 @@ class RegistrationView(BaseRegistrationView):
         new_user.save()
 
         # chercher une branche uniquement pour le membre de type membre
-        if new_user.user_type == MemberType.MEMBER:
+        if int(new_user.user_type) == int(MemberType.MEMBER):
             branch = Branch.objects.get(pk=cleaned_data['id'])
             bm = BranchMembers(user=new_user, branch=branch, is_admin=False, joined=timezone.now())
             bm.save()
@@ -707,7 +705,7 @@ def job_search_view(request):
 
 
             if not form.cleaned_data['date1']:
-                date1 = timezone.now()+timezone.timedelta(hours=-24)
+                date1 = timezone.now()+timezone.timedelta(hours=-25)
             else:
                 date1 = form.cleaned_data['date1']
 
