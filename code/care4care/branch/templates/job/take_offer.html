@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}{% load i18n %}{% load staticfiles %}
+
+
+{% block title %}{% trans "Besoin d'aide" %}{% endblock %}
+
+{% block extra_head %}
+<script src="{% static "js/bloodhound.min.js" %}"></script>
+<script src="http://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+<script src="{% static "js/typeahead-addresspicker.js" %}"></script>
+<script src="{% static "js/typeahead.js" %}"></script>
+
+{% endblock %}
+
+{% block content %}
+
+<h3> {% trans "Demande d'aide de " %}{{ ruser.get_full_name }}{% trans " dans la branche "%}{{ branch }} - {{ offer.date|date:"DATE_FORMAT"}}</h3>
+
+<div class="alert alert-info" role="alert">
+  <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+  <span class="sr-only">{% trans "Information" %}</span>
+  {% blocktrans with offer.donor.get_full_name as name %}
+  Afin de profiter de l'offre de {{name}}, vous devez remplir une demande rentrant dans ses critères.<br />
+  Ce formulaire vous limite donc afin que l'utilisateur {{name}} soit intéressé par votre demande.<br />
+  Cet utilisateur sera ensuite averti et pourra décider de vous venir en aide.
+  {% endblocktrans %}
+</div>
+
+<div class="row mt">
+    <div class="col-lg-12">
+        <form action="." class="form-horizontal style-form" role="form" method="post">
+            {% csrf_token %}
+
+            {% bootstrap_form_errors form %}
+
+            <div class="col-lg-12 col-sm-12 background-gris">
+                <div class="showback">
+                    <h4 class="mb"> {% trans "Informations générales" %}</h4>
+                    {% bootstrap_field form.title %}
+                    {% if not update %}
+                    {% bootstrap_field form.category %}
+                    {% endif %}
+
+                    {% bootstrap_field form.time %}
+
+                    {% bootstrap_field form.estimated_time %}
+                    {% bootstrap_field form.receive_help_from_who %}
+                    {% bootstrap_field form.description %}
+                </div>
+            </div>
+
+            <div class="col-sm-12 background-gris">
+              <div class="showback">
+              <h4 class="mb">{% trans "Adresse" %}</h4>
+              <div class="row">
+                <div class="col-lg-6">
+                  <input id="id_location_input" class="typeahead form-control" type="text" placeholder="{% trans "Entrez votre adresse"%}" value="{% if form.location.value %}{{ form.location.value }}{% else %}{% if ruser.location %}{{ ruser.location }}{% endif %}{% endif %}">
+                  <div class="alert alert-danger mt"><b>{% trans "Information:"%}</b> {% trans "Si vous ne souhaitez pas révéler entièrement votre adresse, n'indiquez que la rue ou un endroit proche. Vous pourrez préciser ensuite votre adresse exacte à la personne qui se proposera afin de vous aider dans votre tâche." %}</div>
+                </div>
+                <div class="col-lg-6">
+                  <div id="map" style="min-height:300px;"></div>
+                  <br />
+                  <div class="alert alert-info"><b>{% trans "Information:"%}</b> {% trans "L'emplacement sur la carte peut être approximatif" %}</div>
+                </div>
+              </div>
+              {% bootstrap_field form.location %}
+              {% bootstrap_field form.latitude %}
+              {% bootstrap_field form.longitude %}
+              </div>
+            </div>
+
+            <div class="col-sm-12">
+            {% buttons %}
+            <div class="row">
+                <div class="col-md-6 mb"><button type="submit" class="btn btn-success btn-lg btn-block">
+                        {% bootstrap_icon "ok" %} &nbsp; {% trans "Envoyer" %}
+                </button></div>
+                <div class="col-md-6"><a href="{% url 'home' %}" class="btn btn-danger btn-lg btn-block">
+                        {% bootstrap_icon "remove" %} &nbsp; {% trans "Annuler" %}
+                </a></div>
+            </div>
+            {% endbuttons %}
+            </div>
+
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block extra_footer %}
+<script>
+$(document).ready(function () {
+
+  // to_keep_time
+  var to_keep_time = [
+  {% for pt in offer.time %}
+    {{pt}}-1,
+  {% endfor %}
+  ]
+  var total_checkbox = $("div.checkbox").length;
+  for(var i=0; i < total_checkbox; ++i){
+
+    if(to_keep_time.indexOf(i) !== -1){
+      
+    } else {
+      $('#id_time_'+i+'').parent().parent().remove();
+    }
+  }
+
+  // to_keep_category
+
+  function da_int(p){
+    p = parseInt(p);
+    if(p === 'a'){
+      return '10';
+    }
+  }
+
+  var to_keep_category = [
+  {% for pt in category_keep %}
+    {{pt}} - 1,
+  {% endfor %}
+  ]
+
+  var total_radio = $("div.radio").length;
+  for(var i=0; i < total_radio; ++i){
+
+    if(to_keep_category.indexOf(i) !== -1){
+      
+    } else {
+      $('#id_category_'+i+'').parent().parent().remove();
+    }
+  }
+
+// https://github.com/sgruhier/typeahead-addresspicker
+// instantiate the addressPicker suggestion engine (based on bloodhound)
+var addressPicker = new AddressPicker({
+  map: {id: '#map', center: new google.maps.LatLng({% if form.latitude.value %}'{{ form.latitude.value }}'{% else %}{% if ruser.latitude %}'{{ruser.latitude}}'{% else %}'50.846975'{% endif %}{% endif %}, {% if form.longitude.value %}'{{ form.longitude.value }}'{% else %}{% if ruser.longitude %}'{{ruser.longitude}}'{% else %}'4.351815699999975'{% endif %}{% endif %}), zoom:15, scrollwheel: false},
+  marker: {visible: true, draggable: false,}
+});
+
+// instantiate the typeahead UI
+$('#id_location_input').typeahead(null, {
+  displayKey: 'description',
+  source: addressPicker.ttAdapter()
+});
+
+// Bind some event to update map on autocomplete selection
+$('#id_location_input').bind("typeahead:selected", addressPicker.updateMap);
+$('#id_location_input').bind("typeahead:cursorchanged", addressPicker.updateMap);
+
+addressPicker.bindDefaultTypeaheadEvent($('#id_location_input'))
+
+$(addressPicker).on('addresspicker:selected', function (event, result) {
+  $('#id_latitude').val(result.lat());
+  $('#id_longitude').val(result.lng());
+  $('#id_location').val($('#id_location_input').typeahead('val'));
+});
+
+});
+</script>
+{{ form.media }}
+{% endblock %}

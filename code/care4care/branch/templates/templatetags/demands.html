@@ -49,6 +49,7 @@
 <script type="application/javascript">
 $(function () {
     $('#demands').bootstrapTable(); // init via javascript
+
     $('.searchable tr').hide();
     $('.searchable tr').filter(function() {
         return !$(this).hasClass("success")
@@ -65,6 +66,7 @@ $(function () {
         }else{
             $('.searchable tr').show();
         }
+        $('#demands').bootstrapTable('resetView');
     });
 });
 </script>

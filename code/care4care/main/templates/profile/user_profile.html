@@ -146,6 +146,7 @@
 
                     </div>
 
+                    {% if request.user.user_type == NON_MEMBER_TYPE %}
                     <div class="panel panel-default">
                         <div class="panel-heading"> {% trans "Données professionnelles" %}
                             {%  if request.user.id == user_to_display.id or request.user.is_superuser %}
@@ -160,6 +161,8 @@
                             <li class="list-group-item text-right"><span class="pull-left"><strong>{% trans "Profession" %}</strong></span> &nbsp; {{user_to_display.work}} </li>
                         </ul>
                     </div>
+                    {% endif %}
+
                     {%  if request.user.id == user_to_display.id or request.user.is_superuser %}
                     <div class="panel panel-default">
                         <div class="panel-heading"> {% trans "Réseaux sociaux" %}

@@ -21,6 +21,11 @@ class CreateBranchForm(forms.ModelForm):
             'location': forms.HiddenInput,
         }
 
+    def clean(self):
+        if not 'latitude' in self.cleaned_data or not 'longitude' in self.cleaned_data:
+            raise forms.ValidationError(_("Veuillez choisir une adresse"))
+        super(CreateBranchForm, self).clean()
+
 class ChooseBranchForm(forms.Form):
     """ Form for choosing a branch """
     id = forms.IntegerField(widget=forms.HiddenInput)
@@ -66,6 +71,19 @@ class NeedHelpForm(forms.ModelForm):
     class Meta:
         model = Demand
         fields = ['description', 'estimated_time', 'category', 'date', 'time', 'location', 'latitude', 'longitude', 'title', 'receive_help_from_who']
+        widgets = {
+            'latitude': forms.HiddenInput,
+            'longitude': forms.HiddenInput,
+            'location': forms.HiddenInput,
+            'date': DateTimePicker(options={"pickTime": False,}),
+            'category': OneJobSelect,
+        }
+
+class TakeOfferForm(NeedHelpForm):
+
+    class Meta:
+        model = Demand
+        fields = ['description', 'estimated_time', 'category', 'time', 'location', 'latitude', 'longitude', 'title', 'receive_help_from_who']
         widgets = {
             'latitude': forms.HiddenInput,
             'longitude': forms.HiddenInput,
