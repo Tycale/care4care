@@ -11,8 +11,8 @@ Consumer Key (API Key) 8xb7STygk334xUdmzgC8nId6n
 Consumer Secret (API Secret) XN20uYRLswtA9ukro1jCIHrXlumVSJEwxWUUzi1b5MoZB0ozwo
 
 Facebook:
-
-
+App ID : 958033600891660
+App secret : f84e8480fe7fea5b746abe269115ebd6
 
 For help implementing in django-allauth:
 http://django-allauth.readthedocs.org/en/latest/providers.html
