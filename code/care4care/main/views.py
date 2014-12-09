@@ -805,7 +805,7 @@ def credits_view(request):
     if request.POST:
         form = GiftForm(request.POST, ruser=user)
         if form.is_valid():
-            if form.cleaned_data['check'] == 1:
+            if form.cleaned_data['check'] == '1':
                 friend = User.objects.get(username=form.cleaned_data['user'])
             else :
                 friend = get_object_or_404(User, pk=1)

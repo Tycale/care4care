@@ -215,13 +215,29 @@ class JobSearchForm(forms.Form):
 
 class GiftForm(forms.Form):
     check = forms.ChoiceField(label = __("Donner à:"),widget=forms.RadioSelect, choices=GIVINGTO, initial=1)
-    user = forms.CharField(label = __("Username"), widget=AutoCompleteWidget('user'))
+    user = forms.CharField(required=False, label = __("Username"), widget=AutoCompleteWidget('user'))
     amount = forms.IntegerField(label = __("Montant du temps (plus que 1)"), min_value=1, initial=60)
     message = forms.CharField(required=False, widget=forms.Textarea, label = __("Message"))
 
     def __init__(self, *args, **kwargs):
         self.ruser = kwargs.pop('ruser')
         super(GiftForm, self).__init__(*args, **kwargs)
+
+    def clean_user(self):
+        print(self.cleaned_data)
+        cleaned_data = super(GiftForm, self).clean()
+        if self.cleaned_data['check']=='1':
+            if self.cleaned_data['user']=="":
+                raise forms.ValidationError(_("Indiquez un utilisateur."))     
+        
+            try:
+                a = User.objects.get(username=self.cleaned_data['user'])
+            except Exception:
+                raise forms.ValidationError(_("Indiquez un utilisateur existant."))
+        
+            if a.id == self.ruser.id:
+                raise forms.ValidationError(_("Vous ne pouvez pas donner à vous même."))
+        return cleaned_data['user']
 
     def clean_amount(self):
         cleaned_data = super(GiftForm, self).clean()
