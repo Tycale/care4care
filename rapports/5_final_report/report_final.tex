@@ -1,0 +1,112 @@
+% LINGI2255 - Software Development Project
+% Final report
+\documentclass[11pt, a4paper]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage[utf8]{inputenc}
+\usepackage[UKenglish]{babel}
+\usepackage{graphicx}
+
+\usepackage{amssymb}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{csquotes}
+\usepackage{enumitem}
+\usepackage{lipsum}
+\usepackage{listings}
+\lstset{language=Python}
+
+\newcommand{\tbf}[1]{\textbf{#1}}
+\newcommand{\tit}[1]{\textit{#1}}
+\newcommand{\shellcmd}[1]{\\\indent\indent\texttt{\footnotesize\$ #1}\\}
+\newcommand{\vshellcmd}[1]{\\\indent\indent\texttt{\footnotesize(venv)\$ #1}\\}
+
+
+\title{Brief Article}
+\author{The Author}
+%\date{}							% Activate to display a given date or no date
+
+\begin{document}
+%\maketitle
+
+%%%%%% Section
+\section{Introduction}
+
+%%%%%% Section
+\section{Product}
+
+\subsection{Features}
+
+%%%%%% Section
+\section{Changes from previous reports}
+
+%%%%%% Section
+\section{Technical discussion}
+
+\subsection{Virtual Environment}
+
+We use \texttt{pyvenv}, a tool that can create virtual environment in \texttt{Python}, to keep the dependencies required by our project in a single place. It creates a folder which contains all the necessary executables to use the packages that our project will need. To create the virtual environment :
+\shellcmd{pyvenv venv}
+To activate the environment :
+\shellcmd{source venv/bin/activate}
+Once your virtual environment installed and activated, you can install the dependencies of \texttt{Care4Care}. All the dependencies are listed in the file requirements.txt. You can install all of them with the following command:
+\vshellcmd{pip install -r requirements.txt}
+
+\subsection{Create the database}
+Once you're in a proper virtual environment with all dependencies installed, you can create the database. To do so, you can go in the root of our \texttt{Django} project and use the built-in command :
+\vshellcmd{./manager.py syncdb}
+At the end, you will ask to create a ``super user'', you can create a user ``care4care''. If you want to populate the database with some demo datas, you can run :
+\vshellcmd{./manager.py loaddata data\_demo.json}
+
+\subsection{Run the project}
+One you're in the virtual environment with all dependencies installed and the dabatase created, you can launch the development server :
+\vshellcmd{./manager.py runserver}
+When the server is launched, you can surf the website in your browser at \url{http://localhost:8000}. 
+
+\subsection{File hierarchy}
+The project is divised in three ``Django applications'' wich are differents folders in our project :
+\begin{description}[noitemsep]
+\item[- main] contains everything about users management
+\item[- branch] contains everything about branch and jobs (demands and offers)
+\item[- news] contains everything about the news system
+\end{description}
+
+Each of these ``Django applications'' contains typic files/folders :
+\begin{description}[noitemsep]
+\item[- migrations/] is a folder containing migrations files. This is the Django’s way of propagating changes we make in our models (adding a field, deleting a model, etc.) into our database schema.
+\item[- templates/] is a folder containing our templates. A template is simply a text file (ofter HTML). It contains variables, which get replaced with values when the template is evaluated, and tags, which control the logic of the template.
+\item[- Templatestags/] is a folder in wich we will extend the template engine by defining custom tags, and then make them available in our templates.
+\item[- static/] is a folder in wich we will put every static files (images, javascript, photos, etc.) used by the application.
+\item[- \_\_init\_\_.py] used to mark the folder on disk as Python package directory.
+\item[- admin.py] contains all the logic for the auto-generated django-admin.
+\item[- forms.py] contains all the forms used by the ``Django application'' and the validation logic.
+\item[- models.py] contains all the models used by the ``Django application''. Models are the source of information about data. Each attribute of a model represents a database field. 
+\item[- tests.py] contains unit tests.
+\item[- urls.py] contains every URLs available for the ``Django application''.
+\item[- views.py] contains the logic of every views (linked to an URL) for the ``Django application''.
+\end{description}
+
+There is some more specific folders in the root of our project that need to be describe :
+\begin{description}[noitemsep]
+\item[- care4care/] contains the settings.py file where you can define all settings relative to our project.
+\item[- templates/] contains templates that are linked to a third-party application.
+\item[- static/] contains all static files not related to a specific application but more about the whole project.
+\item[- media\_root/] contains every files uploaded by users via the website.
+\item[- locale/] contains translations (i18n) of the project.
+\end{description}
+
+And there is some more specific files in the root of our project that need to be describe :
+\begin{description}[noitemsep]
+
+\item[- make\_locale.sh] generates translations .po files into ``locale/''. These files contains every sentences to be translated.
+\item[- compile\_locale.sh] compiles translations .po files into usable translations .mo files.
+\item[- manage.py] is generated by Django. This is the command-line utility for administrative tasks. 
+\item[- start.sh] will run the project in a gunicorn server for production environment.
+\end{description}
+
+
+
+
+%%%%%% Section
+\section{Conclusion}
+
+\end{document}
