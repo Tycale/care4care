@@ -2,15 +2,17 @@
 
 \subsection{Social Media extension}
 
-The Social Media extension allow users to login with a Facebook, a Google account or a Twitter account. It will extract a few information : first name, last name and email address when possible.
-You can also create a care4care account and then link it to your Facebook/Google/Twitter accounts.
+The Social Media extension allow users to connect with a Facebook, a Google or a Twitter account. When connecting using social media care4care will get a few informations from you account: first name, last name, username and email address when possible.
+
+Users also have the possibility to create a care4care account and then link it to their Facebook/Google/Twitter accounts.
 
 This will ease the registration process and we hope will bring more people on the website.
 
 
 \subsubsection{Description}
 
-For this extension we used the Django package "django-allauth" which handle authentication from multiples providers (Google, Facebook, ...). It integrate very well with the Django authentication system and is easy to setup.
+For this extension we used the Django package "django-allauth" which handle authentication from multiples providers (Google, Facebook, ...). 
+It integrate very well with the Django authentication system and is easy to setup.
 
 There is two way to connect with a social media account :
 
@@ -25,16 +27,16 @@ The unique user-name is created from the first and last name of the person (a nu
 
 \subsubsection{Setup}
 
-To enable social authentication you will need to setup some stuff on care4care side but also on the social media websites side.
+To enable social authentication you will need to setup some stuff on the care4care side and also on the social media websites side.
 
 First lets take care of the social media side.
 
 \begin{enumerate}
-\item You will need a account for each social media websites you want your user to connect from. I would advise to create a special account for care4care on each.
+\item You will need a account for each social media websites you want your user to connect from. I would advise to create a dedicate account for care4care on each.
 \item You will need to create a new app on the developer website of the social media. Links are provided below \footnote{\url{https://developers.facebook.com/}}
 \footnote{\url{https://apps.twitter.com/}} \footnote{\url{https://developers.facebook.com/}}
 
-\item Get the ID and Secret key for each of these apps. They are called differently depending on the social media. See figure ~\ref{googleSetup} ~\ref{twitterSetup} 
+\item When you created the apps, get the ID and Secret key for each. They are called differently depending on the social media. See figure ~\ref{googleSetup} ~\ref{twitterSetup} for examples.
 
 \begin{itemize}
 \item Twitter : Consumer Key (API Key) and Consumer Secret (API Secret)
