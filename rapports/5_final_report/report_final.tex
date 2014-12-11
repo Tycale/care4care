@@ -92,7 +92,7 @@ In the top of the main profile page, a menu is available, here are the actions a
   \item \textbf{Statistiques :} See section 2.2
 \end{enumerate}
 
-\subsubsection{Credit}
+\subsubsection{Credit and gift}
 
 Credit page are available in left menu in "my profile" section. On this page you can see your credit, some small statistics, jobs historic, jobs pending. You can perform gift to other member or administration (with a love message).
 
@@ -144,9 +144,47 @@ On the top right of the page you can leave the branch.
 	\item \textbf{For branch creator :} same as superuser but you can remove the branch with all his demands and offers.
 \end{enumerate}
 
+\subsubsection{Jobs}
+
+All offers and demands are specific to one specified branch. 
+
+\paragraph{Offers}
+Offers are a good way to find most pleasant jobs. 
+You can create an offer specifying these various fields:
+\begin{enumerate}
+	\item Type of help (Visit at home, shopping, ...)
+	\item A date
+	\item Available times slots
+	\item Who can see and respond to demand/offer (All, verified, favorites)
+\end{enumerate}
+Once the request made, you will receive a mail inviting you to postulate when an other user make a demand matching with your offer. 
+
+\paragraph{Demands}
+When you require help you can create a demand with the button "I need help" (on the home page or a branch page). There you have to specify this fields:
+\begin{enumerate}
+	\item \textbf{Title :} A title for your help
+	\item \textbf{Type of help :} Job's category
+	\item \textbf{Date :} A date for the job
+	\item \textbf{Available times :} Times slots for the job.
+	\item \textbf{Estimated time :} Estimated time for the job
+	\item \textbf{Who can see and respond to demand/offer :} All, Verified members, favorites
+	\item \textbf{Description :} More details for the job
+	\item \textbf{Address :} Where the job take place
+\end{enumerate}
+Once you confirm the job, other specified member can see it and ask for participate.
+Later you can access and manage your proposed job on the home page or branch page where you posted the job. On the manage page (click on the job) you have a list with people witch proposed their help and you can select the one you want. (That automatically send him a message that confirm his has the job)
+
+\paragraph{Finish a demand}
+When the demand day arrive, the helper can manage and confirm he made the job and give the correct amount of time or say that the job didn't having place.
+The donor (of the job) will receive a mail and can confirm the job or contradict it (In that case a mail will be send to the branch officer). The credit management will be done by the system.  
+
 \subsubsection{Mailbox}
 
-Every member get a mailbox after sign in, he can use it for sending mail to other member or administrator. Sometimes the system use the mailbox automatically in order to reduce the administrator workload.
+Every member get a mailbox after sign in, he could use it for sending mail to other member or administrator. Sometimes the system use the mailbox automatically in order to reduce the administrator workload.
+
+\subsubsection{Languages}
+
+You have the possibility to choose a language on the top menu, the button with a flag (there is a drop down menu with all available languages when you click on it). There is a specified section for manage translations.
 
 \input{statistics.texpart}
 
@@ -334,31 +372,6 @@ And that's all, we have created a page with the possibility of creating an emerg
 \begin{figure}[!ht]
    \includegraphics[height=220px]{addec.png}
 \end{figure}
-
-
-%%%%%% Section
-\section{Translation}
-
-Our site can be used with multiple languages. Indeed, the French and English are already fully implemented. But an additional translation can be done easily.\\
-Here are some useful files for translation :
-
-\begin{description}
-\item [makelocale.sh] Generate translations
-\item [compilelocale.sh] Compile translations
-\end{description}
-Both are used as command.\\
-\\
-The make generates a file \textit{django.po} that contains all the translatable elements in the code. These are defined in django through \\ \textit{from django.utils.translation import ugettext as \_}. \\
-Thus, for example, \textit{\_("Veuillez choisir une adresse")} will be added to the texts to be translated in the \textit{django.po} during the make. \\
-In a .html, the \textit{\% trans} to translate the message is required.\\
-\\
-When the make was executed, you can then translate the messages. Two choices are available to you:
-
-Either directly edit the file django.po in locale/en/LC\_MESSAGES. The "en" folder contains the english translations and "nl" folder contains the dutch translations. For each message, there are indications of the location in the code and two fields: \textit{msgid} which contains the original message and \textit{msgstr} which contains the translation.
-
-Either you use the Rosetta interface, accessible via the superuser by adding \textit{/translate} to the url of the site. This interface will allow you to easily change the translations. It can therefore be used by the customer.\\
-\\
-When the file \textit{django.po} is filled (either directly or via Rosetta), a compilation is needed to integrate these translations in the code.
 
 
 %%%%%% Section
