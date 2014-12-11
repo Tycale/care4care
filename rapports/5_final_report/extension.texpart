@@ -2,11 +2,12 @@
 
 \subsection{Social Media extension}
 
-The Social Media extension allow users to connect with a Facebook, a Google or a Twitter account. When connecting using social media care4care will get a few informations from you account: first name, last name, username and email address when possible.
+The Social Media extension allows users to connect with a Facebook, a Google or a Twitter account. When connecting using social media care4care get a few informations from the user account: first name, last name, username and email address when possible. After that a new account is created on care4care for the user and it will be already ready to use. 
+He can also happen that the email from the social media account is already in use in care4care, if it is the case, it will not allow the user to use this social media account.
 
-Users also have the possibility to create a care4care account and then link it to their Facebook/Google/Twitter accounts.
+Users also have the possibility to create a care4care account and then link their Facebook/Google/Twitter accounts to it. Users will then be able to use their care4care credential or their social media accounts credential to authenticate on care4care.
 
-This will ease the registration process and we hope will bring more people on the website.
+This extension will ease the registration and authentification process for the users and we hope will bring more people on the website.
 
 
 \subsubsection{Description}
