@@ -285,6 +285,31 @@ And that's all, we have created a page with the possibility of creating an emerg
 
 
 %%%%%% Section
+\section{Translation}
+
+Our site can be used with multiple languages. Indeed, the French and English are already fully implemented. But an additional translation can be done easily.\\
+Here are some useful files for translation :
+
+\begin{description}
+\item [makelocale.sh] Generate translations
+\item [compilelocale.sh] Compile translations
+\end{description}
+Both are used as command.\\
+\\
+The make generates a file \textit{django.po} that contains all the translatable elements in the code. These are defined in django through \\ \textit{from django.utils.translation import ugettext as \_}. \\
+Thus, for example, \textit{\_("Veuillez choisir une adresse")} will be added to the texts to be translated in the \textit{django.po} during the make. \\
+In a .html, the \textit{\% trans} to translate the message is required.\\
+\\
+When the make was executed, you can then translate the messages. Two choices are available to you:
+
+Either directly edit the file django.po in locale/en/LC\_MESSAGES. The "en" folder contains the english translations and "nl" folder contains the dutch translations. For each message, there are indications of the location in the code and two fields: \textit{msgid} which contains the original message and \textit{msgstr} which contains the translation.
+
+Either you use the Rosetta interface, accessible via the superuser by adding \textit{/translate} to the url of the site. This interface will allow you to easily change the translations. It can therefore be used by the customer.\\
+\\
+When the file \textit{django.po} is filled (either directly or via Rosetta), a compilation is needed to integrate these translations in the code.
+
+
+%%%%%% Section
 \section{Conclusion}
 
 \end{document}
