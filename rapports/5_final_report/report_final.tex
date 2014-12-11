@@ -20,9 +20,32 @@
 
 \newcommand{\tbf}[1]{\textbf{#1}}
 \newcommand{\tit}[1]{\textit{#1}}
+\newcommand{\ttt}[1]{\texttt{#1}}
+\newcommand{\noi}{\noindent}
 \newcommand{\shellcmd}[1]{\\\indent\indent\texttt{\footnotesize\$ #1}\\}
 \newcommand{\vshellcmd}[1]{\\\indent\indent\texttt{\footnotesize(venv)\$ #1}\\}
 \newcommand{\pcmd}[1]{\\\indent\indent\texttt{\footnotesize> > > #1}\\}
+
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={FitH},    % fits the width of the page to the window
+    pdftitle={My title},    % title
+    pdfauthor={Author},     % author
+    pdfsubject={Subject},   % subject of the document
+    pdfcreator={Creator},   % creator of the document
+    pdfproducer={Producer}, % producer of the document
+    pdfkeywords={keyword1} {key2} {key3}, % list of keywords
+    pdfnewwindow=true,      % links in new PDF window
+    colorlinks=true,       % false: boxed links; true: colored links
+%    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+    citecolor=green,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=blue           % color of external links
+}
 
 \lstset{%
     inputencoding=utf8,
@@ -58,6 +81,30 @@
 \section{Introduction}
 
 %%%%%% Section
+\section{Overall project impressions}
+
+As we approach the end of this project, we take a look back at our previous reports and try to analyze what we did right and what we did wrong. What we were able to implement the way we intended and what we had to change in order to complete this project in time. This analysis should help us in our future projects and tell us whether we were too ambitious or if we could have done much more.
+
+\subsection{The development plan}
+
+We will start by taking a look at the development plan since it is fairly easy to notice whether we were able to respect it or not. Even though the development plan we put in place helped us visualize the amount of work to be done and how we could manage our time, we ran into some difficulties when it came to actually respect this plan.
+
+Indeed, this development plan was done without much knowledge of how Django works and thus neglected some important parts of the implementation. For instance, the overall design of the website was not considered in the development plan whereas in reality it took us some time to find a way to make our application look as appealing as possible. 
+This plan didn't take into consideration the fact that some group had no experience with the framework at all, which made some tasks drag on for more time that what was initially excpected since we had to familiarize ourselves with the framework before being able to program anything. 
+
+\subsection{Absent modules}
+Thankfully, we foresaw that we would most likely run into some problems, which is why we decided that some modules would be optionnal. These modules could be implemented if we had enough time but would be the first ones to be dropped if we had difficulties completing the project in due time. These modules were mostly secondary and the application would still be viable without them.
+
+Because of the difficulties mentionned above, we had to drop some of these modules. We can thus notice that the "events" module, the "calendar" module, the "personal network" module and the "notifications" were not fully implemented. Some of the aforementioned modules are still present to some extent but were not implemented in the way the client would have wanted them to be implemented. We notice that some of these modules were not marked as optional in our development plan, but it is our belief that even without them, the application is still functional and could be used in real life settings. 
+
+Even after dropping these modules, we still had little time left to implement our extension and simulation after the kernel was done. However, we believe we did a good job at implenting those and that they add a real value to our application.
+
+\subsection{Additional modules}
+While we can see that we had some trouble completing some features of the application, we can also notice that we actually had some ideas during the implementation phase for some functionnalities which we hadn't discussed in previous reports. For instance, we noticed that a member could join any branch and that there was no way, even for an administrator, to stop a member from joining a branch. We thus decided to add a "ban" functionnality, giving administrators the opportunity to stop someone from joining a branch. We hope this functionnality won't be needed in the end, but, as the saying goes, better safe than sorry. We also added the possibility the increase the font size to help people with vision difficulties to read the application's content more easily.  We also integrated Google Maps in our application to facilitate the visualization of the distance to be travelled in order for someone to help someone else. Even though none of these functionnalities were mentioned in our previous reports, it is our belief that they make our application a better and easier to use one.\\
+
+It could be argued that it would have been better to start by finishing what was asked before adding features which were not asked. We have a quite simple answer to this : we did not realize we would have to drop these functionnalities at the time we implemented the ones which weren't required. In the end, we realize we were too ambitious in our previous reports and at the start of the implementation phase and it cost us some functionnalities. We also realize that we had to change our vision of the system as time went on because our vision did not always match the way Django worked. The next section will present all the functionnalities we did implement and will hopefully show why we still think we met most of our goals regarding the functional and non-functional requirements set at the start of this project.
+
+%%%%%% Section
 \section{Product}
 
 \subsection{Features}
@@ -86,10 +133,10 @@ For access your profile you have to click on this button \includegraphics[width=
 In the top of the main profile page, a menu is available, here are the actions and their usage:
 \begin{enumerate}
   \item \textbf{Profile :} The default page all informations about this page have been described just on the section above.
-  \item \textbf{	Favorites :} There you can add other member to your favorites network. Your favorites member can see specific offer and demand from you.
+  \item \textbf{Favorites :} There you can add other member to your favorites network. Your favorites member can see specific offer and demand from you.
   \item \textbf{My network :} This your personal network. That help for other member which want to see your personal information. you could for example add your doctor there.
   \item \textbf{Ignored users :} If a member is annoying you, you can add him to your ignored list. It will hide all his demands and offers (except for superuser and branch officer)
-  \item \textbf{Statistiques :} See section 2.2
+  \item \textbf{Statistiques :} See section \ref{sec:section_personal_stats}
 \end{enumerate}
 
 \subsubsection{Credit and gift}
@@ -128,11 +175,11 @@ Click on continue to start the search and you will see all available and not clo
 
 \subsubsection{Branch}
 
-\paragraph{join a branch}
-Everybody(except superuser witch is in all branch) can join a branch in the left menu to the section branch -> "Join branch"
+\paragraph{Join a branch}
+Everybody(except superuser witch is in all branch) can join a branch in the left menu to the section branch $\to$ "Join branch".
 
 \paragraph{Create a branch}
-Superuser and verified member can create a branch using the left menu to the section branch -> "create a new branch". You have to specify a name for the branch and a location.
+Superuser and verified member can create a branch using the left menu to the section banch -> "create a new branch". You have to specify a name for the branch and a location.
 
 \paragraph{Branch detail}
 To access the details on a specific branch, left menu to the section branch -> name of the branch.
@@ -187,9 +234,6 @@ Every member get a mailbox after sign in, he could use it for sending mail to ot
 You have the possibility to choose a language on the top menu, the button with a flag (there is a drop down menu with all available languages when you click on it). There is a specified section for manage translations.
 
 \input{statistics.texpart}
-
-%%%%%% Section
-\section{Changes from previous reports}
 
 %%%%%% Section
 \section{Technical discussion}
@@ -370,8 +414,13 @@ We can see that render our form is easy as ``\{\% bootstrap\_form form \%\}''. W
 And that's all, we have created a page with the possibility of creating an emergency contact linked to a user :
 
 \begin{figure}[!ht]
-   \includegraphics[height=220px]{addec.png}
+   \includegraphics[width=\linewidth]{addec.png}
+   \caption{Add emergency contact}
 \end{figure}
+
+
+
+\input{statistics_technical.texpart}
 
 
 %%%%%% Section

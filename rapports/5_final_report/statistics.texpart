@@ -2,28 +2,89 @@
 
 \subsection{Statistics}
 
-We have implemented statistics for different purposes.
-There are individual statistics, branch statistics and global statistics.
+Statistics are available for different purposes.
+There are personal statistics, branch statistics and global statistics.
 
 
-\subsubsection{Individual statistics}
+\subsubsection{Personal statistics}
+\label{sec:section_personal_stats}
 
-In the profile section, in the ``Statistics'' tab, the following graphs are displayed:
+\begin{figure}[h]
+\includegraphics[width=\linewidth]{Stats_stromae.png}
+\caption{Personal statistics}
+\label{personal_stats}
+\end{figure}
+
+As shown on figure \ref{personal_stats}, in the \tit{Statistics} tab of your profile, you can get informations about your personal statistics :
 
 \begin{itemize}
-\item Job types: number of jobs done of each type.
+\item \tbf{Job types} : amount of jobs done of each type.
 
-\item Average time per job: average job dedicated to helping other users.
+\item \tbf{Average time per job} : average time devoted to help other users for each job type.
 
-\item Jobs made during the last 6 months: amount of jobs by month.
+\item \tbf{Jobs made during the last 6 months} : amount of jobs done by month. \tit{Displays the 5 previous months and the current month.}
 
-\item Time devoted to help during the last 6 months: minutes amount of the time devoted by month.
+\item \tbf{Time devoted to help during the last 6 months} : amount of time (in minutes) devoted by month. \tit{Displays the 5 previous months and the current month.}
 
-\item Kilometers covered in the last 6 months: total distance covered by month.
+\item \tbf{Kilometers covered in the last 6 months} : total distance covered by month. \tit{Displays the 5 previous months and the current month.}
 \end{itemize}
 
 
+\smallskip
 \subsubsection{Branch statistics}
 
+First, in the left menu, select a branch which you are the administrator.
+Then, in the \textit{Admin space}, there is a button that gives you access to the statistics of the branch.
 
+\smallskip \noi
+\tit{Note: these statistics are only available to the branch admin and the site administrator.}
+
+\medskip
+\begin{figure}[!h]
+\includegraphics[width=\linewidth]{Stats_branch.png}
+\caption{Statistics of the branch Bruxelles}
+\label{branch_stats}
+\end{figure}
+
+
+As seen on figure \ref{branch_stats}, the page display charts about different statistics :
+
+\begin{itemize}
+\item \tbf{Number of accounts} : keep track of how the amount of users in the branch has evolved in the lasts 6 months (plus the current month).
+
+\item \tbf{Account types} : repartition of account types of the users registrated in the branch.
+
+\item \tbf{Status of users} : keep track of how many users are on vacation.
+
+\item \tbf{Job types} : amount of jobs done by type in the branch.
+\end{itemize}
+
+
+\smallskip
 \subsubsection{Global statistics}
+
+Keep track of the Care4Care statistics with charts displaying relevant informations about the state of the application.
+To watch them for real, click on \tit{Statistics} in the left menu.
+
+\smallskip \noi
+\tit{Note: these statistics are only available to the site administrator.}
+
+
+\begin{figure}[!ht]
+\includegraphics[width=\linewidth]{Stats_global.png}
+\caption{Statistics of Care4Care}
+\label{global_stats}
+\end{figure}
+
+
+As shown on figure \ref{global_stats}, the following charts are displayed :
+
+\begin{itemize}
+\item \tbf{Number of accounts} : keep track of how the total amount of users has evolved in the 6 previous months (plus the current month).
+
+\item \tbf{Account types} : repartition of account types (members, verified members, and non-members).
+
+\item \tbf{Status of users} : instant view of active users, users on vacation, and accounts disabled.
+
+\item \tbf{Job types} : total amount of jobs done by type.
+\end{itemize}
