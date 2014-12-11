@@ -20,10 +20,32 @@
 
 \newcommand{\tbf}[1]{\textbf{#1}}
 \newcommand{\tit}[1]{\textit{#1}}
+\newcommand{\ttt}[1]{\texttt{#1}}
 \newcommand{\noi}{\noindent}
 \newcommand{\shellcmd}[1]{\\\indent\indent\texttt{\footnotesize\$ #1}\\}
 \newcommand{\vshellcmd}[1]{\\\indent\indent\texttt{\footnotesize(venv)\$ #1}\\}
 \newcommand{\pcmd}[1]{\\\indent\indent\texttt{\footnotesize> > > #1}\\}
+
+\hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={FitH},    % fits the width of the page to the window
+    pdftitle={My title},    % title
+    pdfauthor={Author},     % author
+    pdfsubject={Subject},   % subject of the document
+    pdfcreator={Creator},   % creator of the document
+    pdfproducer={Producer}, % producer of the document
+    pdfkeywords={keyword1} {key2} {key3}, % list of keywords
+    pdfnewwindow=true,      % links in new PDF window
+    colorlinks=true,       % false: boxed links; true: colored links
+%    linkcolor=red,          % color of internal links (change box color with linkbordercolor)
+    citecolor=green,        % color of links to bibliography
+    filecolor=magenta,      % color of file links
+    urlcolor=blue           % color of external links
+}
 
 \lstset{%
     inputencoding=utf8,
@@ -87,10 +109,10 @@ For access your profile you have to click on this button \includegraphics[width=
 In the top of the main profile page, a menu is available, here are the actions and their usage:
 \begin{enumerate}
   \item \textbf{Profile :} The default page all informations about this page have been described just on the section above.
-  \item \textbf{	Favorites :} There you can add other member to your favorites network. Your favorites member can see specific offer and demand from you.
+  \item \textbf{Favorites :} There you can add other member to your favorites network. Your favorites member can see specific offer and demand from you.
   \item \textbf{My network :} This your personal network. That help for other member which want to see your personal information. you could for example add your doctor there.
   \item \textbf{Ignored users :} If a member is annoying you, you can add him to your ignored list.
-  \item \textbf{Statistiques :} See section 2.2
+  \item \textbf{Statistiques :} See section \ref{sec:section_personal_stats}
 \end{enumerate}
 
 
@@ -280,8 +302,13 @@ We can see that render our form is easy as ``\{\% bootstrap\_form form \%\}''. W
 And that's all, we have created a page with the possibility of creating an emergency contact linked to a user :
 
 \begin{figure}[!ht]
-   \includegraphics[height=220px]{addec.png}
+   \includegraphics[width=\linewidth]{addec.png}
+   \caption{Add emergency contact}
 \end{figure}
+
+
+
+\input{statistics_technical.texpart}
 
 
 %%%%%% Section
