@@ -20,7 +20,6 @@
 
 \newcommand{\tbf}[1]{\textbf{#1}}
 \newcommand{\tit}[1]{\textit{#1}}
-\newcommand{\noi}{\noindent}
 \newcommand{\shellcmd}[1]{\\\indent\indent\texttt{\footnotesize\$ #1}\\}
 \newcommand{\vshellcmd}[1]{\\\indent\indent\texttt{\footnotesize(venv)\$ #1}\\}
 \newcommand{\pcmd}[1]{\\\indent\indent\texttt{\footnotesize> > > #1}\\}
@@ -78,7 +77,7 @@ You can sign in whit your social account, this will auto complete your informati
 You can sign in with the button which has the same name on the top of the page. At that time you will see a more complete menu on the right and new features on the top. You can for example search a job or a other member you get a specific mail box for your account care4care but this will be explain later.
 \newline
 
-For access your profile you have to click on this button \includegraphics[width=0.4cm]{user_icon.png} and click on my profile in the drop down menu, then you get a new page where you can see all information about you. I will list you all possible actions possible from this page:
+For access your profile you have to click on this button \includegraphics[width=0.4cm]{user_icon.png} and click on my profile in the drop down menu or in the left menu in my profile section, then you get a new page where you can see all information about you. I will list you all possible actions possible from this page:
 \begin{enumerate}
   \item \textbf{Modify your profile :} You can click on "\includegraphics[width=0.4cm]{edit_icon.png}Edit" next to the username. There you can update all your personal informations (there are more informations than in the inscription page but you are not forced to complete everything once).
   \item \textbf{Social network :} You can link your account with your social network, even all if desired. You can edit them thereafter if needed (example: delete it).
@@ -89,12 +88,65 @@ In the top of the main profile page, a menu is available, here are the actions a
   \item \textbf{Profile :} The default page all informations about this page have been described just on the section above.
   \item \textbf{	Favorites :} There you can add other member to your favorites network. Your favorites member can see specific offer and demand from you.
   \item \textbf{My network :} This your personal network. That help for other member which want to see your personal information. you could for example add your doctor there.
-  \item \textbf{Ignored users :} If a member is annoying you, you can add him to your ignored list.
+  \item \textbf{Ignored users :} If a member is annoying you, you can add him to your ignored list. It will hide all his demands and offers (except for superuser and branch officer)
   \item \textbf{Statistiques :} See section 2.2
 \end{enumerate}
 
+\subsubsection{Credit}
 
- 
+Credit page are available in left menu in "my profile" section. On this page you can see your credit, some small statistics, jobs historic, jobs pending. You can perform gift to other member or administration (with a love message).
+
+\subsubsection{Verified Member}
+
+\paragraph{Make a demand}
+For become a verified member, you have to click on this button \includegraphics[width=0.4cm]{user_icon.png} and click on "Become verified" in the drop down menu or you can use the left menu in the profile section.
+You have to complete all missing informations about you. After validation there is a second page asking you two recommendation letters and your criminal record.
+
+\paragraph{Manage a demand for branch officer or superuser}
+When a member make a demand you can see it in the branch page where the member belong(for the branch page, use the left menu branch section). There is a list with all verified demand. When you click on a demand you can see all informations about the member and visualize his documents. At this point you have tree choices. 
+\begin{itemize}
+	\item Fix an appointment.
+	\item Grant the status (a success message is automatically send to the member
+	\item refuse the status (a refuse message is automatically send to the member
+\end{itemize}
+
+\subsubsection{Search}
+
+\paragraph{Search a member}
+You can search for an other member in the search bar on the top menu. It will return all members witch contain the string entered in their username, first name, last name.
+
+\paragraph{Search a job}
+Using the left menu click on search for a job. At this point you can specify 
+\begin{enumerate}
+	\item If you want see offers, demands or both.
+	\item Category
+	\item Who can see the demands or offers (All, favorites members, verified members)
+	\item Time slot
+\end{enumerate}
+If you don't pick anything in a list, the system will consider that you want all items in the list.
+Click on continue to start the search and you will see all available and not closed job.
+
+\subsubsection{Branch}
+
+\paragraph{join a branch}
+Everybody(except superuser witch is in all branch) can join a branch in the left menu to the section branch -> "Join branch"
+
+\paragraph{Create a branch}
+Superuser and verified member can create a branch using the left menu to the section branch -> "create a new branch". You have to specify a name for the branch and a location.
+
+\paragraph{Branch detail}
+To access the details on a specific branch, left menu to the section branch -> name of the branch.
+\begin{enumerate}
+	\item \textbf{For member and verified member :} You can "ask for help" or "offer your help" in the branch with the specific button. All the offers and demands in the branch that you are allowed to see are visible in the branch page.
+You can see details on click.
+On the top right of the page you can leave the branch.
+	\item \textbf{For branch officer and superuser :} You see everything that member and verified member can see. Moreover, branch statistics are available and you can manage branch's offers and demands. You can remove and ban a user from the branch (a ban list is available for unban).
+	\item \textbf{For branch creator :} same as superuser but you can remove the branch with all his demands and offers.
+\end{enumerate}
+
+\subsubsection{Mailbox}
+
+Every member get a mailbox after sign in, he can use it for sending mail to other member or administrator. Sometimes the system use the mailbox automatically in order to reduce the administrator workload.
 
 \input{statistics.texpart}
 
@@ -122,7 +174,7 @@ At the end, you will ask to create a ``super user'', you can create a user ``car
 \subsection{Run the project}
 One you're in the virtual environment with all dependencies installed and the dabatase created, you can launch the development server :
 \vshellcmd{./manager.py runserver}
-When the server is launched, you can browse the website in your browser at \url{http://localhost:8000}.
+When the server is launched, you can surf the website in your browser at \url{http://localhost:8000}. 
 
 \subsection{File hierarchy}
 The project is divised in three ``Django applications'' wich are differents folders in our project :
@@ -170,7 +222,7 @@ And there is some more specific files in the root of our project that need to be
 To understand how Django works, we'll use as an example the page that allows an user to add an emergency contact. Everything shown here is present in our code in the application ``main''.
 
 \subsubsection{Models}
-First, we have to create a model (wich is represented by a Class) in \texttt{models.py}:
+First, we have to create a model (wich is represnted by a Class) in \texttt{models.py}:
 
 \begin{lstlisting}[language=Python, basicstyle=\footnotesize]
 PRIORITY = (
