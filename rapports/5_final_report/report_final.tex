@@ -20,6 +20,7 @@
 
 \newcommand{\tbf}[1]{\textbf{#1}}
 \newcommand{\tit}[1]{\textit{#1}}
+\newcommand{\noi}{\noindent}
 \newcommand{\shellcmd}[1]{\\\indent\indent\texttt{\footnotesize\$ #1}\\}
 \newcommand{\vshellcmd}[1]{\\\indent\indent\texttt{\footnotesize(venv)\$ #1}\\}
 \newcommand{\pcmd}[1]{\\\indent\indent\texttt{\footnotesize> > > #1}\\}
@@ -88,7 +89,7 @@ At the end, you will ask to create a ``super user'', you can create a user ``car
 \subsection{Run the project}
 One you're in the virtual environment with all dependencies installed and the dabatase created, you can launch the development server :
 \vshellcmd{./manager.py runserver}
-When the server is launched, you can surf the website in your browser at \url{http://localhost:8000}. 
+When the server is launched, you can browse the website in your browser at \url{http://localhost:8000}.
 
 \subsection{File hierarchy}
 The project is divised in three ``Django applications'' wich are differents folders in our project :
@@ -136,7 +137,7 @@ And there is some more specific files in the root of our project that need to be
 To understand how Django works, we'll use as an example the page that allows an user to add an emergency contact. Everything shown here is present in our code in the application ``main''.
 
 \subsubsection{Models}
-First, we have to create a model (wich is represnted by a Class) in \texttt{models.py}:
+First, we have to create a model (wich is represented by a Class) in \texttt{models.py}:
 
 \begin{lstlisting}[language=Python, basicstyle=\footnotesize]
 PRIORITY = (
