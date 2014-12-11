@@ -1,6 +1,6 @@
 % LINGI2255 - Software Development Project
 % Final report
-\documentclass[11pt, a4paper]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\documentclass[11pt, a4paper]{article}      % use "amsart" instead of "article" for AMSLaTeX format
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
@@ -72,7 +72,7 @@
 
 \title{Brief Article}
 \author{The Author}
-%\date{}							% Activate to display a given date or no date
+%\date{}                            % Activate to display a given date or no date
 
 \begin{document}
 %\maketitle
@@ -152,9 +152,9 @@ You have to complete all missing informations about you. After validation there 
 \paragraph{Manage a demand for branch officer or superuser}
 When a member make a demand you can see it in the branch page where the member belong(for the branch page, use the left menu branch section). There is a list with all verified demand. When you click on a demand you can see all informations about the member and visualize his documents. At this point you have tree choices. 
 \begin{itemize}
-	\item Fix an appointment.
-	\item Grant the status (a success message is automatically send to the member
-	\item refuse the status (a refuse message is automatically send to the member
+    \item Fix an appointment.
+    \item Grant the status (a success message is automatically send to the member
+    \item refuse the status (a refuse message is automatically send to the member
 \end{itemize}
 
 \subsubsection{Search}
@@ -165,10 +165,10 @@ You can search for an other member in the search bar on the top menu. It will re
 \paragraph{Search a job}
 Using the left menu click on search for a job. At this point you can specify 
 \begin{enumerate}
-	\item If you want see offers, demands or both.
-	\item Category
-	\item Who can see the demands or offers (All, favorites members, verified members)
-	\item Time slot
+    \item If you want see offers, demands or both.
+    \item Category
+    \item Who can see the demands or offers (All, favorites members, verified members)
+    \item Time slot
 \end{enumerate}
 If you don't pick anything in a list, the system will consider that you want all items in the list.
 Click on continue to start the search and you will see all available and not closed job.
@@ -184,11 +184,11 @@ Superuser and verified member can create a branch using the left menu to the sec
 \paragraph{Branch detail}
 To access the details on a specific branch, left menu to the section branch -> name of the branch.
 \begin{enumerate}
-	\item \textbf{For member and verified member :} You can "ask for help" or "offer your help" in the branch with the specific button. All the offers and demands in the branch that you are allowed to see are visible in the branch page.
+    \item \textbf{For member and verified member :} You can "ask for help" or "offer your help" in the branch with the specific button. All the offers and demands in the branch that you are allowed to see are visible in the branch page.
 You can see details on click.
 On the top right of the page you can leave the branch.
-	\item \textbf{For branch officer and superuser :} You see everything that member and verified member can see. Moreover, branch statistics are available and you can manage branch's offers and demands. You can remove and ban a user from the branch (a ban list is available for unban).
-	\item \textbf{For branch creator :} same as superuser but you can remove the branch with all his demands and offers.
+    \item \textbf{For branch officer and superuser :} You see everything that member and verified member can see. Moreover, branch statistics are available and you can manage branch's offers and demands. You can remove and ban a user from the branch (a ban list is available for unban).
+    \item \textbf{For branch creator :} same as superuser but you can remove the branch with all his demands and offers.
 \end{enumerate}
 
 \subsubsection{Jobs}
@@ -199,24 +199,24 @@ All offers and demands are specific to one specified branch.
 Offers are a good way to find most pleasant jobs. 
 You can create an offer specifying these various fields:
 \begin{enumerate}
-	\item Type of help (Visit at home, shopping, ...)
-	\item A date
-	\item Available times slots
-	\item Who can see and respond to demand/offer (All, verified, favorites)
+    \item Type of help (Visit at home, shopping, ...)
+    \item A date
+    \item Available times slots
+    \item Who can see and respond to demand/offer (All, verified, favorites)
 \end{enumerate}
 Once the request made, you will receive a mail inviting you to postulate when an other user make a demand matching with your offer. 
 
 \paragraph{Demands}
 When you require help you can create a demand with the button "I need help" (on the home page or a branch page). There you have to specify this fields:
 \begin{enumerate}
-	\item \textbf{Title :} A title for your help
-	\item \textbf{Type of help :} Job's category
-	\item \textbf{Date :} A date for the job
-	\item \textbf{Available times :} Times slots for the job.
-	\item \textbf{Estimated time :} Estimated time for the job
-	\item \textbf{Who can see and respond to demand/offer :} All, Verified members, favorites
-	\item \textbf{Description :} More details for the job
-	\item \textbf{Address :} Where the job take place
+    \item \textbf{Title :} A title for your help
+    \item \textbf{Type of help :} Job's category
+    \item \textbf{Date :} A date for the job
+    \item \textbf{Available times :} Times slots for the job.
+    \item \textbf{Estimated time :} Estimated time for the job
+    \item \textbf{Who can see and respond to demand/offer :} All, Verified members, favorites
+    \item \textbf{Description :} More details for the job
+    \item \textbf{Address :} Where the job take place
 \end{enumerate}
 Once you confirm the job, other specified member can see it and ask for participate.
 Later you can access and manage your proposed job on the home page or branch page where you posted the job. On the manage page (click on the job) you have a list with people witch proposed their help and you can select the one you want. (That automatically send him a message that confirm his has the job)
@@ -234,6 +234,22 @@ Every member get a mailbox after sign in, he could use it for sending mail to ot
 You have the possibility to choose a language on the top menu, the button with a flag (there is a drop down menu with all available languages when you click on it). There is a specified section for manage translations.
 
 \input{statistics.texpart}
+
+\subsection{Tests}
+In order to verify that the website correspond to your expectations, we have developed a collection of unit tests. Those unit tests allow us to verify that the source code of the website behaviour as expected and even if the source code was updated. Another goal of those tests are to spot undetected bugs.
+
+We have also developed Selenium tests. Selenium is a program used for automating web applications for testing purposes. This means that Selenium have the ability to  send commands to a browser and to retrieve the results.
+
+We have developed three selenium tests:
+
+\begin{itemize}
+\item one who simulate a perfect user who don't make mistake when submitting forms
+\item one who simulate a bad user who make mistake when submitting forms 
+\item one who test if the two searches on the website (search for user and search for jobs) are executed in reasonable time (10 second, this value can be reduced)
+\end{itemize}
+
+Those Selenium are used for continous integration of the source code: when we update the code, we want to make sure that the modification will not broke an expected behaviour of the website. An interesting feature is that we can actually see the actions performed in real time.
+
 
 %%%%%% Section
 \section{Technical discussion}
@@ -422,7 +438,47 @@ And that's all, we have created a page with the possibility of creating an emerg
 
 \input{statistics_technical.texpart}
 
+\subsection{Tests}
+\subsubsection{Unit Tests}
 
+Django’s unit tests use a Python standard library module: unittest. This module defines tests using a class-based approach. When you run your tests (./manage.py test), the default behavior of the test utility is to find all the test cases in any file whose name begins with test, automatically build a test suite out of those test cases, and run that suite.
+
+We have developped several unit tests who are regrouped in two files:
+
+- care4care/branch/tests.py: Contains the tests for branch management and offer/demand creation.
+- care4care/main/tests.py: Contains the tests for user management.
+
+We don't have developed all the tests to verify that all the functionnalities of the website. You can add some tests in the two files aboves and create the tests for the others apps (for example the news app: care4care/news/tests.py).
+
+The command for running those test is: ./manage.py test.
+
+For more information about unittest in Django, you can refer to the well written documentation: https://docs.djangoproject.com/en/dev/topics/testing/overview/.
+
+
+\subsubsection{Selenium Tests}
+
+
+Selenium is a program used for automating web applications for testing purposes. Selenium is composed of different components, but the one that we’re interested in is the Selenium WebDriver with the Selenium-Server. Like said in the product section, we have developed three tests. There are located in the selenium folder.
+
+\begin{itemize}
+\item user1.py: simulate a perfect user who don't make mistake when submitting forms
+\begin{itemize}
+    \item the user connect to the website;
+    \item the user create a help;
+    \item the user modify his profile;
+    \item the user ignore another user;
+    \item the user create an emergency contact;
+    \item the user add a favorite;
+    \item the user rejoign a branch;
+    \item the user do a search.
+\end{itemize}
+\item user2.py: simulate a bad user who make mistake when submitting forms. The tests are the same than the user1.py file but with bad submissions to the differents forms of the website.
+\item search.py: test if the two searches on the website (search for user and search for jobs) are executed in reasonnable time (10 second, this value can be reduced).
+\end{itemize}
+
+For running those tests, you need to be placed in the selenium folder and run python3 test.py command where test.py is the filename of the test.
+
+An infinity of selenium test can be created for this project. You can per example create a test who simulate two user who interect together. Those test are integration test, who must be launched each time you create or modify a feature.
 %%%%%% Section
 \section{Conclusion}
 
