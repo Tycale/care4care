@@ -1,0 +1,100 @@
+Our product :
+
+- Modern interface
+- Users friendly
+
+Main features:
+
+- Demand and offer matching
+- Messages
+- Notifications 
+- Statistics
+- Social media ready
+
+Social media:
+
+- Connect with you social media account
+- Link you social media account
+- Share it on facebook
+
+Statistics:
+
+- Individual statistics
+- Global statistics 
+
+Privacy:
+
+- Ignored users
+- Private Network
+
+development process:
+
+- 4 weeks 
+- 4 teams of 2 
+- Coordination with trello and github
+
+
+System requirements and functionalites:
+
+- Demand and offer matching
+- Statistics
+- Administration
+- Profile and branch management
+- Privacy
+- Search
+- Messages
+- Notifications 
+- Credit management and gift
+- Social media extension
+
+What we didn't implement:
+
+- Calendar and event
+- Recurrent jobs
+
+What did we do extra:
+
+- Google map
+- Ban from a branch
+- Zoom
+
+System architecture:
+ 
+( models <-> form <-> view <-> template)
+
+(Faire un joli dessins)
+
+Particularity of system implementation:
+
+- Code Maintainability
+- Use of well-known libraries/packages 
+
+
+Data Model: 
+
+- User
+- Branch
+- Demand / Offer
+
+(Il faut expliquer que on a pas vraiment tout respecté)
+
+
+Tests:
+
+- Selenium test
+- Unit test
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
