@@ -5,6 +5,9 @@
 Statistics are available for different purposes.
 There are personal statistics, branch statistics and global statistics.
 
+\smallskip \noi
+\tit{Note: for every graph shown below, specific values are displayed when hovering the graph with the mouse.}
+
 
 \subsubsection{Personal statistics}
 \label{sec:section_personal_stats}
@@ -47,7 +50,7 @@ Then, in the \textit{Admin space}, there is a button that gives you access to th
 \end{figure}
 
 
-As seen on figure \ref{branch_stats}, the page display charts about different statistics :
+As seen on figure \ref{branch_stats}, this page displays charts about different statistics :
 
 \begin{itemize}
 \item \tbf{Number of accounts} : keep track of how the amount of users in the branch has evolved in the lasts 6 months (plus the current month).
@@ -67,7 +70,7 @@ Keep track of the Care4Care statistics with charts displaying relevant informati
 To watch them for real, click on \tit{Statistics} in the left menu.
 
 \smallskip \noi
-\tit{Note: these statistics are only available to the site administrator.}
+\tit{Note: these statistics are only available to the application administrator.}
 
 
 \begin{figure}[!ht]
