@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-05 22:40+0000\n"
+"POT-Creation-Date: 2014-12-16 13:35+0000\n"
 "PO-Revision-Date: 2014-12-05 22:32+0000\n"
 "Last-Translator: b'care4care care4care <care4care@tycale.be>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -984,33 +984,27 @@ msgid "Branche créée"
 msgstr "Created branch"
 
 #: branch/views.py:102
-#, python-brace-format
 msgid ""
 "Vous avez été banni de la branche {branch} et ne pouvez pas la rejoindre"
 msgstr "You have been banned for the branch {branch} and you can't join it"
 
 #: branch/views.py:105
-#, python-brace-format
 msgid "Vous êtes déjà dans la branche {branch}"
 msgstr "You are already in the branch {branch}"
 
 #: branch/views.py:109
-#, python-brace-format
 msgid "Vous avez rejoins la branche {branch}"
 msgstr "You joined the branch {branch}"
 
 #: branch/views.py:126
-#, python-brace-format
 msgid "Vous avez quitté la branche {branch}"
 msgstr "You left the branch {branch}"
 
 #: branch/views.py:148
-#, python-brace-format
 msgid "Bannissement de la branche {branch}"
 msgstr "Ban from the branch {branch}"
 
 #: branch/views.py:149
-#, python-brace-format
 msgid ""
 "Vous avez été banni de la branche {branch}. Vous ne pouvez à présent plus "
 "rejoindre cette branche. Pour plus d'informations, contactez un "
@@ -1020,17 +1014,14 @@ msgstr ""
 "For more information, please contact an administrator or the branch officer."
 
 #: branch/views.py:151
-#, python-brace-format
 msgid "{user} a été banni de la branche {branch}"
 msgstr "{user} was banned from the branch {branch}"
 
 #: branch/views.py:170
-#, python-brace-format
 msgid "Annulation du bannissement de la branche {branch}"
 msgstr "Cancellation banishment of the branch {branch}"
 
 #: branch/views.py:171
-#, python-brace-format
 msgid ""
 "Nous avons annulé le bannissement de la branche {branch} vous concernant. "
 "Vous pouvez à présent rejoindre cette branche si vous le souhaitez."
@@ -1039,32 +1030,26 @@ msgstr ""
 "want."
 
 #: branch/views.py:173
-#, python-brace-format
 msgid "le bannissement de {user} dans la branche {branch} a été annulé"
 msgstr "Ban of {user} for the branch {branch} has been cancelled."
 
 #: branch/views.py:190
-#, python-brace-format
 msgid "{user} a été promu administrateur de la branche {branch}"
 msgstr "{user} was promoted administrator of branch  {branch}"
 
 #: branch/views.py:209
-#, python-brace-format
 msgid "{user} n'est plus administrateur de la branche {branch}"
 msgstr "{user} is no more administrator of branch {branch}"
 
 #: branch/views.py:225
-#, python-brace-format
 msgid "Vous avez supprimé la branche {branch}"
 msgstr "You delete the branch {branch}"
 
 #: branch/views.py:239
-#, python-brace-format
 msgid "Vous avez supprimé la demande {demand}"
 msgstr "You delete the demand {demand}"
 
 #: branch/views.py:251
-#, python-brace-format
 msgid "Vous avez supprimé l'offre {offer}"
 msgstr "You delete the offer {offer}"
 
@@ -1137,7 +1122,6 @@ msgid "Une correspondance a été trouvée !"
 msgstr "A match was found!"
 
 #: branch/views.py:364
-#, python-brace-format
 msgid ""
 "Nous avons trouvé une demande correspondant à une de vos offre d'aide !\n"
 "Cette demande d'aide a été faite par l'utilisateur {user} ({username}) et a "
@@ -1159,7 +1143,6 @@ msgstr ""
 "your branch or the home page of the site."
 
 #: branch/views.py:372
-#, python-brace-format
 msgid ""
 "Nous avons trouvé une offre correspondant à une de vos demande d'aide !\n"
 "Cette offre d'aide a été faite par l'utilisateur {user} ({username}) et "
@@ -1222,7 +1205,6 @@ msgid "Confirmation de job accompli"
 msgstr "Confirmation job done"
 
 #: branch/views.py:674
-#, python-brace-format
 msgid ""
 "L'utilisateur {user} ({username}) affirme avoir accompli le job suivant : "
 "{job}.\n"
@@ -1241,7 +1223,6 @@ msgid "Absence lors d'un job"
 msgstr "Absence during a job"
 
 #: branch/views.py:691
-#, python-brace-format
 msgid ""
 "L'utilisateur {user} ({username}) n'était apparemment pas présent pour "
 "accomplir le job {job}.\n"
@@ -1257,7 +1238,6 @@ msgstr ""
 "by visiting his profile."
 
 #: branch/views.py:697
-#, python-brace-format
 msgid "Vous avez indiqué la tâche {demand} comme non-completée"
 msgstr "You indicated the task {demand} as a non-completed"
 
@@ -1266,7 +1246,6 @@ msgid "Job confirmé"
 msgstr "Job confirmed"
 
 #: branch/views.py:729
-#, python-brace-format
 msgid ""
 "L'utilisateur {user} ({username}) a confirmé que vous aviez accompli le job "
 "{job} avec succès ! Votre compte a donc été crédité de {time} minutes.\n"
@@ -1275,7 +1254,6 @@ msgstr ""
 "successfully! Your account has been credited with {time} minutes.\n"
 
 #: branch/views.py:732
-#, python-brace-format
 msgid ""
 "L'utilisateur {user} ({username}) a laissé le commentaire suivant : {comment}"
 msgstr "The user {user} ({username}) left the comment {comment}"
@@ -1285,7 +1263,6 @@ msgid "Job refusé"
 msgstr "Job refused"
 
 #: branch/views.py:745
-#, python-brace-format
 msgid ""
 "L'utilisateur {user} ({username}) a déclaré que vous n'aviez pas passé "
 "{time} minutes pour accomplir le job {job}. Votre compte n'a donc pas été "
@@ -1295,7 +1272,6 @@ msgstr ""
 "complete the job {job}. Your account has therefore not been credited.\n"
 
 #: branch/views.py:748
-#, python-brace-format
 msgid ""
 "L'utilisateur {user} ({username}) a laissé un commentaire, expliquant "
 "pourquoi il n'a pas désiré créditer votre compte : {comment}\n"
@@ -1405,7 +1381,6 @@ msgid "Veuillez introduire une langue."
 msgstr "Please enter a language"
 
 #: main/forms.py:170
-#, python-brace-format
 msgid ""
 "Votre fichier doit peser moins de {maxsize}. Taille actuelle {currentsize}"
 msgstr "Your file must weigh less thean {maxsize}. Current size {currentsize}"
@@ -1414,43 +1389,29 @@ msgstr "Your file must weigh less thean {maxsize}. Current size {currentsize}"
 msgid "Type de fichier non supporté"
 msgstr "File type not accepted"
 
-#: main/forms.py:196
-msgid "Type de job (rien = tout)"
-msgstr "Type"
-
-#: main/forms.py:197
-msgid "Catégorie du job (rien = tout)"
-msgstr "Category"
-
-#: main/forms.py:198
-msgid "A partir du"
-msgstr "From"
-
-#: main/forms.py:199
-msgid "Jusqu'au"
-msgstr "Until"
-
-#: main/forms.py:200
-msgid "Qui peut fournir son aide ?"
-msgstr "Who can provide help?"
-
-#: main/forms.py:201
-msgid "A quelle heure ?"
-msgstr "At what time?"
-
 #: main/forms.py:208 main/forms.py:210 main/forms.py:213
 msgid "Incohérence dans les dates."
 msgstr "Inconsistency in the dates."
 
-#: main/forms.py:217
-msgid "Donner à:"
-msgstr "Give to:"
+#: main/forms.py:231
+#, fuzzy
+#| msgid "Ignorer un utilisateur"
+msgid "Indiquez un utilisateur."
+msgstr "Ignore"
 
-#: main/forms.py:219
-msgid "Montant du temps (plus que 1)"
-msgstr "How many (> 1)"
+#: main/forms.py:236
+#, fuzzy
+#| msgid "Indiquez une estimation."
+msgid "Indiquez un utilisateur existant."
+msgstr "Indicate an estimate"
 
-#: main/forms.py:229
+#: main/forms.py:239
+#, fuzzy
+#| msgid "Vous ne pouvez pas donner plus d'heure que ce que vous avez."
+msgid "Vous ne pouvez pas donner à vous même."
+msgstr "You cannot give more time than you have"
+
+#: main/forms.py:245
 msgid "Vous ne pouvez pas donner plus d'heure que ce que vous avez."
 msgstr "You cannot give more time than you have"
 
@@ -2999,7 +2960,6 @@ msgid "Droit refusé et demande supprimée"
 msgstr "Status refused and demand deleted"
 
 #: main/views.py:818
-#, python-brace-format
 msgid "Cadeau de : {amount} minutes"
 msgstr "Gift :  {amount} minutes"
 
@@ -3312,6 +3272,30 @@ msgstr ""
 "\n"
 "You are about to use your account %(provider_name)s to log on Care4Care. "
 "Complete this form in order to make your connection:"
+
+#~ msgid "Type de job (rien = tout)"
+#~ msgstr "Type"
+
+#~ msgid "Catégorie du job (rien = tout)"
+#~ msgstr "Category"
+
+#~ msgid "A partir du"
+#~ msgstr "From"
+
+#~ msgid "Jusqu'au"
+#~ msgstr "Until"
+
+#~ msgid "Qui peut fournir son aide ?"
+#~ msgstr "Who can provide help?"
+
+#~ msgid "A quelle heure ?"
+#~ msgstr "At what time?"
+
+#~ msgid "Donner à:"
+#~ msgstr "Give to:"
+
+#~ msgid "Montant du temps (plus que 1)"
+#~ msgstr "How many (> 1)"
 
 #~ msgid "Username"
 #~ msgstr "Username"
