@@ -200,7 +200,9 @@
                 	    <td class="rowlink-skip">
                             <a class="btn btn-primary btn-xs" href="{% url 'create_demand' branch_id=branch.id slug=branch.slug user_id=member.user.id %}"><i class="fa fa-plus"> {% trans "demande" %}</i></a>
                             <a class="btn btn-primary btn-xs" href="{% url 'create_offer' branch_id=branch.id slug=branch.slug user_id=member.user.id %}"><i class="fa fa-plus"> {% trans "offre" %}</i></a>
+                            {% if not member.user.is_superuser %}
                 	        <a class="btn btn-primary btn-xs" href="{% url 'edit_profile' member.user.id %}"><i class="fa fa-pencil"> {% trans "Modifier" %}</i></a>
+                            {% endif %}
                             {% if member.user.id != branch.creator.id %}
                             <button class="btn btn-danger btn-xs" data-toggle="modal" data-target="#modalLeave{{member.user.id}}"><i class="fa fa-trash-o"> {% trans "Enlever" %}</i></button>
 

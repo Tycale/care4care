@@ -381,7 +381,14 @@ class EditProfileView(UpdateView, SuccessMessageMixin):
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):
         obj = self.get_object()
-        if obj.id != self.request.user.id and not self.request.user.is_superuser:
+        branch_admin = False
+        for mb in self.request.user.membership.all():
+            for mb2 in self.get_object().membership.all():
+                if mb.is_admin and mb2.branch == mb.branch:
+                    branch_admin = True
+                    break
+
+        if obj.id != self.request.user.id and not self.request.user.is_superuser and not branch_admin:
             return redirect(obj.get_absolute_url())
         return super(EditProfileView, self).dispatch(*args, **kwargs)
 
