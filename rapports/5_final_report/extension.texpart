@@ -1,0 +1,74 @@
+% Extension part
+
+\subsection{Social Media extension}
+
+The Social Media extension allows users to connect with a Facebook, a Google or a Twitter account. When connecting using social media care4care get a few informations from the user account: first name, last name, username and email address when possible. After that a new account is created on care4care for the user and it will be already ready to use. 
+He can also happen that the email from the social media account is already in use in care4care, if it is the case, it will not allow the user to use this social media account.
+
+Users also have the possibility to create a care4care account and then link their Facebook/Google/Twitter accounts to it. Users will then be able to use their care4care credential or their social media accounts credential to authenticate on care4care.
+
+This extension will ease the registration and authentification process for the users and we hope will bring more people on the website.
+
+
+\subsubsection{Description}
+
+For this extension we used the Django package "django-allauth" which handle authentication from multiples providers (Google, Facebook, ...). 
+It integrate very well with the Django authentication system and is easy to setup.
+
+There is two way to connect with a social media account :
+
+\begin{enumerate}
+ 
+\item If a visitor wants to create a account, he can connect to care4care directly using a social media account. This will create a new local account with a unique user-name and a social media account and then link them together.
+The unique user-name is created from the first and last name of the person (a number will be added if needed to make it unique). If the first name and last name are not provided we will use the user-name instead (on Twitter for example).
+
+\item If a user which already created a care4care account but also whish to connect with a social media account can link it to his current account. This enable a user to keep their current account and all their information and also login from their Facebook/Google/Twitter account.
+
+\end{enumerate}
+
+\subsubsection{Setup}
+
+To enable social authentication you will need to setup some stuff on the care4care side and also on the social media websites side.
+
+First lets take care of the social media side.
+
+\begin{enumerate}
+\item You will need a account for each social media websites you want your user to connect from. I would advise to create a dedicate account for care4care on each.
+\item You will need to create a new app on the developer website of the social media. Links are provided below \footnote{\url{https://developers.facebook.com/}}
+\footnote{\url{https://apps.twitter.com/}} \footnote{\url{https://developers.facebook.com/}}
+
+\item When you created the apps, get the ID and Secret key for each. They are called differently depending on the social media. See figure ~\ref{googleSetup} ~\ref{twitterSetup} for examples.
+
+\begin{itemize}
+\item Twitter : Consumer Key (API Key) and Consumer Secret (API Secret)
+\item Google : Client ID and Client Secret
+\item Facebook : App ID and Secret Key
+\end{itemize}
+\end{enumerate}
+
+\begin{figure}[!ht]
+   \includegraphics[width=\textwidth]{twitterSetup.png}
+   \caption{\label{twitterSetup} Twitter Social Media App setup}
+\end{figure}
+
+\begin{figure}[!ht]
+   \includegraphics[width=\textwidth]{googleSetup.png}
+   \caption{\label{googleSetup} Google Social Media App setup}
+\end{figure}
+
+Now you have all the things you need to configure the care4care4 side.
+
+\begin{enumerate}
+\item Go to the Django administration (http(s)://youwebsiteurl/admin/), login with you super administrator credential.
+\item Create or edit a in the sites section with you domain name (http(s)://youwebsiteurl)
+\item Create three social apps : Facebook, Google and Twitter in the Social accounts section (social applications)
+\begin{itemize}
+\item Use Consumer/App/Client ID for the client ID field
+\item Use secret key for the secret key field
+\item Add you website to the available websites list
+\end{itemize}
+\end{enumerate}
+
+
+You are now done with the setup and you can try to authenticate with a social media account. If you would like to add more social media website to the list you can repeat the same process.
+The django-allauth package supports a lot of different providers, see their documentation for more information \footnote{\url{http://django-allauth.readthedocs.org/en/latest/index.html}} \footnote{\url{http://django-allauth.readthedocs.org/en/latest/providers.html}}

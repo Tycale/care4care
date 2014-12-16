@@ -1,0 +1,48 @@
+% Statistics: technical part
+
+\subsection{Statistics}
+
+We used the \href{http://www.chartjs.org/}{Chart.js} library to display the statistics graphs.
+The statistics are implemented using Ajax calls (via the jQuery library) between the client and the server.
+The data shared between the client and the server is in the JSON format.
+We created high-level functions in JavaScript to make graphs creation more succint, so it is simpler to add more graphs if desired.
+We designed it this way to avoid code redundancy and, if some statistics require time to be computed, they don't block other graphs to be displayed.
+
+
+\subsubsection{Server part}
+
+\paragraph{Add URL for JSON data}
+The URLs where the client can load JSON data for the global and the personal statistics are in the \ttt{main/url\_statistics.py} file.
+For the branch statistics, we placed the corresponding urls in the \ttt{branch/urls\_job.py} file, to respect the principle of Django application.
+
+\paragraph{Compute statistics}
+Because our views are particular views (we call them \tit{Ajax views}), we created a \ttt{main/ajax/} folder, and put the code that computes the statistics and returns JSON data in the \ttt{main/ajax/views.py} file.
+
+\paragraph{Add views}
+We added functions to make a bridge between the URLs and the functions that really compute the data.
+They are located in the \ttt{main/views.py}.
+Their role is to check that only allowed users get access to those data.
+If the user is allowed, the statistics are computed and rendered at the corresponding URLs.
+
+
+
+\subsubsection{Client part}
+
+The general function that make Ajax calls and create the graphs is in the 
+\ttt{main/static/js/statistics.js} file, and is named \ttt{create\_chart}.
+This function takes 3 parameters: the URL that returns the JSON data, the \ttt{id} of the canvas that will contain the graph, and the type of graph to display. \\
+
+For the global statistics, the code that calls the server to get data for the graphs is in the \ttt{global\_stats.js} file. \\
+
+For the branch statistics, we included a \ttt{script} tag in the templates (see the \ttt{templates/statistics/} folder) because we needed to have the identifiers of the branch and of the user who wants to see the graphs.
+We get those ids using \href{https://docs.djangoproject.com/en/dev/topics/templates/}{Django tags template}, and they are directly included in the JavaScript code that will build the graphs. \\
+
+For the personal statistics, we made it the same way as the branch statistics.
+The JavaScript code is in the \ttt{templates/templatetags/user\_stats.html} file, in the \ttt{main} directory.
+
+
+
+\subsubsection{Testing}
+
+To make sure that the data computed is correct, we have created some unit tests.
+These are placed in the \ttt{main/test\_statistics.py} file.
