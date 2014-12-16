@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-05 22:40+0000\n"
+"POT-Creation-Date: 2014-12-16 13:42+0000\n"
 "PO-Revision-Date: 2014-12-05 10:52+0000\n"
 "Last-Translator: b'vv vv <vv@vv.be>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1327,43 +1327,23 @@ msgstr ""
 msgid "Type de fichier non supporté"
 msgstr ""
 
-#: main/forms.py:196
-msgid "Type de job (rien = tout)"
-msgstr ""
-
-#: main/forms.py:197
-msgid "Catégorie du job (rien = tout)"
-msgstr ""
-
-#: main/forms.py:198
-msgid "A partir du"
-msgstr ""
-
-#: main/forms.py:199
-msgid "Jusqu'au"
-msgstr ""
-
-#: main/forms.py:200
-msgid "Qui peut fournir son aide ?"
-msgstr ""
-
-#: main/forms.py:201
-msgid "A quelle heure ?"
-msgstr ""
-
 #: main/forms.py:208 main/forms.py:210 main/forms.py:213
 msgid "Incohérence dans les dates."
 msgstr ""
 
-#: main/forms.py:217
-msgid "Donner à:"
+#: main/forms.py:231
+msgid "Indiquez un utilisateur."
 msgstr ""
 
-#: main/forms.py:219
-msgid "Montant du temps (plus que 1)"
+#: main/forms.py:236
+msgid "Indiquez un utilisateur existant."
 msgstr ""
 
-#: main/forms.py:229
+#: main/forms.py:239
+msgid "Vous ne pouvez pas donner à vous même."
+msgstr ""
+
+#: main/forms.py:245
 msgid "Vous ne pouvez pas donner plus d'heure que ce que vous avez."
 msgstr ""
 
