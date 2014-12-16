@@ -476,7 +476,7 @@ def get_user_km_amount_json(user_id):
     # the key is the month number
     for job in jobs_amount:
         #print('job', job)
-        key = int(job['month'][5:7])
+        key = int(job['month'].month)
         km_amount = job['km_amount']
         if km_amount is not None:
             data_list[key - baseIndex] = km_amount
