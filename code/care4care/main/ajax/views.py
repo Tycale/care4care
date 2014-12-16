@@ -438,7 +438,7 @@ def get_user_time_amount_json(user_id):
     # the base index is the first month and is equal to the index 0 in the data_list
     # the key is the month number
     for job in jobs_amount:
-        key = int(job['month'][5:7])
+        key = int(job['month'].month)
         if job['created_count'] is not None:
             data_list[key - baseIndex] = job['created_count']
 

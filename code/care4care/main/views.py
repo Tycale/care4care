@@ -641,7 +641,7 @@ def branch_statistics(request, branch_id, slug, user_id):
 @login_required
 def get_branch_reg_users_json_view(request, branch_id, slug, user_id):
     branch = get_object_or_404(Branch, pk=branch_id)
-    if not is_branch_admin(request.user, branch) or not request.user.is_superuser:
+    if not is_branch_admin(request.user, branch) and not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
     return get_json_from(get_branch_users_registrated_json(branch_id))
 
@@ -649,7 +649,7 @@ def get_branch_reg_users_json_view(request, branch_id, slug, user_id):
 @login_required
 def get_branch_account_types_json_view(request, branch_id, slug, user_id):
     branch = get_object_or_404(Branch, pk=branch_id)
-    if not is_branch_admin(request.user, branch) or not request.user.is_superuser:
+    if not is_branch_admin(request.user, branch) and not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
     return get_json_from(get_branch_account_types_json(branch_id))
 
@@ -657,7 +657,7 @@ def get_branch_account_types_json_view(request, branch_id, slug, user_id):
 @login_required
 def get_branch_user_status_json_view(request, branch_id, slug, user_id):
     branch = get_object_or_404(Branch, pk=branch_id)
-    if not is_branch_admin(request.user, branch) or not request.user.is_superuser:
+    if not is_branch_admin(request.user, branch) and not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
     return get_json_from(get_branch_user_status_json(branch_id))
 
@@ -665,7 +665,7 @@ def get_branch_user_status_json_view(request, branch_id, slug, user_id):
 @login_required
 def get_branch_job_categories_json_view(request, branch_id, slug, user_id):
     branch = get_object_or_404(Branch, pk=branch_id)
-    if not is_branch_admin(request.user, branch) or not request.user.is_superuser:
+    if not is_branch_admin(request.user, branch) and not request.user.is_superuser:
         return HttpResponse(PERMISSION_DENIED, status=401)
     return get_json_from(get_branch_job_categories_json(branch_id))
 
